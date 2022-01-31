@@ -1,3 +1,5 @@
+using AppUserWebAPI.Data;
+using AppUserWebAPI.Entities;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -32,6 +34,11 @@ namespace AppUserWebAPI
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "AppUserWebAPI", Version = "v1" });
             });
+
+            services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
+            services.AddScoped<ITypeOfUserRepository, TypeOfUserRepository>();
+            services.AddDbContext<AppUserContext>();
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
