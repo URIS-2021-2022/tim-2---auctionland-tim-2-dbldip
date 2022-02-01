@@ -71,8 +71,8 @@ namespace Projekat.Controllers
         [HttpDelete("{commissionId}")]
         public IActionResult DeleteCommission(Guid commissionId)
         {
-           // try
-           // {
+            try
+            {
                 Commission commission = commissionRepository.GetCommissionById(commissionId);
                 if(commission == null)
                 {
@@ -80,18 +80,18 @@ namespace Projekat.Controllers
                 }
                 commissionRepository.DeleteCommission(commissionId);
                 return NoContent();
-          //  }
-           // catch 
-           // {
+            }
+            catch 
+            {
                 return StatusCode(StatusCodes.Status500InternalServerError, "Delete Error");
-           // }
+            }
         }
 
         [HttpPut]
         public ActionResult<CommissionConfirmationDto> UpdateCommission([FromBody] CommissionUpdateDto commissionDto)
         {
-            //try
-           // {
+            try
+            {
                 if (commissionRepository.GetCommissionById(commissionDto.CommissionId) == null)
                 {
                     return NotFound();
@@ -99,11 +99,18 @@ namespace Projekat.Controllers
                 Commission commission = mapper.Map<Commission>(commissionDto);
                 CommissionConfirmation confirmation = commissionRepository.UpdateCommission(commission);
                 return Ok(mapper.Map<CommissionConfirmationDto>(commission));
-           // }
-            //catch
-           // {
+            }
+            catch
+            {
                 return StatusCode(StatusCodes.Status500InternalServerError, "Update error");
-           // }
+            }
+        }
+
+        [HttpOptions]
+        public IActionResult GetPersonOptions()
+        {
+            Response.Headers.Add("Allow", "GET, POST, PUT, DELETE");
+            return Ok();
         }
         public bool Validate(CommissionCreationDto commissionDto)
         {
