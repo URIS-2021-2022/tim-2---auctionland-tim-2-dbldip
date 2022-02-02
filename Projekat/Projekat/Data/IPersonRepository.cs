@@ -14,8 +14,10 @@ namespace Projekat.Data
 
         PersonConfirmation CreatePerson(Person person);
 
-        PersonConfirmation UpdatePerson(Person person);
+        void UpdatePerson(Person person);
 
         void DeletePerson(Guid personId);
+
+        bool SaveChanges();
     }
 }

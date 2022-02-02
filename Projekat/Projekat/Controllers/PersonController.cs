@@ -96,17 +96,20 @@ namespace Projekat.Controllers
         {
             try
             {
-                if (personRepository.GetPersonById(personDto.PersonId) == null)
+                var oldPerson = personRepository.GetPersonById(personDto.PersonId);
+                if(oldPerson == null)
                 {
                     return NotFound();
                 }
+                
                 Person person = mapper.Map<Person>(personDto);
-                PersonConfirmation confirmation = personRepository.UpdatePerson(person);
-                return Ok(mapper.Map<PersonConfirmationDto>(confirmation));
+
+                mapper.Map(person, oldPerson);
+                return Ok(mapper.Map<PersonDto>(oldPerson));
             }
             catch (Exception)
             {
-                return StatusCode(StatusCodes.Status500InternalServerError, "Update Error");
+                return StatusCode(StatusCodes.Status500InternalServerError, "Update error");
             }
         }
 

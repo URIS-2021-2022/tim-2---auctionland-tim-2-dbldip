@@ -1,4 +1,5 @@
-﻿using Projekat.Entities;
+﻿using AutoMapper;
+using Projekat.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,90 +9,45 @@ namespace Projekat.Data
 {
     public class CommissionRepository : ICommissionRepository
     {
-        private List<Commission> Commissions { get; set; } = new List<Commission>();
+        private readonly CommissionContext context;
+        private readonly IMapper mapper;
 
-        public CommissionRepository()
+        public CommissionRepository(IMapper mapper, CommissionContext context)
         {
-            FillData();
+            this.mapper = mapper;
+            this.context = context;
         }
 
-        public void FillData()
-        {
-            Commissions.AddRange(new List<Commission>
-            {
-                new Commission
-                {
-                    CommissionId = Guid.Parse("aa5ce9dc-1534-472d-8d9b-63cc87ca5a39"),
-                    President = new Person
-                    { 
-                        PersonId = Guid.Parse("7845cc32-71e2-4336-bb3c-11e6b3699673"),
-                        Name = "Nikola",
-                        Surname = "Bikar",
-                        Role = "President" 
-                    },
-                    Members = new List<Person>
-                    {
-                        new Person
-                        {
-                            PersonId = Guid.Parse("4244b81e-2a10-40f7-9102-e1b34192eae3"),
-                            Name = "Marko",
-                            Surname = "Markovic",
-                            Role = "Ucesnik"
-                        },
-                        new Person
-                        {
-                            PersonId = Guid.Parse("7d60cc93-0ba3-475b-a36b-f203ebb3281b"),
-                            Name = "Jovan",
-                            Surname = "Jovanovic",
-                            Role = "Ucesnik"
-                        }
-                    }
-                }
-            });
-        }
         public CommissionConfirmation CreateCommission(Commission commission)
         {
-            commission.CommissionId = Guid.NewGuid();
-            Commissions.Add(commission);
-            return new CommissionConfirmation
-            {
-                CommissionId = commission.CommissionId,
-                Members = commission.Members,
-                President = commission.President
-            };
+            var createdEntity = context.Add(commission);
+            return mapper.Map<CommissionConfirmation>(createdEntity.Entity);
         }
 
         public void DeleteCommission(Guid commissionId)
         {
-            Commissions.Remove(Commissions.FirstOrDefault(e => e.CommissionId == commissionId));
+            var commission = GetCommissionById(commissionId);
+            context.Remove(commission);
         }
 
         public Commission GetCommissionById(Guid commissionId)
         {
-            return Commissions.FirstOrDefault(e => e.CommissionId == commissionId);
+            return context.Commissions.FirstOrDefault(e => e.CommissionId == commissionId);
         }
 
         public List<Commission> GetCommissions(string presidentId = null)
         {
-            return (from e in Commissions
-                    where string.IsNullOrEmpty(presidentId) || e.President.PersonId.ToString() == presidentId
-                    select e).ToList();
+            return context.Commissions.Where(e => presidentId == null || e.President.PersonId == Guid.Parse(presidentId)).ToList();
         }
 
-        public CommissionConfirmation UpdateCommission(Commission commission)
+        public bool SaveChanges()
         {
-            Commission commissionEntity = GetCommissionById(commission.CommissionId);
-
-            commissionEntity.CommissionId = commission.CommissionId;
-            commissionEntity.President = commission.President;
-            commissionEntity.Members = commission.Members;
-        
-            return new CommissionConfirmation
-            {
-                CommissionId = commissionEntity.CommissionId,
-                President = commissionEntity.President,
-                Members = commissionEntity.Members
-            };
+            return context.SaveChanges() > 0;
         }
+
+        public void UpdateCommission(Commission commission)
+        {
+        }
+
     }
 }

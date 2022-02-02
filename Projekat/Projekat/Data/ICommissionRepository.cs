@@ -14,8 +14,10 @@ namespace Projekat.Data
 
         CommissionConfirmation CreateCommission(Commission commission);
 
-        CommissionConfirmation UpdateCommission(Commission commission);
+        void UpdateCommission(Commission commission);
 
         void DeleteCommission(Guid commissionId);
+
+        bool SaveChanges();
     }
 }

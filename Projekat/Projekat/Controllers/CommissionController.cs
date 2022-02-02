@@ -92,13 +92,16 @@ namespace Projekat.Controllers
         {
             try
             {
-                if (commissionRepository.GetCommissionById(commissionDto.CommissionId) == null)
+                var oldCommission = commissionRepository.GetCommissionById(commissionDto.CommissionId);
+                if(oldCommission == null)
                 {
                     return NotFound();
                 }
+
                 Commission commission = mapper.Map<Commission>(commissionDto);
-                CommissionConfirmation confirmation = commissionRepository.UpdateCommission(commission);
-                return Ok(mapper.Map<CommissionConfirmationDto>(commission));
+
+                mapper.Map(commission, oldCommission);
+                return Ok(mapper.Map<CommissionDto>(oldCommission));
             }
             catch
             {

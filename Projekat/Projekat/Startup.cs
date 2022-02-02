@@ -11,6 +11,7 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
 using Projekat.Data;
+using Projekat.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -84,12 +85,14 @@ namespace Projekat
 
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
-            services.AddSingleton<IPersonRepository, PersonRepository>();
-            services.AddSingleton<ICommissionRepository, CommissionRepository>();
+            services.AddScoped<IPersonRepository, PersonRepository>();
+            services.AddScoped<ICommissionRepository, CommissionRepository>();
             //services.AddSwaggerGen(c =>
             //{
             //    c.SwaggerDoc("v1", new OpenApiInfo { Title = "WebApplication1", Version = "v1" });
             //});
+
+            services.AddDbContext<CommissionContext>();
 
         }
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
