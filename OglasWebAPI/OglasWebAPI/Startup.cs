@@ -7,6 +7,9 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
+using OglasWebAPI.Data;
+using OglasWebAPI.Data.Interfaces;
+using OglasWebAPI.Entities.DataContext;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -28,10 +31,15 @@ namespace OglasWebAPI
         {
 
             services.AddControllers();
+            services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
+            services.AddScoped<ISluzbeniListRepository, SluzbeniListRepository>();
+            services.AddScoped<IOglasRepository, OglasRepository>();
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "OglasWebAPI", Version = "v1" });
             });
+
+            services.AddDbContext<OglasContext>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
