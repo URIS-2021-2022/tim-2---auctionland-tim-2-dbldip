@@ -10,7 +10,5 @@ namespace AppUserWebAPI.Data
     {
         List<TypeOfUser> GetTypesOfUser();
         TypeOfUser GetTypeOfUserById(Guid typeOfUserId);
-        void UpdateTypeOfUser(TypeOfUser typeOfUser);
-        bool SaveChanges();
     }
 }

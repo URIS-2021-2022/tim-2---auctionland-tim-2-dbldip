@@ -29,13 +29,5 @@ namespace AppUserWebAPI.Data
             return context.Types.ToList();
         }
 
-        public bool SaveChanges()
-        {
-            return context.SaveChanges() > 0;
-        }
-
-        public void UpdateTypeOfUser(TypeOfUser typeOfUser)
-        {
-        }
     }
 }

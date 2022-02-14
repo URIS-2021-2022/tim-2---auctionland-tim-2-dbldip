@@ -17,6 +17,7 @@ namespace AppUserWebAPI.Entities
         }
 
         public DbSet<TypeOfUser> Types { get; set; }
+        public DbSet<AppUser> AppUsers { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {

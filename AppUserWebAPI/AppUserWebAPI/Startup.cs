@@ -37,6 +37,7 @@ namespace AppUserWebAPI
 
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
             services.AddScoped<ITypeOfUserRepository, TypeOfUserRepository>();
+            services.AddScoped<IAppUserRepository, AppUserRepository>();
             services.AddDbContext<AppUserContext>();
 
         }
