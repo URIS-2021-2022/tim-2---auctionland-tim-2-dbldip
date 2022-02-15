@@ -26,17 +26,18 @@ namespace ParcelaWebAPI.Data
 
         public void DeleteParcel(Guid parcelId)
         {
-            throw new NotImplementedException();
+            var parcel = GetParcelById(parcelId);
+            context.Remove(parcel);
         }
 
         public Parcel GetParcelById(Guid parcelId)
         {
-            throw new NotImplementedException();
+            return context.Parcels.FirstOrDefault(e => e.parcelId == parcelId);
         }
 
         public List<Parcel> GetParcels(string surfaceArea = null, int parcelNumber = 0)
         {
-            throw new NotImplementedException();
+            return context.Parcels.ToList();
         }
 
         public bool SaveChanges()

@@ -10,7 +10,6 @@ namespace ParcelaWebAPI.Data
     {
         List<ProtectedZone> GetProtectedZones(int level = 0);
         ProtectedZone GetProtectedZoneById(Guid protectedZoneId);
-        void UpdateProtectedZone(ProtectedZone protectedZone);
         bool SaveChanges();
     }
 }

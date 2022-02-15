@@ -4,42 +4,43 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace ParcelaWebAPI.Entities
+namespace ParcelaWebAPI.Models.ParcelDtos
 {
-    public class Parcel
+    public class ParcelCreationDto
     {
-        [Key]
-        public Guid parcelId { get; set; }
+        [Required]
         public int surfaceArea { get; set; }
+        [Required]
         public int parcelNumber { get; set; }
-        public string realEstateListNumber {get;set;}
+        [Required]
+        public string realEstateListNumber { get; set; }
+        [Required]
         public string protectedZoneRealState { get; set; }
-
-        #region ProtectedZone
+        [Required]
         public Guid protectedZoneId { get; set; }
+        [Required]
         public int level { get; set; }
-        #endregion
-
-        #region ParcelUser
-
+        [Required]
         public Guid parcelUserId { get; set; }
+        [Required]
         public string name { get; set; }
+        [Required]
         public string surname { get; set; }
+        [Required]
         public string jmbg { get; set; }
+        [Required]
         public string address { get; set; }
-        #endregion
-
-        #region CadastralMunicipality
+        [Required]
         public Guid cadastralMunicipalityId { get; set; }
+        [Required]
         public string nameOfCadastralMunicipality { get; set; }
-        #endregion
-
-        #region ParcelPart
+        [Required]
         public Guid parcelPartId { get; set; }
+        [Required]
         public int partSurfaceArea { get; set; }
+        [Required]
         public int partParcelNumber { get; set; }
+        [Required]
         public string partRealEstateListNumber { get; set; }
-        #endregion
-
     }
 }

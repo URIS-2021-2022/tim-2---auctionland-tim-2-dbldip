@@ -20,12 +20,12 @@ namespace ParcelaWebAPI.Data
         }
         public List<CadastralMunicipality> GetCadastralMunicipalities(string nameOfCadastralMunicipality = null)
         {
-            throw new NotImplementedException();
+            return context.CadastralMunicipalities.ToList();
         }
 
         public CadastralMunicipality GetCadastralMunicipalityById(Guid cadastralMunicipalityId)
         {
-            throw new NotImplementedException();
+            return context.CadastralMunicipalities.FirstOrDefault(e => e.cadastralMunicipalityId == cadastralMunicipalityId);
         }
 
         public bool SaveChanges()

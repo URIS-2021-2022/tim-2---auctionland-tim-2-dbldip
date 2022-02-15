@@ -3,11 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace ParcelaWebAPI.Entities
+namespace ParcelaWebAPI.Models.ParcelDtos
 {
-    public class ParcelConfirmation
+    public class ParcelConfirmationDto
     {
-        public Guid parcelId { get; set; }
         public int surfaceArea { get; set; }
         public int parcelNumber { get; set; }
         public string realEstateListNumber { get; set; }

@@ -26,17 +26,18 @@ namespace ParcelaWebAPI.Data
 
         public void DeleteParcelUser(Guid parcelUserId)
         {
-            throw new NotImplementedException();
+            var parcelUser = GetParcelUserById(parcelUserId);
+            context.Remove(parcelUser);
         }
 
         public ParcelUser GetParcelUserById(Guid parcelUserId)
         {
-            throw new NotImplementedException();
+            return context.ParcelUsers.FirstOrDefault(e => e.parcelUserId == parcelUserId);
         }
 
         public List<ParcelUser> GetParcelUsers(string name = null, string surname = null, string jmbg = null)
         {
-            throw new NotImplementedException();
+            return context.ParcelUsers.ToList();
         }
 
         public bool SaveChanges()

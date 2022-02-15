@@ -20,12 +20,12 @@ namespace ParcelaWebAPI.Data
         }
         public ProtectedZone GetProtectedZoneById(Guid protectedZoneId)
         {
-            throw new NotImplementedException();
+            return context.ProtectedZones.FirstOrDefault(e => e.protectedZoneId == protectedZoneId);
         }
 
         public List<ProtectedZone> GetProtectedZones(int level = 0)
         {
-            throw new NotImplementedException();
+            return context.ProtectedZones.ToList();
         }
 
         public bool SaveChanges()
@@ -33,9 +33,6 @@ namespace ParcelaWebAPI.Data
             return context.SaveChanges() > 0;
         }
 
-        public void UpdateProtectedZone(ProtectedZone protectedZone)
-        {
-            throw new NotImplementedException();
-        }
+       
     }
 }
