@@ -6,11 +6,11 @@ using System.Threading.Tasks;
 
 namespace ParcelaWebAPI.Data
 {
-    interface IParcelUserRepository
+    public interface IParcelUserRepository
     {
         List<ParcelUser> GetParcelUsers(string name = null, string surname = null, string jmbg = null);
         ParcelUser GetParcelUserById(Guid parcelUserId);
-        ParcelUser CreateParcelUser(ParcelUser parcelUser);
+        ParcelUserConfirmation CreateParcelUser(ParcelUser parcelUser);
         void UpdateParcelUser(ParcelUser parcelUser);
         void DeleteParcelUser(Guid parcelUserId);
         bool SaveChanges();

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace ParcelaWebAPI.Data
 {
-    interface IProtectedZoneRepository
+    public interface IProtectedZoneRepository
     {
         List<ProtectedZone> GetProtectedZones(int level = 0);
         ProtectedZone GetProtectedZoneById(Guid protectedZoneId);

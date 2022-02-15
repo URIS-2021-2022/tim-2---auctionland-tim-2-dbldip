@@ -7,6 +7,7 @@ namespace ParcelaWebAPI.Entities
 {
     public class ParcelPartConfirmation
     {
+        public Guid parcelPartId { get; set; }
         public int partSurfaceArea { get; set; }
         public int partParcelNumber { get; set; }
         public string partRealEstateListNumber { get; set; }

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace ParcelaWebAPI.Data
 {
-    interface IParcelRepository
+    public interface IParcelRepository
     {
 
         List<Parcel> GetParcels(string surfaceArea = null, int parcelNumber = 0);

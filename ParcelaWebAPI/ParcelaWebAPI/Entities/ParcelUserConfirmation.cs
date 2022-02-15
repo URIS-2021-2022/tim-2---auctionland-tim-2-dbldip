@@ -7,6 +7,7 @@ namespace ParcelaWebAPI.Entities
 {
     public class ParcelUserConfirmation
     {
+        public Guid parcelUserId { get; set; }
         public string name { get; set; }
         public string surname { get; set; }
         public string jmbg { get; set; }

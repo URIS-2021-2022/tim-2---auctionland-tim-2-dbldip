@@ -7,6 +7,7 @@ namespace ParcelaWebAPI.Entities
 {
     public class CadastralMunicipalityConfirmation
     {
+        public Guid cadastralMunicipalityId { get; set; }
         public string nameOfCadastralMunicipality { get; set; }
     }
 }
