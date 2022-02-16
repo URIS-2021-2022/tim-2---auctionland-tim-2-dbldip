@@ -33,5 +33,14 @@ namespace PublicBiddingAPI.Controllers
                 return NoContent();
             return Ok(mapper.Map<List<TypeOfPublicBiddingDto>>(types));
         }
+
+        [HttpGet("{typeId}")]
+        public ActionResult<TypeOfPublicBiddingDto> getTypeById(Guid typeId)
+        {
+            var type = this.typeOfPublicBiddingRepository.getTypeOfPublicBiddingById(typeId);
+            if (type == null)
+                return NoContent();
+            return Ok(mapper.Map<TypeOfPublicBiddingDto>(type));
+        }
     }
 }
