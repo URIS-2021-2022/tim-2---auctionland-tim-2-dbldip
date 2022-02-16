@@ -18,7 +18,7 @@ namespace PublicBiddingAPI.Data
         List<PublicBidding> getPublicBiddingsByCadastralMunicipality(Guid cadastralMunicipality);
         List<PublicBidding> getPublicBiddingsByStartingPricePerHectare(double price);
         List<PublicBidding> getPublicBiddingsByLeasePeriod(double period);
-        PublicBiddingConfirmationDto createPublicBidding(PublicBidding publicBidding);
+        PublicBiddingConfirmation createPublicBidding(PublicBiddingCreation publicBidding);
         void UpdatePublicBidding(PublicBidding publicBidding);
         void DeletePublicBidding(Guid publicBiddingId);
         bool SaveChanges();

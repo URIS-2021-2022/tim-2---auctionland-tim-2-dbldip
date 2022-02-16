@@ -15,13 +15,11 @@ namespace PublicBiddingAPI.Controllers
     public class TypeOfPublicBiddingController : ControllerBase
     {
         private readonly ITypeOfPublicBiddingRepository typeOfPublicBiddingRepository;
-        private readonly LinkGenerator linkGenerator;
         private readonly IMapper mapper;
 
-        public TypeOfPublicBiddingController(ITypeOfPublicBiddingRepository typeOfPublicBiddingRepository, LinkGenerator linkGenerator, IMapper mapper)
+        public TypeOfPublicBiddingController(ITypeOfPublicBiddingRepository typeOfPublicBiddingRepository, IMapper mapper)
         {
             this.typeOfPublicBiddingRepository = typeOfPublicBiddingRepository;
-            this.linkGenerator = linkGenerator;
             this.mapper = mapper;
         }
 

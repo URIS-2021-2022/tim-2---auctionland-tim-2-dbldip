@@ -12,8 +12,10 @@ namespace PublicBiddingAPI.Profiles
     {
         public PublicBiddingConfirmationProfile()
         {
-            CreateMap<PublicBidding, PublicBiddingConfirmation>();
+            CreateMap<PublicBiddingCreation, PublicBiddingConfirmation>();
             CreateMap<PublicBiddingConfirmation, PublicBiddingConfirmationDto>();
+            CreateMap<PublicBidding, PublicBiddingConfirmation>();
+            CreateMap<PublicBiddingWithoutLists, PublicBiddingConfirmation>();
         }
     }
 }

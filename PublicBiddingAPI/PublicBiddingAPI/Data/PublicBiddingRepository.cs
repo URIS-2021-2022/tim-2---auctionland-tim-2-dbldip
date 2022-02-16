@@ -4,7 +4,6 @@ using PublicBiddingAPI.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 
 namespace PublicBiddingAPI.Data
 {
@@ -19,10 +18,37 @@ namespace PublicBiddingAPI.Data
             this.mapper = mapper;
         }
 
-        public PublicBiddingConfirmationDto createPublicBidding(PublicBidding publicBidding)
+        public PublicBiddingConfirmation createPublicBidding(PublicBiddingCreation publicBidding)
         {
-            var createdEntity = context.Add(publicBidding);
-            return mapper.Map<PublicBiddingConfirmationDto>(createdEntity.Entity);
+            var mappedEntity = mapper.Map<PublicBiddingWithoutLists>(publicBidding);
+            var createdEntity = context.Add(mappedEntity);            
+            foreach (var el in publicBidding.appliedBuyersId)
+            {
+                var temp = new Buyer();
+                temp.buyerId = el;
+                temp.publicBiddingId = createdEntity.Entity.publicBiddingId;
+                context.Add(temp);
+            }
+            foreach(var el in publicBidding.biddersId)
+            {
+                var temp = new Bidder();
+                temp.bidderId = el;
+                temp.publicBiddingId = createdEntity.Entity.publicBiddingId;
+                context.Add(temp);
+            }
+            foreach(var el in publicBidding.plotIds)
+            {
+                var temp = new Plot();
+                temp.plotId = el;
+                temp.publicBiddingId = createdEntity.Entity.publicBiddingId;
+                context.Add(temp);
+            }
+            var bestBidder = new BestBidder();
+            bestBidder.bestBidderId = publicBidding.bestBidderId;
+            bestBidder.publicBiddingId = createdEntity.Entity.publicBiddingId;
+            context.Add(bestBidder);
+
+            return mapper.Map<PublicBiddingConfirmation>(createdEntity.Entity);
         }
 
         public void DeletePublicBidding(Guid publicBiddingId)
@@ -31,48 +57,67 @@ namespace PublicBiddingAPI.Data
         }
 
         public List<PublicBidding> getAllPublicBiddings()
-        {
-            return context.PublicBiddings.ToList();
+        {            
+            var biddings = this.context.PublicBiddings.ToList();
+            List<PublicBidding> returnList = mapper.Map<List<PublicBidding>>(biddings);
+            foreach (var el in returnList)
+            {
+                el.appliedBuyers = context.AppliedBuyers.Where(e => e.publicBiddingId == el.publicBiddingId).ToList();
+                el.bestBidder = context.BestBidders.FirstOrDefault(e => e.publicBiddingId == el.publicBiddingId);
+                el.bidders = context.Bidders.Where(e => e.publicBiddingId == el.publicBiddingId).ToList();
+                el.plots = context.Plots.Where(e => e.publicBiddingId == el.publicBiddingId).ToList();
+            }
+            return returnList;
+            //ODRADIM GET IZ TABELE ZA SVAKI OD PAROVA POSEBNO I DODAM U OBJEKAT PA VRATIM
+            //return context.PublicBiddings.ToList();
         }
 
         public PublicBidding getPublicBidding(Guid biddingId)
         {
-            return context.PublicBiddings.FirstOrDefault(e => e.publicBiddingId == biddingId);
+            throw new NotImplementedException();
+           // return context.PublicBiddings.FirstOrDefault(e => e.publicBiddingId == biddingId);
         }
 
         public List<PublicBidding> getPublicBiddingsByAppliedBuyer(Guid buyerId)
         {
-            return context.PublicBiddings.Where(e => e.appliedBuyersIds.Contains(buyerId)).ToList();
+            throw new NotImplementedException();
+            //return context.PublicBiddings.Where(e => e.appliedBuyersIds.Contains(buyerId)).ToList();
         }
 
         public List<PublicBidding> getPublicBiddingsByBestBidder(Guid bestBidderId)
         {
-            return context.PublicBiddings.Where(e => e.buyerId == bestBidderId).ToList();
+            throw new NotImplementedException();
+            //return context.PublicBiddings.Where(e => e.buyerId == bestBidderId).ToList();
         }
 
         public List<PublicBidding> getPublicBiddingsByBidder(Guid bidderId)
         {
-            return context.PublicBiddings.Where(e => e.biddersIds.Contains(bidderId)).ToList();
+            throw new NotImplementedException();
+            //return context.PublicBiddings.Where(e => e.biddersIds.Contains(bidderId)).ToList();
         }
 
         public List<PublicBidding> getPublicBiddingsByCadastralMunicipality(Guid cadastralMunicipalityId)
         {
-            return context.PublicBiddings.Where(e => e.cadastralMunicipality.cadastralMuniciplaityId == cadastralMunicipalityId).ToList();
+            throw new NotImplementedException();
+            //return context.PublicBiddings.Where(e => e.cadastralMunicipality.cadastralMuniciplaityId == cadastralMunicipalityId).ToList();
         }
 
         public List<PublicBidding> getPublicBiddingsByLeasePeriod(double period)
         {
-            return context.PublicBiddings.Where(e => e.leasePeriod == period).ToList();
+            throw new NotImplementedException();
+            //return context.PublicBiddings.Where(e => e.leasePeriod == period).ToList();
         }
 
         public List<PublicBidding> getPublicBiddingsByStartingPricePerHectare(double price)
         {
-            return context.PublicBiddings.Where(e => e.startingPricePerHectare == price).ToList();
+            throw new NotImplementedException();
+            //return context.PublicBiddings.Where(e => e.startingPricePerHectare == price).ToList();
         }
 
         public List<PublicBidding> getPublicBiddingsByType(Guid typeOfPublicBidding)
         {
-            return context.PublicBiddings.Where(e => e.typeOfPublicBidding.typeOfPublicBiddingId == typeOfPublicBidding).ToList();
+            throw new NotImplementedException();
+            //return context.PublicBiddings.Where(e => e.typeOfPublicBidding.typeOfPublicBiddingId == typeOfPublicBidding).ToList();
         }
 
         public bool SaveChanges()

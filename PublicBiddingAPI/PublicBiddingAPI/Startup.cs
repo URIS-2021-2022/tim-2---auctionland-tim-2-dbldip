@@ -40,6 +40,7 @@ namespace PublicBiddingAPI
             services.AddDbContext<PublicBiddingContext>();
             //ADDING REPOSITORIES
             services.AddScoped<ITypeOfPublicBiddingRepository, TypeOfPublicBiddingRepository>();
+            services.AddScoped<IPublicBiddingRepository, PublicBiddingRepository>();
 
         }
 

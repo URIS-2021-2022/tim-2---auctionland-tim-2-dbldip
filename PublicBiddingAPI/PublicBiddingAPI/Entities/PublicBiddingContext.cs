@@ -17,7 +17,11 @@ namespace PublicBiddingAPI.Entities
         }
 
         public DbSet<TypeOfPublicBidding> TypesOfPublicBidding { get; set; }
-        public DbSet<PublicBidding> PublicBiddings { get; set; }
+        public DbSet<PublicBiddingWithoutLists> PublicBiddings { get; set; }
+        public DbSet<Bidder> Bidders{ get; set; }
+        public DbSet<Buyer> AppliedBuyers{ get; set; }
+        public DbSet<Plot> Plots{ get; set; }
+        public DbSet<BestBidder> BestBidders { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
