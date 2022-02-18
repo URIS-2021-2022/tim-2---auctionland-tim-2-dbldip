@@ -59,6 +59,8 @@ namespace PublicBiddingAPI.Data
         public List<PublicBidding> getAllPublicBiddings()
         {            
             var biddings = this.context.PublicBiddings.ToList();
+            if (biddings == null || biddings.Count == 0)
+                return null;
             List<PublicBidding> returnList = mapper.Map<List<PublicBidding>>(biddings);
             foreach (var el in returnList)
             {
@@ -74,8 +76,20 @@ namespace PublicBiddingAPI.Data
 
         public PublicBidding getPublicBidding(Guid biddingId)
         {
-            throw new NotImplementedException();
-           // return context.PublicBiddings.FirstOrDefault(e => e.publicBiddingId == biddingId);
+            //GETTING THE PUBLIC BIDDING WITH PUBLICBIDDINGID PASSED AS A PARAMETER 
+            var bidding = this.context.PublicBiddings.FirstOrDefault(e => e.publicBiddingId == biddingId);
+            //CHECKING TO SEE IF THERE IS A PUBLIC BIDDING WITH SPECIFIED ID
+            if (bidding == null)
+                return null;
+            //IF THERE ISNT A PUBLIC BIDDING WITH THAT ID, THERES NO POINT IN CALLING MAPPER OR GETTING OTHER DATA
+            var returnBidding = mapper.Map<PublicBidding>(bidding);
+            //FILLING THE LISTS WITH DATA FROM OTHER TABLES
+            returnBidding.appliedBuyers = context.AppliedBuyers.Where(e => e.publicBiddingId == bidding.publicBiddingId).ToList();
+            returnBidding.bestBidder = context.BestBidders.FirstOrDefault(e => e.publicBiddingId == bidding.publicBiddingId);
+            returnBidding.bidders = context.Bidders.Where(e => e.publicBiddingId == bidding.publicBiddingId).ToList();
+            returnBidding.plots = context.Plots.Where(e => e.publicBiddingId == bidding.publicBiddingId).ToList();
+            return returnBidding;
+
         }
 
         public List<PublicBidding> getPublicBiddingsByAppliedBuyer(Guid buyerId)

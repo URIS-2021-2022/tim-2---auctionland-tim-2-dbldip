@@ -60,7 +60,7 @@ namespace PublicBiddingAPI.Controllers
 
             publicBiddingRepository.SaveChanges();
 
-            string location = linkGenerator.GetPathByAction("GetPublicBidding", "PublicBidding", new { publicBiddingId = confirmation.publicBiddingId});
+            string location = linkGenerator.GetPathByAction("GetPublicBidding", "PublicBidding", new { biddingId = confirmation.publicBiddingId});
             return Created(location, mapper.Map<PublicBiddingConfirmationDto>(confirmation));
         }
 
