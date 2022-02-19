@@ -94,8 +94,29 @@ namespace PublicBiddingAPI.Data
 
         public List<PublicBidding> getPublicBiddingsByAppliedBuyer(Guid buyerId)
         {
-            throw new NotImplementedException();
-            //return context.PublicBiddings.Where(e => e.appliedBuyersIds.Contains(buyerId)).ToList();
+            var biddings = this.context.PublicBiddings.ToList();
+            if (biddings == null || biddings.Count == 0)
+                return null;
+            List<PublicBidding> tempList = mapper.Map<List<PublicBidding>>(biddings);
+            List<PublicBidding> returnList = new List<PublicBidding>();
+            foreach (var el in tempList)
+            {
+                el.appliedBuyers = context.AppliedBuyers.Where(e => e.publicBiddingId == el.publicBiddingId).ToList();
+                el.bidders = context.Bidders.Where(e => e.publicBiddingId == el.publicBiddingId).ToList();
+                el.plots = context.Plots.Where(e => e.publicBiddingId == el.publicBiddingId).ToList();
+                el.bestBidder = context.BestBidders.FirstOrDefault(e => e.publicBiddingId == el.publicBiddingId);
+                foreach (var temp in el.appliedBuyers)
+                {
+                    if (temp.buyerId == buyerId)
+                    {
+                        returnList.Add(el);
+                        break;
+                    }
+                }
+            }
+
+            return returnList;
+
         }
 
         public List<PublicBidding> getPublicBiddingsByBestBidder(Guid bestBidderId)
