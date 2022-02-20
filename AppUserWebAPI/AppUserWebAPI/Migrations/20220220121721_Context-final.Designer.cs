@@ -4,14 +4,16 @@ using AppUserWebAPI.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace AppUserWebAPI.Migrations
 {
     [DbContext(typeof(AppUserContext))]
-    partial class AppUserContextModelSnapshot : ModelSnapshot
+    [Migration("20220220121721_Context-final")]
+    partial class Contextfinal
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

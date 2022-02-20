@@ -1,13 +1,13 @@
 ﻿using AppUserWebAPI.Entities;
-using AppUserWebAPI.Models;
 using AutoMapper;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
+using System.Security.Cryptography;
 
 namespace AppUserWebAPI.Data
 {
+    
     public class AppUserRepository : IAppUserRepository
     {
 
@@ -22,6 +22,19 @@ namespace AppUserWebAPI.Data
 
         public AppUserConfirmation CreateAppUser(AppUser user)
         {
+            byte[] salt;
+            new RNGCryptoServiceProvider().GetBytes(salt = new byte[16]);
+
+            var pbkdf2 = new Rfc2898DeriveBytes(user.appUserPassword, salt, 100000);
+            byte[] hash = pbkdf2.GetBytes(20);
+
+            byte[] hashBytes = new byte[36];
+            Array.Copy(salt, 0, hashBytes, 0, 16);
+            Array.Copy(hash, 0, hashBytes, 16, 20);
+
+            string savedPasswordHash = Convert.ToBase64String(hashBytes);
+
+            user.appUserPassword = savedPasswordHash;
             var createdEntity = context.Add(user);
             return mapper.Map<AppUserConfirmation>(createdEntity.Entity);
 
@@ -40,7 +53,7 @@ namespace AppUserWebAPI.Data
 
         public AppUser GetAppUserByUsername(string username)
         {
-            return context.AppUsers.FirstOrDefault(e => e.appUserName == username);
+            return context.AppUsers.FirstOrDefault(e => e.appUserUsername == username);
         }
 
         public List<AppUser> GetAppUsers(string firstName = null, string lastName = null, string typeOfUser = null)
@@ -62,7 +75,7 @@ namespace AppUserWebAPI.Data
 
         public bool validateUserData(AppUser user)
         {
-            return GetAppUserByUsername(user.appUserName) == null;
+            return GetAppUserByUsername(user.appUserUsername) == null;
         }
 
     }

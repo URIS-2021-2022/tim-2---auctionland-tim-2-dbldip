@@ -2,15 +2,21 @@
 using AppUserWebAPI.Entities;
 using AppUserWebAPI.Models;
 using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Routing;
+using Microsoft.IdentityModel.Tokens;
 using System;
 using System.Collections.Generic;
+using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
+using System.Security.Claims;
+using System.Text;
 using System.Threading.Tasks;
 
 namespace AppUserWebAPI.Controllers
 {
+    [Authorize]
     [ApiController]
     [Route("/api/appUser")]
     public class AppUserController : ControllerBase
@@ -44,7 +50,7 @@ namespace AppUserWebAPI.Controllers
             return Ok(mapper.Map<AppUserDto>(user));
         }
 
-        [HttpGet("/username")]
+        [HttpGet("/username/{username}")]
         public ActionResult<AppUserDto> GetUserByUsername(string username)
         {
             var user = appUserRepository.GetAppUserByUsername(username);
@@ -58,8 +64,8 @@ namespace AppUserWebAPI.Controllers
         {
             AppUser userToCreate = mapper.Map<AppUser>(user);
             var temp = appUserRepository.validateUserData(userToCreate);
-            if (temp == true)
-                return Conflict(new { mesage = $"There's an existing App User with provided username field: {user.appUserUsername} !" });           
+            if (temp == false)
+                return Conflict(new { mesage = $"There's an existing App User with provided username field: {user.appUserUsername} !" });
             AppUserConfirmation confirmation = appUserRepository.CreateAppUser(userToCreate);
             appUserRepository.SaveChanges();
 
