@@ -240,5 +240,22 @@ namespace PublicBiddingAPI.Data
         {
 
         }
+
+        public bool validatePublicBiddingData(PublicBiddingCreation publicBidding)
+        {
+            if ((publicBidding.date.Year - publicBidding.startingTime.Year == 0 &&
+                publicBidding.date.Month- publicBidding.startingTime.Month == 0 &&
+                publicBidding.date.Day - publicBidding.startingTime.Day == 0 &&
+                publicBidding.date.Day - publicBidding.endingTime.Day == 0 &&
+                publicBidding.startingTime.Hour < publicBidding.endingTime.Hour) ||
+                (publicBidding.date.Year - publicBidding.startingTime.Year == 0 &&
+                publicBidding.date.Month - publicBidding.startingTime.Month == 0 &&
+                publicBidding.date.Day - publicBidding.startingTime.Day == 0 &&
+                publicBidding.date.Day - publicBidding.endingTime.Day == 0 &&
+                publicBidding.startingTime.Hour == publicBidding.endingTime.Hour &&
+                publicBidding.startingTime.Minute < publicBidding.endingTime.Minute))
+                return true;
+            return false;
+        }
     }
 }

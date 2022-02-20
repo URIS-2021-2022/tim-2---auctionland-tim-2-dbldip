@@ -50,13 +50,13 @@ namespace PublicBiddingAPI.Controllers
         [HttpPost]
         public ActionResult<PublicBiddingConfirmationDto> CreatePublicBidding(PublicBiddingCreationDto publicBidding)
         {
-            //SHOULD CHECK IF ALL OF PLOTS, APPLIEDBUYERS, BIDDERS EXIST AND IS THE BUYER INCLUDED IN APPLIEDBUYERS
-            //SHOULD RETRIEVE THEM AND STORE THEM INTO CREATION MODEL 
             TypeOfPublicBidding type = typeOfPublicBiddingRepository.GetTypeOfPublicBiddingByName(publicBidding.typeOfPublicBiddingName);
             if (type == null)
                 return NoContent();
 
             PublicBiddingCreation publicBiddingToCreate = mapper.Map<PublicBiddingCreation>(publicBidding);
+            if (!publicBiddingRepository.validatePublicBiddingData(publicBiddingToCreate))
+                return Conflict("Error validating data! Please check time values!");
             publicBiddingToCreate.typeOfPublicBidding = type;
             PublicBiddingConfirmation confirmation = publicBiddingRepository.createPublicBidding(publicBiddingToCreate);
 
