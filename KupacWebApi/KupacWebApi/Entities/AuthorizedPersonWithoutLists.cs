@@ -7,14 +7,13 @@ using System.Threading.Tasks;
 
 namespace KupacWebApi.Entities
 {
-    public class AuthorizedPerson
+    public class AuthorizedPersonWithoutLists
     {
+        [Key]
         public Guid authorizedPersonId { get; set; }
         public string name { get; set; }
         public string surname { get; set; }
         public string jmbg { get; set; }
-        public List<Buyer> buyers { get; set; }
-        public List<int> tableNumber { get; set; }
         public Address address { get; set; }
         public Country country { get; set; }
     }

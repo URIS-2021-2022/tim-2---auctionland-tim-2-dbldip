@@ -8,9 +8,9 @@ namespace KupacWebApi.Data
 {
     public interface IBuyerRepository
     {
-        BuyerConfirmation createBuyer(BuyerCreation buyer);
-        List<Buyer> getAllBuyers();
-        Buyer getBuyer(Guid buyerId);
+        BuyerConfirmation CreateBuyer(BuyerCreation buyer);
+        List<Buyer> GetBuyers();
+        Buyer GetBuyer(Guid buyerId);
         void UpdateBuyer(Buyer buyer);
         void DeleteBuyer(Guid buyerId);
         bool SaveChanges();

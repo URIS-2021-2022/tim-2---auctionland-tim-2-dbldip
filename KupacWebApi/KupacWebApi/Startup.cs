@@ -1,3 +1,5 @@
+using KupacWebApi.Data;
+using KupacWebApi.Entities;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -32,6 +34,11 @@ namespace KupacWebApi
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "KupacWebApi", Version = "v1" });
             });
+
+            services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
+            services.AddDbContext<BuyerContext>();
+            services.AddScoped<IBuyerRepository, BuyerRepository>();
+            services.AddScoped<IAuthorizedPersonRepository, AuthorizedPersonRepository>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -42,7 +49,11 @@ namespace KupacWebApi
                 app.UseDeveloperExceptionPage();
                 app.UseSwagger();
                 app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "KupacWebApi v1"));
+
+
             }
+
+
 
             app.UseHttpsRedirection();
 
