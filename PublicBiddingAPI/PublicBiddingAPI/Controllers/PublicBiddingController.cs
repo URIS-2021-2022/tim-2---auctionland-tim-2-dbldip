@@ -28,7 +28,7 @@ namespace PublicBiddingAPI.Controllers
             this.linkGenerator = linkGenerator;
             this.mapper = mapper;
         }
-
+        //TESTED
         [HttpGet]
         public ActionResult<List<PublicBiddingDto>> GetAllPublicBiddings()
         {
@@ -37,7 +37,7 @@ namespace PublicBiddingAPI.Controllers
                 return NoContent();
             return Ok(mapper.Map<List<PublicBiddingDto>>(biddings));
         }
-
+        //TESTED
         [HttpGet("{biddingId}")]
         public ActionResult<PublicBiddingDto> GetPublicBidding(Guid biddingId)
         {
@@ -46,10 +46,12 @@ namespace PublicBiddingAPI.Controllers
                 return NoContent();
             return Ok(mapper.Map<PublicBiddingDto>(bidding));
         }
-
+        //TESTED
         [HttpPost]
         public ActionResult<PublicBiddingConfirmationDto> CreatePublicBidding(PublicBiddingCreationDto publicBidding)
         {
+            //SHOULD CHECK IF ALL OF PLOTS, APPLIEDBUYERS, BIDDERS EXIST AND IS THE BUYER INCLUDED IN APPLIEDBUYERS
+            //SHOULD RETRIEVE THEM AND STORE THEM INTO CREATION MODEL 
             TypeOfPublicBidding type = typeOfPublicBiddingRepository.GetTypeOfPublicBiddingByName(publicBidding.typeOfPublicBiddingName);
             if (type == null)
                 return NoContent();
@@ -63,7 +65,7 @@ namespace PublicBiddingAPI.Controllers
             string location = linkGenerator.GetPathByAction("GetPublicBidding", "PublicBidding", new { biddingId = confirmation.publicBiddingId});
             return Created(location, mapper.Map<PublicBiddingConfirmationDto>(confirmation));
         }
-
+        //TESTED
         [HttpGet("buyer/{buyerId}")]
         public ActionResult<List<PublicBiddingDto>> GetPublicBiddingsByBuyer(Guid buyerId)
         {
@@ -72,7 +74,7 @@ namespace PublicBiddingAPI.Controllers
                 return NoContent();
             return Ok(mapper.Map<List<PublicBiddingDto>>(biddings));
         }
-
+        //TESTED
         [HttpGet("appliedbuyer/{buyerId}")]
         public ActionResult<List<PublicBiddingDto>> GetPublicBiddingsByAppliedBuyer(Guid buyerId)
         {
@@ -81,7 +83,7 @@ namespace PublicBiddingAPI.Controllers
                 return NoContent();
             return Ok(mapper.Map<List<PublicBiddingDto>>(biddings));
         }
-
+        //TESTED
         [HttpGet("bidder/{bidderId}")]
         public ActionResult<List<PublicBiddingDto>> GetPublicBiddingsByBidder(Guid bidderId)
         {
