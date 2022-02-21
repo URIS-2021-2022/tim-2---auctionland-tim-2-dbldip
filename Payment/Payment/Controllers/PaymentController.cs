@@ -2,9 +2,11 @@
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Routing;
+using Microsoft.Extensions.Logging;
 using PaymentService.Data;
 using PaymentService.Entities;
 using PaymentService.Models;
+using PaymentService.ServiceCalls;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -19,12 +21,14 @@ namespace PaymentService.Controllers
         private readonly IPaymentRepository paymentRepository;
         private readonly LinkGenerator linkGenerator;
         private readonly IMapper mapper;
-        
-        public PaymentController(IPaymentRepository paymentRepository, LinkGenerator linkGenerator, IMapper mapper)
+        private readonly ILoggerService loggerService;
+
+        public PaymentController(IPaymentRepository paymentRepository, LinkGenerator linkGenerator, IMapper mapper, ILoggerService loggerService)
         {
             this.paymentRepository = paymentRepository;
             this.linkGenerator = linkGenerator;
             this.mapper = mapper;
+            this.loggerService = loggerService;
         }
 
         [HttpGet]
@@ -33,6 +37,14 @@ namespace PaymentService.Controllers
         public ActionResult<List<PaymentDto>> GetPayments()
         {
             var payments = paymentRepository.GetPayments();
+
+            if (payments == null || payments.Count == 0)
+            {
+                this.loggerService.LogMessage("List of payments is empty", "Get", LogLevel.Warning);
+                return NoContent();
+            }
+
+            this.loggerService.LogMessage("List of payments is returned", "Get", LogLevel.Information);
             return Ok(mapper.Map<List<PaymentDto>>(payments));
         }
 
@@ -41,8 +53,12 @@ namespace PaymentService.Controllers
         {
             var payment = paymentRepository.GetPaymentById(paymentId);
             if (payment == null)
+            {
+                this.loggerService.LogMessage("There is no payment with that id", "Get", LogLevel.Warning);
                 return NoContent();
+            }
 
+            this.loggerService.LogMessage("Payment is returned", "Get", LogLevel.Information);
             return Ok(mapper.Map<PaymentDto>(payment));
         }
 
@@ -54,6 +70,7 @@ namespace PaymentService.Controllers
             paymentRepository.SaveChanges();
 
             string location = linkGenerator.GetPathByAction(action: "GetPayment", controller: "Payment", values: new { paymentId = confirmation.paymentId });
+            this.loggerService.LogMessage("Payment created", "Post", LogLevel.Information);
             return Created(location, mapper.Map<PaymentConfirmationDto>(confirmation));
         }
 
@@ -67,6 +84,7 @@ namespace PaymentService.Controllers
             Payment paymentEntity = mapper.Map<Payment>(payment);
             mapper.Map(paymentEntity, oldPayment);
             paymentRepository.SaveChanges();
+            this.loggerService.LogMessage("Payment updated", "Put", LogLevel.Information);
             return Ok(mapper.Map<PaymentDto>(oldPayment));
         }
 
@@ -81,11 +99,12 @@ namespace PaymentService.Controllers
 
                 paymentRepository.DeletePayment(paymentId);
                 paymentRepository.SaveChanges();
+                this.loggerService.LogMessage("Payment deleted", "Delete", LogLevel.Information);
                 return NoContent();
             }
             catch (Exception e)
             {
-                return StatusCode(StatusCodes.Status500InternalServerError, "Delete error");
+                return StatusCode(StatusCodes.Status500InternalServerError, e.Message);
             }
         }
     }

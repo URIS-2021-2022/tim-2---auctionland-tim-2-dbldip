@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using PaymentService.Entities;
 
 namespace PaymentService.Migrations
 {
     [DbContext(typeof(PaymentContext))]
-    partial class PaymentContextModelSnapshot : ModelSnapshot
+    [Migration("20220221220004_testingLists")]
+    partial class testingLists
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -41,28 +43,28 @@ namespace PaymentService.Migrations
                     b.HasData(
                         new
                         {
-                            exchangeRateId = new Guid("e84030f1-de4e-4fe6-b955-47be91a93e83"),
+                            exchangeRateId = new Guid("e3994763-cee5-434a-b124-4ca6c1410946"),
                             currencyCode = "EUR",
                             currencyName = "EURO",
                             currencyPrice = 117.584
                         },
                         new
                         {
-                            exchangeRateId = new Guid("51a3727e-b756-4d0d-a3d5-cf230f4b0ee4"),
+                            exchangeRateId = new Guid("29c9ec79-ff5a-4b2c-8c52-39a933b75163"),
                             currencyCode = "USD",
                             currencyName = "US Dollar",
                             currencyPrice = 103.298
                         },
                         new
                         {
-                            exchangeRateId = new Guid("782d8e54-15c2-419b-b97f-7eedf9334acb"),
+                            exchangeRateId = new Guid("f0b5a956-06d7-4334-8540-f73c7ed1d8bb"),
                             currencyCode = "CHF",
                             currencyName = "Swiss Franc",
                             currencyPrice = 111.33799999999999
                         },
                         new
                         {
-                            exchangeRateId = new Guid("fe607c65-fcd0-4874-b960-fba53af94fbf"),
+                            exchangeRateId = new Guid("7d754c47-2700-4fbe-851c-3157c4d5c851"),
                             currencyCode = "GBP",
                             currencyName = "Pound sterling",
                             currencyPrice = 139.73099999999999
@@ -156,7 +158,7 @@ namespace PaymentService.Migrations
 
                     b.HasIndex("paymentId");
 
-                    b.ToTable("Plots");
+                    b.ToTable("Plot");
                 });
 
             modelBuilder.Entity("PaymentService.Entities.Plot", b =>

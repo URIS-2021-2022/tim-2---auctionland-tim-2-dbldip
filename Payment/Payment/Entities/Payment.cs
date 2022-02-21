@@ -14,22 +14,24 @@ namespace PaymentService.Entities
         public string referenceNumber { get; set; }
         public int amount { get; set; }
 
-        #region payer
-        public Guid payerId { get; set; }
-        public string payerIdentificationNumber { get; set; }
-        public string payerName { get; set; }
-        public string payerAdress { get; set; }
+        #region buyer
+        public Guid buyerId { get; set; }
+        public int realizedArea { get; set; }
+        public bool hasBan { get; set; }
+        public DateTime dateOfBanStart { get; set; }
+        public DateTime dateOfBanEnd { get; set; }
+        public int banDuration { get; set; }
         #endregion
 
-        public string PaymentPurpose { get; set; }
-        public DateTime PaymentDate { get; set; }
-        
         #region publicBidding
         public Guid publicBiddingId { get; set; }
-        public DateTime publicBiddingDate { get; set; }
-        public int startingPricePerHectare { get; set; }
-        public bool exception { get; set; }
-        public int licitatedPrice { get; set; }
+        public DateTime date { get; set; }
+        public DateTime startingTime { get; set; }
+        public DateTime endingTime { get; set; }
+        public List<Plot> plots { get; set; }
+        public double bestBid { get; set; }
+        public Guid bestBidder { get; set; }
+        public double leasePeriod { get; set; }
         #endregion
 
         #region excangeRate

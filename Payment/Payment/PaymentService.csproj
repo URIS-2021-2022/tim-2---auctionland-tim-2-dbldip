@@ -17,6 +17,10 @@
     <Compile Include="Migrations\20220213234559_test.Designer.cs" />
     <Compile Include="Migrations\20220214161355_finalMigration.cs" />
     <Compile Include="Migrations\20220214161355_finalMigration.Designer.cs" />
+    <Compile Include="Migrations\20220221220004_testingLists.cs" />
+    <Compile Include="Migrations\20220221220004_testingLists.Designer.cs" />
+    <Compile Include="Migrations\20220221225726_AddedPlots.cs" />
+    <Compile Include="Migrations\20220221225726_AddedPlots.Designer.cs" />
     <Compile Include="Migrations\PaymentContextModelSnapshot.cs" />
   </ItemGroup>
 

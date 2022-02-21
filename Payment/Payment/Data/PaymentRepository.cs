@@ -25,8 +25,16 @@ namespace PaymentService.Data
 
         public void DeletePayment(Guid paymentId)
         {
-            var payment = GetPaymentById(paymentId);
+            Payment payment = GetPaymentById(paymentId);
+            //List<Plot> plots = payment.plots;
+
+            //context.RemoveRange(plots);
             context.Remove(payment);
+        }
+
+        public List<Plot> GetAllPlots(Guid paymentId)
+        {
+            return context.Plots.ToList();
         }
 
         public Payment GetPaymentById(Guid paymentId)

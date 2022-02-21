@@ -13,6 +13,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using PaymentService.ServiceCalls;
 
 namespace PaymentService
 {
@@ -38,6 +39,8 @@ namespace PaymentService
             services.AddScoped<IPaymentRepository, PaymentRepository>();
             services.AddScoped<IExchangeRateRepository, ExchangeRateRepository>();
             services.AddDbContext<PaymentContext>();
+
+            services.AddScoped<ILoggerService, LoggerServiceMock>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
