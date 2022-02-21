@@ -120,5 +120,13 @@ namespace PublicBiddingAPI.Controllers
             return Ok(mapper.Map<List<PublicBiddingDto>>(biddings));
         }
 
+        [HttpDelete("{publicBiddingId}")]
+        public ActionResult<String> DeletePublicBidding(Guid publicBiddingId)
+        {
+            publicBiddingRepository.DeletePublicBidding(publicBiddingId);
+            publicBiddingRepository.SaveChanges();
+            return Ok("Deleted?");
+        }
+
     }
 }

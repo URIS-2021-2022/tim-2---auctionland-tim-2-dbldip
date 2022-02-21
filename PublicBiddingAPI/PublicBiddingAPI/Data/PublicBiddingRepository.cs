@@ -55,7 +55,9 @@ namespace PublicBiddingAPI.Data
 
         public void DeletePublicBidding(Guid publicBiddingId)
         {
-            //NOT IMPLEMENTED YET
+            var publicBiddingToDelete = getPublicBidding(publicBiddingId);
+            publicBiddingToDelete.isDelete = true;
+            UpdatePublicBidding(publicBiddingToDelete);
         }
 
         public List<PublicBidding> getAllPublicBiddings()
