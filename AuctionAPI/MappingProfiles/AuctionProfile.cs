@@ -8,13 +8,13 @@ using System.Threading.Tasks;
 
 namespace AuctionAPI.MappingProfiles
 {
-    public class AuctionCreationProfile : Profile
+    public class AuctionProfile : Profile
     {
-        public AuctionCreationProfile()
+        public AuctionProfile()
         {
-            CreateMap<AuctionCreation, AuctionCreationDto>();
+            CreateMap<Auction, AuctionDto>();
 
-            CreateMap<AuctionCreationDto, CreationDto>();
+            CreateMap<AuctionDto, CreationAuctionDto>();
         }
     }
 }

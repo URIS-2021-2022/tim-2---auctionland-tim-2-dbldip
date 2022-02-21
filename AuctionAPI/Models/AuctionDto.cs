@@ -9,7 +9,7 @@ namespace AuctionAPI.Models
     /// <summary>
     /// Model kreirane licitacije
     /// </summary>
-    public class AuctionCreationDto
+    public class AuctionDto
     {
 
         #region Auction

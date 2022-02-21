@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace AuctionAPI.Entities
 {
-    public class AuctionCreationConfirmation
+    public class AuctionConfirmation
     {
         public Guid auctionId { get; set; }
         public int auctionNumber { get; set; }

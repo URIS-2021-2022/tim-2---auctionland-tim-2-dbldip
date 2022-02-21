@@ -36,7 +36,7 @@ namespace AuctionAPI
             }).AddXmlDataContractSerializerFormatters();
 
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies()); 
-            services.AddSingleton<IAuctionCreationRepository, AuctionCreationRepository>();
+            services.AddSingleton<IAuctionRepository, AuctionRepository>();
             
             //Not sure if needed 
             services.AddSwaggerGen(setupAction =>

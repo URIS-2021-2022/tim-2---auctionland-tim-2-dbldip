@@ -8,7 +8,7 @@ namespace AuctionAPI.Models
     /// <summary>
     /// Potvrda kreiranja licitacije
     /// </summary>
-    public class AuctionCreationConfirmationDto
+    public class AuctionConfirmationDto
     {
         #region Auction
 

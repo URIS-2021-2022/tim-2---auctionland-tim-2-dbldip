@@ -9,7 +9,7 @@ namespace AuctionAPI.Models
     /// <summary>
     /// Model kreiranja licitacije
     /// </summary>
-    public class CreationDto
+    public class CreationAuctionDto
     {
         /// <summary>
         /// Broj licitacije

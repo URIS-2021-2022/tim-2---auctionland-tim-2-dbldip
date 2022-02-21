@@ -17,13 +17,13 @@ namespace AuctionAPI.Controllers
     [ApiController]
     [Route("api/auctionCreations")]
     [Produces("application/json", "application/xml")]
-    public class AuctionCreationController : ControllerBase //Daje nam pristup korisnim poljima i metodama
+    public class AuctionController : ControllerBase //Daje nam pristup korisnim poljima i metodama
     {
-        private readonly IAuctionCreationRepository auctionCreationRepository;
+        private readonly IAuctionRepository auctionCreationRepository;
         private readonly LinkGenerator linkGenerator; //Generise putanje do neke akcije
         private readonly IMapper mapper;
 
-        public AuctionCreationController(IAuctionCreationRepository auctionCreationRepository, LinkGenerator linkGenerator, IMapper mapper)
+        public AuctionController(IAuctionRepository auctionCreationRepository, LinkGenerator linkGenerator, IMapper mapper)
         {
             this.auctionCreationRepository = auctionCreationRepository;
             this.linkGenerator = linkGenerator;
@@ -35,7 +35,7 @@ namespace AuctionAPI.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpGet]
-        public ActionResult<List<AuctionCreationDto>> GetAuctionCreations()
+        public ActionResult<List<AuctionDto>> GetAuctionCreations()
         {
             var creations = auctionCreationRepository.GetAuctionCreations();
             if (creations == null || creations.Count == 0)
@@ -53,7 +53,7 @@ namespace AuctionAPI.Controllers
         /// <returns></returns>
         /// <response code="200">Uspeh</response>
         [HttpGet("{auctionId})")]
-        public ActionResult<AuctionCreationDto> GetAuctionCreationById(Guid auctionId)
+        public ActionResult<AuctionDto> GetAuctionCreationById(Guid auctionId)
         {
             var creation = auctionCreationRepository.GetAuctionCreationById(auctionId);
 
@@ -62,12 +62,12 @@ namespace AuctionAPI.Controllers
                 return NotFound();
             }
             //Ukoliko je pronadjeno kreiranje, vraca se status 200 i listu pronadjenih kreiranja
-            return Ok(mapper.Map<List<AuctionCreationDto>>(creation));
+            return Ok(mapper.Map<List<AuctionDto>>(creation));
         }
 
         [Consumes("application/json")] //Naznačava OpenAPI dokumentaciji da prihvata samo json tip
         [HttpPost]
-        public ActionResult<AuctionCreationDto> CreateAuctionCreation([FromBody] CreationDto auctionCreation)
+        public ActionResult<AuctionDto> CreateAuctionCreation([FromBody] CreationAuctionDto auctionCreation)
         {
             try
             {
@@ -90,7 +90,7 @@ namespace AuctionAPI.Controllers
             }
         }
 
-        private bool ValidateAuctionCreation(CreationDto auctionCreation)
+        private bool ValidateAuctionCreation(CreationAuctionDto auctionCreation)
         {
             throw new NotImplementedException();
             // PLACEHOLDER  
