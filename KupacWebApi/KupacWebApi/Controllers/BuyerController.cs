@@ -2,8 +2,11 @@
 using KupacWebApi.Data;
 using KupacWebApi.Entities;
 using KupacWebApi.Models;
+using KupacWebApi.ServiceCalls;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Routing;
+using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -18,12 +21,14 @@ namespace KupacWebApi.Controllers
         private readonly IBuyerRepository buyerRepository;
         private readonly LinkGenerator linkGenerator;
         private readonly IMapper mapper;
+        private readonly ILoggerService loggerService;
 
-        public BuyerController(IBuyerRepository buyerRepository, LinkGenerator linkGenerator, IMapper mapper)
+        public BuyerController(IBuyerRepository buyerRepository, LinkGenerator linkGenerator, IMapper mapper, ILoggerService loggerService)
         {
             this.buyerRepository = buyerRepository;
             this.linkGenerator = linkGenerator;
             this.mapper = mapper;
+            this.loggerService = loggerService;
         }
 
         [HttpGet]
@@ -31,7 +36,12 @@ namespace KupacWebApi.Controllers
         {
             var buyers = this.buyerRepository.GetBuyers();
             if (buyers == null || buyers.Count == 0)
+            {
+                this.loggerService.LogMessage("List of buyers is empty", "Get", LogLevel.Warning);
                 return NoContent();
+            }
+
+            this.loggerService.LogMessage("List of buyers is returned", "Get", LogLevel.Information);
             return Ok(mapper.Map<List<BuyerDto>>(buyers));
         }
 
@@ -47,7 +57,6 @@ namespace KupacWebApi.Controllers
         [HttpPost]
         public ActionResult<BuyerConfirmationDto> CreateBuyer([FromBody] BuyerCreationDto buyer, Guid buyerId)
         {
-
             Buyer buyerCheck = buyerRepository.GetBuyer(buyerId);
             if (buyerCheck == null)
                 return NoContent();
@@ -57,6 +66,7 @@ namespace KupacWebApi.Controllers
             buyerRepository.SaveChanges();
 
             string location = linkGenerator.GetPathByAction(action: "GetBuyer", controller: "Buyer", values: new { buyerId = confirmation.buyerId });
+
             return Created(location, mapper.Map<BuyerConfirmationDto>(confirmation));
         }
 
@@ -64,9 +74,17 @@ namespace KupacWebApi.Controllers
         [HttpDelete("{buyerId}")]
         public ActionResult<String> DeleteBuyer(Guid buyerId)
         {
-            buyerRepository.DeleteBuyer(buyerId);
-            buyerRepository.SaveChanges();
-            return Ok("Deleted?");
+            try
+            {
+                buyerRepository.DeleteBuyer(buyerId);
+                buyerRepository.SaveChanges();
+                return Ok("Deleted?");
+            }
+            catch (Exception exception)
+            {
+                this.loggerService.LogMessage("Error with deleting buyer", "Delete", LogLevel.Error, exception);
+                return StatusCode(StatusCodes.Status500InternalServerError, "Error with deleting buyer");
+            }
         }
     }
 }
