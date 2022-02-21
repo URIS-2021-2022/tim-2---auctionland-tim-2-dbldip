@@ -64,7 +64,7 @@ namespace KupacWebApi.Controllers
             Buyer buyerCheck = buyerRepository.GetBuyer(buyerId);
             if (buyerCheck == null)
             {
-                this.loggerService.LogMessage("Adding new buyer did not happen", "Get", LogLevel.Warning);
+                this.loggerService.LogMessage("Adding new buyer did not happen", "Post", LogLevel.Warning);
                 return NoContent();
             }
 
@@ -85,7 +85,7 @@ namespace KupacWebApi.Controllers
             {
                 buyerRepository.DeleteBuyer(buyerId);
                 buyerRepository.SaveChanges();
-                this.loggerService.LogMessage("Buyer is deleted successfully!", "Get", LogLevel.Warning);
+                this.loggerService.LogMessage("Buyer is deleted successfully!", "Delete", LogLevel.Warning);
                 return Ok("Deleted?");
             }
             catch (Exception exception)

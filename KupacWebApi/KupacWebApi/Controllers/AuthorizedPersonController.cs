@@ -65,7 +65,7 @@ namespace KupacWebApi.Controllers
             AuthorizedPerson authorizedPersonCheck = authorizedPersonRepository.GetAuthorizedPerson(authorizedPersonId);
             if (authorizedPersonCheck == null)
             {
-                this.loggerService.LogMessage("There is no authorized person with that id", "Get", LogLevel.Warning);
+                this.loggerService.LogMessage("There is no authorized person with that id", "Post", LogLevel.Warning);
                 return NoContent();
 
             }
@@ -76,7 +76,7 @@ namespace KupacWebApi.Controllers
 
             string location = linkGenerator.GetPathByAction(action: "GetAuthorizedPerson", controller: "AuthorizedPerson", values: new { authorizedPersonId = confirmation.authorizedPersonId });
 
-            this.loggerService.LogMessage("Authorized person is created", "Get", LogLevel.Information);
+            this.loggerService.LogMessage("Authorized person is created", "Post", LogLevel.Information);
             return Created(location, mapper.Map<BuyerConfirmationDto>(confirmation));
         }
 
@@ -87,7 +87,7 @@ namespace KupacWebApi.Controllers
             {
                 authorizedPersonRepository.DeleteAuthorizedPerson(authorizedPersonId);
                 authorizedPersonRepository.SaveChanges();
-                this.loggerService.LogMessage("Authorized person is deleted successfully!", "Get", LogLevel.Warning);
+                this.loggerService.LogMessage("Authorized person is deleted successfully!", "Delete", LogLevel.Warning);
                 return Ok("Deleted?");
             }
             
