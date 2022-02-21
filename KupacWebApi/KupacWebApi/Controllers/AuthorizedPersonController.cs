@@ -2,8 +2,11 @@
 using KupacWebApi.Data;
 using KupacWebApi.Entities;
 using KupacWebApi.Models;
+using KupacWebApi.ServiceCalls;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Routing;
+using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -18,12 +21,13 @@ namespace KupacWebApi.Controllers
         private readonly IAuthorizedPersonRepository authorizedPersonRepository;
         private readonly LinkGenerator linkGenerator;
         private readonly IMapper mapper;
-
-        public AuthorizedPersonController(IAuthorizedPersonRepository authorizedPersonRepository, LinkGenerator linkGenerator, IMapper mapper)
+        private readonly ILoggerService loggerService;
+        public AuthorizedPersonController(IAuthorizedPersonRepository authorizedPersonRepository, LinkGenerator linkGenerator, IMapper mapper, ILoggerService loggerService)
         {
             this.authorizedPersonRepository = authorizedPersonRepository;
             this.linkGenerator = linkGenerator;
             this.mapper = mapper;
+            this.loggerService = loggerService;
         }
 
         [HttpGet]
@@ -31,7 +35,12 @@ namespace KupacWebApi.Controllers
         {
             var authorizedPeople = authorizedPersonRepository.GetAuthorizedPersons();
             if (authorizedPeople == null || authorizedPeople.Count == 0)
+            {
+                this.loggerService.LogMessage("List of authorized people is empty", "Get", LogLevel.Warning);
                 return NoContent();
+
+            }
+            this.loggerService.LogMessage("List of authorized people is returned", "Get", LogLevel.Information);
             return Ok(mapper.Map<List<AuthorizedPersonDto>>(authorizedPeople));
         }
 
@@ -40,7 +49,12 @@ namespace KupacWebApi.Controllers
         {
             var authorizedPerson = authorizedPersonRepository.GetAuthorizedPerson(authorizedPersonId);
             if (authorizedPerson == null)
+            {
+                this.loggerService.LogMessage("There is no authorized person with that id", "Get", LogLevel.Warning);
                 return NoContent();
+
+            }
+            this.loggerService.LogMessage("Authorized person is returned", "Get", LogLevel.Information);
             return Ok(mapper.Map<AuthorizedPersonDto>(authorizedPerson));
         }
 
@@ -50,22 +64,39 @@ namespace KupacWebApi.Controllers
 
             AuthorizedPerson authorizedPersonCheck = authorizedPersonRepository.GetAuthorizedPerson(authorizedPersonId);
             if (authorizedPersonCheck == null)
+            {
+                this.loggerService.LogMessage("There is no authorized person with that id", "Get", LogLevel.Warning);
                 return NoContent();
+
+            }
 
             AuthorizedPersonCreation authorizedPersonToCreate = mapper.Map<AuthorizedPersonCreation>(authorizedPerson);
             AuthorizedPersonConfirmation confirmation = authorizedPersonRepository.CreateAuthorizedPerson(authorizedPersonToCreate);
             authorizedPersonRepository.SaveChanges();
 
             string location = linkGenerator.GetPathByAction(action: "GetAuthorizedPerson", controller: "AuthorizedPerson", values: new { authorizedPersonId = confirmation.authorizedPersonId });
+
+            this.loggerService.LogMessage("Authorized person is created", "Get", LogLevel.Information);
             return Created(location, mapper.Map<BuyerConfirmationDto>(confirmation));
         }
 
         [HttpDelete("{authorizedPersonId}")]
         public ActionResult<String> DeleteAuthorizedPerson(Guid authorizedPersonId)
         {
-            authorizedPersonRepository.DeleteAuthorizedPerson(authorizedPersonId);
-            authorizedPersonRepository.SaveChanges();
-            return Ok("Deleted?");
+            try
+            {
+                authorizedPersonRepository.DeleteAuthorizedPerson(authorizedPersonId);
+                authorizedPersonRepository.SaveChanges();
+                this.loggerService.LogMessage("Authorized person is deleted successfully!", "Get", LogLevel.Warning);
+                return Ok("Deleted?");
+            }
+            
+
+            catch (Exception exception)
+            {
+                this.loggerService.LogMessage("Error with deleting buyer", "Delete", LogLevel.Error, exception);
+                return StatusCode(StatusCodes.Status500InternalServerError, "Error with deleting buyer");
+            }
         }
     }
 }

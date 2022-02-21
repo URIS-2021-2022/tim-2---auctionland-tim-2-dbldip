@@ -50,7 +50,11 @@ namespace KupacWebApi.Controllers
         {
             var buyer = this.buyerRepository.GetBuyer(buyerId);
             if (buyer == null)
+            {
+                this.loggerService.LogMessage("There is no buyer with that id", "Get", LogLevel.Warning);
                 return NoContent();
+            }
+            this.loggerService.LogMessage("Buyer is returned", "Get", LogLevel.Information);
             return Ok(mapper.Map<BuyerDto>(buyer));
         }
 
@@ -59,14 +63,17 @@ namespace KupacWebApi.Controllers
         {
             Buyer buyerCheck = buyerRepository.GetBuyer(buyerId);
             if (buyerCheck == null)
+            {
+                this.loggerService.LogMessage("Adding new buyer did not happen", "Get", LogLevel.Warning);
                 return NoContent();
+            }
 
             BuyerCreation buyerToCreate = mapper.Map<BuyerCreation>(buyer);
             BuyerConfirmation confirmation = buyerRepository.CreateBuyer(buyerToCreate);
             buyerRepository.SaveChanges();
 
             string location = linkGenerator.GetPathByAction(action: "GetBuyer", controller: "Buyer", values: new { buyerId = confirmation.buyerId });
-
+            this.loggerService.LogMessage("Buyer is added", "Post", LogLevel.Information);
             return Created(location, mapper.Map<BuyerConfirmationDto>(confirmation));
         }
 
@@ -78,6 +85,7 @@ namespace KupacWebApi.Controllers
             {
                 buyerRepository.DeleteBuyer(buyerId);
                 buyerRepository.SaveChanges();
+                this.loggerService.LogMessage("Buyer is deleted successfully!", "Get", LogLevel.Warning);
                 return Ok("Deleted?");
             }
             catch (Exception exception)
