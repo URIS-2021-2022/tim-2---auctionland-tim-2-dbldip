@@ -8,6 +8,5 @@ namespace UgovorOZakupuWebAPI.Entities
     public class DocumentAuthorConfirmation
     {
         public Guid DocumentAuthorId { get; set; }
-        public string AgencyInfo { get; set; }
     }
 }

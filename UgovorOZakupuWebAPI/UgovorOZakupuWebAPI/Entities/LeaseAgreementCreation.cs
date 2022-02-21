@@ -1,12 +1,14 @@
-﻿using System;
+﻿using AutoMapper;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using UgovorOZakupuWebAPI.Data;
 
 namespace UgovorOZakupuWebAPI.Entities
 {
-    public class ContractedPublicBiddingConfirmation
+    public class LeaseAgreementCreation
     {
-        public Guid ContractedPublicBiddingId { get; set; }
+        
     }
 }

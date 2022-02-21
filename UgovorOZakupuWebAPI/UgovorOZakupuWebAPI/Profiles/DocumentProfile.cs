@@ -12,8 +12,7 @@ namespace UgovorOZakupuWebAPI.Profiles
     {
         public DocumentProfile()
         {
-            CreateMap<Document, DocumentDto>();
-            CreateMap<DocumentDto, Document>();
+
         }
     }
 }

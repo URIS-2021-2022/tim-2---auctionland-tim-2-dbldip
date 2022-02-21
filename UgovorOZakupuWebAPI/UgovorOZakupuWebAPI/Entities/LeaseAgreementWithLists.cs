@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace UgovorOZakupuWebAPI.Entities
 {
-    public class LeaseAgreement
+    public class LeaseAgreementWithLists
     {
         public Guid LeaseAgreementId { get; set; }
         public string SerialNumber { get; set; }
@@ -15,6 +15,7 @@ namespace UgovorOZakupuWebAPI.Entities
         public string PlaceOfSigning { get; set; }
         public DateTime? DateOfSigning { get; set; }
         public bool? IsDelete { get; set; }
+        public int[] MaturityDeadlines { get; set; }
 
         [ForeignKey("ContractedPublicBidding")]
         public Guid ContractedPublicBiddingId { get; set; }

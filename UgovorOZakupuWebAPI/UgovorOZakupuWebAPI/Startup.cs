@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -11,6 +12,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using UgovorOZakupuWebAPI.Data;
+using UgovorOZakupuWebAPI.Entities;
 
 namespace UgovorOZakupuWebAPI
 {
@@ -28,10 +31,22 @@ namespace UgovorOZakupuWebAPI
         {
 
             services.AddControllers();
-            services.AddSwaggerGen(c =>
-            {
-                c.SwaggerDoc("v1", new OpenApiInfo { Title = "UgovorOZakupuWebAPI", Version = "v1" });
-            });
+
+            services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
+
+            services.AddScoped<IContractedPublicBiddingRepository, ContractedPublicBiddingRepository>();
+            services.AddScoped<IContractPartyRepository, ContractPartyRepository>();
+            services.AddScoped<IDocumentAuthorRepository, DocumentAuthorRepository>();
+            services.AddScoped<IDocumentRepository, DocumentRepository>();
+            services.AddScoped<IGuaranteeTypeRepository, GuaranteeTypeRepository>();
+            services.AddScoped<ILeaseAgreementRepository, LeaseAgreementRepository>();
+
+            // services.AddSwaggerGen(c =>
+            // {
+            //     c.SwaggerDoc("v1", new OpenApiInfo { Title = "UgovorOZakupuWebAPI", Version = "v1" });
+            // });
+
+            services.AddDbContextPool<LeaseAgreementContext>(options => options.UseSqlServer(Configuration.GetConnectionString("LeaseAgreementDB")));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

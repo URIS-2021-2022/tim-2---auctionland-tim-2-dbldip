@@ -1,16 +1,18 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Threading.Tasks;
 
 namespace UgovorOZakupuWebAPI.Entities
 {
-    public class LeaseAgreementConfirmation
+    public class MaturityDeadline
     {
+        public Guid MaturityDeadlineId { get; set; }
+
+        [ForeignKey("LeaseAgreement")]
         public Guid LeaseAgreementId { get; set; }
-        public string SerialNumber { get; set; }
-        public DateTime RecordDate { get; set; }
+        public LeaseAgreement LeaseAgreement { get; set; }
+        public int Deadline { get; set; }
     }
 }

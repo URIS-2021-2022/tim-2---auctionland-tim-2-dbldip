@@ -12,9 +12,7 @@ namespace UgovorOZakupuWebAPI.Profiles
     {
         public ContractPartyProfile()
         {
-            CreateMap<ContractParty, ContractPartyConfirmation>();
-            CreateMap<ContractParty, ContractPartyDto>();
-            CreateMap<ContractPartyDto, ContractParty>();
+
         }
     }
 }

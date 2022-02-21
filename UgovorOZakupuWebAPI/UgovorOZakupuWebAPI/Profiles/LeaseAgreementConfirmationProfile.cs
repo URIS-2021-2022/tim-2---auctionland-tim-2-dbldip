@@ -3,14 +3,12 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using UgovorOZakupuWebAPI.Entities;
-using UgovorOZakupuWebAPI.Models;
 
 namespace UgovorOZakupuWebAPI.Profiles
 {
-    public class DocumentConfirmationProfile : Profile
+    public class LeaseAgreementConfirmationProfile : Profile
     {
-        public DocumentConfirmationProfile()
+        public LeaseAgreementConfirmationProfile()
         {
 
         }

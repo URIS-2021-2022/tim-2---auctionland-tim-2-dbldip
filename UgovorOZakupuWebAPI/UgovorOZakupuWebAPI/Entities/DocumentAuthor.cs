@@ -9,5 +9,6 @@ namespace UgovorOZakupuWebAPI.Entities
     {
         public Guid DocumentAuthorId { get; set; }
         public string AgencyInfo { get; set; }
+        //od korisnika sistema ime prezime
     }
 }

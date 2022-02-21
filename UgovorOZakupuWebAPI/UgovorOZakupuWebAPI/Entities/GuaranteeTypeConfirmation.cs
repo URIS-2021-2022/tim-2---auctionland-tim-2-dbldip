@@ -8,7 +8,5 @@ namespace UgovorOZakupuWebAPI.Entities
     public class GuaranteeTypeConfirmation
     {
         public Guid GuaranteeTypeId { get; set; }
-
-        public string Type { get; set; }
     }
 }
