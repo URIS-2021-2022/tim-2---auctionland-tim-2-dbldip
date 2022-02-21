@@ -11,10 +11,5 @@ namespace CommissionWebAPI.Entities
         public string Name { get; set; }
         public string Surname { get; set; }
         public string Role { get; set; }
-
-        #region Members
-        //public Guid CommissionId { get; set; }
-        //public Commission Commission { get; set; }
-        #endregion
     }
 }

@@ -14,6 +14,7 @@ namespace CommissionWebAPI.Profiles
         {
             CreateMap<CommissionWithLists, CommissionDto>();
             CreateMap<Commission, Commission>();
+
             CreateMap<Commission, CommissionWithLists>();
             CreateMap<Commission, CommissionDto>();
             CreateMap<CommissionCreationDto, Commission>();

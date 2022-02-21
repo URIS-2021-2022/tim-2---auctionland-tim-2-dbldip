@@ -9,6 +9,8 @@ namespace CommissionWebAPI.Models
     public class PersonCreationDto
     {
         [Required]
+        public Guid PersonId { get; set; }
+        [Required]
         public string Name { get; set; }
         [Required]
         public string Surname { get; set; }

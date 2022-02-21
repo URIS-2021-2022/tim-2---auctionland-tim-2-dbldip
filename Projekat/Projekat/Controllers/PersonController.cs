@@ -28,9 +28,6 @@ namespace CommissionWebAPI.Controllers
         }
 
         [HttpGet]
-        [ProducesResponseType(StatusCodes.Status404NotFound)]
-        [ProducesResponseType(StatusCodes.Status200OK)]
-        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public ActionResult<List<PersonDto>> GetPersons(string name, string surname, string role)
         {
             var persons = personRepository.GetPersons(name, surname, role);
@@ -40,9 +37,6 @@ namespace CommissionWebAPI.Controllers
         }
 
         [HttpGet("{personId}")]
-        [ProducesResponseType(StatusCodes.Status404NotFound)]
-        [ProducesResponseType(StatusCodes.Status200OK)]
-        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public ActionResult<PersonDto> GetPersonById(Guid personId)
         {
             Person personModel = personRepository.GetPersonById(personId);
@@ -52,14 +46,13 @@ namespace CommissionWebAPI.Controllers
         }
 
         [HttpPost]
-        [ProducesResponseType(StatusCodes.Status201Created)]
-        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public ActionResult<PersonConfirmationDto> CreatePerson([FromBody]PersonCreationDto personDto)
+        public ActionResult<PersonConfirmationDto> CreatePerson(PersonCreationDto personDto)
         {
             try
             {
                 Person person = mapper.Map<Person>(personDto);
                 PersonConfirmation confirmation = personRepository.CreatePerson(person);
+                personRepository.SaveChanges();
 
                 string location = linkGenerator.GetPathByAction("GetPersonById", "Person", new { personId = confirmation.PersonId });
 
@@ -72,9 +65,6 @@ namespace CommissionWebAPI.Controllers
         }
 
         [HttpDelete("{personId}")]
-        [ProducesResponseType(StatusCodes.Status204NoContent)]
-        [ProducesResponseType(StatusCodes.Status404NotFound)]
-        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public IActionResult DeletePerson(Guid personId)
         {
             try
@@ -93,17 +83,23 @@ namespace CommissionWebAPI.Controllers
         }
 
         [HttpPut]
-        [ProducesResponseType(StatusCodes.Status404NotFound)]
-        [ProducesResponseType(StatusCodes.Status200OK)]
-        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public ActionResult<PersonDto> UpdatePerson([FromBody]PersonDto personDto)
+        public ActionResult<PersonDto> UpdatePerson(PersonUpdateDto person)
         {
-           var oldPerson = personRepository.GetPersonById(personDto.PersonId);
-            if(oldPerson == null)
-                return NotFound();
-            Person person = mapper.Map<Person>(personDto);
-            mapper.Map(person, oldPerson);
-            return Ok(mapper.Map<PersonDto>(oldPerson));    
+            try
+            {
+                var oldPerson = personRepository.GetPersonById(person.PersonId);
+                if (oldPerson == null)
+                    return NotFound();
+                Person personEntity = mapper.Map<Person>(person);
+                mapper.Map(personEntity, oldPerson); //update
+                personRepository.SaveChanges();
+                return Ok(mapper.Map<PersonDto>(oldPerson));
+            }
+
+            catch (Exception)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, "Update error");
+            }
         }
     }
 }

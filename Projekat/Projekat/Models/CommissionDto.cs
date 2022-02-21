@@ -11,7 +11,6 @@ namespace CommissionWebAPI.Models
     public class CommissionDto
     {
         public Guid CommissionId { get; set; }
-        public Guid PresidentId { get; set; }
         public Person President { get; set; }
         public List<Members> Members { get; set; }
     }

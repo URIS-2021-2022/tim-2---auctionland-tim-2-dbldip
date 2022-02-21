@@ -28,7 +28,6 @@ namespace CommissionWebAPI.Controllers
         }
 
         //WORKS
-        [HttpHead]
         [HttpGet]
         public ActionResult<List<CommissionDto>> GetCommissions()
         {
@@ -60,7 +59,7 @@ namespace CommissionWebAPI.Controllers
             return Created(location, mapper.Map<CommissionConfirmationDto>(confirmation));
         }
 
-
+        ///WORKS
         [HttpDelete("{commissionId}")]
         public ActionResult<String> DeleteCommission(Guid commissionId)
         {
@@ -70,15 +69,23 @@ namespace CommissionWebAPI.Controllers
         }
 
         [HttpPut]
-        public ActionResult<CommissionConfirmationDto> UpdateCommission([FromBody] CommissionUpdateDto commissionDto, Guid commissionId)
+        public ActionResult<CommissionDto> UpdateCommission(CommissionUpdateDto commission)
         {
-            var oldCommission = commissionRepository.GetCommissionById(commissionId);
-            if(oldCommission == null)
-                return NotFound();
-            Commission commission = mapper.Map<Commission>(commissionDto);
-            mapper.Map(commission, oldCommission);
-            commissionRepository.SaveChanges();
-            return Ok(mapper.Map<CommissionDto>(oldCommission));
+            try
+            {
+                var oldCommission = commissionRepository.GetCommissionById(commission.CommissionId);
+                if (oldCommission == null)
+                    return NotFound();
+                Commission commissionEntity = mapper.Map<Commission>(commission);
+                mapper.Map(commissionEntity, oldCommission); //update
+                commissionRepository.SaveChanges();
+                return Ok(mapper.Map<CommissionDto>(oldCommission));
+            }
+
+            catch (Exception)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, "Update error");
+            }
         }
     }
 }
