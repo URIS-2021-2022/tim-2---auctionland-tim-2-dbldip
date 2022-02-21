@@ -18,8 +18,11 @@ namespace KupacWebApi.Entities
 
         public DbSet<BuyerWithoutLists> Buyers { get; set; }
         public DbSet<AuthorizedPersonWithoutLists> AuthorizedPeople { get; set; }
+        public DbSet<AuthorizedPersonBuyerConnection> AuthorizedPeopleBuyers { get; set; }
+        public DbSet<BuyerAuthorizedPersonConnection> BuyerAuthorizedPeople { get; set; }
         public DbSet<BuyerPaymentConnection> BuyerPayments { get; set; }
         public DbSet<BuyerPersonConnection> BuyerPeople { get; set; }
+        public DbSet<BuyerPublicBiddingConnection> BuyerPublicBiddings { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {

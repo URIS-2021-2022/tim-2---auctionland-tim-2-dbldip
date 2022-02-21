@@ -1,4 +1,5 @@
-﻿using KupacWebApi.Entities.OtherAgregates;
+﻿using KupacWebApi.Entities.ConnectionClasses;
+using KupacWebApi.Entities.OtherAgregates;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -10,15 +11,16 @@ namespace KupacWebApi.Entities
     public class Buyer
     {
         public Guid buyerId { get; set; }
-        public Person person { get; set; }
+        public BuyerPersonConnection person { get; set; }
         public int realizedArea { get; set; }
         public bool hasBan { get; set; }
         public DateTime dateOfBanStart { get; set; }
         public DateTime dateOfBanEnd { get; set; }
         public int banDuration { get; set; }
-        public List <PublicBidding> publicBiddings { get; set; }
-        public List<Payment> payments { get; set; }
-        public List<AuthorizedPerson> authorizedPeople { get; set; }
+        public List <BuyerPublicBiddingConnection> publicBiddings { get; set; }
+        public List<BuyerPaymentConnection> payments { get; set; }
+        public List<BuyerAuthorizedPersonConnection> authorizedPeople { get; set; }
+        public bool isDelete { get; set; }
 
     }
 }

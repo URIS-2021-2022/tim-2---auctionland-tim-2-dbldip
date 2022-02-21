@@ -60,29 +60,50 @@ namespace KupacWebApi.Data
         
         public Buyer GetBuyer(Guid buyerId)
         {
-            throw new NotImplementedException();
+            var buyer = this.context.Buyers.FirstOrDefault(e => e.buyerId == buyerId);
+            if (buyer == null)
+                return null;
+            var returnBuyer = mapper.Map<Buyer>(buyer);
+            returnBuyer.payments = context.BuyerPayments.Where(e => e.buyerId == buyer.buyerId).ToList();
+            returnBuyer.person = context.BuyerPeople.FirstOrDefault(e => e.buyerId == buyer.buyerId);
+            returnBuyer.publicBiddings = context.BuyerPublicBiddings.Where(e => e.buyerId == buyer.buyerId).ToList();
+            returnBuyer.authorizedPeople = context.BuyerAuthorizedPeople.Where(e => e.buyerId == buyer.buyerId).ToList();
+            return returnBuyer;
         }
 
         public List<Buyer> GetBuyers()
         {
-            throw new NotImplementedException();
+            var buyers = this.context.Buyers.ToList();
+            if (buyers == null || buyers.Count == 0)
+                return null;
+            List<Buyer> returnList = mapper.Map<List<Buyer>>(buyers);
+            foreach (var el in returnList)
+            {
+                el.payments = context.BuyerPayments.Where(e => e.buyerId == el.buyerId).ToList();
+                el.person = context.BuyerPeople.FirstOrDefault(e => e.buyerId == el.buyerId);
+                el.publicBiddings = context.BuyerPublicBiddings.Where(e => e.buyerId == el.buyerId).ToList();
+                el.authorizedPeople = context.BuyerAuthorizedPeople.Where(e => e.buyerId == el.buyerId).ToList();
+            }
+            return returnList;
         }
 
        
         public void UpdateBuyer(Buyer buyer)
         {
-            throw new NotImplementedException();
+            
         }
 
         public void DeleteBuyer(Guid buyerId)
         {
-            throw new NotImplementedException();
+            var buyerToDelete = GetBuyer(buyerId);
+            buyerToDelete.isDelete = true;
+            UpdateBuyer(buyerToDelete);
         }
 
 
         public bool SaveChanges()
         {
-            throw new NotImplementedException();
+            return context.SaveChanges() > 0;
         }
 
     }

@@ -1,17 +1,12 @@
-﻿using KupacWebApi.Entities.OtherAgregates;
-using System;
+﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace KupacWebApi.Entities
+namespace KupacWebApi.Models
 {
-    public class BuyerWithoutLists
+    public class BuyerConfirmationDto
     {
-        [Key]
-        public Guid buyerId { get; set; }
-        //public Person person { get; set; }
         public int realizedArea { get; set; }
         public bool hasBan { get; set; }
         public DateTime dateOfBanStart { get; set; }

@@ -14,7 +14,7 @@ namespace KupacWebApi.Entities
         public string name { get; set; }
         public string surname { get; set; }
         public string jmbg { get; set; }
-        public Address address { get; set; }
-        public Country country { get; set; }
+        //public Address address { get; set; }
+        //public Country country { get; set; }
     }
 }
