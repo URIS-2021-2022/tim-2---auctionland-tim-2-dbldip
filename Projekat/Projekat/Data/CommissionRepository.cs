@@ -1,11 +1,12 @@
 ﻿using AutoMapper;
-using Projekat.Entities;
+using CommissionWebAPI.Entities;
+using CommissionWebAPI.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Projekat.Data
+namespace CommissionWebAPI.Data
 {
     public class CommissionRepository : ICommissionRepository
     {
@@ -18,26 +19,50 @@ namespace Projekat.Data
             this.context = context;
         }
 
-        public CommissionConfirmation CreateCommission(Commission commission)
+        public CommissionConfirmation CreateCommission(CommissionCreation commission)
         {
-            var createdEntity = context.Add(commission);
+            var mappedEntity = mapper.Map<Commission>(commission);
+            var createdEntity = context.Add(mappedEntity);
+            foreach(var el in commission.Members)
+            {
+                var temp = new Members();
+                temp.CommissionId = commission.CommissionId;
+                temp.PersonId = el;
+                context.Add(temp);
+            }
             return mapper.Map<CommissionConfirmation>(createdEntity.Entity);
         }
 
         public void DeleteCommission(Guid commissionId)
         {
-            var commission = GetCommissionById(commissionId);
-            context.Remove(commission);
+            var commissionToDelete = GetCommissionById(commissionId);
+            commissionToDelete.IsDelete = true;
+            UpdateCommission(commissionToDelete);
         }
 
-        public Commission GetCommissionById(Guid commissionId)
+        public CommissionWithLists GetCommissionById(Guid commissionId)
         {
-            return context.Commissions.FirstOrDefault(e => e.CommissionId == commissionId);
+            var commission = this.context.Commissions.FirstOrDefault(e => e.CommissionId == commissionId);
+            if (commission == null)
+                return null;
+            var returnCommission = mapper.Map<CommissionWithLists>(commission);
+            returnCommission.President = context.Persons.FirstOrDefault(e => e.PersonId == commission.PresidentId);
+            returnCommission.Members = context.Members.Where(e => e.CommissionId == commission.CommissionId).ToList();
+            return returnCommission;
         }
 
-        public List<Commission> GetCommissions(string presidentId = null)
+        public List<CommissionWithLists> GetCommissions(string presidentId = null)
         {
-            return context.Commissions.Where(e => presidentId == null || e.President.PersonId == Guid.Parse(presidentId)).ToList();
+            var commissions = this.context.Commissions.ToList();
+            if (commissions == null || commissions.Count == 0)
+                return null;
+            List<CommissionWithLists> returnList = mapper.Map<List<CommissionWithLists>>(commissions);
+            foreach(var el in returnList)
+            {
+                el.President = context.Persons.FirstOrDefault(e => e.PersonId == el.PresidentId);
+                el.Members = context.Members.Where(e => e.CommissionId == el.CommissionId).ToList();  
+            }
+            return returnList;
         }
 
         public bool SaveChanges()
@@ -45,9 +70,8 @@ namespace Projekat.Data
             return context.SaveChanges() > 0;
         }
 
-        public void UpdateCommission(Commission commission)
+        public void UpdateCommission(CommissionWithLists commission)
         {
         }
-
     }
 }

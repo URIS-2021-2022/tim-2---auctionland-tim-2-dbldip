@@ -1,20 +1,20 @@
-﻿using Projekat.Entities;
+﻿using CommissionWebAPI.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Projekat.Data
+namespace CommissionWebAPI.Data
 {
     public interface ICommissionRepository
     {
-        List<Commission> GetCommissions(string presidentId = null);
+        List<CommissionWithLists> GetCommissions(string presidentId = null);
             
-        Commission GetCommissionById(Guid commissionId);
+        CommissionWithLists GetCommissionById(Guid commissionId);
 
-        CommissionConfirmation CreateCommission(Commission commission);
+        CommissionConfirmation CreateCommission(CommissionCreation commission);
 
-        void UpdateCommission(Commission commission);
+        void UpdateCommission(CommissionWithLists commission);
 
         void DeleteCommission(Guid commissionId);
 

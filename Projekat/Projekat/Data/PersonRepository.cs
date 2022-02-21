@@ -1,11 +1,11 @@
 ﻿using AutoMapper;
-using Projekat.Entities;
+using CommissionWebAPI.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Projekat.Data
+namespace CommissionWebAPI.Data
 {
     public class PersonRepository : IPersonRepository
     {
@@ -18,7 +18,6 @@ namespace Projekat.Data
             this.mapper = mapper;
         }
 
-        
         public PersonConfirmation CreatePerson(Person person)
         {
             var createdEntity = context.Add(person);

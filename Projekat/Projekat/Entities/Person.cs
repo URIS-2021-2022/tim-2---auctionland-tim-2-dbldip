@@ -2,10 +2,11 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Projekat.Entities
+namespace CommissionWebAPI.Entities
 {
     
     public class Person
@@ -16,5 +17,9 @@ namespace Projekat.Entities
         public string Surname { get; set; }
         public string Role { get; set; }
 
+        #region Members
+       // public Guid CommissionId { get; set; }
+       // public Commission Commission { get; set; }
+        #endregion
     }
 }

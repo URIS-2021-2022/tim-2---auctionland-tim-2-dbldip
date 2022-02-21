@@ -1,18 +1,18 @@
-﻿using Projekat.Entities;
+﻿using CommissionWebAPI.Entities;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 
 
-namespace Projekat.Models
+namespace CommissionWebAPI.Models
 {
     public class CommissionDto
     {
         public Guid CommissionId { get; set; }
-
+        public Guid PresidentId { get; set; }
         public Person President { get; set; }
-
-        public List<Person> Members { get; set; }
+        public List<Members> Members { get; set; }
     }
 }

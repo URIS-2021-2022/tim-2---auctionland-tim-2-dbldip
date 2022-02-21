@@ -1,21 +1,21 @@
 ﻿using AutoMapper;
-using Projekat.Entities;
-using Projekat.Models;
+using CommissionWebAPI.Entities;
+using CommissionWebAPI.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Projekat.Profiles
+namespace CommissionWebAPI.Profiles
 {
     public class PersonProfile : Profile
     {
         public PersonProfile()
         {
             CreateMap<Person, PersonDto>();
-            CreateMap<Person, PersonCreationDto>();
+            CreateMap<Person, Person>();
+            CreateMap<PersonDto, Person>();
             CreateMap<PersonCreationDto, Person>();
-            CreateMap<PersonUpdateDto, Person>();
         }
     }
 }

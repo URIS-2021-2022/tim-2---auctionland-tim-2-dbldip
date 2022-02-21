@@ -4,26 +4,16 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Projekat.Models
+namespace CommissionWebAPI.Models
 {
-    public class PersonCreationDto : IValidatableObject
+    public class PersonCreationDto
     {
-        public Guid PersonId { get; set; }
-
-        [Required(ErrorMessage = "Obavezno je uneti ime osobe.")]
+        [Required]
         public string Name { get; set; }
-
-        [Required(ErrorMessage = "Obavezno je uneti prezime osobe.")]
+        [Required]
         public string Surname { get; set; }
-
-        [Required(ErrorMessage = "Obavezno je uneti ulogu osobe.")]
+        [Required]
         public string Role { get; set; }
-        public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
-        {
-            if(Name == Surname)
-            {
-                yield return new ValidationResult("Osoba ne moze da ima isto ime i prezime", new[] { "PersonCreationDto" });
-            }
-        }
+       
     }
 }
