@@ -9,6 +9,7 @@ using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
 using ParcelaWebAPI.Data;
 using ParcelaWebAPI.Entities;
+using ParcelaWebAPI.ServiceCalls;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -41,6 +42,7 @@ namespace ParcelaWebAPI
             services.AddScoped<IProtectedZoneRepository, ProtectedZoneRepository>();
             services.AddScoped<ICadastralMunicipalityRepository, CadastralMunicipalityRepository>();
             services.AddDbContext<ParcelContext>();
+            services.AddScoped<ILoggerService, LoggerServiceMock>();
 
         }
 
