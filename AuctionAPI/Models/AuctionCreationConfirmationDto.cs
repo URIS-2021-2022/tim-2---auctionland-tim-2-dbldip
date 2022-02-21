@@ -33,7 +33,7 @@ namespace AuctionAPI.Models
         public List<Guid> publicBidding { get; set; }
 
         /// <summary>
-        /// Rok zatvaranja licitacije
+        /// Rok zatvaranja prijava na licitaciju
         /// </summary>
         public DateTime registryClosingDate { get; set; }
 

@@ -56,9 +56,9 @@ namespace AuctionAPI.Models
         List<Guid> publicBidding { get; set; }
 
         /// <summary>
-        /// Rok zatvaranja licitacije
+        /// Rok zatvaranja prijava na licitaciju
         /// </summary>
-        [Required(ErrorMessage = "Obavezno je uneti rok zatvaranja licitacije.")]
+        [Required(ErrorMessage = "Obavezno je uneti rok zatvaranja prijava na licitaciju.")]
         public DateTime registryClosingDate { get; set; }
     }
 }
