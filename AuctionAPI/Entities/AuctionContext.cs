@@ -1,5 +1,6 @@
 ﻿using AuctionAPI.Entities.ConnectionClasses;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,14 +10,20 @@ namespace AuctionAPI.Entities
 {
     public class AuctionContext : DbContext
     {
-        public AuctionContext(DbContextOptions<AuctionContext> options) : base(options)
+        public AuctionContext(DbContextOptions<AuctionContext> options, IEntityTypeConfiguration configuration) : base(options)
         {
-
+            this.configuration = configuration;
         }
 
-        public DbSet<AuctionWithoutLists> AuctionCreations { get; set; }
+        public DbSet<AuctionWithoutLists> Auctions { get; set; }
         public DbSet<AuctionPublicBiddingConnection> AuctionPublicBidding { get; set; }
 
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        {
+            optionsBuilder.UseSqlServer(configuration.GetConnectionString("AuctionsDb"));
+        }
+
+        /*
         protected override void OnModelCreating(ModelBuilder builder)
         {
             //builder.Entity<AuctionCreation>()
@@ -47,5 +54,7 @@ namespace AuctionAPI.Entities
             //    }); 
             // Treba dodati vise prema vise javne nabavke i spojiti sa licitacijom
         }
+        */
+
     }
 }

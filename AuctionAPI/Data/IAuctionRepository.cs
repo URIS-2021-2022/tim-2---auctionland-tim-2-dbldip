@@ -9,18 +9,16 @@ namespace AuctionAPI.Data
 {
     public interface IAuctionRepository
     {
-        List<Auction> GetAuctionCreations();
+        List<Auction> GetAuctions();
 
-        Auction GetAuctionCreationById(Guid auctionId);
+        Auction CreateAuction(CreationAuctionDto auctionCreation);
 
-        Auction GetAuctionCreationByNumber(int auctionNumber);
+        Auction GetAuctionById(Guid auctionId);
 
-        Auction GetAuctionCreationByBiddingDate(DateTime biddingDate); 
+        Auction GetAuctionByNumber(int auctionNumber);
 
-        Auction UpdateAuctionCreation(CreationAuctionDto auctionCreation);
+        Auction UpdateAuction(CreationAuctionDto auctionCreation);
 
-        Auction CreateAuctionCreation(CreationAuctionDto auctionCreation);
-
-        void DeleteAuctionCreation(Guid auctionId);
+        void DeleteAuction(Guid auctionId);
     }
 }
