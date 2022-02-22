@@ -8,6 +8,7 @@ namespace AuctionAPI.Entities
 {
     public class AuctionConfirmation
     {
+        
         public Guid auctionId { get; set; }
         public int auctionNumber { get; set; }
         public DateTime biddingDate { get; set; }

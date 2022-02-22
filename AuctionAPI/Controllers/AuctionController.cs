@@ -66,6 +66,7 @@ namespace AuctionAPI.Controllers
             return Ok(mapper.Map<List<AuctionDto>>(creation));
         }
 
+        /*
         [Consumes("application/json")] //Naznačava OpenAPI dokumentaciji da prihvata samo json tip
         [HttpPost]
         public ActionResult<AuctionDto> CreateAuction([FromBody] CreationAuctionDto auctionCreation)
@@ -89,7 +90,7 @@ namespace AuctionAPI.Controllers
             {
                 return StatusCode(StatusCodes.Status500InternalServerError, "Create error");
             }
-        }
+        } */
 
         private bool ValidateAuction(CreationAuctionDto auctionCreation)
         {

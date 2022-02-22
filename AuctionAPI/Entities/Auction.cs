@@ -1,6 +1,7 @@
 ﻿using AuctionAPI.Entities.ConnectionClasses;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -8,6 +9,7 @@ namespace AuctionAPI.Entities
 {
     public class Auction
     {
+        [Key]
         public Guid auctionId { get; set; }
         public int auctionNumber { get; set; }
         public int auctionYear { get; set; }

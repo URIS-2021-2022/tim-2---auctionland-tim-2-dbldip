@@ -11,7 +11,7 @@ namespace AuctionAPI.Data
     {
         List<AuctionWithoutLists> GetAuctions();
 
-        AuctionWithoutLists CreateAuction(CreationAuctionDto auctionCreation);
+        void CreateAuction(CreationAuctionDto auctionCreation);
 
         AuctionWithoutLists GetAuctionById(Guid auctionId);
 

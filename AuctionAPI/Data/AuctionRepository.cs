@@ -40,10 +40,10 @@ namespace AuctionAPI.Data
             return context.Auctions.ToList();
         }
 
-        public Auction CreateAuction(CreationAuctionDto auctionCreation)
+        public void CreateAuction(CreationAuctionDto auctionCreation)
         {
             var createdEntity = context.Add(auctionCreation);
-            return mapper.Map<AuctionConfirmation>(createdEntity.Entity);
+            //return mapper.Map<AuctionConfirmation>(createdEntity.Entity);
 
         }
 

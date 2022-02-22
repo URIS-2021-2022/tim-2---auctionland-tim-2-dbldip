@@ -1,4 +1,5 @@
 using AuctionAPI.Data;
+using AuctionAPI.Entities;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -36,9 +37,9 @@ namespace AuctionAPI
             }).AddXmlDataContractSerializerFormatters();
 
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies()); 
-            services.AddSingleton<IAuctionRepository, AuctionRepository>();
+            services.AddScoped<IAuctionRepository, AuctionRepository>();
             
-            //Not sure if needed 
+            
             services.AddSwaggerGen(setupAction =>
             {
                 setupAction.SwaggerDoc("AuctionCreationOpenApiSpecification", 
@@ -52,6 +53,8 @@ namespace AuctionAPI
 
                 setupAction.IncludeXmlComments(xmlCommentsPath);
             });
+
+            services.AddDbContext<AuctionContext>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
