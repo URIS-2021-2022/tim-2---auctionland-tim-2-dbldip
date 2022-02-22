@@ -17,6 +17,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using CommissionWebAPI.ServiceCalls;
 
 namespace CommissionWebAPI
 {
@@ -39,6 +40,7 @@ namespace CommissionWebAPI
 
             services.AddScoped<IPersonRepository, PersonRepository>();
             services.AddScoped<ICommissionRepository, CommissionRepository>();
+            services.AddScoped<ILoggerService, LoggerServiceMock>();
             //services.AddSwaggerGen(c =>
             //{
             //    c.SwaggerDoc("v1", new OpenApiInfo { Title = "WebApplication1", Version = "v1" });
