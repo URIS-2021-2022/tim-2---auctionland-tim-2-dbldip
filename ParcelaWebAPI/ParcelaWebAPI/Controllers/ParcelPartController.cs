@@ -79,18 +79,19 @@ namespace ParcelaWebAPI.Controllers
             return Created(location, mapper.Map<ParcelPartConfirmationDto>(confirmation));
         }
 
-        [HttpPut]
-        public ActionResult<ParcelPartDto> UpdateParcelPart(Guid parcelPartId, ParcelPartUpdateDto parcelPart)
+        [Consumes("application/json")]
+        [HttpPut("{parcelPartId}")]
+        public ActionResult<ParcelPartUpdateDto> UpdateParcelPart(Guid parcelPartId, [FromBody] ParcelPartUpdateDto parcelPart)
         {
-            var oldParcelPart = parcelPartRepository.GetParcelPartById(parcelPart.parcelPartId);
+            var oldParcelPart = parcelPartRepository.GetParcelPartById(parcelPartId);
             if (oldParcelPart == null)
             {
                 this.loggerService.LogMessage("There is no parcel part with that id", "Put", LogLevel.Warning);
-
                 return NotFound();
             }
 
             ParcelPart parcelPartEntity = mapper.Map<ParcelPart>(parcelPart);
+            parcelPartEntity.parcelPartId = parcelPartId;
             mapper.Map(parcelPartEntity, oldParcelPart);
             parcelPartRepository.SaveChanges();
 

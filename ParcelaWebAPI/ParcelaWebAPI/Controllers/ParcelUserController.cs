@@ -76,10 +76,12 @@ namespace ParcelaWebAPI.Controllers
             return Created(location, mapper.Map<ParcelUserConfirmationDto>(confirmation));
         }
 
-        [HttpPut]
-        public ActionResult<ParcelUserDto> UpdateParcelUser(Guid parcelUserId, ParcelUserUpdateDto parcelUser)
+        [Consumes("application/json")]
+
+        [HttpPut("{parcelUserId}")]
+        public ActionResult<ParcelUserUpdateDto> UpdateParcelUser(Guid parcelUserId, ParcelUserUpdateDto parcelUser)
         {
-            var oldParcelUser = parcelUserRepository.GetParcelUserById(parcelUser.parcelUserId);
+            var oldParcelUser = parcelUserRepository.GetParcelUserById(parcelUserId);
             if (oldParcelUser == null)
             {
                 this.loggerService.LogMessage("There is no parcel user with that id", "Put", LogLevel.Warning);
@@ -88,6 +90,7 @@ namespace ParcelaWebAPI.Controllers
             }
 
             ParcelUser parcelUserEntity = mapper.Map<ParcelUser>(parcelUser);
+            parcelUserEntity.parcelUserId = parcelUserId;
             mapper.Map(parcelUserEntity, oldParcelUser);
             parcelUserRepository.SaveChanges();
 
