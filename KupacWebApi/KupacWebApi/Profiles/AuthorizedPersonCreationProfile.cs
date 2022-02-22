@@ -12,7 +12,7 @@ namespace KupacWebApi.Profiles
     {
         public AuthorizedPersonCreationProfile()
         {
-            CreateMap<AuthorizedPersonCreationDto, AuthorizedPersonCreation>();
+            CreateMap<AuthorizedPersonCreationDto, AuthorizedPersonCreation>().ReverseMap();
         }
     }
 }

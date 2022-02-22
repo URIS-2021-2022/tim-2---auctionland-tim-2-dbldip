@@ -59,25 +59,25 @@ namespace KupacWebApi.Controllers
         }
 
         [HttpPost]
-        public ActionResult<AuthorizedPersonConfirmationDto> CreateBuyer([FromBody] AuthorizedPersonDto authorizedPerson, Guid authorizedPersonId)
+        public ActionResult<AuthorizedPersonConfirmationDto> CreateBuyer([FromBody] AuthorizedPersonCreationDto authorizedPerson)
         {
 
-            AuthorizedPerson authorizedPersonCheck = authorizedPersonRepository.GetAuthorizedPerson(authorizedPersonId);
+            /*AuthorizedPerson authorizedPersonCheck = authorizedPersonRepository.GetAuthorizedPerson(authorizedPersonId);
             if (authorizedPersonCheck == null)
             {
                 this.loggerService.LogMessage("There is no authorized person with that id", "Post", LogLevel.Warning);
                 return NoContent();
 
-            }
+            }*/
 
             AuthorizedPersonCreation authorizedPersonToCreate = mapper.Map<AuthorizedPersonCreation>(authorizedPerson);
             AuthorizedPersonConfirmation confirmation = authorizedPersonRepository.CreateAuthorizedPerson(authorizedPersonToCreate);
             authorizedPersonRepository.SaveChanges();
 
-            string location = linkGenerator.GetPathByAction(action: "GetAuthorizedPerson", controller: "AuthorizedPerson", values: new { authorizedPersonId = confirmation.authorizedPersonId });
+            string location = linkGenerator.GetPathByAction(action: "GetAuthorizedPersonById", controller: "AuthorizedPerson", values: new { authorizedPersonId = confirmation.authorizedPersonId });
 
             this.loggerService.LogMessage("Authorized person is created", "Post", LogLevel.Information);
-            return Created(location, mapper.Map<BuyerConfirmationDto>(confirmation));
+            return Created(location, mapper.Map<AuthorizedPersonConfirmationDto>(confirmation));
         }
 
         [HttpDelete("{authorizedPersonId}")]

@@ -59,20 +59,20 @@ namespace KupacWebApi.Controllers
         }
 
         [HttpPost]
-        public ActionResult<BuyerConfirmationDto> CreateBuyer([FromBody] BuyerCreationDto buyer, Guid buyerId)
+        public ActionResult<BuyerConfirmationDto> CreateBuyer([FromBody] BuyerCreationDto buyer)
         {
-            Buyer buyerCheck = buyerRepository.GetBuyer(buyerId);
+            /*Buyer buyerCheck = buyerRepository.GetBuyer(buyerId);
             if (buyerCheck == null)
             {
                 this.loggerService.LogMessage("Adding new buyer did not happen", "Post", LogLevel.Warning);
                 return NoContent();
-            }
+            }*/
 
             BuyerCreation buyerToCreate = mapper.Map<BuyerCreation>(buyer);
             BuyerConfirmation confirmation = buyerRepository.CreateBuyer(buyerToCreate);
             buyerRepository.SaveChanges();
 
-            string location = linkGenerator.GetPathByAction(action: "GetBuyer", controller: "Buyer", values: new { buyerId = confirmation.buyerId });
+            string location = linkGenerator.GetPathByAction(action: "GetBuyerById", controller: "Buyer", values: new { buyerId = confirmation.buyerId });
             this.loggerService.LogMessage("Buyer is added", "Post", LogLevel.Information);
             return Created(location, mapper.Map<BuyerConfirmationDto>(confirmation));
         }
