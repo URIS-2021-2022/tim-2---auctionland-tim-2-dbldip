@@ -10,6 +10,7 @@ using Microsoft.OpenApi.Models;
 using OglasWebAPI.Data;
 using OglasWebAPI.Data.Interfaces;
 using OglasWebAPI.Entities.DataContext;
+using OglasWebAPI.ServiceCalls;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -38,7 +39,7 @@ namespace OglasWebAPI
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "OglasWebAPI", Version = "v1" });
             });
-
+            services.AddScoped<ILoggerService, LoggerServiceMock>();
             services.AddDbContext<OglasContext>();
         }
 
