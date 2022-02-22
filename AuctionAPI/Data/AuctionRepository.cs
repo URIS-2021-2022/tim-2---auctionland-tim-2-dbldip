@@ -23,9 +23,9 @@ namespace AuctionAPI.Data
         {
             return context.SaveChanges() > 0;
         }
-        public Auction GetAuctionById(Guid auctionId)
+        public AuctionWithoutLists GetAuctionById(Guid auctionId)
         {
-            return context.Auctions.FirstOrDefault(a => a.AuctionId == auctionId);
+            return context.Auctions.FirstOrDefault(a => a.auctionId == auctionId);
         }
 
 
@@ -35,19 +35,21 @@ namespace AuctionAPI.Data
             return mapper.Map<AuctionConfirmation>(createdEntity.Entity);
         }
 
-        public List<Auction> GetAuctions()
+        public List<AuctionWithoutLists> GetAuctions()
         {
             return context.Auctions.ToList();
         }
 
         public Auction CreateAuction(CreationAuctionDto auctionCreation)
         {
-            throw new NotImplementedException();
+            var createdEntity = context.Add(auctionCreation);
+            return mapper.Map<AuctionConfirmation>(createdEntity.Entity);
+
         }
 
-        public Auction GetAuctionByNumber(int auctionNumber)
+        public AuctionWithoutLists GetAuctionByNumber(int auctionNumber)
         {
-            return context.Auctions.FirstOrDefault(a => a.AuctionNumber == auctionNumber);
+            return context.Auctions.FirstOrDefault(a => a.auctionNumber == auctionNumber);
         }
 
         public void UpdateAuction(CreationAuctionDto auctionCreation)

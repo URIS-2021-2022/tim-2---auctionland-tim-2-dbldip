@@ -10,7 +10,8 @@ namespace AuctionAPI.Entities
 {
     public class AuctionContext : DbContext
     {
-        public AuctionContext(DbContextOptions<AuctionContext> options, IEntityTypeConfiguration configuration) : base(options)
+        private readonly IConfiguration configuration;
+        public AuctionContext(DbContextOptions<AuctionContext> options, IConfiguration configuration) : base(options)
         {
             this.configuration = configuration;
         }
