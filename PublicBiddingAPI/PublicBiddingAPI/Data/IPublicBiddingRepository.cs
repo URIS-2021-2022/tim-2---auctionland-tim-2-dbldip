@@ -1,9 +1,6 @@
 ﻿using PublicBiddingAPI.Entities;
-using PublicBiddingAPI.Models;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace PublicBiddingAPI.Data
 {
@@ -18,9 +15,9 @@ namespace PublicBiddingAPI.Data
         List<PublicBidding> getPublicBiddingsByCadastralMunicipality(Guid cadastralMunicipality);
         List<PublicBidding> getPublicBiddingsByStartingPricePerHectare(double price);
         List<PublicBidding> getPublicBiddingsByLeasePeriod(double period);
-        PublicBiddingConfirmation createPublicBidding(PublicBiddingCreation publicBidding);        
-        void UpdatePublicBidding(PublicBidding publicBidding);
+        PublicBiddingConfirmation createPublicBidding(PublicBiddingCreation publicBidding);
         void DeletePublicBidding(Guid publicBiddingId);
+        void UpdatePublicBidding(PublicBiddingUpdate publicBidding);
         bool SaveChanges();
         bool validatePublicBiddingData(PublicBiddingCreation publicBidding);
     }

@@ -17,7 +17,7 @@ namespace PublicBiddingAPI.Entities
         public TypeOfPublicBidding typeOfPublicBidding { get; set; }
         public double bestBid { get; set; }
         public BestBidder bestBidder { get; set; }
-        public Guid cadastralMunicipality { get; set; } 
+        public CadastralMunicipality cadastralMunicipality { get; set; } 
         public double leasePeriod { get; set; }
         public List<Buyer> appliedBuyers { get; set; }
         public List<Bidder> bidders { get; set; }

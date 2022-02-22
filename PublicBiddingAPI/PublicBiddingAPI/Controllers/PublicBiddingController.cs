@@ -6,8 +6,6 @@ using PublicBiddingAPI.Entities;
 using PublicBiddingAPI.Models;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace PublicBiddingAPI.Controllers
 {
@@ -123,10 +121,40 @@ namespace PublicBiddingAPI.Controllers
         [HttpDelete("{publicBiddingId}")]
         public ActionResult<String> DeletePublicBidding(Guid publicBiddingId)
         {
-            publicBiddingRepository.DeletePublicBidding(publicBiddingId);
+            var publicBiddingToDelete = publicBiddingRepository.getPublicBidding(publicBiddingId);
+            var mapperPB = mapper.Map<PublicBiddingWithoutLists>(publicBiddingToDelete);
+            if (publicBiddingToDelete == null)
+                return NoContent();
+            var updatedPublicBidding = mapper.Map<PublicBiddingWithoutLists>(mapperPB);
+            updatedPublicBidding.isDelete = true; 
             publicBiddingRepository.SaveChanges();
             return Ok("Deleted?");
         }
 
+        [HttpPut]
+        public ActionResult<PublicBiddingConfirmationDto> UpdatePublicBidding(PublicBiddingUpdateDto publicBidding)
+        {
+            try
+            {
+                var publicBiddingOld = mapper.Map<PublicBiddingWithoutLists>(publicBiddingRepository.getPublicBidding(publicBidding.publicBiddingId));
+                //var publicBiddingOld = publicBiddingRepository.getPublicBidding(publicBidding.publicBiddingId);
+                if (publicBiddingOld == null)
+                {
+                    return NoContent();
+                }
+                //var publicBiddingNew = mapper.Map<PublicBiddingWithoutLists>(publicBidding);
+                //var publicBiddingNew = mapper.Map<PublicBidding>(publicBidding);
+                //mapper.Map(publicBidding, publicBiddingOld);
+                publicBiddingRepository.UpdatePublicBidding(mapper.Map<PublicBiddingUpdate>(publicBidding));
+                publicBiddingRepository.SaveChanges();
+                return Ok("Changed!");
+            }
+            catch(Exception e)
+            {
+                return Conflict("ERROR: " + e.Message);
+            }
+            
+
+        }
     }
 }

@@ -12,6 +12,9 @@ namespace PublicBiddingAPI.Profiles
         public PublicBiddingWithoutListsProfile()
         {
             CreateMap<PublicBiddingCreation, PublicBiddingWithoutLists>();
+            CreateMap<PublicBidding, PublicBiddingWithoutLists>();
+            CreateMap<PublicBiddingUpdate, PublicBiddingWithoutLists>();
+            CreateMap<PublicBiddingWithoutLists, PublicBiddingWithoutLists>();
         }
     }
 }

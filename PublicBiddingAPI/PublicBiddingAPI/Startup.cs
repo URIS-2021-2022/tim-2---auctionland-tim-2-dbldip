@@ -1,4 +1,4 @@
-using Microsoft.AspNetCore.Builder;
+﻿using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
@@ -11,7 +11,9 @@ using PublicBiddingAPI.Data;
 using PublicBiddingAPI.Entities;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Threading.Tasks;
 
 namespace PublicBiddingAPI
@@ -30,9 +32,31 @@ namespace PublicBiddingAPI
         {
 
             services.AddControllers();
-            services.AddSwaggerGen(c =>
+            services.AddSwaggerGen(setupAction =>
             {
-                c.SwaggerDoc("v1", new OpenApiInfo { Title = "PublicBiddingAPI", Version = "v1" });
+                setupAction.SwaggerDoc("PublicBiddingMicroService",
+                    new OpenApiInfo()
+                    {
+                        Title = "PublicBidding API",
+                        Version = "1",
+                        //Često treba da dodamo neke dodatne informacije
+                        Description = "Pomocu ovog API-ja moze da se kreira javno nadmetanje, da se vrsi modifikacija kao i pregled kreiranih javnih nadmetanja i statusa i tipova javnih nadmetanja.",
+                        Contact = new OpenApiContact
+                        {
+                            Name = "Milan Novcic",
+                            Email = "novcic.milan17@uns.ac.rs",
+                            Url = new Uri("https://github.com/novcicmilan")
+                        }
+                    });
+
+                //Pomocu refleksije dobijamo ime XML fajla sa komentarima (ovako smo ga nazvali u Project -> Properties)
+                var xmlComments = $"{ Assembly.GetExecutingAssembly().GetName().Name }.xml";
+
+                //Pravimo putanju do XML fajla sa komentarima
+                var xmlCommentsPath = Path.Combine(AppContext.BaseDirectory, xmlComments);
+
+                //Govorimo swagger-u gde se nalazi dati xml fajl sa komentarima
+                setupAction.IncludeXmlComments(xmlCommentsPath);
             });
             //ADDING AUTOMAPPER
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
@@ -50,9 +74,16 @@ namespace PublicBiddingAPI
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
-                app.UseSwagger();
-                app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "PublicBiddingAPI v1"));
             }
+
+            app.UseSwagger();
+
+            app.UseSwaggerUI(setupAction =>
+            {
+                //Podesavamo endpoint gde Swagger UI moze da pronadje OpenAPI specifikaciju
+                setupAction.SwaggerEndpoint("/swagger/PublicBiddingMicroService/swagger.json", "PublicBidding API");
+                setupAction.RoutePrefix = ""; //Dokumentacija ce sada biti dostupna na root-u (ne mora da se pise /swagger)
+            });
 
             app.UseHttpsRedirection();
 

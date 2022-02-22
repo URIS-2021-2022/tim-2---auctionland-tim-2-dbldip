@@ -1,9 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace PublicBiddingAPI.Entities
 {
@@ -17,11 +14,11 @@ namespace PublicBiddingAPI.Entities
         }
 
         public DbSet<TypeOfPublicBidding> TypesOfPublicBidding { get; set; }
-        public DbSet<PublicBiddingWithoutLists> PublicBiddings { get; set; }
-        public DbSet<Bidder> Bidders{ get; set; }
-        public DbSet<Buyer> AppliedBuyers{ get; set; }
-        public DbSet<Plot> Plots{ get; set; }
-        public DbSet<BestBidder> BestBidders { get; set; }
+        public DbSet<PublicBiddingWithoutLists> PublicBidding { get; set; }
+        public DbSet<Bidder> Bidder{ get; set; }
+        public DbSet<Buyer> AppliedBuyer{ get; set; }
+        public DbSet<Plot> Plot{ get; set; }
+        public DbSet<BestBidder> BestBidder { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
