@@ -13,11 +13,8 @@ namespace PaymentService.Entities
         public int amount { get; set; }
 
         public Guid buyerId { get; set; }
-        public int realizedArea { get; set; }
-        public bool hasBan { get; set; }
-        public DateTime dateOfBanStart { get; set; }
-        public DateTime dateOfBanEnd { get; set; }
-        public int banDuration { get; set; }
+
+        public Guid publicBiddingId { get; set; }
 
         public string PaymentPurpose { get; set; }
         public DateTime PaymentDate { get; set; }

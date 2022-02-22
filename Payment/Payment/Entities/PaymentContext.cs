@@ -17,7 +17,6 @@ namespace PaymentService.Entities
         }
 
         public DbSet<Payment> Payments { get; set; }
-        public DbSet<Plot> Plots { get; set; }
         public DbSet<ExchangeRate> ExchangeRates { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)

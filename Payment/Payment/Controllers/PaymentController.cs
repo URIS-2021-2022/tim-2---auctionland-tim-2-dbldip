@@ -44,7 +44,7 @@ namespace PaymentService.Controllers
                 return NoContent();
             }
 
-            this.loggerService.LogMessage("List of payments is returned", "Get", LogLevel.Information);
+            this.loggerService.LogMessage("List of payments returned", "Get", LogLevel.Information);
             return Ok(mapper.Map<List<PaymentDto>>(payments));
         }
 
@@ -58,7 +58,7 @@ namespace PaymentService.Controllers
                 return NoContent();
             }
 
-            this.loggerService.LogMessage("Payment is returned", "Get", LogLevel.Information);
+            this.loggerService.LogMessage("Payment returned", "Get", LogLevel.Information);
             return Ok(mapper.Map<PaymentDto>(payment));
         }
 

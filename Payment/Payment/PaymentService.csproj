@@ -21,6 +21,8 @@
     <Compile Include="Migrations\20220221220004_testingLists.Designer.cs" />
     <Compile Include="Migrations\20220221225726_AddedPlots.cs" />
     <Compile Include="Migrations\20220221225726_AddedPlots.Designer.cs" />
+    <Compile Include="Migrations\20220222124908_ChangedEntities.cs" />
+    <Compile Include="Migrations\20220222124908_ChangedEntities.Designer.cs" />
     <Compile Include="Migrations\PaymentContextModelSnapshot.cs" />
   </ItemGroup>
 
