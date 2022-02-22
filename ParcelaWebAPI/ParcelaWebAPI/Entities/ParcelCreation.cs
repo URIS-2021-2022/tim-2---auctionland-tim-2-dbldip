@@ -1,14 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace ParcelaWebAPI.Models.ParcelDtos
+namespace ParcelaWebAPI.Entities
 {
-    public class ParcelCreationDto
+    public class ParcelCreation
     {
-
         public int surfaceArea { get; set; }
         public int parcelNumber { get; set; }
         public string realEstateListNumber { get; set; }

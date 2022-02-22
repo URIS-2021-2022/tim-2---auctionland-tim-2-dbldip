@@ -10,7 +10,7 @@ namespace ParcelaWebAPI.Data
     {
         List<ParcelPart> GetParcelParts(string partSurfaceArea = null, int partParcelNumber = 0);
         ParcelPart GetParcelPartById(Guid parcelPartId);
-        ParcelPartConfirmation CreateParcelPart(ParcelPart parcelPart);
+        ParcelPartConfirmation CreateParcelPart(ParcelPartCreation parcelPart);
         void UpdateParcelPart(ParcelPart parcelPart);
         void DeleteParcelPart(Guid parcelPartId);
         bool SaveChanges();

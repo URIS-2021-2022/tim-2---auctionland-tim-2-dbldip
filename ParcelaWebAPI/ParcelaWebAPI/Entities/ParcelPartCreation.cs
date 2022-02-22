@@ -1,12 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace ParcelaWebAPI.Models.ParcelPartDtos
+namespace ParcelaWebAPI.Entities
 {
-    public class ParcelPartCreationDto
+    public class ParcelPartCreation
     {
         public int partSurfaceArea { get; set; }
         public int partParcelNumber { get; set; }

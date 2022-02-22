@@ -62,16 +62,11 @@ namespace ParcelaWebAPI.Controllers
         }
 
         [HttpPost]
-        public ActionResult<ParcelUserConfirmationDto> CreateParcelUser([FromBody] ParcelUserCreationDto parcelUser, Guid parcelUserId)
+        public ActionResult<ParcelUserConfirmationDto> CreateParcelUser([FromBody] ParcelUserCreationDto parcelUser)
         {
-            ParcelUser parcelUserToCreate = mapper.Map<ParcelUser>(parcelUser);
+            ParcelUserCreation parcelUserToCreate = mapper.Map<ParcelUserCreation>(parcelUser);
 
-            ParcelUser parcelUserCheck = parcelUserRepository.GetParcelUserById(parcelUserId);
-            if (parcelUserCheck == null)
-            {
-                this.loggerService.LogMessage("Adding new parcel user did not happen", "Post", LogLevel.Warning);
-                return NoContent();
-            }
+        
             ParcelUserConfirmation confirmation = parcelUserRepository.CreateParcelUser(parcelUserToCreate);
             parcelUserRepository.SaveChanges();
 

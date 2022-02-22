@@ -10,7 +10,7 @@ namespace ParcelaWebAPI.Data
     {
         List<ParcelUser> GetParcelUsers(string name = null, string surname = null, string jmbg = null);
         ParcelUser GetParcelUserById(Guid parcelUserId);
-        ParcelUserConfirmation CreateParcelUser(ParcelUser parcelUser);
+        ParcelUserConfirmation CreateParcelUser(ParcelUserCreation parcelUser);
         void UpdateParcelUser(ParcelUser parcelUser);
         void DeleteParcelUser(Guid parcelUserId);
         bool SaveChanges();

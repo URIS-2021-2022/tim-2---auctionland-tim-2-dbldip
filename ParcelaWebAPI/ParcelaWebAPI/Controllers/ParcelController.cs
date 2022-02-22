@@ -59,15 +59,10 @@ namespace ParcelaWebAPI.Controllers
         }
 
         [HttpPost]
-        public ActionResult<ParcelConfirmationDto> CreateParcel([FromBody] ParcelCreationDto parcel, Guid parcelId)
+        public ActionResult<ParcelConfirmationDto> CreateParcel([FromBody] ParcelCreationDto parcel)
         {
-            Parcel parcelToCreate = mapper.Map<Parcel>(parcel);
-            Parcel parcelCheck = parcelRepository.GetParcelById(parcelId);
-            if (parcelCheck == null)
-            {
-                this.loggerService.LogMessage("Adding new parcel did not happen", "Post", LogLevel.Warning);
-                return NoContent();
-            }
+            ParcelCreation parcelToCreate = mapper.Map<ParcelCreation>(parcel);
+            
             ParcelConfirmation confirmation = parcelRepository.CreateParcel(parcelToCreate);
             parcelRepository.SaveChanges();
 

@@ -11,7 +11,7 @@ namespace ParcelaWebAPI.Data
 
         List<Parcel> GetParcels(string surfaceArea = null, int parcelNumber = 0);
         Parcel GetParcelById(Guid parcelId);
-        ParcelConfirmation CreateParcel(Parcel parcel);
+        ParcelConfirmation CreateParcel(ParcelCreation parcel);
         void UpdateParcel(Parcel parcel);
         void DeleteParcel(Guid parcelId);
         bool SaveChanges();

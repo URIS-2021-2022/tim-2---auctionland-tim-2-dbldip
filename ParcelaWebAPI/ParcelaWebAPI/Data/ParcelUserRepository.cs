@@ -18,9 +18,11 @@ namespace ParcelaWebAPI.Data
                 this.context = context;
                 this.mapper = mapper;
             }
-            public ParcelUserConfirmation CreateParcelUser(ParcelUser parcelUser)
+            public ParcelUserConfirmation CreateParcelUser(ParcelUserCreation parcelUser)
         {
-            var createdEntity = context.Add(parcelUser);
+            var mappedParcelUser = mapper.Map<ParcelUser>(parcelUser);
+
+            var createdEntity = context.Add(mappedParcelUser);
             return mapper.Map<ParcelUserConfirmation>(createdEntity.Entity);
         }
 

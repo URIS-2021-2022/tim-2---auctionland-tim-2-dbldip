@@ -12,6 +12,7 @@ namespace ParcelaWebAPI.Profiles.ParcelProfiles
     {
         public ParcelConfirmationProfile()
         {
+            CreateMap<ParcelCreation, ParcelConfirmation>();
             CreateMap<ParcelConfirmation, ParcelConfirmationDto>();
             CreateMap<Parcel, ParcelConfirmation>();
         }

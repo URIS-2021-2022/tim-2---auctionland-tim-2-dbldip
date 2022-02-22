@@ -18,9 +18,10 @@ namespace ParcelaWebAPI.Data
             this.context = context;
             this.mapper = mapper;
         }
-        public ParcelPartConfirmation CreateParcelPart(ParcelPart parcelPart)
+        public ParcelPartConfirmation CreateParcelPart(ParcelPartCreation parcelPart)
         {
-            var createdEntity = context.Add(parcelPart);
+            var mappedParcelPart = mapper.Map<ParcelPart>(parcelPart);
+            var createdEntity = context.Add(mappedParcelPart);
             return mapper.Map<ParcelPartConfirmation>(createdEntity.Entity);
         }
 

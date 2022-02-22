@@ -17,11 +17,11 @@ namespace ParcelaWebAPI.Controllers
     public class ParcelPartController : ControllerBase
     {
         private readonly IParcelPartRepository parcelPartRepository;
-        private readonly Mapper mapper;
+        private readonly IMapper mapper;
         private readonly LinkGenerator linkGenerator;
         private readonly ILoggerService loggerService;
 
-        public ParcelPartController(IParcelPartRepository parcelPartRepository, Mapper mapper, LinkGenerator linkGenerator, ILoggerService loggerService)
+        public ParcelPartController(IParcelPartRepository parcelPartRepository, IMapper mapper, LinkGenerator linkGenerator, ILoggerService loggerService)
         {
             this.parcelPartRepository = parcelPartRepository;
             this.mapper = mapper;
@@ -49,7 +49,7 @@ namespace ParcelaWebAPI.Controllers
         }
 
         [HttpGet("{parcelPartId}")]
-        public ActionResult<ParcelPartDto> GetParcelParts (Guid parcelPartId)
+        public ActionResult<ParcelPartDto> GetParcelPart (Guid parcelPartId)
         {
             var parcelPart = parcelPartRepository.GetParcelPartById(parcelPartId);
             if (parcelPart == null)
@@ -66,15 +66,10 @@ namespace ParcelaWebAPI.Controllers
         }
 
         [HttpPost]
-        public ActionResult<ParcelPartConfirmationDto> CreateParcelPart([FromBody] ParcelPartCreationDto parcelPart, Guid parcelPartId)
+        public ActionResult<ParcelPartConfirmationDto> CreateParcelPart([FromBody] ParcelPartCreationDto parcelPart)
         {
-            ParcelPart parcelPartToCreate = mapper.Map<ParcelPart>(parcelPart);
-            ParcelPart parcelPartCheck = parcelPartRepository.GetParcelPartById(parcelPartId);
-            if (parcelPartCheck == null)
-            {
-                this.loggerService.LogMessage("Adding new parcel part did not happen", "Post", LogLevel.Warning);
-                return NoContent();
-            }
+            ParcelPartCreation parcelPartToCreate = mapper.Map<ParcelPartCreation>(parcelPart);
+           
             ParcelPartConfirmation confirmation = parcelPartRepository.CreateParcelPart(parcelPartToCreate);
             parcelPartRepository.SaveChanges();
 

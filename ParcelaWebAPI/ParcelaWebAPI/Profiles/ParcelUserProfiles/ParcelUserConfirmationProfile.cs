@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using ParcelaWebAPI.Entities;
 using ParcelaWebAPI.Models.ParcelPartDtos;
+using ParcelaWebAPI.Models.ParcelUserDtos;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,8 +13,9 @@ namespace ParcelaWebAPI.Profiles.ParcelUserProfiles
     {
         public ParcelUserConfirmationProfile()
         {
-            CreateMap<ParcelPartConfirmation, ParcelPartConfirmationDto>();
-            CreateMap<ParcelPart, ParcelPartConfirmation>();
+            CreateMap<ParcelUserCreation, ParcelUserConfirmation>();
+            CreateMap<ParcelUserConfirmation, ParcelUserConfirmationDto>();
+            CreateMap<ParcelUser, ParcelUserConfirmation>();
         }
         
     }
