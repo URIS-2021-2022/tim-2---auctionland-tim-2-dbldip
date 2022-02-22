@@ -12,7 +12,10 @@ namespace UgovorOZakupuWebAPI.Profiles
     {
         public ContractedPublicBiddingProfile()
         {
-
+            CreateMap<ContractedPublicBidding, ContractedPublicBiddingDto>();
+            CreateMap<ContractedPublicBiddingDto, ContractedPublicBidding>();
+            CreateMap<ContractedPublicBidding, ContractedPublicBidding>();
+            CreateMap<ContractedPublicBidding, ContractedPublicBiddingConfirmation>();
         }
     }
 }

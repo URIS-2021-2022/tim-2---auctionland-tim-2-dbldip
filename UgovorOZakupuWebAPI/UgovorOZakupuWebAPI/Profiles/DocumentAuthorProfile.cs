@@ -12,7 +12,10 @@ namespace UgovorOZakupuWebAPI.Profiles
     {
         public DocumentAuthorProfile()
         {
-
+            CreateMap<DocumentAuthor, DocumentAuthorDto>();
+            CreateMap<DocumentAuthorDto, DocumentAuthor>();
+            CreateMap<DocumentAuthor, DocumentAuthor>();
+            CreateMap<DocumentAuthor, DocumentAuthorConfirmation>();
         }
     }
 }

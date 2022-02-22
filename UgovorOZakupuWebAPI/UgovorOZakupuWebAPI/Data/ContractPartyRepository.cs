@@ -32,7 +32,10 @@ namespace UgovorOZakupuWebAPI.Data
 
         public List<ContractParty> GetContractParties()
         {
-            return context.ContractParties.ToList();
+            var contractParties = this.context.ContractParties.ToList();
+            if (contractParties == null || contractParties.Count == 0)
+                return null;
+            return contractParties;
         }
 
         public ContractParty GetContractPartyById(Guid contractPartyId)

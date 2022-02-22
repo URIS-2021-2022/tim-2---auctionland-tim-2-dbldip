@@ -12,7 +12,7 @@ namespace UgovorOZakupuWebAPI.Entities
 
         [ForeignKey("LeaseAgreement")]
         public Guid LeaseAgreementId { get; set; }
-        public LeaseAgreement LeaseAgreement { get; set; }
+//        public LeaseAgreement LeaseAgreement { get; set; }
         public int Deadline { get; set; }
     }
 }

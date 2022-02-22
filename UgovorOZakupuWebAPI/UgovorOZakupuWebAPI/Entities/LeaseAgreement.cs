@@ -31,5 +31,7 @@ namespace UgovorOZakupuWebAPI.Entities
         [ForeignKey("Decision")]
         public Guid DecisionId { get; set; }
         public Document Decision { get; set; }
+
+
     }
 }

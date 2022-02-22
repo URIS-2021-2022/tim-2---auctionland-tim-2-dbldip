@@ -9,10 +9,5 @@ namespace UgovorOZakupuWebAPI.Models
     {
         public Guid ContractPartyId { get; set; }
 
-        public string PartyName { get; set; }
-
-        public string PartySurname { get; set; }
-
-        public string PartyJMBG { get; set; }
     }
 }

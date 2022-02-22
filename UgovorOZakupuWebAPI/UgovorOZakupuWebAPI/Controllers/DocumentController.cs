@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Routing;
+using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,22 +10,25 @@ using System.Threading.Tasks;
 using UgovorOZakupuWebAPI.Data;
 using UgovorOZakupuWebAPI.Entities;
 using UgovorOZakupuWebAPI.Models;
+using UgovorOZakupuWebAPI.ServiceCalls;
 
 namespace UgovorOZakupuWebAPI.Controllers
 {
     [ApiController]
-    [Route("api/lease-agreement/document")]
+    [Route("api/leaseAgreement/document")]
     public class DocumentController : ControllerBase
     {
         private readonly IDocumentRepository documentRepository;
         private readonly LinkGenerator linkGenerator;
         private readonly IMapper mapper;
+        private readonly ILoggerService loggerService;
 
-        public DocumentController(IDocumentRepository documentRepository, LinkGenerator linkGenerator, IMapper mapper)
+        public DocumentController(IDocumentRepository documentRepository, LinkGenerator linkGenerator, IMapper mapper, ILoggerService loggerService)
         {
             this.documentRepository = documentRepository;
             this.linkGenerator = linkGenerator;
             this.mapper = mapper;
+            this.loggerService = loggerService;
         }
 
         [HttpGet]
@@ -33,8 +37,10 @@ namespace UgovorOZakupuWebAPI.Controllers
             var documents = documentRepository.GetDocuments(fileNumber);
             if (documents == null)
             {
+                this.loggerService.LogMessage("List of documents is empty", "Get", LogLevel.Warning);
                 return NoContent();
             }
+            this.loggerService.LogMessage("List of documents is returned", "Get", LogLevel.Information);
             return Ok(mapper.Map<List<DocumentDto>>(documents));
         }
 
@@ -44,8 +50,10 @@ namespace UgovorOZakupuWebAPI.Controllers
             var document = documentRepository.GetDocumentById(documentId);
             if( document == null)
             {
+                this.loggerService.LogMessage("There is no document with that id", "Get", LogLevel.Warning);
                 return NoContent();
             }
+            this.loggerService.LogMessage("Document is returned", "Get", LogLevel.Information);
             return Ok(mapper.Map<DocumentDto>(document));
         }
 
@@ -58,13 +66,14 @@ namespace UgovorOZakupuWebAPI.Controllers
                 DocumentConfirmation confirmation = documentRepository.CreateDocument(document);
                 documentRepository.SaveChanges();
 
-                string location = linkGenerator.GetPathByAction("GetDocument", "Document", new { documentId = confirmation.DocumentId });
-
+                string location = linkGenerator.GetPathByAction("GetDocumentById", "Document", new { documentId = confirmation.DocumentId });
+                this.loggerService.LogMessage("Document is created successfully", "Post", LogLevel.Information);
                 return Created(location, mapper.Map<DocumentConfirmationDto>(confirmation));
             }
-            catch (Exception e)
+            catch (Exception exception)
             {
-                return StatusCode(StatusCodes.Status500InternalServerError, $"Create error {e}");
+                this.loggerService.LogMessage("Error with creating document", "Post", LogLevel.Error, exception);
+                return StatusCode(StatusCodes.Status500InternalServerError, $"Create error {exception}");
             }
         }
 
@@ -74,11 +83,13 @@ namespace UgovorOZakupuWebAPI.Controllers
             var oldDocument = documentRepository.GetDocumentById(documentDto.DocumentId);
             if(oldDocument == null)
             {
+                this.loggerService.LogMessage("There is no document with that id", "Update", LogLevel.Warning);
                 return NotFound();
             }
             Document documentEntity = mapper.Map<Document>(documentDto);
             mapper.Map(documentEntity, oldDocument);
             documentRepository.SaveChanges();
+            this.loggerService.LogMessage("Document is updated successfully", "Update", LogLevel.Information);
             return Ok(mapper.Map<DocumentDto>(oldDocument));
         }
 
@@ -89,13 +100,18 @@ namespace UgovorOZakupuWebAPI.Controllers
             {
                 var documentToDelete = documentRepository.GetDocumentById(documentId);
                 if (documentToDelete == null)
+                {
+                    this.loggerService.LogMessage("There is no document with that id", "Delete", LogLevel.Warning);
                     return NotFound();
+                }
                 documentRepository.DeleteDocument(documentId);
                 documentRepository.SaveChanges();
+                this.loggerService.LogMessage("Document deleted successfully", "Get", LogLevel.Warning);
                 return NoContent();
             }
-            catch
+            catch(Exception exception)
             {
+                this.loggerService.LogMessage("Error with deleting document", "Delete", LogLevel.Error, exception);
                 return StatusCode(StatusCodes.Status500InternalServerError, "Delete Error");
             }
         }  

@@ -5,8 +5,9 @@ using System.Threading.Tasks;
 
 namespace UgovorOZakupuWebAPI.Models
 {
-    public class GuaranteeTypeCreationDto
+    public class LeaseAgreementConfirmationDto
     {
-        public string Type { get; set; }
+        public Guid LeaseAgreementId { get; set; }
+        public string SerialNumber { get; set; }
     }
 }

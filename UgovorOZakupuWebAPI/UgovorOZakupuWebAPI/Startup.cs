@@ -14,6 +14,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using UgovorOZakupuWebAPI.Data;
 using UgovorOZakupuWebAPI.Entities;
+using UgovorOZakupuWebAPI.ServiceCalls;
 
 namespace UgovorOZakupuWebAPI
 {
@@ -41,6 +42,8 @@ namespace UgovorOZakupuWebAPI
             services.AddScoped<IGuaranteeTypeRepository, GuaranteeTypeRepository>();
             services.AddScoped<ILeaseAgreementRepository, LeaseAgreementRepository>();
 
+            services.AddScoped<ILoggerService, LoggerServiceMock>();
+            
             // services.AddSwaggerGen(c =>
             // {
             //     c.SwaggerDoc("v1", new OpenApiInfo { Title = "UgovorOZakupuWebAPI", Version = "v1" });
@@ -55,8 +58,8 @@ namespace UgovorOZakupuWebAPI
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
-                app.UseSwagger();
-                app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "UgovorOZakupuWebAPI v1"));
+                //app.UseSwagger();
+                //app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "UgovorOZakupuWebAPI v1"));
             }
 
             app.UseHttpsRedirection();

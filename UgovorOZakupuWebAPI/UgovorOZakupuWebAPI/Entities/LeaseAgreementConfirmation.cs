@@ -11,6 +11,5 @@ namespace UgovorOZakupuWebAPI.Entities
     {
         public Guid LeaseAgreementId { get; set; }
         public string SerialNumber { get; set; }
-        public DateTime RecordDate { get; set; }
     }
 }

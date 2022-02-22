@@ -3,12 +3,12 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace UgovorOZakupuWebAPI.Migrations
 {
-    public partial class DataAdded : Migration
+    public partial class Initial : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
-                name: "ContractedPublicBidding",
+                name: "ContractedPublicBiddings",
                 columns: table => new
                 {
                     ContractedPublicBiddingId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
@@ -16,22 +16,22 @@ namespace UgovorOZakupuWebAPI.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_ContractedPublicBidding", x => x.ContractedPublicBiddingId);
+                    table.PrimaryKey("PK_ContractedPublicBiddings", x => x.ContractedPublicBiddingId);
                 });
 
             migrationBuilder.CreateTable(
-                name: "ContractParty",
+                name: "ContractParties",
                 columns: table => new
                 {
                     ContractPartyId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_ContractParty", x => x.ContractPartyId);
+                    table.PrimaryKey("PK_ContractParties", x => x.ContractPartyId);
                 });
 
             migrationBuilder.CreateTable(
-                name: "DocumentAuthor",
+                name: "DocumentAuthors",
                 columns: table => new
                 {
                     DocumentAuthorId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
@@ -39,11 +39,11 @@ namespace UgovorOZakupuWebAPI.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_DocumentAuthor", x => x.DocumentAuthorId);
+                    table.PrimaryKey("PK_DocumentAuthors", x => x.DocumentAuthorId);
                 });
 
             migrationBuilder.CreateTable(
-                name: "GuaranteeType",
+                name: "GuaranteeTypes",
                 columns: table => new
                 {
                     GuaranteeTypeId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
@@ -51,11 +51,11 @@ namespace UgovorOZakupuWebAPI.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_GuaranteeType", x => x.GuaranteeTypeId);
+                    table.PrimaryKey("PK_GuaranteeTypes", x => x.GuaranteeTypeId);
                 });
 
             migrationBuilder.CreateTable(
-                name: "MaturityDeadline",
+                name: "MaturityDeadlines",
                 columns: table => new
                 {
                     MaturityDeadlineId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
@@ -64,11 +64,11 @@ namespace UgovorOZakupuWebAPI.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_MaturityDeadline", x => x.MaturityDeadlineId);
+                    table.PrimaryKey("PK_MaturityDeadlines", x => x.MaturityDeadlineId);
                 });
 
             migrationBuilder.CreateTable(
-                name: "Document",
+                name: "Documents",
                 columns: table => new
                 {
                     DocumentId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
@@ -80,17 +80,17 @@ namespace UgovorOZakupuWebAPI.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Document", x => x.DocumentId);
+                    table.PrimaryKey("PK_Documents", x => x.DocumentId);
                     table.ForeignKey(
-                        name: "FK_Document_DocumentAuthor_DocumentAuthorId",
+                        name: "FK_Documents_DocumentAuthors_DocumentAuthorId",
                         column: x => x.DocumentAuthorId,
-                        principalTable: "DocumentAuthor",
+                        principalTable: "DocumentAuthors",
                         principalColumn: "DocumentAuthorId",
                         onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
-                name: "LeaseAgreement",
+                name: "LeaseAgreements",
                 columns: table => new
                 {
                     LeaseAgreementId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
@@ -107,55 +107,62 @@ namespace UgovorOZakupuWebAPI.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_LeaseAgreement", x => x.LeaseAgreementId);
+                    table.PrimaryKey("PK_LeaseAgreements", x => x.LeaseAgreementId);
                     table.ForeignKey(
-                        name: "FK_LeaseAgreement_ContractedPublicBidding_ContractedPublicBiddingId",
+                        name: "FK_LeaseAgreements_ContractedPublicBiddings_ContractedPublicBiddingId",
                         column: x => x.ContractedPublicBiddingId,
-                        principalTable: "ContractedPublicBidding",
+                        principalTable: "ContractedPublicBiddings",
                         principalColumn: "ContractedPublicBiddingId",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_LeaseAgreement_ContractParty_ContractPartyId",
+                        name: "FK_LeaseAgreements_ContractParties_ContractPartyId",
                         column: x => x.ContractPartyId,
-                        principalTable: "ContractParty",
+                        principalTable: "ContractParties",
                         principalColumn: "ContractPartyId",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_LeaseAgreement_Document_DecisionId",
+                        name: "FK_LeaseAgreements_Documents_DecisionId",
                         column: x => x.DecisionId,
-                        principalTable: "Document",
+                        principalTable: "Documents",
                         principalColumn: "DocumentId",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_LeaseAgreement_GuaranteeType_GuaranteeTypeId",
+                        name: "FK_LeaseAgreements_GuaranteeTypes_GuaranteeTypeId",
                         column: x => x.GuaranteeTypeId,
-                        principalTable: "GuaranteeType",
+                        principalTable: "GuaranteeTypes",
                         principalColumn: "GuaranteeTypeId",
                         onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.InsertData(
-                table: "ContractParty",
+                table: "ContractParties",
                 column: "ContractPartyId",
                 value: new Guid("2426e609-5dd9-4817-8d32-d63a032402ac"));
 
             migrationBuilder.InsertData(
-                table: "ContractedPublicBidding",
+                table: "ContractedPublicBiddings",
                 columns: new[] { "ContractedPublicBiddingId", "AdditionalInfo" },
                 values: new object[] { new Guid("55ee6acb-39fd-4464-a5f6-29f9767b82b5"), "Nema dodatnih informacija." });
 
             migrationBuilder.InsertData(
-                table: "DocumentAuthor",
+                table: "DocumentAuthors",
                 columns: new[] { "DocumentAuthorId", "AgencyInfo" },
                 values: new object[] { new Guid("554c65b1-56af-4050-b232-c20d7197bb78"), "Agencija za zavod 021" });
 
             migrationBuilder.InsertData(
-                table: "GuaranteeType",
+                table: "GuaranteeTypes",
                 columns: new[] { "GuaranteeTypeId", "Type" },
-                values: new object[] { new Guid("d751aa4b-936c-4b23-bdbe-be6081235133"), "Jemstvo" });
+                values: new object[,]
+                {
+                    { new Guid("a0999e21-b0e4-4c41-909c-b3cc1a4520a7"), "Jemstvo" },
+                    { new Guid("0c779a8e-6509-4814-b1db-350a3335dd01"), "Bankarska Garancija" },
+                    { new Guid("fec2697e-8ddd-4dca-9efc-d5214e5b988e"), "Garancija nekretninom" },
+                    { new Guid("677c878c-ffdb-4188-aba6-0bd45b6a680e"), "Žirantska" },
+                    { new Guid("d751aa4b-936c-4b23-bdbe-be6081235133"), "Uplata gotovinom" }
+                });
 
             migrationBuilder.InsertData(
-                table: "MaturityDeadline",
+                table: "MaturityDeadlines",
                 columns: new[] { "MaturityDeadlineId", "Deadline", "LeaseAgreementId" },
                 values: new object[,]
                 {
@@ -164,63 +171,63 @@ namespace UgovorOZakupuWebAPI.Migrations
                 });
 
             migrationBuilder.InsertData(
-                table: "Document",
+                table: "Documents",
                 columns: new[] { "DocumentId", "Date", "DocumentAdoptionDate", "DocumentAuthorId", "FileNumber", "Template" },
                 values: new object[] { new Guid("68ee654e-31f4-40ca-be06-aa95b7356712"), null, null, new Guid("554c65b1-56af-4050-b232-c20d7197bb78"), "File001", "template2" });
 
             migrationBuilder.InsertData(
-                table: "LeaseAgreement",
+                table: "LeaseAgreements",
                 columns: new[] { "LeaseAgreementId", "ContractPartyId", "ContractedPublicBiddingId", "DateOfSigning", "DecisionId", "GuaranteeTypeId", "LandReturnDeadline", "PlaceOfSigning", "RecordDate", "SerialNumber" },
                 values: new object[] { new Guid("5a10ccf3-d021-49a9-9844-244c3ac30ebe"), new Guid("2426e609-5dd9-4817-8d32-d63a032402ac"), new Guid("55ee6acb-39fd-4464-a5f6-29f9767b82b5"), null, new Guid("68ee654e-31f4-40ca-be06-aa95b7356712"), new Guid("d751aa4b-936c-4b23-bdbe-be6081235133"), null, "Novi Sad", null, "012392" });
 
             migrationBuilder.CreateIndex(
-                name: "IX_Document_DocumentAuthorId",
-                table: "Document",
+                name: "IX_Documents_DocumentAuthorId",
+                table: "Documents",
                 column: "DocumentAuthorId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_LeaseAgreement_ContractedPublicBiddingId",
-                table: "LeaseAgreement",
+                name: "IX_LeaseAgreements_ContractedPublicBiddingId",
+                table: "LeaseAgreements",
                 column: "ContractedPublicBiddingId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_LeaseAgreement_ContractPartyId",
-                table: "LeaseAgreement",
+                name: "IX_LeaseAgreements_ContractPartyId",
+                table: "LeaseAgreements",
                 column: "ContractPartyId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_LeaseAgreement_DecisionId",
-                table: "LeaseAgreement",
+                name: "IX_LeaseAgreements_DecisionId",
+                table: "LeaseAgreements",
                 column: "DecisionId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_LeaseAgreement_GuaranteeTypeId",
-                table: "LeaseAgreement",
+                name: "IX_LeaseAgreements_GuaranteeTypeId",
+                table: "LeaseAgreements",
                 column: "GuaranteeTypeId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "LeaseAgreement");
+                name: "LeaseAgreements");
 
             migrationBuilder.DropTable(
-                name: "MaturityDeadline");
+                name: "MaturityDeadlines");
 
             migrationBuilder.DropTable(
-                name: "ContractedPublicBidding");
+                name: "ContractedPublicBiddings");
 
             migrationBuilder.DropTable(
-                name: "ContractParty");
+                name: "ContractParties");
 
             migrationBuilder.DropTable(
-                name: "Document");
+                name: "Documents");
 
             migrationBuilder.DropTable(
-                name: "GuaranteeType");
+                name: "GuaranteeTypes");
 
             migrationBuilder.DropTable(
-                name: "DocumentAuthor");
+                name: "DocumentAuthors");
         }
     }
 }

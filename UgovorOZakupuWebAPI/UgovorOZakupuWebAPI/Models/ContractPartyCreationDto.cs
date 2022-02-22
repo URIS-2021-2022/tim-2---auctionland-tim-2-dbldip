@@ -7,8 +7,6 @@ namespace UgovorOZakupuWebAPI.Models
 {
     public class ContractPartyCreationDto
     {
-        public string PartyName { get; set; }
-
-        public string PartySurname { get; set; }
+        public Guid ContractPartyId { get; set; }
     }
 }

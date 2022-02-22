@@ -12,7 +12,7 @@ namespace UgovorOZakupuWebAPI.Profiles
     {
         public GuaranteeTypeProfile()
         {
-
+            CreateMap<GuaranteeType, GuaranteeTypeDto>();
         }
     }
 }

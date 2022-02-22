@@ -7,8 +7,7 @@ namespace UgovorOZakupuWebAPI.Models
 {
     public class ContractedPublicBiddingConfirmationDto
     {
-        public Guid ContractedPublicBidding { get; set; }
-
+        public Guid ContractedPublicBiddingId { get; set; }
         public string AdditionalInfo { get; set; }
     }
 }

@@ -27,7 +27,7 @@ namespace UgovorOZakupuWebAPI.Migrations
 
                     b.HasKey("ContractPartyId");
 
-                    b.ToTable("ContractParty");
+                    b.ToTable("ContractParties");
 
                     b.HasData(
                         new
@@ -47,7 +47,7 @@ namespace UgovorOZakupuWebAPI.Migrations
 
                     b.HasKey("ContractedPublicBiddingId");
 
-                    b.ToTable("ContractedPublicBidding");
+                    b.ToTable("ContractedPublicBiddings");
 
                     b.HasData(
                         new
@@ -82,7 +82,7 @@ namespace UgovorOZakupuWebAPI.Migrations
 
                     b.HasIndex("DocumentAuthorId");
 
-                    b.ToTable("Document");
+                    b.ToTable("Documents");
 
                     b.HasData(
                         new
@@ -105,7 +105,7 @@ namespace UgovorOZakupuWebAPI.Migrations
 
                     b.HasKey("DocumentAuthorId");
 
-                    b.ToTable("DocumentAuthor");
+                    b.ToTable("DocumentAuthors");
 
                     b.HasData(
                         new
@@ -126,13 +126,33 @@ namespace UgovorOZakupuWebAPI.Migrations
 
                     b.HasKey("GuaranteeTypeId");
 
-                    b.ToTable("GuaranteeType");
+                    b.ToTable("GuaranteeTypes");
 
                     b.HasData(
                         new
                         {
-                            GuaranteeTypeId = new Guid("d751aa4b-936c-4b23-bdbe-be6081235133"),
+                            GuaranteeTypeId = new Guid("a0999e21-b0e4-4c41-909c-b3cc1a4520a7"),
                             Type = "Jemstvo"
+                        },
+                        new
+                        {
+                            GuaranteeTypeId = new Guid("0c779a8e-6509-4814-b1db-350a3335dd01"),
+                            Type = "Bankarska Garancija"
+                        },
+                        new
+                        {
+                            GuaranteeTypeId = new Guid("fec2697e-8ddd-4dca-9efc-d5214e5b988e"),
+                            Type = "Garancija nekretninom"
+                        },
+                        new
+                        {
+                            GuaranteeTypeId = new Guid("677c878c-ffdb-4188-aba6-0bd45b6a680e"),
+                            Type = "Žirantska"
+                        },
+                        new
+                        {
+                            GuaranteeTypeId = new Guid("d751aa4b-936c-4b23-bdbe-be6081235133"),
+                            Type = "Uplata gotovinom"
                         });
                 });
 
@@ -184,7 +204,7 @@ namespace UgovorOZakupuWebAPI.Migrations
 
                     b.HasIndex("GuaranteeTypeId");
 
-                    b.ToTable("LeaseAgreement");
+                    b.ToTable("LeaseAgreements");
 
                     b.HasData(
                         new
@@ -213,9 +233,7 @@ namespace UgovorOZakupuWebAPI.Migrations
 
                     b.HasKey("MaturityDeadlineId");
 
-                    b.HasIndex("LeaseAgreementId");
-
-                    b.ToTable("MaturityDeadline");
+                    b.ToTable("MaturityDeadlines");
 
                     b.HasData(
                         new
@@ -276,17 +294,6 @@ namespace UgovorOZakupuWebAPI.Migrations
                     b.Navigation("Decision");
 
                     b.Navigation("GuaranteeType");
-                });
-
-            modelBuilder.Entity("UgovorOZakupuWebAPI.Entities.MaturityDeadline", b =>
-                {
-                    b.HasOne("UgovorOZakupuWebAPI.Entities.LeaseAgreement", "LeaseAgreement")
-                        .WithMany()
-                        .HasForeignKey("LeaseAgreementId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("LeaseAgreement");
                 });
 #pragma warning restore 612, 618
         }

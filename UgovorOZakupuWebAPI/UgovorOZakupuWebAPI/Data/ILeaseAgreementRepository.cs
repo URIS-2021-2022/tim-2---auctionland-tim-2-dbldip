@@ -8,7 +8,7 @@ namespace UgovorOZakupuWebAPI.Data
 {
     public interface ILeaseAgreementRepository
     {
-        List<LeaseAgreementWithLists> GetLeaseAgreements();
+        List<LeaseAgreementWithLists> GetLeaseAgreements(string serialNumber);
 
         LeaseAgreementWithLists GetLeaseAgreementById(Guid leaseAgreementId);
 

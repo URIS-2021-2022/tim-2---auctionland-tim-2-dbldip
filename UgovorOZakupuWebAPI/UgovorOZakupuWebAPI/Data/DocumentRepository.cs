@@ -38,7 +38,14 @@ namespace UgovorOZakupuWebAPI.Data
 
         public List<Document> GetDocuments(string fileNumber = null)
         {
-            return context.Documents.Where(e => (fileNumber == null || e.FileNumber == fileNumber)).ToList();
+            var documents = this.context.Documents.Where(e => (fileNumber == null || e.FileNumber == fileNumber)).ToList();
+            if (documents == null || documents.Count == 0)
+                return null;
+            foreach(var el in documents)
+            {
+                el.DocumentAuthor = context.DocumentAuthors.FirstOrDefault(e => e.DocumentAuthorId == el.DocumentAuthorId);
+            }
+            return documents;
         }
 
         public bool SaveChanges()

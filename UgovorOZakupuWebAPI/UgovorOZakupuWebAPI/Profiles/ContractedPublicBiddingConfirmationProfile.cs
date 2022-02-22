@@ -12,7 +12,7 @@ namespace UgovorOZakupuWebAPI.Profiles
     {
         public ContractedPublicBiddingConfirmationProfile()
         {
-
+            CreateMap<ContractedPublicBiddingConfirmation, ContractedPublicBiddingConfirmationDto>();
         }
     }
 }

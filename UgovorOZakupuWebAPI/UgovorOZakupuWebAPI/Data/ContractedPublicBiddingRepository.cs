@@ -35,7 +35,10 @@ namespace UgovorOZakupuWebAPI.Data
 
         public List<ContractedPublicBidding> GetContractedPublicBiddings()
         {
-            return context.ContractedPublicBiddings.ToList();
+            var contractedPublicBiddings = this.context.ContractedPublicBiddings.ToList();
+            if (contractedPublicBiddings == null || contractedPublicBiddings.Count == 0)
+                return null;
+            return contractedPublicBiddings;
         }
 
         public bool SaveChanges()

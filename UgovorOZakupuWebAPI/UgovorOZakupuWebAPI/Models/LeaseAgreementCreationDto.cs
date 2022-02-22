@@ -1,12 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations.Schema;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
+using UgovorOZakupuWebAPI.Entities;
 
-namespace UgovorOZakupuWebAPI.Entities
+namespace UgovorOZakupuWebAPI.Models
 {
-    public class LeaseAgreementWithLists
+    public class LeaseAgreementCreationDto
     {
         public Guid LeaseAgreementId { get; set; }
         public string SerialNumber { get; set; }
@@ -15,22 +16,16 @@ namespace UgovorOZakupuWebAPI.Entities
         public string PlaceOfSigning { get; set; }
         public DateTime? DateOfSigning { get; set; }
         public bool? IsDelete { get; set; }
+
+        [Required]
+        public Guid ContractedPublicBiddingId { get; set; }
+        [Required]
+        public Guid ContractPartyId { get; set; }
+        [Required]
+        public Guid GuaranteeTypeId { get; set; }
+        [Required]
+        public Guid DecisionId { get; set; }
         public List<MaturityDeadline> MaturityDeadlines { get; set; }
 
-        [ForeignKey("ContractedPublicBidding")]
-        public Guid ContractedPublicBiddingId { get; set; }
-        public ContractedPublicBidding ContractedPublicBidding { get; set; }
-
-        [ForeignKey("ContractParty")]
-        public Guid ContractPartyId { get; set; }
-        public ContractParty ContractParty { get; set; }
-
-        [ForeignKey("GuaranteeType")]
-        public Guid GuaranteeTypeId { get; set; }
-        public GuaranteeType GuaranteeType { get; set; }
-
-        [ForeignKey("Decision")]
-        public Guid DecisionId { get; set; }
-        public Document Decision { get; set; }
     }
 }

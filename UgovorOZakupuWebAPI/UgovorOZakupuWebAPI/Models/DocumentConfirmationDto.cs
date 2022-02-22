@@ -7,9 +7,8 @@ namespace UgovorOZakupuWebAPI.Models
 {
     public class DocumentConfirmationDto
     {
+        public Guid DocumentId { get; set; }
         public string FileNumber { get; set; }
-
-        public DateTime Date { get; set; }
 
     }
 }

@@ -13,13 +13,13 @@ namespace UgovorOZakupuWebAPI.Entities
         {
         }
 
-        public List<Document> Documents = new List<Document>();
-        public List<GuaranteeType> GuaranteeTypes = new List<GuaranteeType>();
-        public List<ContractParty> ContractParties = new List<ContractParty>();
-        public List<DocumentAuthor> DocumentAuthors = new List<DocumentAuthor>();
-        public List<ContractedPublicBidding> ContractedPublicBiddings = new List<ContractedPublicBidding>();
-        public List<LeaseAgreement> LeaseAgreements = new List<LeaseAgreement>();
-        public List<MaturityDeadline> MaturityDeadlines = new List<MaturityDeadline>();
+        public DbSet<Document> Documents { get; set; }
+        public DbSet<GuaranteeType> GuaranteeTypes { get; set; }
+        public DbSet<ContractParty> ContractParties { get; set; }
+        public DbSet<DocumentAuthor> DocumentAuthors { get; set; }
+        public DbSet<ContractedPublicBidding> ContractedPublicBiddings { get; set; }
+        public DbSet<LeaseAgreement> LeaseAgreements { get; set; }
+        public DbSet<MaturityDeadline> MaturityDeadlines { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
@@ -38,8 +38,32 @@ namespace UgovorOZakupuWebAPI.Entities
             builder.Entity<GuaranteeType>()
                 .HasData(new
                 {
-                    GuaranteeTypeId = Guid.Parse("d751aa4b-936c-4b23-bdbe-be6081235133"),
+                    GuaranteeTypeId = Guid.Parse("a0999e21-b0e4-4c41-909c-b3cc1a4520a7"),
                     Type = "Jemstvo"
+                });
+            builder.Entity<GuaranteeType>()
+                .HasData(new
+                {
+                    GuaranteeTypeId = Guid.Parse("0c779a8e-6509-4814-b1db-350a3335dd01"),
+                    Type = "Bankarska Garancija"
+                });
+            builder.Entity<GuaranteeType>()
+                .HasData(new
+                {
+                    GuaranteeTypeId = Guid.Parse("fec2697e-8ddd-4dca-9efc-d5214e5b988e"),
+                    Type = "Garancija nekretninom"
+                });
+            builder.Entity<GuaranteeType>()
+                .HasData(new
+                {
+                    GuaranteeTypeId = Guid.Parse("677c878c-ffdb-4188-aba6-0bd45b6a680e"),
+                    Type = "Žirantska"
+                });
+            builder.Entity<GuaranteeType>()
+                .HasData(new
+                {
+                    GuaranteeTypeId = Guid.Parse("d751aa4b-936c-4b23-bdbe-be6081235133"),
+                    Type = "Uplata gotovinom"
                 });
             builder.Entity<ContractParty>()
                 .HasData(new
