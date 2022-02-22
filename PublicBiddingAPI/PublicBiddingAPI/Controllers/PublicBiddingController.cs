@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Routing;
 using PublicBiddingAPI.Data;
@@ -121,14 +122,16 @@ namespace PublicBiddingAPI.Controllers
         [HttpDelete("{publicBiddingId}")]
         public ActionResult<String> DeletePublicBidding(Guid publicBiddingId)
         {
-            var publicBiddingToDelete = publicBiddingRepository.getPublicBidding(publicBiddingId);
-            var mapperPB = mapper.Map<PublicBiddingWithoutLists>(publicBiddingToDelete);
-            if (publicBiddingToDelete == null)
+            try
+            {
+                publicBiddingRepository.DeletePublicBidding(publicBiddingId);
+                publicBiddingRepository.SaveChanges();
                 return NoContent();
-            var updatedPublicBidding = mapper.Map<PublicBiddingWithoutLists>(mapperPB);
-            updatedPublicBidding.isDelete = true; 
-            publicBiddingRepository.SaveChanges();
-            return Ok("Deleted?");
+            }
+            catch (Exception e)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, e.Message);
+            }
         }
 
         [HttpPut]

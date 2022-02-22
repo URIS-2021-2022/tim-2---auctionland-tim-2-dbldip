@@ -53,7 +53,16 @@ namespace PublicBiddingAPI.Data
 
         public void DeletePublicBidding(Guid publicBiddingId)
         {
-            var publicBiddingToDelete = getPublicBidding(publicBiddingId);
+            var publicBiddingToDelete = context.PublicBidding.FirstOrDefault(e => e.publicBiddingId == publicBiddingId);
+            var listOfbidders = this.context.Bidder.Where(e => e.publicBiddingId == publicBiddingId).ToList();
+            var listOfAppliedBuyers = this.context.AppliedBuyer.Where(e => e.publicBiddingId == publicBiddingId).ToList();
+            var listOfPlots = this.context.Plot.Where(e => e.publicBiddingId == publicBiddingId).ToList();
+            var bestBidder = this.context.BestBidder.FirstOrDefault(e => e.publicBiddingId == publicBiddingId);
+
+            context.RemoveRange(listOfbidders);
+            context.RemoveRange(listOfAppliedBuyers);
+            context.RemoveRange(listOfPlots);
+            context.Remove(bestBidder);
             context.Remove(publicBiddingToDelete);
 
         }
@@ -237,17 +246,18 @@ namespace PublicBiddingAPI.Data
         }
 
         public void UpdatePublicBidding(PublicBiddingUpdate publicBidding)
-        {            
-            var publicBiddingToUpdate = getPublicBidding(publicBidding.publicBiddingId);
+        {
+            //var publicBiddingToUpdate = getPublicBidding(publicBidding.publicBiddingId);
+            var publicBiddingToUpdate = context.PublicBidding.FirstOrDefault(e => e.publicBiddingId == publicBidding.publicBiddingId);
 
-            var listOfbidders = publicBiddingToUpdate.bidders;
-            var listOfAppliedBuyers = publicBiddingToUpdate.appliedBuyers;
-            var listOfPlots = publicBiddingToUpdate.plots;
-            var bestBidder = publicBiddingToUpdate.bestBidder;
+            var appliedBuyers = context.AppliedBuyer.Where(e => e.publicBiddingId == publicBidding.publicBiddingId).ToList();
+            var bestBidder = context.BestBidder.FirstOrDefault(e => e.publicBiddingId == publicBidding.publicBiddingId);
+            var bidders = context.Bidder.Where(e => e.publicBiddingId == publicBidding.publicBiddingId).ToList();
+            var plots = context.Plot.Where(e => e.publicBiddingId == publicBidding.publicBiddingId).ToList();
 
-            context.RemoveRange(listOfbidders);
-            context.RemoveRange(listOfAppliedBuyers);
-            context.RemoveRange(listOfPlots);
+            context.RemoveRange(bidders);
+            context.RemoveRange(appliedBuyers);
+            context.RemoveRange(plots);
             context.Remove(bestBidder);
 
             foreach (var el in publicBidding.appliedBuyersId)
@@ -276,12 +286,9 @@ namespace PublicBiddingAPI.Data
             bestBidder2.publicBiddingId = publicBidding.publicBiddingId;
             context.Add(bestBidder2);
 
-            var mappedWL = mapper.Map<PublicBiddingWithoutLists>(publicBiddingToUpdate);
+            //var mappedWL = mapper.Map<PublicBiddingWithoutLists>(publicBiddingToUpdate);
             var newValues = mapper.Map<PublicBiddingWithoutLists>(publicBidding);
-            mapper.Map(newValues, mappedWL);
-
-
-            //context.SaveChanges();
+            mapper.Map(newValues, publicBiddingToUpdate);
         }
 
         public bool validatePublicBiddingData(PublicBiddingCreation publicBidding)
