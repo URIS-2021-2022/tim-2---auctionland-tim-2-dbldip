@@ -39,7 +39,7 @@ namespace Application.Data
         {
             return context.Applications.ToList();
         }
-
+                                                                    
         public bool SaveChanges()
         {
             return context.SaveChanges() > 0;

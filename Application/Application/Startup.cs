@@ -11,7 +11,9 @@ using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Threading.Tasks;
 
 namespace Application
@@ -37,6 +39,51 @@ namespace Application
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
             services.AddScoped<IApplicationRepository, ApplicationRepository>();
             services.AddScoped<IPriorityRepository, PriorityRepository>();
+
+            services.AddSwaggerGen(setup =>
+            {
+                /*var securitySchema = new OpenApiSecurityScheme
+                {
+                    Description = "JWT Authorization header using the Bearer scheme. Example: \"Authorization: Bearer {token}\"",
+                    Name = "Authorization",
+                    In = ParameterLocation.Header,
+                    Type = SecuritySchemeType.Http,
+                    Scheme = "bearer",
+                    Reference = new OpenApiReference
+                    {
+                        Type = ReferenceType.SecurityScheme,
+                        Id = "Bearer"
+                    }
+                };*/
+
+                //setup.AddSecurityDefinition("Bearer", securitySchema);
+
+                /* var securityRequirement = new OpenApiSecurityRequirement
+                 {
+                     { securitySchema, new[] { "Bearer" } }
+                 };*/
+
+                //setup.AddSecurityRequirement(securityRequirement);
+
+                setup.SwaggerDoc("v2",
+                    new OpenApiInfo()
+                    {
+                        Title = "Application API",
+                        Version = "v1",
+                        Description = "Application API allows creation and read of all licitation applications",
+                        Contact = new Microsoft.OpenApi.Models.OpenApiContact
+                        {
+                            Name = "David Fejes",
+                            Email = "david.fejes@uns.ac.rs",
+                            Url = new Uri(Configuration["Swagger:Github"])
+                        }
+                    });
+                //Korisitmo refleksiju za dobijanje XML fajla za komentarima
+                var xmlComments = $"{ Assembly.GetExecutingAssembly().GetName().Name }.xml";
+                var xmlCommentsPath = Path.Combine(AppContext.BaseDirectory, xmlComments);
+                setup.IncludeXmlComments(xmlCommentsPath);
+            });
+
             services.AddDbContext<LicitationApplicationContext>();
         }
 
@@ -46,11 +93,16 @@ namespace Application
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
-                app.UseSwagger();
-                app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "Application v1"));
             }
 
             app.UseHttpsRedirection();
+
+            app.UseSwagger();
+            app.UseSwaggerUI(setupAction =>
+            {
+                setupAction.SwaggerEndpoint("/swagger/v1/swagger.json", "Application API");
+                setupAction.RoutePrefix = "";
+            });
 
             app.UseRouting();
 

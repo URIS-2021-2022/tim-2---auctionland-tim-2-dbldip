@@ -18,12 +18,24 @@ namespace Application.Controllers
         private readonly IPriorityRepository priorityRepository;
         private readonly IMapper mapper;
 
+        /// <summary>
+        /// ApplicationController constructor
+        /// </summary>
+        /// <param name="priorityRepository">Priority repository</param>
+        /// <param name="linkGenerator">Link generator</param>
+        /// <param name="mapper">AutoMapper</param>
         public PriorityController(IPriorityRepository priorityRepository, IMapper mapper)
         {
             this.priorityRepository = priorityRepository;
             this.mapper = mapper;
         }
 
+        /// <summary>
+        /// Return all priorities
+        /// </summary>
+        /// <returns>List of priorities</returns>
+        /// <response code="200">Returns all priorities</response>
+        /// <response code="404">No priority found</response>
         [HttpGet]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
@@ -33,6 +45,13 @@ namespace Application.Controllers
             return Ok(mapper.Map<List<PriorityDto>>(priorities));
         }
 
+        /// <summary>
+        /// Returns priority by ID
+        /// </summary>
+        /// <param name="priorityId">Priority ID</param>
+        /// <returns>Priority</returns>
+        /// <response code="200">Returns priority by ID</response>
+        /// <response code="404">No priority by ID found</response>
         [HttpGet("{priorityId}")]
         public ActionResult<PriorityDto> GetPriority(Guid priorityId)
         {

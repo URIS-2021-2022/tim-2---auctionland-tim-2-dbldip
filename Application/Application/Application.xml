@@ -1,0 +1,399 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Application</name>
+    </assembly>
+    <members>
+        <member name="M:Application.Controllers.LicitationApplicationController.#ctor(Application.Data.IApplicationRepository,Application.Data.IPriorityRepository,Microsoft.AspNetCore.Routing.LinkGenerator,AutoMapper.IMapper)">
+            <summary>
+            ApplicationController constructor
+            </summary>
+            <param name="applicationRepository">Application repository</param>
+            <param name="linkGenerator">Link generator</param>
+            <param name="mapper">AutoMapper</param>
+        </member>
+        <member name="M:Application.Controllers.LicitationApplicationController.GetApplications">
+            <summary>
+            Return all applications
+            </summary>
+            <returns>List of applications</returns>
+            <response code="200">Returns all applications</response>
+            <response code="404">No application found</response>
+        </member>
+        <member name="M:Application.Controllers.LicitationApplicationController.GetApplication(System.Guid)">
+            <summary>
+            Returns application by ID
+            </summary>
+            <param name="applicationId">Application ID</param>
+            <returns>Application</returns>
+            <response code="200">Returns application by ID</response>
+            <response code="404">No application by ID found</response>
+        </member>
+        <member name="M:Application.Controllers.LicitationApplicationController.CreateApplication(Application.Models.LicitationApplicationCreationDto)">
+            <summary>
+            Create new application
+            </summary>
+            <param name="application">Creation application DTO</param>
+            <returns>Confirmation of created application</returns>
+            <response code="201">Returns confirmation of created application</response>
+            <response code="500">Application creation error</response>
+            
+        </member>
+        <member name="M:Application.Controllers.LicitationApplicationController.UpdateApplication(Application.Models.LicitationApplicationUpdateDto)">
+            <summary>
+            Application modify
+            </summary>
+            <param name="application">Update application DTO</param>
+            <returns>Confirmation of updated application</returns>
+            <response code="200">Returns confirmation of updated application</response>
+            <response code="400">Bad request</response>
+            <response code="404">Not found application by ID</response>
+            <response code="500">Server error</response>
+        </member>
+        <member name="M:Application.Controllers.LicitationApplicationController.DeleteApplication(System.Guid)">
+            <summary>
+            Delete application
+            </summary>
+            <param name="applicationId">Application ID</param>
+            <returns>Status 204 (NoContent)</returns>
+            <response code="204">Application deleted</response>
+            <response code="404">Application by ID not found</response>
+            <response code="500">Server error</response>
+        </member>
+        <member name="M:Application.Controllers.PriorityController.#ctor(Application.Data.IPriorityRepository,AutoMapper.IMapper)">
+            <summary>
+            ApplicationController constructor
+            </summary>
+            <param name="priorityRepository">Priority repository</param>
+            <param name="linkGenerator">Link generator</param>
+            <param name="mapper">AutoMapper</param>
+        </member>
+        <member name="M:Application.Controllers.PriorityController.GetPriorities">
+            <summary>
+            Return all priorities
+            </summary>
+            <returns>List of priorities</returns>
+            <response code="200">Returns all priorities</response>
+            <response code="404">No priority found</response>
+        </member>
+        <member name="M:Application.Controllers.PriorityController.GetPriority(System.Guid)">
+            <summary>
+            Returns priority by ID
+            </summary>
+            <param name="priorityId">Priority ID</param>
+            <returns>Priority</returns>
+            <response code="200">Returns priority by ID</response>
+            <response code="404">No priority by ID found</response>
+        </member>
+        <member name="T:Application.Entities.LicitationApplication">
+            <summary>
+            Licitation application
+            </summary>
+        </member>
+        <member name="P:Application.Entities.LicitationApplication.applicationId">
+            <summary>
+            Application ID
+            </summary>
+        </member>
+        <member name="P:Application.Entities.LicitationApplication.applicationDate">
+            <summary>
+            Application date
+            </summary>
+        </member>
+        <member name="P:Application.Entities.LicitationApplication.appliedLicitationId">
+            <summary>
+            Applied licitation ID
+            </summary>
+        </member>
+        <member name="P:Application.Entities.LicitationApplication.licitationNumber">
+            <summary>
+            Number of applied licitation
+            </summary>
+        </member>
+        <member name="P:Application.Entities.LicitationApplication.licitationDate">
+            <summary>
+            Date of applied licitation
+            </summary>
+        </member>
+        <member name="P:Application.Entities.LicitationApplication.applierId">
+            <summary>
+            Applier ID
+            </summary>
+        </member>
+        <member name="P:Application.Entities.LicitationApplication.applierName">
+            <summary>
+            Applier name
+            </summary>
+        </member>
+        <member name="P:Application.Entities.LicitationApplication.applierAdress">
+            <summary>
+            Applier adress
+            </summary>
+        </member>
+        <member name="P:Application.Entities.LicitationApplication.priorityId">
+            <summary>
+            Priority ID
+            </summary>
+        </member>
+        <member name="P:Application.Entities.LicitationApplication.priorityName">
+            <summary>
+            Priority name
+            </summary>
+        </member>
+        <member name="T:Application.Entities.LicitationApplicationConfirmation">
+            <summary>
+            Confirms licitation application
+            </summary>
+        </member>
+        <member name="P:Application.Entities.LicitationApplicationConfirmation.applicationId">
+            <summary>
+            Application ID
+            </summary>
+        </member>
+        <member name="P:Application.Entities.LicitationApplicationConfirmation.applicationDate">
+            <summary>
+            Application date
+            </summary>
+        </member>
+        <member name="P:Application.Entities.LicitationApplicationConfirmation.licitationNumber">
+            <summary>
+            Number of applied licitation
+            </summary>
+        </member>
+        <member name="P:Application.Entities.LicitationApplicationConfirmation.applierName">
+            <summary>
+            Applier name
+            </summary>
+        </member>
+        <member name="P:Application.Entities.LicitationApplicationConfirmation.priorityName">
+            <summary>
+            Priority name
+            </summary>
+        </member>
+        <member name="T:Application.Entities.Priority">
+            <summary>
+            Priority of application
+            </summary>
+        </member>
+        <member name="P:Application.Entities.Priority.priorityID">
+            <summary>
+            Priority ID
+            </summary>
+        </member>
+        <member name="P:Application.Entities.Priority.priorityDescription">
+            <summary>
+            Priority description
+            </summary>
+        </member>
+        <member name="T:Application.Entities.PriorityConfirmation">
+            <summary>
+            Confirms priority
+            </summary>
+        </member>
+        <member name="P:Application.Entities.PriorityConfirmation.priorityID">
+            <summary>
+            Priority ID
+            </summary>
+        </member>
+        <member name="P:Application.Entities.PriorityConfirmation.priorityDescription">
+            <summary>
+            Priority description
+            </summary>
+        </member>
+        <member name="T:Application.Models.LicitationApplicationConfirmationDto">
+            <summary>
+            Licitation application confirmation DTO
+            </summary>
+        </member>
+        <member name="P:Application.Models.LicitationApplicationConfirmationDto.applicationDate">
+            <summary>
+            Application date
+            </summary>
+        </member>
+        <member name="P:Application.Models.LicitationApplicationConfirmationDto.licitationNumber">
+            <summary>
+            Number of applied licitation
+            </summary>
+        </member>
+        <member name="P:Application.Models.LicitationApplicationConfirmationDto.applierName">
+            <summary>
+            Applier name
+            </summary>
+        </member>
+        <member name="T:Application.Models.LicitationApplicationCreationDto">
+            <summary>
+            Licitation application creation DTO
+            </summary>
+        </member>
+        <member name="P:Application.Models.LicitationApplicationCreationDto.applicationDate">
+            <summary>
+            Application date
+            </summary>
+        </member>
+        <member name="P:Application.Models.LicitationApplicationCreationDto.appliedLicitationId">
+            <summary>
+            Applied licitation ID
+            </summary>
+        </member>
+        <member name="P:Application.Models.LicitationApplicationCreationDto.licitationNumber">
+            <summary>
+            Number of applied licitation
+            </summary>
+        </member>
+        <member name="P:Application.Models.LicitationApplicationCreationDto.licitationDate">
+            <summary>
+            Date of applied licitation
+            </summary>
+        </member>
+        <member name="P:Application.Models.LicitationApplicationCreationDto.applierId">
+            <summary>
+            Applier ID
+            </summary>
+        </member>
+        <member name="P:Application.Models.LicitationApplicationCreationDto.applierName">
+            <summary>
+            Applier name
+            </summary>
+        </member>
+        <member name="P:Application.Models.LicitationApplicationCreationDto.applierAdress">
+            <summary>
+            Applier adress
+            </summary>
+        </member>
+        <member name="P:Application.Models.LicitationApplicationCreationDto.priorityId">
+            <summary>
+            Priority ID
+            </summary>
+        </member>
+        <member name="T:Application.Models.LicitationApplicationDto">
+            <summary>
+            Licitation application DTO
+            </summary>
+        </member>
+        <member name="P:Application.Models.LicitationApplicationDto.applicationId">
+            <summary>
+            Application ID
+            </summary>
+        </member>
+        <member name="P:Application.Models.LicitationApplicationDto.applicationDate">
+            <summary>
+            Application date
+            </summary>
+        </member>
+        <member name="P:Application.Models.LicitationApplicationDto.appliedLicitationId">
+            <summary>
+            Applied licitation ID
+            </summary>
+        </member>
+        <member name="P:Application.Models.LicitationApplicationDto.licitationNumber">
+            <summary>
+            Number of applied licitation
+            </summary>
+        </member>
+        <member name="P:Application.Models.LicitationApplicationDto.licitationDate">
+            <summary>
+            Date of applied licitation
+            </summary>
+        </member>
+        <member name="P:Application.Models.LicitationApplicationDto.applierId">
+            <summary>
+            Applier ID
+            </summary>
+        </member>
+        <member name="P:Application.Models.LicitationApplicationDto.applierName">
+            <summary>
+            Applier name
+            </summary>
+        </member>
+        <member name="P:Application.Models.LicitationApplicationDto.applierAdress">
+            <summary>
+            Applier adress
+            </summary>
+        </member>
+        <member name="P:Application.Models.LicitationApplicationDto.priorityId">
+            <summary>
+            Priority ID
+            </summary>
+        </member>
+        <member name="P:Application.Models.LicitationApplicationDto.priorityDescription">
+            <summary>
+            Priority name
+            </summary>
+        </member>
+        <member name="T:Application.Models.LicitationApplicationUpdateDto">
+            <summary>
+            Licitation application update DTO
+            </summary>
+        </member>
+        <member name="P:Application.Models.LicitationApplicationUpdateDto.applicationId">
+            <summary>
+            Application ID
+            </summary>
+        </member>
+        <member name="P:Application.Models.LicitationApplicationUpdateDto.applicationDate">
+            <summary>
+            Application date
+            </summary>
+        </member>
+        <member name="P:Application.Models.LicitationApplicationUpdateDto.appliedLicitationId">
+            <summary>
+            Applied licitation ID
+            </summary>
+        </member>
+        <member name="P:Application.Models.LicitationApplicationUpdateDto.licitationNumber">
+            <summary>
+            Number of applied licitation
+            </summary>
+        </member>
+        <member name="P:Application.Models.LicitationApplicationUpdateDto.licitationDate">
+            <summary>
+            Date of applied licitation
+            </summary>
+        </member>
+        <member name="P:Application.Models.LicitationApplicationUpdateDto.applierId">
+            <summary>
+            Applier ID
+            </summary>
+        </member>
+        <member name="P:Application.Models.LicitationApplicationUpdateDto.applierName">
+            <summary>
+            Applier name
+            </summary>
+        </member>
+        <member name="P:Application.Models.LicitationApplicationUpdateDto.applierAdress">
+            <summary>
+            Applier adress
+            </summary>
+        </member>
+        <member name="P:Application.Models.LicitationApplicationUpdateDto.priorityId">
+            <summary>
+            Priority ID
+            </summary>
+        </member>
+        <member name="T:Application.Models.PriorityConfirmationDto">
+            <summary>
+            Priority confirmation DTO
+            </summary>
+        </member>
+        <member name="P:Application.Models.PriorityConfirmationDto.priorityDescription">
+            <summary>
+            Priority description
+            </summary>
+        </member>
+        <member name="T:Application.Models.PriorityDto">
+            <summary>
+            Priority DTO
+            </summary>
+        </member>
+        <member name="P:Application.Models.PriorityDto.priorityId">
+            <summary>
+            Priority ID
+            </summary>
+        </member>
+        <member name="P:Application.Models.PriorityDto.priorityDescription">
+            <summary>
+            Priority description
+            </summary>
+        </member>
+    </members>
+</doc>
