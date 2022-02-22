@@ -1,3 +1,7 @@
+using LiceWebAPI.Data;
+using LiceWebAPI.Data.Interfaces;
+using LiceWebAPI.Entities.DataContext;
+using LiceWebAPI.ServiceCalls;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -28,10 +32,18 @@ namespace LiceWebAPI
         {
 
             services.AddControllers();
+            services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
+            services.AddScoped<IKontaktOsobaRepository, KontaktOsobaRepository>();
+            services.AddScoped<IFizickoLiceRepository, FizickoLiceRepository>();
+            services.AddScoped<IPravnoLiceRepository, PravnoLiceRepository>();
+            services.AddScoped<ILiceRepository, LiceRepository>();
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "LiceWebAPI", Version = "v1" });
             });
+
+            services.AddScoped<ILoggerService, LoggerServiceMock>();
+            services.AddDbContext<LiceContext>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
