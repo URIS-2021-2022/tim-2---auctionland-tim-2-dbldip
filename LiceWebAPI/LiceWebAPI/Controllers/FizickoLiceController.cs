@@ -14,6 +14,9 @@ using System.Threading.Tasks;
 
 namespace LiceWebAPI.Controllers
 {
+    /// <summary>
+    /// Kontroler za fizičko lice
+    /// </summary>
     [Route("api/fizickoLice")]
     [ApiController]
     [Produces("application/json", "application/xml")]
@@ -24,6 +27,13 @@ namespace LiceWebAPI.Controllers
         private readonly IMapper _mapper;
         private readonly ILoggerService _loggerService;
 
+        /// <summary>
+        /// Konstruktor kontrolera fizičkog lica - DI
+        /// </summary>
+        /// <param name="fizickoLiceRepository">Repository fizičkog lica</param>
+        /// <param name="linkGenerator">Link generator za create zahtev</param>
+        /// <param name="mapper">AutoMapper</param>
+        /// <param name="loggerService">Logger servis</param>
         public FizickoLiceController(IFizickoLiceRepository fizickoLiceRepository, LinkGenerator linkGenerator, IMapper mapper, ILoggerService loggerService)
         {
             _fizickoLiceRepository = fizickoLiceRepository;
@@ -32,6 +42,13 @@ namespace LiceWebAPI.Controllers
             _loggerService = loggerService;
         }
 
+        /// <summary>
+        /// Vraća sva fizička lica
+        /// </summary>
+        /// <returns>Lista fizičkih lica</returns>
+        /// <response code="200">Vraća listu fizičkih lica</response>
+        /// <response code="404">Nije pronađena ni jedno fizičko lice</response>
+        /// 
         [HttpGet]
         [HttpHead]
         public async Task<ActionResult<List<FizickoLiceDto>>> GetAllFizickaLica()
@@ -47,6 +64,14 @@ namespace LiceWebAPI.Controllers
             return Ok(_mapper.Map<IEnumerable<FizickoLiceDto>>(fizickaLica));
         }
 
+        /// <summary>
+        /// Vraća jedno fizičko lice na osnovu ID-a
+        /// </summary>
+        /// <param name="liceId">ID fizičkog lica</param>
+        /// <returns>Fizičko lice</returns>
+        /// <response code="200">Vraća traženo fizičko lice</response>
+        /// <response code="404">Nije pronađeno fizičko lice za uneti ID</response>
+        /// 
         [HttpGet("{liceId}")]
         public async Task<ActionResult<FizickoLiceDto>> GetFizickoLice(Guid liceId)
         {
@@ -60,6 +85,28 @@ namespace LiceWebAPI.Controllers
             return Ok(_mapper.Map<FizickoLiceDto>(fizickoLice));
         }
 
+        /// <summary>
+        /// Kreira novo fizičko lice
+        /// </summary>
+        /// <param name="fizickoLice">Model fizičko lice</param>
+        /// <remarks>
+        /// Primer zahteva za kreiranje novog fizičkog lica \
+        /// POST /api/fizičkoLice \
+        /// {   
+        ///     "brojTelefona": "0694534321", \
+        ///     "brojTelefona2": "0694004321", \
+        ///     "email": "filip@gmail.com", \
+        ///     "brojRacuna": "908 ‑ 10501123 ‑ 97", \
+        ///     "adresaId": "1c989ee3-13b2-4d3b-abeb-c4e6343eace7", \
+        ///     "ime": "Create Filip", \
+        ///     "prezime": "Create Ivanic", \
+        ///     "jmbg": "1253627363526" \
+        ///}
+        /// </remarks>
+        /// <returns>Potvrda o kreiranju fizičkog lica</returns>
+        /// <response code="201">Vraća kreirano fizičko lice</response>
+        /// <response code="500">Desila se greška prilikom unosa novog fizičkog lica</response>
+        /// 
         [Consumes("application/json")]
         [HttpPost]
         public async Task<ActionResult<FizickoLiceCreateDto>> CreateFizickoLice([FromBody] FizickoLiceCreateDto fizickoLice)
@@ -80,6 +127,16 @@ namespace LiceWebAPI.Controllers
             }
         }
 
+        /// <summary>
+        /// Modifikacija fizičkog lica
+        /// </summary>
+        /// <param name="liceId">ID fizičkog lica</param>
+        /// <param name="fizickoLice">Model fizičkog lica</param>
+        /// <returns>Potvrda o modifikaciji fizičkog lica</returns>
+        /// <response code="200">Izmenjeno fizičko lice</response>
+        /// <response code="404">Nije pronađeno fizičko lice za uneti ID</response>
+        /// <response code="500">Serverska greška tokom modifikacije fizičkog lica</response>
+        ///
         [Consumes("application/json")]
         [HttpPut("{liceId}")]
         public async Task<ActionResult<FizickoLiceUpdateDto>> UpdateFizickoLice(Guid liceId, [FromBody] FizickoLiceUpdateDto fizickoLice)
@@ -108,6 +165,15 @@ namespace LiceWebAPI.Controllers
             }
         }
 
+        /// <summary>
+        /// Brisanje fizičkog lica na osnovu ID-a
+        /// </summary>
+        /// <param name="liceId">ID fizičkog lica</param>
+        /// <returns>Status 204 (NoContent)</returns>
+        /// <response code="204">Fizičko lice je uspešno obrisano</response>
+        /// <response code="404">Nije pronađeno fizičko lice za uneti ID</response>
+        /// <response code="500">Serverska greška tokom brisanja fizičkog lica</response>
+        /// 
         [HttpDelete("{liceId}")]
         public async Task<ActionResult> DeleteFizickoLice(Guid liceId)
         {

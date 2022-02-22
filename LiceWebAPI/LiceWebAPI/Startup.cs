@@ -1,4 +1,4 @@
-using LiceWebAPI.Data;
+﻿using LiceWebAPI.Data;
 using LiceWebAPI.Data.Interfaces;
 using LiceWebAPI.Entities.DataContext;
 using LiceWebAPI.ServiceCalls;
@@ -13,7 +13,9 @@ using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Threading.Tasks;
 
 namespace LiceWebAPI
@@ -37,9 +39,48 @@ namespace LiceWebAPI
             services.AddScoped<IFizickoLiceRepository, FizickoLiceRepository>();
             services.AddScoped<IPravnoLiceRepository, PravnoLiceRepository>();
             services.AddScoped<ILiceRepository, LiceRepository>();
-            services.AddSwaggerGen(c =>
+            services.AddSwaggerGen(setup =>
             {
-                c.SwaggerDoc("v1", new OpenApiInfo { Title = "LiceWebAPI", Version = "v1" });
+                /*var securitySchema = new OpenApiSecurityScheme
+                {
+                    Description = "JWT Authorization header using the Bearer scheme. Example: \"Authorization: Bearer {token}\"",
+                    Name = "Authorization",
+                    In = ParameterLocation.Header,
+                    Type = SecuritySchemeType.Http,
+                    Scheme = "bearer",
+                    Reference = new OpenApiReference
+                    {
+                        Type = ReferenceType.SecurityScheme,
+                        Id = "Bearer"
+                    }
+                };*/
+
+                //setup.AddSecurityDefinition("Bearer", securitySchema);
+
+               /* var securityRequirement = new OpenApiSecurityRequirement
+                {
+                    { securitySchema, new[] { "Bearer" } }
+                };*/
+
+                //setup.AddSecurityRequirement(securityRequirement);
+
+                setup.SwaggerDoc("v1",
+                    new OpenApiInfo()
+                    {
+                        Title = "Lice API",
+                        Version = "v1",
+                        Description = "API Lice omogućava unos i pregled podataka o licima.",
+                        Contact = new Microsoft.OpenApi.Models.OpenApiContact
+                        {
+                            Name = "Milоš Jeremić",
+                            Email = "jeremic@uns.ac.rs",
+                            Url = new Uri(Configuration["Swagger:Github"])
+                        }
+                    });
+                //Korisitmo refleksiju za dobijanje XML fajla za komentarima
+                var xmlComments = $"{ Assembly.GetExecutingAssembly().GetName().Name }.xml";
+                var xmlCommentsPath = Path.Combine(AppContext.BaseDirectory, xmlComments);
+                setup.IncludeXmlComments(xmlCommentsPath);
             });
 
             services.AddScoped<ILoggerService, LoggerServiceMock>();
@@ -52,11 +93,16 @@ namespace LiceWebAPI
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
-                app.UseSwagger();
-                app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "LiceWebAPI v1"));
+                
             }
 
             app.UseHttpsRedirection();
+            app.UseSwagger();
+            app.UseSwaggerUI(setupAction =>
+            {
+                setupAction.SwaggerEndpoint("/swagger/v1/swagger.json", "Lice API");
+                setupAction.RoutePrefix = "";
+            });
 
             app.UseRouting();
 
@@ -66,6 +112,8 @@ namespace LiceWebAPI
             {
                 endpoints.MapControllers();
             });
+
+
         }
     }
 }

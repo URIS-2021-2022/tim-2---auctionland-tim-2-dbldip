@@ -7,23 +7,62 @@ using System.Threading.Tasks;
 
 namespace LiceWebAPI.Models.Lice.PravnoLice
 {
+    /// <summary>
+    ///  Dto Update pravno lice
+    /// </summary>
     public class PravnoLiceUpdateDto
     {
+        /// <summary>
+        /// Broj telefona pravnog lica
+        /// </summary>
+        [Required(ErrorMessage = "Obavezno je uneti broj telefona 1!")]
         public string BrojTelefona { get; set; }
+
+        /// <summary>
+        /// Broj telefona 2 pravnog lica
+        /// </summary>
+        [Required(ErrorMessage = "Obavezno je uneti broj telefona 2!")]
         public string BrojTelefona2 { get; set; }
+
+        /// <summary>
+        /// Email pravnog lica
+        /// </summary>
+        [Required(ErrorMessage = "Obavezno je uneti email!")]
         public string Email { get; set; }
+
+        /// <summary>
+        /// Broj računa pravnog lica
+        /// </summary>
+        [Required(ErrorMessage = "Obavezno je uneti broj racuna!")]
         public string BrojRacuna { get; set; }
+
+        /// <summary>
+        /// Adresa id
+        /// </summary>
+        [Required(ErrorMessage = "Obavezno je uneti id adrese!")]
         public Guid AdresaId { get; set; }
 
+        /// <summary>
+        /// Naziv pravnog lica
+        /// </summary>
         [Required(ErrorMessage = "Obavezno je uneti naziv!")]
         public string Naziv { get; set; }
 
+        /// <summary>
+        /// Matični broj pravnog lica
+        /// </summary>
         [Required(ErrorMessage = "Obavezno je uneti maticni broj!")]
         public string Maticnibroj { get; set; }
 
+        /// <summary>
+        /// Faks pravnog lica
+        /// </summary>
         [Required(ErrorMessage = "Obavezno je uneti faks!")]
         public string Faks { get; set; }
 
+        /// <summary>
+        /// Kontakt osoba
+        /// </summary>
         [Required(ErrorMessage = "Obavezno je uneti kontakt osobu!")]
         public Guid KontaktOsobaId { get; set; }
     }

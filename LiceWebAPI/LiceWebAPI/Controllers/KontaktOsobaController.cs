@@ -14,6 +14,9 @@ using System.Threading.Tasks;
 
 namespace LiceWebAPI.Controllers
 {
+    /// <summary>
+    /// Kontroler za kontakt osobu
+    /// </summary>
     [Route("api/kontaktOsoba")]
     [ApiController]
     [Produces("application/json", "application/xml")]
@@ -24,6 +27,13 @@ namespace LiceWebAPI.Controllers
         private readonly IMapper _mapper;
         private readonly ILoggerService _loggerService;
 
+        /// <summary>
+        /// Konstruktor kontrolera pravnog lica - DI
+        /// </summary>
+        /// <param name="kontaktOsobaRepository">Repository kontakt osobe</param>
+        /// <param name="linkGenerator">Link generator za create zahtev</param>
+        /// <param name="mapper">AutoMapper</param>
+        /// <param name="loggerService">Logger servis</param>
         public KontaktOsobaController(IKontaktOsobaRepository kontaktOsobaRepository, LinkGenerator linkGenerator, IMapper mapper, ILoggerService loggerService)
         {
             _kontaktOsobaRepository = kontaktOsobaRepository;
@@ -32,6 +42,13 @@ namespace LiceWebAPI.Controllers
             _loggerService = loggerService;
         }
 
+        /// <summary>
+        /// Vraća sve kontakt osobe
+        /// </summary>
+        /// <returns>Lista kontakt osoba</returns>
+        /// <response code="200">Vraća listu kontakt osoba</response>
+        /// <response code="404">Nije pronađena ni jedna kontakt osoba</response>
+        /// 
         [HttpGet]
         [HttpHead]
         public async Task<ActionResult<List<KontaktOsobaDto>>> GetAllKontaktOsobe()
@@ -47,6 +64,14 @@ namespace LiceWebAPI.Controllers
             return Ok(_mapper.Map<IEnumerable<KontaktOsobaDto>>(kontaktOsobe));
         }
 
+        /// <summary>
+        /// Vraća jednu kontakt osobu na osnovu ID-a
+        /// </summary>
+        /// <param name="kontaktOsobaId">ID kontakt osobe</param>
+        /// <returns>Kontakt osoba</returns>
+        /// <response code="200">Vraća traženu kontakt osobu</response>
+        /// <response code="404">Nije pronađena kontakt osoba za uneti ID</response>
+        /// 
         [HttpGet("{kontaktOsobaId}")]
         public async Task<ActionResult<KontaktOsobaDto>> GetKontaktOsoba(Guid kontaktOsobaId)
         {
@@ -60,6 +85,24 @@ namespace LiceWebAPI.Controllers
             return Ok(_mapper.Map<KontaktOsobaDto>(kontaktOsoba));
         }
 
+        /// <summary>
+        /// Kreira novu kontakt osobu
+        /// </summary>
+        /// <param name="kontaktOsoba">Model kontakt osoba</param>
+        /// <remarks>
+        /// Primer zahteva za kreiranje nove kontakt osobe \
+        /// POST /api/kontaktOsoba \
+        /// {   
+        ///     "ime": "Create Andrija", \
+        ///     "prezime": "Create Matic", \
+        ///     "funkcija": "Create Funkcija 1", \
+        ///     "telefon": "0621525365" \
+        ///}
+        /// </remarks>
+        /// <returns>Potvrda o kreiranju kontakt osobe</returns>
+        /// <response code="201">Vraća kreiranu kontakt osobu</response>
+        /// <response code="500">Desila se greška prilikom unosa nove kontakt osobe</response>
+        /// 
         [Consumes("application/json")]
         [HttpPost]
         public async Task<ActionResult<KontaktOsobaCreateDto>> CreateKontaktOsoba([FromBody] KontaktOsobaCreateDto kontaktOsoba)
@@ -91,6 +134,16 @@ namespace LiceWebAPI.Controllers
             }
         }
 
+        /// <summary>
+        /// Modifikacija kontakt osobe
+        /// </summary>
+        /// <param name="kontaktOsobaId">ID kontakt osobe</param>
+        /// <param name="kontaktOsoba">Model kontakt osobe</param>
+        /// <returns>Potvrda o modifikaciji kontakt osobe</returns>
+        /// <response code="200">Izmenjena kontakt osoba</response>
+        /// <response code="404">Nije pronađena kontakt osoba za uneti ID</response>
+        /// <response code="500">Serverska greška tokom modifikacije kontakt osobe</response>
+        ///
         [Consumes("application/json")]
         [HttpPut("{kontaktOsobaId}")]
         public async Task<ActionResult<KontaktOsobaUpdateDto>> UpdateKontaktOsoba(Guid kontaktOsobaId, [FromBody] KontaktOsobaUpdateDto kontaktOsoba)
@@ -130,6 +183,15 @@ namespace LiceWebAPI.Controllers
             }
         }
 
+        /// <summary>
+        /// Brisanje kontakt osobe na osnovu ID-a
+        /// </summary>
+        /// <param name="kontaktOsobaId">ID kontakt osobe</param>
+        /// <returns>Status 204 (NoContent)</returns>
+        /// <response code="204">Kontakt osoba je uspešno obrisana</response>
+        /// <response code="404">Nije pronađena kontakt osoba za uneti ID</response>
+        /// <response code="500">Serverska greška tokom brisanja kontakt osobe</response>
+        /// 
         [HttpDelete("{kontaktOsobaId}")]
         public async Task<ActionResult> DeleteKontaktOsoba(Guid kontaktOsobaId)
         {
