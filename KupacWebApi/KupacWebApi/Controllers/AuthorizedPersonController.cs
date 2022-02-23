@@ -26,7 +26,7 @@ namespace KupacWebApi.Controllers
         /// <summary>
         /// BuyerController constructor
         /// </summary>
-        /// <param name="authorizedPersonRepository">Application repository</param>
+        /// <param name="authorizedPersonRepository">Authorized person repository</param>
         /// <param name="linkGenerator">Link generator</param>
         /// <param name="mapper">AutoMapper</param>
         ///  /// <param name="loggerService">Logger Service</param>
@@ -64,8 +64,8 @@ namespace KupacWebApi.Controllers
         /// <summary>
         /// Returns AuthorizedPerson by ID
         /// </summary>
-        /// <param name="authorizedPersonId">AuthorizedPerson ID</param>
-        /// <returns>Application</returns>
+        /// <param name="authorizedPersonId">Authorized Person ID</param>
+        /// <returns>Authorized Person</returns>
         /// <response code="200">Returns AuthorizedPerson by ID</response>
         /// <response code="404">No AuthorizedPerson by ID found</response>
         [HttpGet("{authorizedPersonId}")]

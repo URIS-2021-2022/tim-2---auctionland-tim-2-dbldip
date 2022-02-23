@@ -29,9 +29,9 @@ namespace KupacWebApi.Controllers
 
 
         /// <summary>
-        /// BuyerController constructor
+        /// Buyer Controller constructor
         /// </summary>
-        /// <param name="buyerRepository">Application repository</param>
+        /// <param name="buyerRepository">Buyer repository</param>
         /// <param name="linkGenerator">Link generator</param>
         /// <param name="mapper">AutoMapper</param>
         ///  /// <param name="loggerService">Logger Service</param>

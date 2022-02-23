@@ -8,7 +8,7 @@
             <summary>
             BuyerController constructor
             </summary>
-            <param name="authorizedPersonRepository">Application repository</param>
+            <param name="authorizedPersonRepository">Authorized person repository</param>
             <param name="linkGenerator">Link generator</param>
             <param name="mapper">AutoMapper</param>
              /// <param name="loggerService">Logger Service</param>
@@ -25,8 +25,8 @@
             <summary>
             Returns AuthorizedPerson by ID
             </summary>
-            <param name="authorizedPersonId">AuthorizedPerson ID</param>
-            <returns>Application</returns>
+            <param name="authorizedPersonId">Authorized Person ID</param>
+            <returns>Authorized Person</returns>
             <response code="200">Returns AuthorizedPerson by ID</response>
             <response code="404">No AuthorizedPerson by ID found</response>
         </member>
@@ -67,9 +67,9 @@
         </member>
         <member name="M:KupacWebApi.Controllers.BuyerController.#ctor(KupacWebApi.Data.IBuyerRepository,Microsoft.AspNetCore.Routing.LinkGenerator,AutoMapper.IMapper,KupacWebApi.ServiceCalls.ILoggerService)">
             <summary>
-            BuyerController constructor
+            Buyer Controller constructor
             </summary>
-            <param name="buyerRepository">Application repository</param>
+            <param name="buyerRepository">Buyer repository</param>
             <param name="linkGenerator">Link generator</param>
             <param name="mapper">AutoMapper</param>
              /// <param name="loggerService">Logger Service</param>
