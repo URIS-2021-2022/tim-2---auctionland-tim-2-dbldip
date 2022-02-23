@@ -10,6 +10,9 @@ using System.Threading.Tasks;
 
 namespace AppUserWebAPI.Controllers
 {
+    /// <summary>
+    /// Controller class that manages type of user data
+    /// </summary>
     [ApiController]
     [Route("api/typeofuser")]
     public class TypeOfUserController : ControllerBase
@@ -18,13 +21,22 @@ namespace AppUserWebAPI.Controllers
         private readonly LinkGenerator linkGenerator;
         private readonly IMapper mapper;
 
+        /// <summary>
+        /// Controller of TypeOfUserController
+        /// </summary>
+        /// <param name="typeOfUserRepository"></param>
+        /// <param name="linkGenerator"></param>
+        /// <param name="mapper"></param>
         public TypeOfUserController(ITypeOfUserRepository typeOfUserRepository, LinkGenerator linkGenerator, IMapper mapper)
         {
             this.typeOfUserRepository = typeOfUserRepository;
             this.linkGenerator = linkGenerator;
             this.mapper = mapper;
         }
-
+        /// <summary>
+        /// Manages getting type data from database
+        /// </summary>
+        /// <returns>List of types</returns>
         [HttpGet]
         public ActionResult<List<TypeOfUserDto>> GetTypes()
         {
@@ -33,7 +45,11 @@ namespace AppUserWebAPI.Controllers
                 return NoContent();
             return Ok(mapper.Map<List<TypeOfUserDto>>(types));
         }
-
+        /// <summary>
+        /// Manages getting data from the database with specified id
+        /// </summary>
+        /// <param name="typeId"></param>
+        /// <returns>returns a type with passed id</returns>
         [HttpGet("{typeId}")]
         public ActionResult<TypeOfUserDto> GetTypeOfUserById(Guid typeId)
         {
@@ -42,6 +58,5 @@ namespace AppUserWebAPI.Controllers
                 return NoContent();
             return Ok(mapper.Map<TypeOfUserDto>(type));
         }
-        //POKRENUTI MIGRACIJE, DOVRSITI ENDPOINTE!
     }
 }

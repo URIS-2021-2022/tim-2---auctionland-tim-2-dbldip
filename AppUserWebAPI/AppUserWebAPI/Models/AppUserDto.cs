@@ -5,6 +5,9 @@ using System.Threading.Tasks;
 
 namespace AppUserWebAPI.Models
 {
+    /// <summary>
+    /// Dto sent to user via response
+    /// </summary>
     public class AppUserDto
     {
         public string appUserFullName { get; set; }

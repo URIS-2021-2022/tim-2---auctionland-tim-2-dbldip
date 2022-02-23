@@ -13,7 +13,9 @@ using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -28,7 +30,6 @@ namespace AppUserWebAPI
 
         public IConfiguration Configuration { get; }
 
-        // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
 
@@ -50,9 +51,25 @@ namespace AppUserWebAPI
                         ValidateAudience = false
                     };
                 });
-            services.AddSwaggerGen(c =>
+            services.AddSwaggerGen(setup =>
             {
-                c.SwaggerDoc("v1", new OpenApiInfo { Title = "AppUserWebAPI", Version = "v1" });
+
+                setup.SwaggerDoc("v1",
+                    new OpenApiInfo()
+                    {
+                        Title = "AppUser API",
+                        Version = "v1",
+                        Description = "AppUser API manages HTTP Request for app user data, it provides GET, POST, PUT,DELETE endpoints and authentication.",
+                        Contact = new Microsoft.OpenApi.Models.OpenApiContact
+                        {
+                            Name = "Milan Novcic",
+                            Email = "novcic.milan17@uns.ac.rs",
+                            Url = new Uri("https://github.com/novcicmilan")
+                        }
+                    });
+                var xmlComments = $"{ Assembly.GetExecutingAssembly().GetName().Name }.xml";
+                var xmlCommentsPath = Path.Combine(AppContext.BaseDirectory, xmlComments);
+                setup.IncludeXmlComments(xmlCommentsPath);
             });
 
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
@@ -68,9 +85,13 @@ namespace AppUserWebAPI
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
-                app.UseSwagger();
-                app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "AppUserWebAPI v1"));
             }
+            app.UseSwagger();
+            app.UseSwaggerUI(setupAction =>
+            {
+                setupAction.SwaggerEndpoint("/swagger/v1/swagger.json", "AppUser API");
+                setupAction.RoutePrefix = "";
+            });
 
             app.UseHttpsRedirection();
 
