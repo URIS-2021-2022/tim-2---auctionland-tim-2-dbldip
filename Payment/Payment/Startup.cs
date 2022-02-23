@@ -14,6 +14,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using PaymentService.ServiceCalls;
+using System.Reflection;
+using System.IO;
 
 namespace PaymentService
 {
@@ -31,9 +33,48 @@ namespace PaymentService
         {
 
             services.AddControllers();
-            services.AddSwaggerGen(c =>
+            services.AddSwaggerGen(setup =>
             {
-                c.SwaggerDoc("v1", new OpenApiInfo { Title = "PaymentService", Version = "v1" });
+                /*var securitySchema = new OpenApiSecurityScheme
+                {
+                    Description = "JWT Authorization header using the Bearer scheme. Example: \"Authorization: Bearer {token}\"",
+                    Name = "Authorization",
+                    In = ParameterLocation.Header,
+                    Type = SecuritySchemeType.Http,
+                    Scheme = "bearer",
+                    Reference = new OpenApiReference
+                    {
+                        Type = ReferenceType.SecurityScheme,
+                        Id = "Bearer"
+                    }
+                };*/
+
+                //setup.AddSecurityDefinition("Bearer", securitySchema);
+
+                /* var securityRequirement = new OpenApiSecurityRequirement
+                 {
+                     { securitySchema, new[] { "Bearer" } }
+                 };*/
+
+                //setup.AddSecurityRequirement(securityRequirement);
+
+                setup.SwaggerDoc("v1",
+                    new OpenApiInfo()
+                    {
+                        Title = "Payment API",
+                        Version = "v1",
+                        Description = "Payment API allows creation and read of all payments",
+                        Contact = new Microsoft.OpenApi.Models.OpenApiContact
+                        {
+                            Name = "David Fejes",
+                            Email = "david.fejes@uns.ac.rs",
+                            Url = new Uri(Configuration["Swagger:Github"])
+                        }
+                    });
+                //Korisitmo refleksiju za dobijanje XML fajla za komentarima
+                var xmlComments = $"{ Assembly.GetExecutingAssembly().GetName().Name }.xml";
+                var xmlCommentsPath = Path.Combine(AppContext.BaseDirectory, xmlComments);
+                setup.IncludeXmlComments(xmlCommentsPath);
             });
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
             services.AddScoped<IPaymentRepository, PaymentRepository>();
@@ -49,11 +90,16 @@ namespace PaymentService
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
-                app.UseSwagger();
-                app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "PaymentService v1"));
             }
 
             app.UseHttpsRedirection();
+
+            app.UseSwagger();
+            app.UseSwaggerUI(setupAction =>
+            {
+                setupAction.SwaggerEndpoint("/swagger/v1/swagger.json", "Payment API");
+                setupAction.RoutePrefix = "";
+            });
 
             app.UseRouting();
 

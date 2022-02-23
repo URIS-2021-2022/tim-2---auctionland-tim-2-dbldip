@@ -5,6 +5,11 @@
   <RuntimeIdentifier>win10-x64</RuntimeIdentifier>
   </PropertyGroup>
 
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <DocumentationFile>PaymentService.xml</DocumentationFile>
+    <NoWarn>1701;1702;1591;</NoWarn>
+  </PropertyGroup>
+
   <ItemGroup>
     <Compile Remove="Migrations\**" />
     <Content Remove="Migrations\**" />
@@ -23,6 +28,10 @@
     <Compile Include="Migrations\20220221225726_AddedPlots.Designer.cs" />
     <Compile Include="Migrations\20220222124908_ChangedEntities.cs" />
     <Compile Include="Migrations\20220222124908_ChangedEntities.Designer.cs" />
+    <Compile Include="Migrations\20220222224012_UpdatedEntities.cs" />
+    <Compile Include="Migrations\20220222224012_UpdatedEntities.Designer.cs" />
+    <Compile Include="Migrations\20220222233327_EditedEntities.cs" />
+    <Compile Include="Migrations\20220222233327_EditedEntities.Designer.cs" />
     <Compile Include="Migrations\PaymentContextModelSnapshot.cs" />
   </ItemGroup>
 

@@ -46,7 +46,6 @@ namespace PaymentService.Data
 
         public void UpdateExchangeRate(ExchangeRate exchangeRate)
         {
-            throw new NotImplementedException();
         }
     }
 }

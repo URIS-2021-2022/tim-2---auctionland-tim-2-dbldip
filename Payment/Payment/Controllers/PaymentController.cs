@@ -23,6 +23,13 @@ namespace PaymentService.Controllers
         private readonly IMapper mapper;
         private readonly ILoggerService loggerService;
 
+        /// <summary>
+        /// PaymentController constructor
+        /// </summary>
+        /// <param name="paymentRepository">Payment repository</param>
+        /// <param name="linkGenerator">Link generator</param>
+        /// <param name="mapper">AutoMapper</param>
+        /// <param name="loggerService">Logger service</param>
         public PaymentController(IPaymentRepository paymentRepository, LinkGenerator linkGenerator, IMapper mapper, ILoggerService loggerService)
         {
             this.paymentRepository = paymentRepository;
@@ -31,6 +38,12 @@ namespace PaymentService.Controllers
             this.loggerService = loggerService;
         }
 
+        /// <summary>
+        /// Return all payments
+        /// </summary>
+        /// <returns>List of payments</returns>
+        /// <response code="200">Returns all payments</response>
+        /// <response code="404">No payment found</response>
         [HttpGet]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
@@ -40,28 +53,42 @@ namespace PaymentService.Controllers
 
             if (payments == null || payments.Count == 0)
             {
-                this.loggerService.LogMessage("List of payments is empty", "Get", LogLevel.Warning);
+                loggerService.LogMessage("List of payments is empty", "Get", LogLevel.Warning);
                 return NoContent();
             }
 
-            this.loggerService.LogMessage("List of payments returned", "Get", LogLevel.Information);
+            loggerService.LogMessage("List of payments returned", "Get", LogLevel.Information);
             return Ok(mapper.Map<List<PaymentDto>>(payments));
         }
 
+        /// <summary>
+        /// Returns payment by ID
+        /// </summary>
+        /// <param name="paymentId">Payment ID</param>
+        /// <returns>Payment</returns>
+        /// <response code="200">Returns payment by ID</response>
+        /// <response code="404">No payment by ID found</response>
         [HttpGet("{paymentId}")]
         public ActionResult<PaymentDto> GetPayment(Guid paymentId)
         {
             var payment = paymentRepository.GetPaymentById(paymentId);
             if (payment == null)
             {
-                this.loggerService.LogMessage("There is no payment with that id", "Get", LogLevel.Warning);
+                loggerService.LogMessage("There is no payment with that id", "Get", LogLevel.Warning);
                 return NoContent();
             }
 
-            this.loggerService.LogMessage("Payment returned", "Get", LogLevel.Information);
+            loggerService.LogMessage("Payment returned", "Get", LogLevel.Information);
             return Ok(mapper.Map<PaymentDto>(payment));
         }
 
+        /// <summary>
+        /// Create new payment
+        /// </summary>
+        /// <param name="payment">Creation payment DTO</param>
+        /// <returns>Confirmation of created applipaymentcation</returns>
+        /// <response code="201">Returns confirmation of created payment</response>
+        /// <response code="500">Payment creation error</response>
         [HttpPost]
         public ActionResult<PaymentConfirmationDto> CreatePayment([FromBody] PaymentCreationDto payment)
         {
@@ -70,24 +97,44 @@ namespace PaymentService.Controllers
             paymentRepository.SaveChanges();
 
             string location = linkGenerator.GetPathByAction(action: "GetPayment", controller: "Payment", values: new { paymentId = confirmation.paymentId });
-            this.loggerService.LogMessage("Payment created", "Post", LogLevel.Information);
+            loggerService.LogMessage("Payment created", "Post", LogLevel.Information);
             return Created(location, mapper.Map<PaymentConfirmationDto>(confirmation));
         }
 
+        /// <summary>
+        /// Payment modify
+        /// </summary>
+        /// <param name="payment">Update payment DTO</param>
+        /// <returns>Confirmation of updated payment</returns>
+        /// <response code="200">Returns confirmation of updated payment</response>
+        /// <response code="400">Bad request</response>
+        /// <response code="404">Not found payment by ID</response>
+        /// <response code="500">Server error</response>
         [HttpPut]
-        public ActionResult<PaymentDto> UpdatePayment(PaymentUpdateDto payment)
+        public ActionResult<PaymentDto> UpdatePayment([FromBody] PaymentUpdateDto payment)
         {
             var oldPayment = paymentRepository.GetPaymentById(payment.paymentId);
             if (oldPayment == null)
+            {
+                loggerService.LogMessage("There is no payment with that id", "Get", LogLevel.Warning);
                 return NotFound();
+            }
 
             Payment paymentEntity = mapper.Map<Payment>(payment);
             mapper.Map(paymentEntity, oldPayment);
             paymentRepository.SaveChanges();
-            this.loggerService.LogMessage("Payment updated", "Put", LogLevel.Information);
+            loggerService.LogMessage("Payment updated", "Put", LogLevel.Information);
             return Ok(mapper.Map<PaymentDto>(oldPayment));
         }
 
+        /// <summary>
+        /// Delete payment
+        /// </summary>
+        /// <param name="paymentId">Payment ID</param>
+        /// <returns>Status 204 (NoContent)</returns>
+        /// <response code="204">Payment deleted</response>
+        /// <response code="404">Payment by ID not found</response>
+        /// <response code="500">Server error</response>
         [HttpDelete("{paymentId}")]
         public IActionResult DeletePayment(Guid paymentId)
         {
@@ -95,11 +142,14 @@ namespace PaymentService.Controllers
             {
                 var paymentToDelete = paymentRepository.GetPaymentById(paymentId);
                 if (paymentToDelete == null)
+                {
+                    loggerService.LogMessage("There is no payment with that id", "Get", LogLevel.Warning);
                     return NotFound();
+                }
 
                 paymentRepository.DeletePayment(paymentId);
                 paymentRepository.SaveChanges();
-                this.loggerService.LogMessage("Payment deleted", "Delete", LogLevel.Information);
+                loggerService.LogMessage("Payment deleted", "Delete", LogLevel.Information);
                 return NoContent();
             }
             catch (Exception e)
