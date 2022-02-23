@@ -159,7 +159,7 @@ namespace AdresaWebAPI.Controllers
             }
             catch(Exception ex)
             {
-                this.loggerService.LogMessage("Error while updating country", "Delete", LogLevel.Error);
+                this.loggerService.LogMessage("Error while deleting country", "Delete", LogLevel.Error);
                 return StatusCode(StatusCodes.Status500InternalServerError, "Delete Error!");
             }
         }
