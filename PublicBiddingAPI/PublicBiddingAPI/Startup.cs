@@ -39,8 +39,7 @@ namespace PublicBiddingAPI
                     {
                         Title = "PublicBidding API",
                         Version = "1",
-                        //Često treba da dodamo neke dodatne informacije
-                        Description = "Pomocu ovog API-ja moze da se kreira javno nadmetanje, da se vrsi modifikacija kao i pregled kreiranih javnih nadmetanja i statusa i tipova javnih nadmetanja.",
+                        Description = "This API is used to create, update, delete and get all public biddings.",
                         Contact = new OpenApiContact
                         {
                             Name = "Milan Novcic",
@@ -49,13 +48,10 @@ namespace PublicBiddingAPI
                         }
                     });
 
-                //Pomocu refleksije dobijamo ime XML fajla sa komentarima (ovako smo ga nazvali u Project -> Properties)
                 var xmlComments = $"{ Assembly.GetExecutingAssembly().GetName().Name }.xml";
 
-                //Pravimo putanju do XML fajla sa komentarima
                 var xmlCommentsPath = Path.Combine(AppContext.BaseDirectory, xmlComments);
 
-                //Govorimo swagger-u gde se nalazi dati xml fajl sa komentarima
                 setupAction.IncludeXmlComments(xmlCommentsPath);
             });
             //ADDING AUTOMAPPER
@@ -80,9 +76,8 @@ namespace PublicBiddingAPI
 
             app.UseSwaggerUI(setupAction =>
             {
-                //Podesavamo endpoint gde Swagger UI moze da pronadje OpenAPI specifikaciju
                 setupAction.SwaggerEndpoint("/swagger/PublicBiddingMicroService/swagger.json", "PublicBidding API");
-                setupAction.RoutePrefix = ""; //Dokumentacija ce sada biti dostupna na root-u (ne mora da se pise /swagger)
+                setupAction.RoutePrefix = "";
             });
 
             app.UseHttpsRedirection();

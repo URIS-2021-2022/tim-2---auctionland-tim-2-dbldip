@@ -3,6 +3,9 @@ using System.ComponentModel.DataAnnotations;
 
 namespace PublicBiddingAPI.Entities
 {
+    /// <summary>
+    /// Entity that serves as template for root table 
+    /// </summary>
     public class PublicBiddingWithoutLists
     {
         [Key]

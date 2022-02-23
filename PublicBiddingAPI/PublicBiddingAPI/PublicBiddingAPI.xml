@@ -4,5 +4,401 @@
         <name>PublicBiddingAPI</name>
     </assembly>
     <members>
+        <member name="T:PublicBiddingAPI.Controllers.PublicBiddingController">
+            <summary>
+            Controller class that manages Public Biddings, provides multiple GET methods, POST, PUT and DELETE endpoints also.
+            </summary>
+        </member>
+        <member name="M:PublicBiddingAPI.Controllers.PublicBiddingController.#ctor(PublicBiddingAPI.Data.IPublicBiddingRepository,PublicBiddingAPI.Data.ITypeOfPublicBiddingRepository,Microsoft.AspNetCore.Routing.LinkGenerator,AutoMapper.IMapper)">
+            <summary>
+            Constructor of a PublicBiddingController, 
+            </summary>
+            <param name="publicBiddingRepository">Public bidding repository</param>
+            <param name="linkGenerator">Link generator for create request</param>
+            <param name="mapper">AutoMapper</param>
+            <param name="typeOfPublicBiddingRepository">Repository that manages types data</param>
+        </member>
+        <member name="M:PublicBiddingAPI.Controllers.PublicBiddingController.GetAllPublicBiddings">
+            <summary>
+            Returns all PublicBidding data when requested
+            </summary>
+            <returns>List of public biddings</returns>
+            <response code="200">Returns list of types</response>
+            <response code="404">Could not find any stored data</response>
+        </member>
+        <member name="M:PublicBiddingAPI.Controllers.PublicBiddingController.GetPublicBidding(System.Guid)">
+            <summary>
+            Returns certain public bidding when requested, which type is specified with correct id param in the request url
+            </summary>
+            <param name="biddingId">Buyer Id</param>
+            <returns>public bidding</returns>
+            <response code="200">Returns public bidding</response>
+            <response code="404">Could not find any stored data</response>
+        </member>
+        <member name="M:PublicBiddingAPI.Controllers.PublicBiddingController.CreatePublicBidding(PublicBiddingAPI.Models.PublicBiddingCreationDto)">
+             <summary>
+            Endpoint that manages creating public bidding
+             </summary>
+             <param name="publicBidding">Public bidding wiht new values</param>
+             /// <remarks>
+             Example of POST request\
+             POST /api/publicBidding \
+             {   
+             "date":"2018-12-10T00:00:00.000Z",\
+            "startingTime": "2018-12-10T13:45:00.000Z",\
+            "endingTime":"2018-12-10T15:45:00.000Z",\
+            "plotIds":["9c87cb08-dbf6-41cc-bea3-4070429867d0"],\
+            "startingPricePerHectare":500,\
+            "excepted": false,\
+            "typeOfPublicBiddingName": "Javno nadmetanje",\
+            "bestBid":600,\
+            "bestBidderId": "5adf06b6-605c-40b2-92bc-5fff5ca3d6f8",\
+            "cadastralMunicipalityId" : "c0bf531d-f461-4936-bba4-a5375a75bd02",\
+            "leasePeriod":2,\
+            "appliedBuyersId":["5adf06b6-605c-40b2-92bc-5fff5ca3d6f8"],\
+            "biddersId":["92c0db66-b124-4eed-8d3f-ba5ce3e1db8e"],\
+            "numbOfParticipants": 1,\
+            "deposit":300,\
+            "round":4 \
+            }
+             </remarks>
+             <returns>Public bidding confirmation</returns>
+             <response code="201">Public bidding confirmation</response>
+             <response code="409">Conflict when creating</response>
+        </member>
+        <member name="M:PublicBiddingAPI.Controllers.PublicBiddingController.GetPublicBiddingsByBuyer(System.Guid)">
+            <summary>
+            Returns list of public biddings which were won by a certain buyer, specified with correct id param in the request url
+            </summary>
+            <param name="buyerId">Buyer Id</param>
+            <returns>List of public bidding</returns>
+            <response code="200">Returns list of public biddings</response>
+            <response code="404">Could not find any stored data</response>
+        </member>
+        <member name="M:PublicBiddingAPI.Controllers.PublicBiddingController.GetPublicBiddingsByAppliedBuyer(System.Guid)">
+            <summary>
+            Returns list of public biddings in which a specified buyer is applied to, specified with correct id param in the request url
+            </summary>
+            <param name="buyerId">Buyer Id</param>
+            <returns>List of public bidding</returns>
+            <response code="200">Returns list of public biddings</response>
+            <response code="404">Could not find any stored data</response>
+        </member>
+        <member name="M:PublicBiddingAPI.Controllers.PublicBiddingController.GetPublicBiddingsByBidder(System.Guid)">
+            <summary>
+            Returns list of public biddings in which a specified bidder is competing in, specified with correct id param in the request url
+            </summary>
+            <param name="bidderId">Bidder Id</param>
+            <returns>List of public bidding</returns>
+            <response code="200">Returns list of public biddings</response>
+            <response code="404">Could not find any stored data</response>
+        </member>
+        <member name="M:PublicBiddingAPI.Controllers.PublicBiddingController.GetPublicBiddingsByCadastralMunicipality(System.Guid)">
+            <summary>
+            Returns list of public biddings which are held in specified cadastral municipality, specified with correct id param in the request url
+            </summary>
+            <param name="municipalityId">Municipality Id</param>
+            <returns>List of public bidding</returns>
+            <response code="200">Returns list of public biddings</response>
+            <response code="404">Could not find any stored data</response>
+        </member>
+        <member name="M:PublicBiddingAPI.Controllers.PublicBiddingController.GetPublicBiddingsByStartingPricePerHectare(System.Double)">
+            <summary>
+            Returns list of public biddings that have specified starting price per hectare, specified with correct id param in the request url
+            </summary>
+            <param name="price">Price</param>
+            <returns>List of public bidding</returns>
+            <response code="200">Returns list of public biddings</response>
+            <response code="404">Could not find any stored data</response>
+        </member>
+        <member name="M:PublicBiddingAPI.Controllers.PublicBiddingController.GetPublicBiddingsByLeasePeriod(System.Double)">
+            <summary>
+            Returns list of public biddings that have specified lease period, specified with correct id param in the request url
+            </summary>
+            <param name="period">Lease period</param>
+            <returns>List of public bidding</returns>
+            <response code="200">Returns list of public biddings</response>
+            <response code="404">Could not find any stored data</response>
+        </member>
+        <member name="M:PublicBiddingAPI.Controllers.PublicBiddingController.DeletePublicBidding(System.Guid)">
+             <summary>
+            Endpoint that manages deleting specified public bidding
+             </summary>
+             <param name="publicBiddingId">Public bidding Id</param>
+             <returns>Text message</returns>
+             <response code="200">Message</response>
+             <response code="404">Could not find any stored data</response>
+        </member>
+        <member name="M:PublicBiddingAPI.Controllers.PublicBiddingController.UpdatePublicBidding(PublicBiddingAPI.Models.PublicBiddingUpdateDto)">
+             <summary>
+            Endpoint that manages updating specified public bidding
+             </summary>
+             <param name="publicBidding">Public bidding wiht new values</param>
+             /// <remarks>
+             Example of PUT request\
+             PUT /api/publicBidding \
+             {   
+             "publicBiddingId" : "03b08923-d9f8-4f55-9fd2-08d9f325c5e2",\
+             "date":"2018-12-10T00:00:00.000Z",\
+            "startingTime": "2018-12-10T13:45:00.000Z",\
+            "endingTime":"2018-12-10T15:45:00.000Z",\
+            "plotIds":["9c87cb08-dbf6-41cc-bea3-4070429867d0"],\
+            "startingPricePerHectare":900,\
+            "excepted": false,\
+            "typeOfPublicBiddingName": "Javno nadmetanje",\
+            "bestBid":600,\
+            "bestBidderId": "5adf06b6-605c-40b2-92bc-5fff5ca3d6f8",\
+            "cadastralMunicipalityId" : "c0bf531d-f461-4936-bba4-a5375a75bd02",\
+            "leasePeriod":5,\
+            "appliedBuyersId":["5adf06b6-605c-40b2-92bc-5fff5ca3d6f8"],\
+            "biddersId":["92c0db66-b124-4eed-8d3f-ba5ce3e1db8e"],\
+            "numbOfParticipants": 1,\
+            "deposit":300,\
+            "round":4 \
+            }
+             </remarks>
+             <returns>Public bidding confirmation</returns>
+             <response code="200">Public bidding confirmation</response>
+             <response code="404">Could not find any stored data</response>
+        </member>
+        <member name="T:PublicBiddingAPI.Controllers.TypeOfPublicBiddingController">
+            <summary>
+            Controller class that manages Types of Public Biddings, only provides GET methods since these are permanent values for types..
+            </summary>
+        </member>
+        <member name="M:PublicBiddingAPI.Controllers.TypeOfPublicBiddingController.#ctor(PublicBiddingAPI.Data.ITypeOfPublicBiddingRepository,AutoMapper.IMapper)">
+            <summary>
+            Constructor of a TypeOfPublicBiddingController
+            </summary>
+            <param name="typeOfPublicBiddingRepository">Repository that manages types data</param>
+            <param name="mapper">AutoMapper</param>
+        </member>
+        <member name="M:PublicBiddingAPI.Controllers.TypeOfPublicBiddingController.getAllTypes">
+            <summary>
+            Returns all types data when requested
+            </summary>
+            <returns>List of types of public bidding</returns>
+            <response code="200">Returns list of types</response>
+            <response code="404">Could not find any stored data</response>
+        </member>
+        <member name="M:PublicBiddingAPI.Controllers.TypeOfPublicBiddingController.getTypeById(System.Guid)">
+            <summary>
+            Returns certain type when requested, which type is specified with correct id param in the request url
+            </summary>
+            <param name="typeId">ID of type</param>
+            <returns>Type of public bidding</returns>
+            <response code="200">Returns type</response>
+            <response code="404">Could not find any stored data</response>
+        </member>
+        <member name="T:PublicBiddingAPI.Entities.BestBidder">
+            <summary>
+            Best bidder - winner of public bidding, used as template for a table in a database
+            </summary>
+        </member>
+        <member name="P:PublicBiddingAPI.Entities.BestBidder.publicBiddingId">
+            <summary>
+            Id of public bidding in which the buyer won
+            </summary>
+        </member>
+        <member name="P:PublicBiddingAPI.Entities.BestBidder.bestBidderId">
+            <summary>
+            Id of winning buyer
+            </summary>
+        </member>
+        <member name="T:PublicBiddingAPI.Entities.Bidder">
+            <summary>
+            Bidder entity, used as template for a table that connects public bidding with applied bidders
+            </summary>
+        </member>
+        <member name="P:PublicBiddingAPI.Entities.Bidder.publicBiddingId">
+            <summary>
+            Public bidding in which bidders are competing
+            </summary>
+        </member>
+        <member name="P:PublicBiddingAPI.Entities.Bidder.bidderId">
+            <summary>
+            bidder that competes in specified public bidding
+            </summary>
+        </member>
+        <member name="T:PublicBiddingAPI.Entities.Buyer">
+            <summary>
+            Buyer entity, used as template for a table that connects public bidding with applied buyers
+            </summary>
+        </member>
+        <member name="P:PublicBiddingAPI.Entities.Buyer.publicBiddingId">
+            <summary>
+            Public bidding which buyers are applied to
+            </summary>
+        </member>
+        <member name="P:PublicBiddingAPI.Entities.Buyer.buyerId">
+            <summary>
+            Buyer that is applied to specified public bidding
+            </summary>
+        </member>
+        <member name="T:PublicBiddingAPI.Entities.CadastralMunicipality">
+            <summary>
+            Cadastral Municipality in which public bidding is being held
+            </summary>
+        </member>
+        <member name="P:PublicBiddingAPI.Entities.CadastralMunicipality.cadastralMuniciplaityId">
+            <summary>
+            Id of cadastral municipality
+            </summary>
+        </member>
+        <member name="P:PublicBiddingAPI.Entities.CadastralMunicipality.cadastralMunicipalityName">
+            <summary>
+            Name of cadastral municipality
+            </summary>
+        </member>
+        <member name="T:PublicBiddingAPI.Entities.Plot">
+            <summary>
+            Connection entity between public bidding and plots that are being auctioned
+            </summary>
+        </member>
+        <member name="P:PublicBiddingAPI.Entities.Plot.publicBiddingId">
+            <summary>
+            Public bidding that plots are being auctioned on
+            </summary>
+        </member>
+        <member name="P:PublicBiddingAPI.Entities.Plot.plotId">
+            <summary>
+            Id of a plot that is being auctioned
+            </summary>
+        </member>
+        <member name="T:PublicBiddingAPI.Entities.PublicBidding">
+            <summary>
+            Public Bidding Entity
+            </summary>
+        </member>
+        <member name="P:PublicBiddingAPI.Entities.PublicBidding.publicBiddingId">
+            <summary>
+            Id of public bidding
+            </summary>
+        </member>
+        <member name="P:PublicBiddingAPI.Entities.PublicBidding.date">
+            <summary>
+            Date of public bidding
+            </summary>
+        </member>
+        <member name="P:PublicBiddingAPI.Entities.PublicBidding.startingTime">
+            <summary>
+            Starting time of public bidding
+            </summary>
+        </member>
+        <member name="P:PublicBiddingAPI.Entities.PublicBidding.endingTime">
+            <summary>
+            ending time ofpublic bidding
+            </summary>
+        </member>
+        <member name="P:PublicBiddingAPI.Entities.PublicBidding.plots">
+            <summary>
+            List of plots that are auctioned
+            </summary>
+        </member>
+        <member name="P:PublicBiddingAPI.Entities.PublicBidding.startingPricePerHectare">
+            <summary>
+            Starting price of hectare
+            </summary>
+        </member>
+        <member name="P:PublicBiddingAPI.Entities.PublicBidding.typeOfPublicBidding">
+            <summary>
+            Type of public bidding
+            </summary>
+        </member>
+        <member name="P:PublicBiddingAPI.Entities.PublicBidding.bestBid">
+            <summary>
+            Best bid
+            </summary>
+        </member>
+        <member name="P:PublicBiddingAPI.Entities.PublicBidding.bestBidder">
+            <summary>
+            Winner of bidding
+            </summary>
+        </member>
+        <member name="P:PublicBiddingAPI.Entities.PublicBidding.cadastralMunicipality">
+            <summary>
+            Cadastral Municipality in which bidding is being held
+            </summary>
+        </member>
+        <member name="P:PublicBiddingAPI.Entities.PublicBidding.leasePeriod">
+            <summary>
+            Lease period of plots 
+            </summary>
+        </member>
+        <member name="P:PublicBiddingAPI.Entities.PublicBidding.appliedBuyers">
+            <summary>
+            List of applied buyers
+            </summary>
+        </member>
+        <member name="P:PublicBiddingAPI.Entities.PublicBidding.bidders">
+            <summary>
+            List of bidders that are competing
+            </summary>
+        </member>
+        <member name="P:PublicBiddingAPI.Entities.PublicBidding.numbOfParticipants">
+            <summary>
+            Total number of participants
+            </summary>
+        </member>
+        <member name="P:PublicBiddingAPI.Entities.PublicBidding.deposit">
+            <summary>
+            Deposit
+            </summary>
+        </member>
+        <member name="P:PublicBiddingAPI.Entities.PublicBidding.round">
+            <summary>
+            Total rounds of bidding
+            </summary>
+        </member>
+        <member name="T:PublicBiddingAPI.Entities.PublicBiddingConfirmation">
+            <summary>
+            Confirmation entity when creating
+            </summary>
+        </member>
+        <member name="T:PublicBiddingAPI.Entities.PublicBiddingCreation">
+            <summary>
+            Creation Entity of Public Bidding
+            </summary>
+        </member>
+        <member name="P:PublicBiddingAPI.Entities.PublicBiddingCreation.plotIds">
+            <summary>
+            List of plot ids
+            </summary>
+        </member>
+        <member name="P:PublicBiddingAPI.Entities.PublicBiddingCreation.bestBidderId">
+            <summary>
+            Winning buyer id
+            </summary>
+        </member>
+        <member name="P:PublicBiddingAPI.Entities.PublicBiddingCreation.cadastralMunicipalityId">
+            <summary>
+            Cadastral municipality id
+            </summary>
+        </member>
+        <member name="P:PublicBiddingAPI.Entities.PublicBiddingCreation.appliedBuyersId">
+            <summary>
+            List of applied buyers ids
+            </summary>
+        </member>
+        <member name="P:PublicBiddingAPI.Entities.PublicBiddingCreation.biddersId">
+            <summary>
+            List of competing bidder ids
+            </summary>
+        </member>
+        <member name="T:PublicBiddingAPI.Entities.PublicBiddingWithoutLists">
+            <summary>
+            Entity that serves as template for root table 
+            </summary>
+        </member>
+        <member name="T:PublicBiddingAPI.Entities.TypeOfPublicBidding">
+            <summary>
+            Type of public bidding entity
+            </summary>
+        </member>
+        <member name="P:PublicBiddingAPI.Entities.TypeOfPublicBidding.typeOfPublicBiddingName">
+            <summary>
+            Name of type
+            </summary>
+        </member>
     </members>
 </doc>

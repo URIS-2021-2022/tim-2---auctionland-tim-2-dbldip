@@ -5,6 +5,9 @@ using System.Threading.Tasks;
 
 namespace PublicBiddingAPI.Entities
 {
+    /// <summary>
+    /// Confirmation entity when creating
+    /// </summary>
     public class PublicBiddingConfirmation
     {
         public Guid publicBiddingId { get; set; }
