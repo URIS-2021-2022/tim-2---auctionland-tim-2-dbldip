@@ -6,8 +6,14 @@ using System.Threading.Tasks;
 
 namespace CommissionWebAPI.Entities
 {
+    /// <summary>
+    /// Entitet potvrda komisije
+    /// </summary>
     public class CommissionConfirmation
     {
+        /// <summary>
+        /// ID komisije
+        /// </summary>
         public Guid CommissionId { get; set; }
     }
 }

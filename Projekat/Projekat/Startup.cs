@@ -18,6 +18,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using CommissionWebAPI.ServiceCalls;
+using System.Reflection;
+using System.IO;
 
 namespace CommissionWebAPI
 {
@@ -34,19 +36,59 @@ namespace CommissionWebAPI
         public void ConfigureServices(IServiceCollection services)
         {
 
-            services.AddControllers(); 
+            services.AddControllers();
+
 
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
             services.AddScoped<IPersonRepository, PersonRepository>();
             services.AddScoped<ICommissionRepository, CommissionRepository>();
             services.AddScoped<ILoggerService, LoggerServiceMock>();
-            //services.AddSwaggerGen(c =>
-            //{
-            //    c.SwaggerDoc("v1", new OpenApiInfo { Title = "WebApplication1", Version = "v1" });
-            //});
+            services.AddSwaggerGen(setup =>
+            {
+                /*var securitySchema = new OpenApiSecurityScheme
+                {
+                    Description = "JWT Authorization header using the Bearer scheme. Example: \"Authorization: Bearer {token}\"",
+                    Name = "Authorization",
+                    In = ParameterLocation.Header,
+                    Type = SecuritySchemeType.Http,
+                    Scheme = "bearer",
+                    Reference = new OpenApiReference
+                    {
+                        Type = ReferenceType.SecurityScheme,
+                        Id = "Bearer"
+                    }
+                };*/
 
-            //services.AddDbContext<CommissionContext>();
+                //setup.AddSecurityDefinition("Bearer", securitySchema);
+
+                /* var securityRequirement = new OpenApiSecurityRequirement
+                 {
+                     { securitySchema, new[] { "Bearer" } }
+                 };*/
+
+                //setup.AddSecurityRequirement(securityRequirement);
+
+                setup.SwaggerDoc("v1",
+                    new OpenApiInfo()
+                    {
+                        Title = "Commission API",
+                        Version = "v1",
+                        Description = "API Commission omogućava unos i pregled podataka o komisijama.",
+                        Contact = new Microsoft.OpenApi.Models.OpenApiContact
+                        {
+                            Name = "Nikola Bikar",
+                            Email = "nikolabikar1@gmail.com",
+                            Url = new Uri(Configuration["Swagger:Github"])
+                        }
+                    });
+                //Korisitmo refleksiju za dobijanje XML fajla za komentarima
+                var xmlComments = $"{ Assembly.GetExecutingAssembly().GetName().Name }.xml";
+                var xmlCommentsPath = Path.Combine(AppContext.BaseDirectory, xmlComments);
+                setup.IncludeXmlComments(xmlCommentsPath);
+            });
+
+
             services.AddDbContextPool<CommissionContext>(options => options.UseSqlServer(Configuration.GetConnectionString("CommissionDB")));
         }
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -55,11 +97,15 @@ namespace CommissionWebAPI
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
-                //app.UseSwagger();
-                //app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "Projekat v1"));
             }
 
             app.UseHttpsRedirection();
+            app.UseSwagger();
+            app.UseSwaggerUI(setupAction => {
+                setupAction.SwaggerEndpoint("/swagger/v1/swagger.json", "Commission API");
+                setupAction.RoutePrefix = "";
+                });
+
 
             app.UseRouting();
 

@@ -44,9 +44,6 @@ namespace CommissionWebAPI.Entities
                     Role = "Ucesnik"
                 });
             builder.Entity<Commission>()
-                .Property("IsDelete")
-                .HasDefaultValue(false);
-            builder.Entity<Commission>()
                  .HasData(new
                  {
                      CommissionId = Guid.Parse("aa5ce9dc-1534-472d-8d9b-63cc87ca5a39"),

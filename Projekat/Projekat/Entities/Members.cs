@@ -7,10 +7,20 @@ using System.Threading.Tasks;
 
 namespace CommissionWebAPI.Entities
 {
+    /// <summary>
+    /// Entitet članovi
+    /// </summary>
     public class Members
     {
+        /// <summary>
+        /// Deo kompozitnog ključa
+        /// </summary>
         [Required]
         public Guid CommissionId { get; set; }
+
+        /// <summary>
+        /// Deo kompozitnog ključa
+        /// </summary>
         [Required]
         public Guid PersonId { get; set; }
     }

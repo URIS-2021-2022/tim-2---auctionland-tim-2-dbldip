@@ -1,4 +1,5 @@
 ﻿using CommissionWebAPI.Entities;
+using CommissionWebAPI.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,15 +9,17 @@ namespace CommissionWebAPI.Data
 {
     public interface ICommissionRepository
     {
-        List<CommissionWithLists> GetCommissions(string presidentId = null);
+        List<CommissionsFilledDto> GetCommissions(string presidentId = null);
             
-        CommissionWithLists GetCommissionById(Guid commissionId);
+        Commission GetCommissionById(Guid commissionId);
 
-        CommissionConfirmation CreateCommission(CommissionCreation commission);
+        CommissionConfirmation CreateCommission(Commission commission);
 
         void UpdateCommission(CommissionWithLists commission);
 
         void DeleteCommission(Guid commissionId);
+
+        void UpdateMembers(List<Members> members, Guid commissionId);
 
         bool SaveChanges();
     }

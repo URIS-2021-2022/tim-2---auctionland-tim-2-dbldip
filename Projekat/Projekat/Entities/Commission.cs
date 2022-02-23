@@ -8,21 +8,31 @@ using System.Threading.Tasks;
 
 namespace CommissionWebAPI.Entities
 {
+    /// <summary>
+    /// Entitet komisija
+    /// </summary>
     public class Commission
     {
-
+        /// <summary>
+        /// ID komisije
+        /// </summary>
         public Guid CommissionId { get; set; }
 
-        #region President
+        /// <summary>
+        /// ID predsednika
+        /// </summary>
         [ForeignKey("President")]
         public Guid PresidentId { get; set; }
+        /// <summary>
+        /// Entitet predsednik
+        /// </summary>
         public Person President { get; set; }
-        #endregion
 
-        public bool? IsDelete { get; set; }
-
-
-        
+        /// <summary>
+        /// Lista članova
+        /// </summary>
+        [NotMapped]
+        public List<Members> Members { get; set; }
 
     }
 }

@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using CommissionWebAPI.Entities;
 using CommissionWebAPI.Models;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -19,15 +20,14 @@ namespace CommissionWebAPI.Data
             this.context = context;
         }
 
-        public CommissionConfirmation CreateCommission(CommissionCreation commission)
+        public CommissionConfirmation CreateCommission(Commission commission)
         {
-            var mappedEntity = mapper.Map<Commission>(commission);
-            var createdEntity = context.Add(mappedEntity);
+            var createdEntity = context.Add(commission);
             foreach(var el in commission.Members)
             {
                 var temp = new Members();
                 temp.CommissionId = commission.CommissionId;
-                temp.PersonId = el;
+                temp.PersonId = el.PersonId;
                 context.Add(temp);
             }
             return mapper.Map<CommissionConfirmation>(createdEntity.Entity);
@@ -35,39 +35,69 @@ namespace CommissionWebAPI.Data
 
         public void DeleteCommission(Guid commissionId)
         {
-            var commissionToDelete = GetCommissionById(commissionId);
-            commissionToDelete.IsDelete = true;
-            UpdateCommission(commissionToDelete);
+            var commission = context.Commissions.FirstOrDefault(e => e.CommissionId == commissionId);
+            context.Remove(commission);
         }
 
-        public CommissionWithLists GetCommissionById(Guid commissionId)
+        public Commission GetCommissionById(Guid commissionId)
         {
             var commission = this.context.Commissions.FirstOrDefault(e => e.CommissionId == commissionId);
-            if (commission == null)
+            var returnCommission = mapper.Map<Commission>(commission);
+            if (returnCommission == null)
+            {
                 return null;
-            var returnCommission = mapper.Map<CommissionWithLists>(commission);
+            }
             returnCommission.President = context.Persons.FirstOrDefault(e => e.PersonId == commission.PresidentId);
             returnCommission.Members = context.Members.Where(e => e.CommissionId == commission.CommissionId).ToList();
             return returnCommission;
         }
 
-        public List<CommissionWithLists> GetCommissions(string presidentId = null)
+        public List<CommissionsFilledDto> GetCommissions(string presidentId = null)
         {
             var commissions = this.context.Commissions.ToList();
-            if (commissions == null || commissions.Count == 0)
-                return null;
-            List<CommissionWithLists> returnList = mapper.Map<List<CommissionWithLists>>(commissions);
-            foreach(var el in returnList)
+            foreach(var el in commissions)
             {
                 el.President = context.Persons.FirstOrDefault(e => e.PersonId == el.PresidentId);
                 el.Members = context.Members.Where(e => e.CommissionId == el.CommissionId).ToList();  
             }
-            return returnList;
+            List<CommissionsFilledDto> commissionsFilled = new List<CommissionsFilledDto>();
+            foreach(var el in commissions)
+            {
+                CommissionsFilledDto temp = new CommissionsFilledDto();      
+                temp.CommissionId = el.CommissionId;
+                temp.President = el.President;
+                if (el.Members != null)
+                {
+                    foreach (var el1 in el.Members)
+                    {
+                        Person temp1 = new Person();
+                        temp1 = context.Persons.FirstOrDefault(e => e.PersonId == el1.PersonId);
+                        temp.Members.Add(temp1);
+                    }
+                }  
+                commissionsFilled.Add(temp);
+            }
+            return commissionsFilled;
         }
 
         public bool SaveChanges()
         {
             return context.SaveChanges() > 0;
+        }
+
+        public void UpdateMembers(List<Members> members, Guid commissionId)
+        {
+            foreach(var el in context.Members.Where(e => e.CommissionId == commissionId))
+            {
+                context.Remove(el);
+            }
+            foreach(var el in members)
+            {
+                var temp = new Members();
+                temp.CommissionId = el.CommissionId;
+                temp.PersonId = el.PersonId;
+                context.Add(temp);
+            }
         }
 
         public void UpdateCommission(CommissionWithLists commission)

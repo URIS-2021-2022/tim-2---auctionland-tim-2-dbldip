@@ -13,7 +13,6 @@ namespace CommissionWebAPI.Profiles
         public CommissionConfirmationProfile()
         {
             CreateMap<CommissionConfirmation, CommissionConfirmationDto>();
-            CreateMap<Commission, CommissionConfirmationDto>();
             CreateMap<Commission, CommissionConfirmation>();
         }
     }

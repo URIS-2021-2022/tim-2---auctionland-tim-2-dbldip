@@ -7,18 +7,30 @@ using System.Threading.Tasks;
 
 namespace CommissionWebAPI.Models
 {
-    public class PersonUpdateDto : IValidatableObject
+    /// <summary>
+    /// Ličnost update dto
+    /// </summary>
+    public class PersonUpdateDto
     {
+        /// <summary>
+        /// ID Ličnost
+        /// </summary>
         public Guid PersonId { get; set; }
+
+        /// <summary>
+        /// Ime
+        /// </summary>
         public string Name { get; set; }
+
+        /// <summary>
+        /// Prezime
+        /// </summary>
         public string Surname { get; set; }
+
+        /// <summary>
+        /// Uloga
+        /// </summary>
         public string Role { get; set; }
 
-
-        public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
-        {
-            if(Name == Surname)
-                yield  return new ValidationResult("Nije moguce posedovati isto ime i prezime", new[] { "PersonCreationDto" });
-        }
     }
 }

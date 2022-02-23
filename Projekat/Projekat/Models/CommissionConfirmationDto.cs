@@ -7,9 +7,14 @@ using System.Threading.Tasks;
 
 namespace CommissionWebAPI.Models
 {
+    /// <summary>
+    /// Dto Potvrda Komisija
+    /// </summary>
     public class CommissionConfirmationDto 
     {
-        public string PresidentName { get; set; }
-        public string PresidentSurname { get; set; }
+        /// <summary>
+        /// ID Komisija
+        /// </summary>
+        public Guid CommissionId { get; set; }
     }
 }

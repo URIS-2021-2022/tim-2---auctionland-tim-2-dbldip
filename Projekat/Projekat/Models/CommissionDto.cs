@@ -8,10 +8,24 @@ using System.Threading.Tasks;
 
 namespace CommissionWebAPI.Models
 {
+    /// <summary>
+    /// Komisija Dto
+    /// </summary>
     public class CommissionDto
     {
+        /// <summary>
+        /// ID Komisija
+        /// </summary>
         public Guid CommissionId { get; set; }
+
+        /// <summary>
+        /// Predsednik
+        /// </summary>
         public Person President { get; set; }
+
+        /// <summary>
+        /// Lista ključeva članova
+        /// </summary>
         public List<Members> Members { get; set; }
     }
 }

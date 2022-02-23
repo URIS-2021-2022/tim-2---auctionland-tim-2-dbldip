@@ -6,14 +6,26 @@ using System.Threading.Tasks;
 
 namespace CommissionWebAPI.Models
 {
+    /// <summary>
+    /// Create ličnost dto
+    /// </summary>
     public class PersonCreationDto
     {
-        [Required]
-        public Guid PersonId { get; set; }
+        /// <summary>
+        /// Ime
+        /// </summary>
         [Required]
         public string Name { get; set; }
+
+        /// <summary>
+        /// Prezime
+        /// </summary>
         [Required]
         public string Surname { get; set; }
+
+        /// <summary>
+        /// Uloga
+        /// </summary>
         [Required]
         public string Role { get; set; }
        

@@ -14,6 +14,9 @@ using CommissionWebAPI.ServiceCalls;
 
 namespace CommissionWebAPI.Controllers
 {
+    /// <summary>
+    /// Kontroler za ličnost
+    /// </summary>
     [ApiController]
     [Route("api/persons")]
     public class PersonController : ControllerBase
@@ -23,6 +26,13 @@ namespace CommissionWebAPI.Controllers
         private readonly LinkGenerator linkGenerator;
         private readonly ILoggerService loggerService;
 
+        /// <summary>
+        /// Konstruktor kontrolera ličnosti - DI
+        /// </summary>
+        /// <param name="personRepository">Repository ličnosti</param>
+        /// <param name="linkGenerator">Link generator za create zahtev</param>
+        /// <param name="mapper">AutoMapper</param>
+        /// <param name="loggerService">Logger servis</param>
         public PersonController(IPersonRepository personRepository, IMapper mapper, LinkGenerator linkGenerator, ILoggerService loggerService)
         {
             this.personRepository = personRepository;
@@ -31,6 +41,13 @@ namespace CommissionWebAPI.Controllers
             this.loggerService = loggerService;
         }
 
+        /// <summary>
+        /// Vraća sve ličnosti
+        /// </summary>
+        /// <returns>Lista ličnosti</returns>
+        /// <response code="200">Vraća listu ličnosti</response>
+        /// <response code="404">Nije pronađena ni jedna ličnost</response>
+        /// 
         [HttpGet]
         public ActionResult<List<PersonDto>> GetPersons(string name, string surname, string role)
         {
@@ -44,6 +61,14 @@ namespace CommissionWebAPI.Controllers
             return Ok(mapper.Map<List<PersonDto>>(persons));
         }
 
+        /// <summary>
+        /// Vraća jednu ličnost na osnovu ID-a
+        /// </summary>
+        /// <param name="personId">ID ličnosti</param>
+        /// <returns>Ličnost</returns>
+        /// <response code="200">Vraća traženu ličnost</response>
+        /// <response code="404">Nije pronađena ličnost za uneti ID</response>
+        /// 
         [HttpGet("{personId}")]
         public ActionResult<PersonDto> GetPersonById(Guid personId)
         {
@@ -57,6 +82,23 @@ namespace CommissionWebAPI.Controllers
             return Ok(mapper.Map<PersonDto>(personModel));
         }
 
+        /// <summary>
+        /// Kreira novu ličnost
+        /// </summary>
+        /// <param name="personDto">Model ličnosti</param>
+        /// <remarks>
+        /// Primer zahteva za kreiranje nove ličnosti \
+        /// POST /api/person \
+        /// {   
+        ///     "Name": "Jovana", \
+        ///     "Surname": "Miscevic", \
+        ///     "Role": "Ministar" \
+        ///}
+        /// </remarks>
+        /// <returns>Potvrda o kreiranju ličnosti</returns>
+        /// <response code="201">Vraća kreiranu ličnost</response>
+        /// <response code="500">Desila se greška prilikom unosa nove ličnosti</response>
+        /// 
         [HttpPost]
         public ActionResult<PersonConfirmationDto> CreatePerson(PersonCreationDto personDto)
         {
@@ -77,6 +119,15 @@ namespace CommissionWebAPI.Controllers
             }
         }
 
+        /// <summary>
+        /// Brisanje ličnosti na osnovu ID-a
+        /// </summary>
+        /// <param name="personId">ID ličnosti</param>
+        /// <returns>Status 204 (NoContent)</returns>
+        /// <response code="204">Ličnost je uspešno obrisana</response>
+        /// <response code="404">Nije pronađena ličnost za uneti ID</response>
+        /// <response code="500">Serverska greška tokom brisanja ličnosti</response>
+        /// 
         [HttpDelete("{personId}")]
         public IActionResult DeletePerson(Guid personId)
         {
@@ -100,6 +151,15 @@ namespace CommissionWebAPI.Controllers
             }
         }
 
+        /// <summary>
+        /// Modifikacija ličnosti
+        /// </summary>
+        /// <param name="person">Model ličnosti</param>
+        /// <returns>Potvrda o modifikaciji ličnosti</returns>
+        /// <response code="200">Izmenjena ličnost</response>
+        /// <response code="404">Nije pronađena ličnost za uneti ID</response>
+        /// <response code="500">Serverska greška tokom modifikacije ličnosti</response>
+        ///
         [HttpPut]
         public ActionResult<PersonDto> UpdatePerson(PersonUpdateDto person)
         {
