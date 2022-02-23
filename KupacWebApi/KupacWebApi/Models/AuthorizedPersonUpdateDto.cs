@@ -7,6 +7,9 @@ namespace KupacWebApi.Models
 {
     public class AuthorizedPersonUpdateDto : AuthorizedPersonCreationDto
     {
+        /// <summary>
+        /// Authorized person ID
+        /// </summary>
         public Guid authorizedPersonId { get; set; }
     }
 }

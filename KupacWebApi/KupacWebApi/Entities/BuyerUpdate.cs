@@ -7,6 +7,9 @@ namespace KupacWebApi.Entities
 {
     public class BuyerUpdate : BuyerCreation
     {
+        /// <summary>
+        /// Buyer ID
+        /// </summary>
         public Guid buyerId { get; set; }
     }
 }

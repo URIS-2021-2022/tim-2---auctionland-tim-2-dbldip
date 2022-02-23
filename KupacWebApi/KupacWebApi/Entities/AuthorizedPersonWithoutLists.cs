@@ -9,12 +9,22 @@ namespace KupacWebApi.Entities
 {
     public class AuthorizedPersonWithoutLists
     {
+        /// <summary>
+        /// Authorized person ID
+        /// </summary>
         [Key]
         public Guid authorizedPersonId { get; set; }
+        /// <summary>
+        /// Authorized person's name
+        /// </summary>
         public string name { get; set; }
+        /// <summary>
+        /// Authorized person's surname
+        /// </summary>
         public string surname { get; set; }
+        /// <summary>
+        /// Authorized person's jmbg
+        /// </summary>
         public string jmbg { get; set; }
-        //public Address address { get; set; }
-        //public Country country { get; set; }
     }
 }

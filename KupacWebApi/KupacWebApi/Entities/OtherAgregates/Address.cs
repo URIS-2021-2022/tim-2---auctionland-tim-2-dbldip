@@ -10,7 +10,6 @@ namespace KupacWebApi.Entities.OtherAgregates
     [Keyless]
     public class Address
     {
-        //public Guid addressId { get; set; }
         public string completeAddress { get; set; }
         public string townInfo { get; set; }
         public string country { get; set; }   

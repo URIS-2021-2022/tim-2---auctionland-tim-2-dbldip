@@ -7,6 +7,9 @@ namespace KupacWebApi.Models
 {
     public class BuyerUpdateDto : BuyerCreationDto
     {
+        /// <summary>
+        /// Buyer ID
+        /// </summary>
         public Guid buyerId { get; set; }
     }
 }

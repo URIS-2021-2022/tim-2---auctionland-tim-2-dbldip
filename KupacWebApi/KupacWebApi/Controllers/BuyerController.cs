@@ -14,6 +14,10 @@ using System.Threading.Tasks;
 
 namespace KupacWebApi.Controllers
 {
+
+    /// <summary>
+    /// Controller for the buyer
+    /// </summary>
     [ApiController]
     [Route("/api/buyer")]
     public class BuyerController : ControllerBase
@@ -23,6 +27,14 @@ namespace KupacWebApi.Controllers
         private readonly IMapper mapper;
         private readonly ILoggerService loggerService;
 
+
+        /// <summary>
+        /// BuyerController constructor
+        /// </summary>
+        /// <param name="buyerRepository">Application repository</param>
+        /// <param name="linkGenerator">Link generator</param>
+        /// <param name="mapper">AutoMapper</param>
+        ///  /// <param name="loggerService">Logger Service</param>
         public BuyerController(IBuyerRepository buyerRepository, LinkGenerator linkGenerator, IMapper mapper, ILoggerService loggerService)
         {
             this.buyerRepository = buyerRepository;
@@ -31,7 +43,15 @@ namespace KupacWebApi.Controllers
             this.loggerService = loggerService;
         }
 
+        /// <summary>
+        /// Return all buyers
+        /// </summary>
+        /// <returns>List of buyers</returns>
+        /// <response code="200">Returns all buyers</response>
+        /// <response code="404">No buyer found</response>
         [HttpGet]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
         public ActionResult<List<BuyerDto>> GetBuyers()
         {
             var buyers = this.buyerRepository.GetBuyers();
@@ -44,7 +64,13 @@ namespace KupacWebApi.Controllers
             this.loggerService.LogMessage("List of buyers is returned", "Get", LogLevel.Information);
             return Ok(mapper.Map<List<BuyerDto>>(buyers));
         }
-
+        /// <summary>
+        /// Returns buyer by ID
+        /// </summary>
+        /// <param name="buyerId">Buyer ID</param>
+        /// <returns>Buyer</returns>
+        /// <response code="200">Returns buyer by ID</response>
+        /// <response code="404">No buyer by ID found</response>
         [HttpGet("{buyerId}")]
         public ActionResult<BuyerDto> GetBuyerById(Guid buyerId)
         {
@@ -58,6 +84,13 @@ namespace KupacWebApi.Controllers
             return Ok(mapper.Map<BuyerDto>(buyer));
         }
 
+        /// <summary>
+        /// Create new buyer
+        /// </summary>
+        /// <param name="buyer">Creation buyer DTO</param>
+        /// <returns>Confirmation of created buyer</returns>
+        /// <response code="201">Returns confirmation of created buyer</response>
+        /// <response code="500">Buyer creation error</response>
         [HttpPost]
         public ActionResult<BuyerConfirmationDto> CreateBuyer([FromBody] BuyerCreationDto buyer)
         {
@@ -70,6 +103,15 @@ namespace KupacWebApi.Controllers
             return Created(location, mapper.Map<BuyerConfirmationDto>(confirmation));
         }
 
+        /// <summary>
+        /// Buyer modify
+        /// </summary>
+        /// <param name="buyer">Update buyer DTO</param>
+        /// <returns>Confirmation of updated buyer</returns>
+        /// <response code="200">Returns confirmation of updated buyer</response>
+        /// <response code="400">Bad request</response>
+        /// <response code="404">Not found buyer by ID</response>
+        /// <response code="500">Server error</response>
         [HttpPut]
         public ActionResult<BuyerConfirmationDto> UpdateBuyer(BuyerUpdateDto buyer)
         {
@@ -96,7 +138,16 @@ namespace KupacWebApi.Controllers
                 return Conflict("ERROR: " + exception.Message);
             }
         }
-            [HttpDelete("{buyerId}")]
+
+        /// <summary>
+        /// Delete buyer
+        /// </summary>
+        /// <param name="buyerId"> Buyer ID</param>
+        /// <returns>Status 204 (NoContent)</returns>
+        /// <response code="204">Buyer deleted</response>
+        /// <response code="404">Buyer by ID not found</response>
+        /// <response code="500">Server error</response>
+        [HttpDelete("{buyerId}")]
             public ActionResult<String> DeleteBuyer(Guid buyerId)
             {
                 try
