@@ -98,16 +98,7 @@ namespace AuctionAPI.Controllers
         {
             try
             {
-                //bool modelValid = ValidateAuction(auctionCreation);
-
-                /*
-                 if (!modelValid)
-                {
-                    return BadRequest("The auction created is not valid.");
-                }
-                */
-                //var auctionCreationEntity = mapper.Map<AuctionDto>(auctionCreation);
-
+              
                 var confirmation = auctionRepository.CreateAuction(auctionCreation);
                 string location = linkGenerator.GetPathByAction("GetAuction", "Auction", new { auctionId = confirmation.auctionId });
                 return Created(location, mapper.Map<AuctionConfirmationDto>(confirmation));
@@ -118,11 +109,6 @@ namespace AuctionAPI.Controllers
             }
         } 
 
-        private bool ValidateAuction(CreationAuctionDto auctionCreation)
-        {
-            throw new NotImplementedException();
-            // PLACEHOLDER  
-        }
 
         /// <summary>
         /// Izmena licitacije
