@@ -10,7 +10,13 @@ namespace AppUserWebAPI.Entities
     /// </summary>
     public class TypeOfUser
     {
+        /// <summary>
+        /// Typeid
+        /// </summary>
         public Guid typeOfUserId { get; set; }
+        /// <summary>
+        /// name of type
+        /// </summary>
         public string typeOfUser { get; set; }
     }
 }

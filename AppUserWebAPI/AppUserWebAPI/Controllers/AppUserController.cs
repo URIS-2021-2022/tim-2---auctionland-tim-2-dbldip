@@ -4,6 +4,7 @@ using AppUserWebAPI.Models;
 using AppUserWebAPI.ServiceCalls;
 using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Routing;
 using Microsoft.Extensions.Logging;
@@ -106,7 +107,21 @@ namespace AppUserWebAPI.Controllers
             return Ok(mapper.Map<AppUserDto>(user));
         }
 
-
+        /// <summary>
+        /// Creating new user
+        /// </summary>
+        /// <param name="user">User to add</param>
+        /// <remarks>
+        /// {
+        ///"appUserName":"John",\
+        ///"appUserLastName": "Smith",\
+        ///"appUserUsername":"johnsmith1312",\
+        ///"appUserPassword":"unprotectedpassword",\
+        ///"typeOfUserId" : "b27196e7-3ffd-4b72-b201-1366052b2f71",\
+        ///"typeOfUser": "Prva komisija"\
+        ///}
+        ///</remarks>
+        ///<returns>Confirmation</returns>
         [HttpPost]
         public ActionResult<AppUserConfirmationDto> CreateAppUser(AppUserCreationDto user)
         {
@@ -121,9 +136,66 @@ namespace AppUserWebAPI.Controllers
             appUserRepository.SaveChanges();
 
             string location = linkGenerator.GetPathByAction("GetUser", "AppUser", new { appUserId = confirmation.appUserId });
-            this.loggerService.LogMessage("App user created!", "Post", LogLevel.Information);
+            this.loggerService.LogMessage("App user created! ", "Post", LogLevel.Information);
             return Created(location, mapper.Map<AppUserConfirmationDto>(confirmation));
 
         }
+
+        /// <summary>
+        /// Update endpoint 
+        /// </summary>
+        /// <param name="appUser">New app user values</param>
+        /// <remarks>
+        /// {
+        /// "appUserId": "fdcdee71-95b0-467d-998e-08d9f46c032b"\
+        ///"appUserName":"John",\
+        ///"appUserLastName": "Smith",\
+        ///"appUserUsername":"johnsmith12",\
+        ///"appUserPassword":"unprotectedpassword",\
+        ///"typeOfUserId" : "b27196e7-3ffd-4b72-b201-1366052b2f71",\
+        ///"typeOfUser": "Prva komisija"\
+        ///}
+        ///</remarks>
+        /// <returns>Confirmation</returns>
+        [HttpPut]
+        public ActionResult<AppUserConfirmationDto> UpdateAppUser(AppUserUpdateDto appUser)
+        {            
+            var oldValues = appUserRepository.GetAppUser(appUser.appUserId);
+            if (oldValues == null)
+            {
+                this.loggerService.LogMessage("Couldnt find user wiht that id", "Get", LogLevel.Warning);
+                return NoContent();
+            }
+            var updateObj = mapper.Map<AppUserUpdate>(appUser);
+            var newValuesObj = mapper.Map<AppUser>(updateObj);
+            mapper.Map(newValuesObj, oldValues);
+            appUserRepository.SaveChanges();
+            this.loggerService.LogMessage("AppUser is updated", "Put", LogLevel.Information);
+            return Ok(mapper.Map<AppUserConfirmationDto>(oldValues));
+        }
+
+        [HttpDelete("{userId}")]
+        public IActionResult deleteUser(Guid userId)
+        {
+            try
+            {
+                var toDelete = appUserRepository.GetAppUser(userId);
+                if(toDelete == null)
+                {
+                    this.loggerService.LogMessage("App user cant be found with that id", "Delete", LogLevel.Information);
+                    return NotFound();
+                }
+                appUserRepository.DeleteAppUser(userId);
+                appUserRepository.SaveChanges();
+                this.loggerService.LogMessage("App user is deleted", "Delete", LogLevel.Information);
+                return NoContent();
+            }
+            catch (Exception e)
+            {
+                this.loggerService.LogMessage("Error while deleting app user", "Delete", LogLevel.Error);
+                return StatusCode(StatusCodes.Status500InternalServerError, "Delete Error!");
+            }
+        }
     }
+    
 }

@@ -10,7 +10,13 @@ namespace AppUserWebAPI.Models
     /// </summary>
     public class LoginModel
     {
+        /// <summary>
+        /// Username 
+        /// </summary>
         public string userName { get; set; }
+        /// <summary>
+        /// Password
+        /// </summary>
         public string password { get; set; }
     }
 }

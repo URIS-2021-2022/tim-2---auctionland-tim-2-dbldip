@@ -33,7 +33,7 @@ namespace AppUserWebAPI.Controllers
         /// <summary>
         /// Login method that check user for his username and password, if the correct combination of two is provided it generates a token as a response!
         /// </summary>
-        /// <param name="userLoginModel"></param>
+        /// <param name="userLoginModel">Login model to authenticate</param>
         /// <returns></returns>
         [HttpPost]
         public ActionResult<String> authenticateUser(LoginModel userLoginModel)
