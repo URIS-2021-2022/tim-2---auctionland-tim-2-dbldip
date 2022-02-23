@@ -4,14 +4,16 @@ using KupacWebApi.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace KupacWebApi.Migrations
 {
     [DbContext(typeof(BuyerContext))]
-    partial class BuyerContextModelSnapshot : ModelSnapshot
+    [Migration("20220223041942_finalTest")]
+    partial class finalTest
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

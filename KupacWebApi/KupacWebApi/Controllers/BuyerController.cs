@@ -61,13 +61,6 @@ namespace KupacWebApi.Controllers
         [HttpPost]
         public ActionResult<BuyerConfirmationDto> CreateBuyer([FromBody] BuyerCreationDto buyer)
         {
-            /*Buyer buyerCheck = buyerRepository.GetBuyer(buyerId);
-            if (buyerCheck == null)
-            {
-                this.loggerService.LogMessage("Adding new buyer did not happen", "Post", LogLevel.Warning);
-                return NoContent();
-            }*/
-
             BuyerCreation buyerToCreate = mapper.Map<BuyerCreation>(buyer);
             BuyerConfirmation confirmation = buyerRepository.CreateBuyer(buyerToCreate);
             buyerRepository.SaveChanges();
@@ -77,22 +70,42 @@ namespace KupacWebApi.Controllers
             return Created(location, mapper.Map<BuyerConfirmationDto>(confirmation));
         }
 
-
-        [HttpDelete("{buyerId}")]
-        public ActionResult<String> DeleteBuyer(Guid buyerId)
+        [HttpPut]
+        public ActionResult<BuyerConfirmationDto> UpdateBuyer(BuyerUpdateDto buyer)
         {
             try
             {
-                buyerRepository.DeleteBuyer(buyerId);
+                var buyerOld = mapper.Map<BuyerWithoutLists>(buyerRepository.GetBuyer(buyer.buyerId));
+
+                if (buyerOld == null)
+                {
+                    return NoContent();
+                }
+
+                buyerRepository.UpdateBuyer(mapper.Map<BuyerUpdate>(buyer));
                 buyerRepository.SaveChanges();
-                this.loggerService.LogMessage("Buyer is deleted successfully!", "Delete", LogLevel.Warning);
-                return Ok("Deleted?");
+                return Ok("Changed!");
             }
-            catch (Exception exception)
+            catch (Exception e)
             {
-                this.loggerService.LogMessage("Error with deleting buyer", "Delete", LogLevel.Error, exception);
-                return StatusCode(StatusCodes.Status500InternalServerError, "Error with deleting buyer");
+                return Conflict("ERROR: " + e.Message);
+            }
+        }
+            [HttpDelete("{buyerId}")]
+            public ActionResult<String> DeleteBuyer(Guid buyerId)
+            {
+                try
+                {
+                    buyerRepository.DeleteBuyer(buyerId);
+                    buyerRepository.SaveChanges();
+                    this.loggerService.LogMessage("Buyer is deleted successfully!", "Delete", LogLevel.Warning);
+                    return NoContent();
+                }
+                catch (Exception exception)
+                {
+                    this.loggerService.LogMessage("Error with deleting buyer", "Delete", LogLevel.Error, exception);
+                    return StatusCode(StatusCodes.Status500InternalServerError, "Error with deleting buyer");
+                }
             }
         }
     }
-}

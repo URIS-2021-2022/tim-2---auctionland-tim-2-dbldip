@@ -16,5 +16,6 @@ namespace KupacWebApi.Entities.OtherAgregates
         public DateTime endingTime { get; set; }
         public double bestBid { get; set; }
         public double leasePeriod { get; set; }
+
     }
 }

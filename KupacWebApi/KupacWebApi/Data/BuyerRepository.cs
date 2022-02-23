@@ -88,16 +88,64 @@ namespace KupacWebApi.Data
         }
 
        
-        public void UpdateBuyer(Buyer buyer)
+        public void UpdateBuyer(BuyerUpdate buyer)
         {
-            
+            var buyerToUpdate = context.Buyers.FirstOrDefault(e => e.buyerId == buyer.buyerId);
+
+            var payments = context.BuyerPayments.Where(e => e.buyerId == buyer.buyerId).ToList();
+            var person = context.BuyerPeople.FirstOrDefault(e => e.buyerId == buyer.buyerId);
+            var publicBiddings = context.BuyerPublicBiddings.Where(e => e.buyerId == buyer.buyerId).ToList();
+            var authorizedPeople = context.BuyerAuthorizedPeople.Where(e => e.buyerId == buyer.buyerId).ToList();
+
+            context.RemoveRange(payments);
+            context.RemoveRange(authorizedPeople);
+            context.RemoveRange(publicBiddings);
+            context.Remove(person);
+
+            foreach (var el in buyer.paymentIds)
+            {
+                var temp = new BuyerPaymentConnection();
+                temp.payerId = el;
+                temp.buyerId = buyer.buyerId;
+                context.Add(temp);
+            }
+            foreach (var el in buyer.publicBiddingIds)
+            {
+                var temp = new BuyerPublicBiddingConnection();
+                temp.publicBiddingId = el;
+                temp.buyerId = buyer.buyerId;
+                context.Add(temp);
+            }
+            foreach (var el in buyer.authorizedPeopleIds)
+            {
+                var temp = new BuyerAuthorizedPersonConnection();
+                temp.authorizedPersonId = el;
+                temp.buyerId = buyer.buyerId;
+                context.Add(temp);
+            }
+            var person2 = new BuyerPersonConnection();
+            person2.personId = buyer.buyerId;
+            person2.buyerId = buyer.buyerId;
+            context.Add(person2);
+
+            var newValues = mapper.Map<BuyerWithoutLists>(buyer);
+            mapper.Map(newValues, buyerToUpdate);
+
         }
 
         public void DeleteBuyer(Guid buyerId)
         {
-            var buyerToDelete = GetBuyer(buyerId);
-            buyerToDelete.isDelete = true;
-            UpdateBuyer(buyerToDelete);
+            var buyerToDelete = context.Buyers.FirstOrDefault(e => e.buyerId == buyerId);
+            var listOfPayments = this.context.BuyerPayments.Where(e => e.buyerId == buyerId).ToList();
+            var listOfPublicBiddings = this.context.BuyerPublicBiddings.Where(e => e.buyerId == buyerId).ToList();
+            var listOfAuthorizedPeople = this.context.BuyerAuthorizedPeople.Where(e => e.buyerId == buyerId).ToList();
+            var person = this.context.BuyerPeople.FirstOrDefault(e => e.buyerId == buyerId);
+
+            context.RemoveRange(listOfPayments);
+            context.RemoveRange(listOfPublicBiddings);
+            context.RemoveRange(listOfAuthorizedPeople);
+            context.Remove(person);
+            context.Remove(buyerToDelete);
         }
 
 

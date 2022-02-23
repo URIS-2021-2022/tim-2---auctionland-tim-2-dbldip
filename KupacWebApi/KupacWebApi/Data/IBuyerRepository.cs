@@ -11,7 +11,7 @@ namespace KupacWebApi.Data
         BuyerConfirmation CreateBuyer(BuyerCreation buyer);
         List<Buyer> GetBuyers();
         Buyer GetBuyer(Guid buyerId);
-        void UpdateBuyer(Buyer buyer);
+        void UpdateBuyer(BuyerUpdate buyer);
         void DeleteBuyer(Guid buyerId);
         bool SaveChanges();
     }

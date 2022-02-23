@@ -11,7 +11,7 @@ namespace KupacWebApi.Data
         AuthorizedPersonConfirmation CreateAuthorizedPerson(AuthorizedPersonCreation authorizedPerson);
         List<AuthorizedPerson> GetAuthorizedPersons();
         AuthorizedPerson GetAuthorizedPerson(Guid authorizedPersonId);
-        void UpdateAuthorizedPerson(AuthorizedPerson authorizedPerson);
+        void UpdateAuthorizedPerson(AuthorizedPersonUpdate authorizedPerson);
         void DeleteAuthorizedPerson(Guid authorizedPersonId);
         bool SaveChanges();
     }

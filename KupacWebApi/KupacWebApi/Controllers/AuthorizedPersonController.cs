@@ -61,15 +61,6 @@ namespace KupacWebApi.Controllers
         [HttpPost]
         public ActionResult<AuthorizedPersonConfirmationDto> CreateBuyer([FromBody] AuthorizedPersonCreationDto authorizedPerson)
         {
-
-            /*AuthorizedPerson authorizedPersonCheck = authorizedPersonRepository.GetAuthorizedPerson(authorizedPersonId);
-            if (authorizedPersonCheck == null)
-            {
-                this.loggerService.LogMessage("There is no authorized person with that id", "Post", LogLevel.Warning);
-                return NoContent();
-
-            }*/
-
             AuthorizedPersonCreation authorizedPersonToCreate = mapper.Map<AuthorizedPersonCreation>(authorizedPerson);
             AuthorizedPersonConfirmation confirmation = authorizedPersonRepository.CreateAuthorizedPerson(authorizedPersonToCreate);
             authorizedPersonRepository.SaveChanges();
@@ -80,6 +71,28 @@ namespace KupacWebApi.Controllers
             return Created(location, mapper.Map<AuthorizedPersonConfirmationDto>(confirmation));
         }
 
+        [HttpPut]
+        public ActionResult<AuthorizedPersonConfirmationDto> UpdateAuthorizedPerson(AuthorizedPersonUpdateDto authorizedPerson)
+        {
+            try
+            {
+                var authorizedPersonOld = mapper.Map<AuthorizedPersonWithoutLists>(authorizedPersonRepository.GetAuthorizedPerson(authorizedPerson.authorizedPersonId));
+                if (authorizedPersonOld == null)
+                {
+                    return NoContent();
+                }
+                authorizedPersonRepository.UpdateAuthorizedPerson(mapper.Map<AuthorizedPersonUpdate>(authorizedPerson));
+                authorizedPersonRepository.SaveChanges();
+                return Ok("Changed!");
+            }
+            catch (Exception e)
+            {
+                return Conflict("ERROR: " + e.Message);
+            }
+
+
+        }
+
         [HttpDelete("{authorizedPersonId}")]
         public ActionResult<String> DeleteAuthorizedPerson(Guid authorizedPersonId)
         {
@@ -88,7 +101,7 @@ namespace KupacWebApi.Controllers
                 authorizedPersonRepository.DeleteAuthorizedPerson(authorizedPersonId);
                 authorizedPersonRepository.SaveChanges();
                 this.loggerService.LogMessage("Authorized person is deleted successfully!", "Delete", LogLevel.Warning);
-                return Ok("Deleted?");
+                return NoContent();
             }
             
 
