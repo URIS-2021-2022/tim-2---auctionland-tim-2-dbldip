@@ -14,6 +14,9 @@ using UgovorOZakupuWebAPI.ServiceCalls;
 
 namespace UgovorOZakupuWebAPI.Controllers
 {
+    /// <summary>
+    /// Kontroler za ugovoreno javno nadmetanje
+    /// </summary>
     [ApiController]
     [Route("api/leaseAgreement/contractedPublicBidding")]
     public class ContractedPublicBiddingController : ControllerBase
@@ -23,6 +26,14 @@ namespace UgovorOZakupuWebAPI.Controllers
         private readonly IMapper mapper;
         private readonly ILoggerService loggerService;
 
+
+        /// <summary>
+        /// Konstruktor za ugovoreno javno nadmetanje - DI
+        /// </summary>
+        /// <param name="contractedPublicBiddingRepository">Repository oglasa/param>
+        /// <param name="linkGenerator">Link generator za create zahtev</param>
+        /// <param name="mapper">AutoMapper</param>
+        /// <param name="loggerService">Logger servis</param>
         public ContractedPublicBiddingController(IContractedPublicBiddingRepository contractedPublicBiddingRepository, LinkGenerator linkGenerator, IMapper mapper, ILoggerService loggerService)
         {
             this.contractedPublicBiddingRepository = contractedPublicBiddingRepository;
@@ -31,6 +42,13 @@ namespace UgovorOZakupuWebAPI.Controllers
             this.loggerService = loggerService;
         }
 
+        /// <summary>
+        /// Vraća sva ugovorena javna nadmetanja
+        /// </summary>
+        /// <returns>Lista oglasa</returns>
+        /// <response code="200">Vraća listu ugovorenih javnih nadmetanja</response>
+        /// <response code="404">Nije pronađeno ni jedno ugovoreno javno nadmetanje</response>
+        /// 
         [HttpGet]
         public ActionResult<List<ContractedPublicBiddingDto>> GetContractedPublicBiddings()
         {
@@ -44,6 +62,14 @@ namespace UgovorOZakupuWebAPI.Controllers
             return Ok(mapper.Map<List<ContractedPublicBiddingDto>>(contractedPublicBiddings));
         }
 
+        /// <summary>
+        /// Vraća jedno ugovoreno javno nadmetanje na osnovu ID-a
+        /// </summary>
+        /// <param name="contractedPublicBiddingId">ID oglasa</param>
+        /// <returns>Ugovoreno javno nadmetanje</returns>
+        /// <response code="200">Vraća traženo ugovoreno javno nadmetanje</response>
+        /// <response code="404">Nije pronađno ni jedno javno nadmetanje za dati ID</response>
+        ///
         [HttpGet("{contractedPublicBiddingId}")]
         public ActionResult<ContractedPublicBiddingDto> GetContractedPublicBiddingById(Guid contractedPublicBiddingId)
         {
@@ -57,6 +83,22 @@ namespace UgovorOZakupuWebAPI.Controllers
             return Ok(mapper.Map<ContractedPublicBiddingDto>(contractedPublicBidding));
         }
 
+        /// <summary>
+        /// Kreira novo ugovoreno javno nadmetanje
+        /// </summary>
+        /// <param name="contractedPublicBiddingDto">Model za ugovoreno javno nadmetanje</param>
+        /// <remarks>
+        /// Primer zahteva za kreiranje novog oglasa \
+        /// POST /api/leaseAgreement/contractedPublicBidding \
+        /// {   
+        ///     "additionalInfo": "Sto pre." \
+        ///}
+        /// </remarks>
+        /// <returns>Potvrda o kreiranju ugovorenog javnog nadmetanja</returns>
+        /// <response code="201">Vraća kreirano ugovoreno javno nadmetanje</response>
+        /// <response code="500">Desila se greška prilikom unosa novog ugovorenog javnog nadmetanja</response>
+        ///
+        [Consumes("application/json")]
         [HttpPost]
         public ActionResult<ContractedPublicBiddingConfirmationDto> CreateContractedPublicBidding([FromBody] ContractedPublicBiddingDto contractedPublicBiddingDto)
         {
@@ -77,6 +119,15 @@ namespace UgovorOZakupuWebAPI.Controllers
             }
         }
 
+        /// <summary>
+        /// Modifikacija ugovorenog javnog nadmetanja
+        /// </summary>
+        /// <param name="contractedPublicBiddingDto">Model ugovorenog javnog nadmetanja</param>
+        /// <returns>Potvrda o modifikaciji ugovorenog javnog nadmetanja</returns>
+        /// <response code="200">Izmenjeno ugovoreno javno nadmetanje</response>
+        /// <response code="404">Nije pronađeno ugovoreno javno nadmetanje za uneti ID</response>
+        /// <response code="500">Serverska greška tokom modifikacije ugovorenog javnog nadmetanja</response>
+        ///
         [HttpPut]
         public ActionResult<ContractedPublicBiddingDto> UpdateContractedPublicBidding([FromBody] ContractedPublicBiddingDto contractedPublicBiddingDto)
         {
@@ -101,6 +152,15 @@ namespace UgovorOZakupuWebAPI.Controllers
             }
         }
 
+        /// <summary>
+        /// Brisanje oglasa na osnovu ID-a
+        /// </summary>
+        /// <param name="contractedPublicBiddingId">ID oglasa</param>
+        /// <returns>Status 204 (NoContent)</returns>
+        /// <response code="204">Ugovoreno javno nadmetanje je uspešno obrisano</response>
+        /// <response code="404">Nije pronađeno ugovoreno javno nadmetanje za uneti ID</response>
+        /// <response code="500">Serverska greška tokom brisanja ugovorenog javnog nadmetanja</response>
+        /// 
         [HttpDelete("{contractedPublicBiddingId}")]
         public IActionResult DeleteContractedPublicBidding(Guid contractedPublicBiddingId)
         {

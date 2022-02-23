@@ -18,16 +18,16 @@ namespace UgovorOZakupuWebAPI.Data
             this.context = context;
         }
 
-        public LeaseAgreementConfirmation CreateLeaseAgreement(LeaseAgreementCreation leaseAgreement)
+        public LeaseAgreementConfirmation CreateLeaseAgreement(LeaseAgreement leaseAgreement)
         {
-            var mappedEntity = mapper.Map<LeaseAgreement>(leaseAgreement);
-            var createdEntity = context.Add(mappedEntity);
+            var createdEntity = context.Add(leaseAgreement);
             foreach(var el in leaseAgreement.MaturityDeadlines)
             {
                 var temp = new MaturityDeadline();
                 temp.MaturityDeadlineId = el.MaturityDeadlineId;
                 temp.LeaseAgreementId = leaseAgreement.LeaseAgreementId;
                 temp.Deadline = el.Deadline;
+                context.Add(temp);
             }
             return mapper.Map<LeaseAgreementConfirmation>(createdEntity.Entity);
         }

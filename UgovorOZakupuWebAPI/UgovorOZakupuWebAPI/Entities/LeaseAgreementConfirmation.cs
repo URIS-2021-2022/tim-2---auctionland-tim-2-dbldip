@@ -7,9 +7,18 @@ using System.Threading.Tasks;
 
 namespace UgovorOZakupuWebAPI.Entities
 {
+    /// <summary>
+    /// Entitet potvrda ugovora o zakupu
+    /// </summary>
     public class LeaseAgreementConfirmation
     {
+        /// <summary>
+        /// ID ugovora o zakupu
+        /// </summary>
         public Guid LeaseAgreementId { get; set; }
+        /// <summary>
+        /// serijski broj
+        /// </summary>
         public string SerialNumber { get; set; }
     }
 }

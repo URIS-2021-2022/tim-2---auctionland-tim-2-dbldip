@@ -10,7 +10,7 @@ using UgovorOZakupuWebAPI.Entities;
 namespace UgovorOZakupuWebAPI.Migrations
 {
     [DbContext(typeof(LeaseAgreementContext))]
-    [Migration("20220222033229_Initial")]
+    [Migration("20220223075020_Initial")]
     partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -164,19 +164,19 @@ namespace UgovorOZakupuWebAPI.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid>("ContractPartyId")
+                    b.Property<Guid?>("ContractPartyId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid>("ContractedPublicBiddingId")
+                    b.Property<Guid?>("ContractedPublicBiddingId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<DateTime?>("DateOfSigning")
                         .HasColumnType("datetime2");
 
-                    b.Property<Guid>("DecisionId")
+                    b.Property<Guid?>("DecisionId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid>("GuaranteeTypeId")
+                    b.Property<Guid?>("GuaranteeTypeId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<bool?>("IsDelete")
@@ -235,6 +235,8 @@ namespace UgovorOZakupuWebAPI.Migrations
 
                     b.HasKey("MaturityDeadlineId");
 
+                    b.HasIndex("LeaseAgreementId");
+
                     b.ToTable("MaturityDeadlines");
 
                     b.HasData(
@@ -267,27 +269,19 @@ namespace UgovorOZakupuWebAPI.Migrations
                 {
                     b.HasOne("UgovorOZakupuWebAPI.Entities.ContractParty", "ContractParty")
                         .WithMany()
-                        .HasForeignKey("ContractPartyId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("ContractPartyId");
 
                     b.HasOne("UgovorOZakupuWebAPI.Entities.ContractedPublicBidding", "ContractedPublicBidding")
                         .WithMany()
-                        .HasForeignKey("ContractedPublicBiddingId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("ContractedPublicBiddingId");
 
                     b.HasOne("UgovorOZakupuWebAPI.Entities.Document", "Decision")
                         .WithMany()
-                        .HasForeignKey("DecisionId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("DecisionId");
 
                     b.HasOne("UgovorOZakupuWebAPI.Entities.GuaranteeType", "GuaranteeType")
                         .WithMany()
-                        .HasForeignKey("GuaranteeTypeId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("GuaranteeTypeId");
 
                     b.Navigation("ContractedPublicBidding");
 
@@ -296,6 +290,20 @@ namespace UgovorOZakupuWebAPI.Migrations
                     b.Navigation("Decision");
 
                     b.Navigation("GuaranteeType");
+                });
+
+            modelBuilder.Entity("UgovorOZakupuWebAPI.Entities.MaturityDeadline", b =>
+                {
+                    b.HasOne("UgovorOZakupuWebAPI.Entities.LeaseAgreement", null)
+                        .WithMany("MaturityDeadlines")
+                        .HasForeignKey("LeaseAgreementId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("UgovorOZakupuWebAPI.Entities.LeaseAgreement", b =>
+                {
+                    b.Navigation("MaturityDeadlines");
                 });
 #pragma warning restore 612, 618
         }

@@ -32,7 +32,7 @@ namespace UgovorOZakupuWebAPI.ServiceCalls
                     Method = method,
                     LogLevel = logLevel,
                     Exception = exception,
-                    Microservice = "KupacWebApi"
+                    Microservice = "UgovorOZakupuWebApi"
                 };
 
                 HttpContent httpContent = new StringContent(JsonConvert.SerializeObject(logMessage));

@@ -14,6 +14,9 @@ using UgovorOZakupuWebAPI.ServiceCalls;
 
 namespace UgovorOZakupuWebAPI.Controllers
 {
+    /// <summary>
+    /// Kontroler za tip garancije
+    /// </summary>
     [ApiController]
     [Route("api/leaseAgreement/guaranteeType")]
     public class GuaranteeTypeController : ControllerBase
@@ -22,6 +25,12 @@ namespace UgovorOZakupuWebAPI.Controllers
         private readonly IMapper mapper;
         private readonly ILoggerService loggerService;
 
+        /// <summary>
+        /// Konstruktor za tip garancije - DI
+        /// </summary>
+        /// <param name="guaranteeTypeRepository">Repository oglasa/param>
+        /// <param name="mapper">AutoMapper</param>
+        /// <param name="loggerService">Logger servis</param>
         public GuaranteeTypeController(IGuaranteeTypeRepository guaranteeTypeRepository, IMapper mapper, ILoggerService loggerService)
         {
             this.guaranteeTypeRepository = guaranteeTypeRepository;
@@ -29,6 +38,13 @@ namespace UgovorOZakupuWebAPI.Controllers
             this.loggerService = loggerService;
         }
 
+        /// <summary>
+        /// Vraća sve tipove garancija
+        /// </summary>
+        /// <returns>Lista tipova garancija</returns>
+        /// <response code="200">Vraća listu tipova garancija</response>
+        /// <response code="404">Nije pronađen ni jedan tip garancije</response>
+        /// 
         [HttpGet]
         public ActionResult<List<GuaranteeTypeDto>> GetGuaranteeTypes()
         {

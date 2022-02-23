@@ -13,6 +13,7 @@ namespace UgovorOZakupuWebAPI.Profiles
         public LeaseAgreementProfile()
         {
             CreateMap<LeaseAgreementCreation, LeaseAgreement>();
+            CreateMap<LeaseAgreementCreationDto, LeaseAgreement>();
             CreateMap<LeaseAgreementCreationDto, LeaseAgreementCreation>();
             CreateMap<LeaseAgreementWithLists, LeaseAgreementDto>();
             CreateMap<LeaseAgreementWithLists, LeaseAgreement>();

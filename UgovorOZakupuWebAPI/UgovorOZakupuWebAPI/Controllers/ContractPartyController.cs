@@ -14,6 +14,9 @@ using UgovorOZakupuWebAPI.ServiceCalls;
 
 namespace UgovorOZakupuWebAPI.Controllers
 {
+    /// <summary>
+    /// Kontroler za učesnika ugovora
+    /// </summary>
     [ApiController]
     [Route("api/leaseAgreement/contractParty")]
     public class ContractPartyController : ControllerBase
@@ -23,7 +26,14 @@ namespace UgovorOZakupuWebAPI.Controllers
         private readonly IMapper mapper;
         private readonly ILoggerService loggerService;
 
-        public ContractPartyController(IContractPartyRepository contractPartyRepository , LinkGenerator linkGenerator, IMapper mapper, ILoggerService loggerService)
+        /// <summary>
+        /// Konstruktor učesnika ugovora - DI
+        /// </summary>
+        /// <param name="contractPartyRepository">Repository oglasa/param>
+        /// <param name="linkGenerator">Link generator za učesnika ugovora</param>
+        /// <param name="mapper">AutoMapper</param>
+        /// <param name="loggerService">Logger servis</param>
+        public ContractPartyController(IContractPartyRepository contractPartyRepository, LinkGenerator linkGenerator, IMapper mapper, ILoggerService loggerService)
         {
             this.contractPartyRepository = contractPartyRepository;
             this.linkGenerator = linkGenerator;
@@ -31,6 +41,13 @@ namespace UgovorOZakupuWebAPI.Controllers
             this.loggerService = loggerService;
         }
 
+        /// <summary>
+        /// Vraća sve učesnike ugovora
+        /// </summary>
+        /// <returns>Lista učesnika ugovora</returns>
+        /// <response code="200">Vraća listu učesnika ugovora</response>
+        /// <response code="404">Nije pronađen ni jedan učesnik ugovora</response>
+        /// 
         [HttpGet]
         public ActionResult<List<ContractPartyDto>> GetContractParties()
         {
@@ -44,6 +61,14 @@ namespace UgovorOZakupuWebAPI.Controllers
             return Ok(mapper.Map<List<ContractPartyDto>>(contractParties));
         }
 
+        /// <summary>
+        /// Vraća jednog učesnika ugovora na osnovu ID-a
+        /// </summary>
+        /// <param name="contractPartyId">ID učesnika ugovora</param>
+        /// <returns>Učesnik ugovora</returns>
+        /// <response code="200">Vraća učesnika ugovora</response>
+        /// <response code="404">Nije pronađen učesnik ugovora za uneti ID</response>
+        ///
         [HttpGet("{contractPartyId}")]
         public ActionResult<ContractPartyDto> GetContractPartyById(Guid contractPartyId)
         {
@@ -57,6 +82,21 @@ namespace UgovorOZakupuWebAPI.Controllers
             return Ok(mapper.Map<ContractPartyDto>(contractParty));
         }
 
+        /// <summary>
+        /// Kreira novog učesnika ugovora
+        /// </summary>
+        /// <param name="contractPartyDto">Model učesnika ugovora</param>
+        /// <remarks>
+        /// Primer zahteva za kreiranje novog učesnika ugovora \
+        /// POST /api/leaseAgreement/contractParty \
+        /// {   
+        ///     "contractPartyId": "f84a055c-7ae0-44e7-9207-c3bb66deb14a", \
+        ///}
+        /// </remarks>
+        /// <returns>Potvrda o kreiranju učesnika ugovora</returns>
+        /// <response code="201">Vraća kreiranog učesnika ugovora</response>
+        /// <response code="500">Desila se greška prilikom unosa novog učesnika ugovora</response>
+        ///
         [HttpPost]
         public ActionResult<ContractPartyConfirmationDto> CreateContractParty(ContractPartyDto contractPartyDto)
         {
@@ -77,6 +117,15 @@ namespace UgovorOZakupuWebAPI.Controllers
             }
         }
 
+        /// <summary>
+        /// Modifikacija učesnika ugovora
+        /// </summary>
+        /// <param name="contractPartyDto">Model učesnik ugovoa</param>
+        /// <returns>Potvrda o modifikaciji učesnika ugovora</returns>
+        /// <response code="200">Izmenjen učesnik ugovora</response>
+        /// <response code="404">Nije pronađen učesnik ugovora za uneti ID</response>
+        /// <response code="500">Serverska greška tokom modifikacije učesnika ugovora</response>
+        ///
         [HttpPut]
         public ActionResult<ContractPartyDto> UpdateContractParty(ContractPartyDto contractPartyDto)
         {
@@ -102,6 +151,15 @@ namespace UgovorOZakupuWebAPI.Controllers
             }
         }
 
+        /// <summary>
+        /// Brisanje učesnika ugovora na osnovu ID-a
+        /// </summary>
+        /// <param name="contractPartyId">ID učesnika ugovora</param>
+        /// <returns>Status 204 (NoContent)</returns>
+        /// <response code="204">Učesnika ugovora je uspešno obrisan</response>
+        /// <response code="404">Nije pronađen učesnik ugovora za uneti ID</response>
+        /// <response code="500">Serverska greška tokom brisanja učesnika ugovora</response>
+        /// 
         [HttpDelete("{contractPartyId}")]
         public IActionResult DeleteContractParty(Guid contractPartyId)
         {

@@ -14,6 +14,9 @@ using UgovorOZakupuWebAPI.ServiceCalls;
 
 namespace UgovorOZakupuWebAPI.Controllers
 {
+    /// <summary>
+    /// Kontroler za autora dokumenta
+    /// </summary>
     [ApiController]
     [Route("api/leaseAgreement/documentAuthor")]
     public class DocumentAuthorController : ControllerBase
@@ -23,6 +26,14 @@ namespace UgovorOZakupuWebAPI.Controllers
         private readonly IMapper mapper;
         private readonly ILoggerService loggerService;
 
+        /// <summary>
+        /// Konstruktor autora dokumenta - DI
+        /// </summary>
+        /// <param name="documentAuthorRepository">Repository oglasa/param>
+        /// <param name="linkGenerator">Link generator za create zahtev</param>
+        /// <param name="mapper">AutoMapper</param>
+        /// <param name="loggerService">Logger servis</param>
+        /// 
         public DocumentAuthorController(IDocumentAuthorRepository documentAuthorRepository, LinkGenerator linkGenerator, IMapper mapper, ILoggerService loggerService)
         {
             this.documentAuthorRepository = documentAuthorRepository;
@@ -30,6 +41,14 @@ namespace UgovorOZakupuWebAPI.Controllers
             this.mapper = mapper;
             this.loggerService = loggerService;
         }
+
+        /// <summary>
+        /// Vraća autore dokumenta
+        /// </summary>
+        /// <returns>Lista autora dokumenta</returns>
+        /// <response code="200">Vraća listu autora dokumenta</response>
+        /// <response code="404">Nije pronađen ni autor dokumenta</response>
+        /// 
         [HttpGet]
         public ActionResult<List<DocumentAuthorDto>> GetDocumentAuthors()
         {
@@ -43,6 +62,14 @@ namespace UgovorOZakupuWebAPI.Controllers
             return Ok(mapper.Map<List<DocumentAuthorDto>>(documentAuthors));
         }
 
+        /// <summary>
+        /// Vraća jednog autora dokumenta osnovu ID-a
+        /// </summary>
+        /// <param name="documentAuthorId">ID autora dokumenta</param>
+        /// <returns>Autor dokumenta</returns>
+        /// <response code="200">Vraća traženog autora dokumenta</response>
+        /// <response code="404">Nije pronađen autor dokumenta za uneti ID</response>
+        ///
         [HttpGet("{documentAuthorId}")]
         public ActionResult<DocumentAuthorDto> GetDocumentAuthorById(Guid documentAuthorId)
         {
@@ -56,6 +83,22 @@ namespace UgovorOZakupuWebAPI.Controllers
             return Ok(mapper.Map<DocumentAuthorDto>(documentAuthor));
         }
 
+        /// <summary>
+        /// Kreira novog autora dokumenta
+        /// </summary>
+        /// <param name="documentAuthorDto">Model oglas</param>
+        /// <remarks>
+        /// Primer zahteva za kreiranje novog oglasa \
+        /// POST /api/leaseAgreement/documentAuthor \
+        /// {   
+        ///     "documentAuthorId": "dea67985-ced6-4af2-a0df-fcfc21e947fe", \
+        ///     "agencyInfo": "Agencija za zavod 021" \
+        ///}
+        /// </remarks>
+        /// <returns>Potvrda o kreiranju autora dokumenta</returns>
+        /// <response code="201">Vraća kreiranog autora dokumenta</response>
+        /// <response code="500">Desila se greška prilikom unosa novog autora dokumenta</response>
+        ///
         [HttpPost]
         public ActionResult<DocumentAuthorConfirmationDto> CreateDocument([FromBody] DocumentAuthorDto documentAuthorDto)
         {
@@ -76,6 +119,15 @@ namespace UgovorOZakupuWebAPI.Controllers
             }
         }
 
+        /// <summary>
+        /// Modifikacija autora dokumenta
+        /// </summary>
+        /// <param name="documentAuthorDto">Model autora dokumenta</param>
+        /// <returns>Potvrda o modifikaciji autora dokumenta</returns>
+        /// <response code="200">Izmenjen autor dokumenta</response>
+        /// <response code="404">Nije pronađen autor dokumenta za uneti ID</response>
+        /// <response code="500">Serverska greška tokom modifikacije autora dokumenta</response>
+        ///
         [HttpPut]
         public ActionResult<DocumentAuthorDto> UpdateDocumentAuthor(DocumentAuthorDto documentAuthorDto)
         {
@@ -87,7 +139,7 @@ namespace UgovorOZakupuWebAPI.Controllers
                     this.loggerService.LogMessage("There is no document authors with that id", "Update", LogLevel.Warning);
                     return NotFound();
                 }
-                DocumentAuthor documentAuthorEntity = mapper.Map<DocumentAuthor>(documentAuthorDto);
+                DocumentAuthor documentAuthorEntity = mapper.Map<DocumentAuthor>(documentAuthorDto); 
                 mapper.Map(documentAuthorEntity, oldDocumentAuthor);
                 documentAuthorRepository.SaveChanges();
                 this.loggerService.LogMessage("Document author updated successfully", "Update", LogLevel.Information);
@@ -100,6 +152,15 @@ namespace UgovorOZakupuWebAPI.Controllers
             }
         }
 
+        /// <summary>
+        /// Brisanje autora dokumenta na osnovu ID-a
+        /// </summary>
+        /// <param name="documentAuthorId">ID autora dokumenta</param>
+        /// <returns>Status 204 (NoContent)</returns>
+        /// <response code="204">Autor dokumenta je uspešno obrisan</response>
+        /// <response code="404">Nije pronađen autora dokumenta za uneti ID</response>
+        /// <response code="500">Serverska greška tokom brisanja oautora dokumenta</response>
+        /// 
         [HttpDelete("{documentAuthorId}")]
         public IActionResult DeleteDocumentAuthor(Guid documentAuthorId)
         {

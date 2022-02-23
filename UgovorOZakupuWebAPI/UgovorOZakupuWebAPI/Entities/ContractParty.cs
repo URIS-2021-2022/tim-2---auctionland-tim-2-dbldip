@@ -6,8 +6,14 @@ using System.Threading.Tasks;
 
 namespace UgovorOZakupuWebAPI.Entities
 {
+    /// <summary>
+    /// Entitet ucesnik ugovora
+    /// </summary>
     public class ContractParty
     {
+        /// <summary>
+        /// ID ucesnika ugovora
+        /// </summary>
         public Guid ContractPartyId { get; set; }
         //Od komisije celog ministra
     }

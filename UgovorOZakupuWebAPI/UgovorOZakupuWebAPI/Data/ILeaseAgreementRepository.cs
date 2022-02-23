@@ -12,7 +12,7 @@ namespace UgovorOZakupuWebAPI.Data
 
         LeaseAgreementWithLists GetLeaseAgreementById(Guid leaseAgreementId);
 
-        LeaseAgreementConfirmation CreateLeaseAgreement(LeaseAgreementCreation leaseAgreement);
+        LeaseAgreementConfirmation CreateLeaseAgreement(LeaseAgreement leaseAgreement);
 
         void UpdateLeaseAgreement(LeaseAgreementWithLists leaseAgreement);
 
