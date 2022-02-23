@@ -1,59 +1,80 @@
-﻿using System;
+﻿using ComplaintService.Entities;
+using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace ComplaintAPI.Models
+/// <summary>
+/// Predstavlja žalbu
+/// </summary>
+namespace ComplaintAPI.Entities
 {
-    /// <summary>
-    /// Dto za žalbu
-    /// </summary>
-    public class ComplaintDto
+    public class Complaint
     {
         /// <summary>
         /// ID žalbe
         /// </summary>
-        public Guid complaintId { get; set; }
+        [Key]
+        public Guid complaintId { get; set; } = Guid.NewGuid();
+        
+        /// <summary>
+        /// ID tipa žalbe
+        /// </summary>
+        [Required]
+        public Guid complaintTypeId { get; set; }
 
         /// <summary>
-        /// Tip žalbe id
+        /// Objekat tipa žalbe
         /// </summary>
-        public Guid complaintTypeId { get; set; }
+        public ComplaintType complaintType { get; set; }
 
         /// <summary>
         /// Datum podnošenja žalbe
         /// </summary>
+        [Required]
         public DateTime dateOfComplaint { get; set; }
 
         /// <summary>
-        /// Podnosilac žalbe - Mikroservis Kupac
+        /// ID kupca
         /// </summary>
         public Guid personId { get; set; }
 
         /// <summary>
         /// Razlog žalbe
         /// </summary>
-        public string complaintReason { get; set; }
+        [Required]
+        public string complaintReaason { get; set; }
 
         /// <summary>
         /// Obrazloženje žalbe
         /// </summary>
-        public string elaboration { get; set; }
+        [Required]
+        public string elaboration { get; set; } 
 
         /// <summary>
         /// Datum rešenja žalbe
         /// </summary>
+        [Required]
         public DateTime dateOfProcedure { get; set; }
+
 
         /// <summary>
         /// Broj rešenja
         /// </summary>
+        [Required]
         public string procedureNumber { get; set; }
 
         /// <summary>
-        /// Status žalbe
+        /// ID statusa žalbe
         /// </summary>
+        [Required]
         public Guid complaintStatusId { get; set; }
+
+        /// <summary>
+        /// Objekat statusa žalbe
+        /// </summary>
+        public ComplaintStatus complaintStatus { get; set; }
 
         /// <summary>
         /// Broj odluke ili broj nadmetanja
@@ -64,5 +85,12 @@ namespace ComplaintAPI.Models
         /// Radnja na osnovu žalbe
         /// </summary>
         public Guid actionTakenId { get; set; }
+
+        /// <summary>
+        /// Objekat radnje na osnovu žalbe
+        /// </summary>
+        public ActionTaken actionTaken { get; set; }
+
+
     }
 }

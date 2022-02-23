@@ -26,7 +26,7 @@ namespace ComplaintAPI.Models.Complaint
         /// <summary>
         /// Podnosilac žalbe - Mikroservis Kupac
         /// </summary>
-        public Guid KupacId { get; set; }
+        public Guid personId { get; set; }
 
         /// <summary>
         /// Razlog žalbe
