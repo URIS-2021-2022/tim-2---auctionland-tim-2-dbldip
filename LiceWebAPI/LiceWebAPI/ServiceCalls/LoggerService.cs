@@ -32,7 +32,7 @@ namespace LiceWebAPI.ServiceCalls
                     Method = method,
                     LogLevel = logLevel,
                     Exception = exception,
-                    Microservice = "KupacWebApi"
+                    Microservice = "LiceWebApi"
                 };
 
                 HttpContent httpContent = new StringContent(JsonConvert.SerializeObject(logMessage));

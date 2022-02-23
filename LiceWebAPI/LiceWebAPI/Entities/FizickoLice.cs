@@ -7,22 +7,22 @@ using System.Threading.Tasks;
 namespace LiceWebAPI.Entities
 {
     /// <summary>
-    /// Entitet fizick lice
+    /// Entitet fizičko lice
     /// </summary>
     public class FizickoLice : Lice
     {
         /// <summary>
-        /// Ime lica
+        /// Ime fizičkog lica
         /// </summary>
         public string Ime { get; set; }
 
         /// <summary>
-        /// Prezime lica
+        /// Prezime fizičkog lica
         /// </summary>
         public string Prezime { get; set; }
 
         /// <summary>
-        /// Jmbg lica
+        /// Jmbg fizičkog lica
         /// </summary>
         public string Jmbg { get; set; }
 
