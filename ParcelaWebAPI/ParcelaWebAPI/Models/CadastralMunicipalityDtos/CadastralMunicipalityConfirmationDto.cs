@@ -7,6 +7,9 @@ namespace ParcelaWebAPI.Models.CadastralMunicipalityDtos
 {
     public class CadastralMunicipalityConfirmationDto
     {
+        /// <summary>
+        /// name of Cadastral Municipality
+        /// </summary>
         public string nameOfCadastralMunicipality { get; set; }
     }
 }

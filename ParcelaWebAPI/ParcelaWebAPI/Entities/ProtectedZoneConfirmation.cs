@@ -7,7 +7,13 @@ namespace ParcelaWebAPI.Entities
 {
     public class ProtectedZoneConfirmation
     {
+        /// <summary>
+        /// Protected zone ID
+        /// </summary>
         public Guid protectedZoneId { get; set; }
+        /// <summary>
+        /// Level of protected zone
+        /// </summary>
         public int level { get; set; }
     }
 }

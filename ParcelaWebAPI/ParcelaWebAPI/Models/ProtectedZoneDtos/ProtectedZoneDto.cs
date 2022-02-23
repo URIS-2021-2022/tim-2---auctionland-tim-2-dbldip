@@ -7,6 +7,9 @@ namespace ParcelaWebAPI.Models.ProtectedZoneDtos
 {
     public class ProtectedZoneDto
     {
+        /// <summary>
+        /// Level of protected zone
+        /// </summary>
         public int level { get; set; }
     }
 }

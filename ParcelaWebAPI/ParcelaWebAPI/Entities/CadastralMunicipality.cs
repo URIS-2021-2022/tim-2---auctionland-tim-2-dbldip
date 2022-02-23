@@ -8,8 +8,14 @@ namespace ParcelaWebAPI.Entities
 {
     public class CadastralMunicipality
     {
+        /// <summary>
+        /// Cadastral Municipality ID
+        /// </summary>
         [Key]
         public Guid cadastralMunicipalityId { get; set; }
+        /// <summary>
+        /// name of Cadastral Municipality
+        /// </summary>
         public string nameOfCadastralMunicipality { get; set; }
 
     }

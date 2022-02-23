@@ -12,6 +12,9 @@ using System.Collections.Generic;
 
 namespace ParcelaWebAPI.Controllers
 {
+    /// <summary>
+    /// Controller for the parcel user
+    /// </summary>
     [ApiController]
     [Route("api/parcelUsers")]
     public class ParcelUserController : ControllerBase
@@ -20,6 +23,14 @@ namespace ParcelaWebAPI.Controllers
         private readonly LinkGenerator linkGenerator;
         private readonly IMapper mapper;
         private readonly ILoggerService loggerService;
+
+        /// <summary>
+        /// Parcel user Controller constructor
+        /// </summary>
+        /// <param name="parcelUserRepository">Parcel user repository</param>
+        /// <param name="linkGenerator">Link generator</param>
+        /// <param name="mapper">AutoMapper</param>
+        ///  /// <param name="loggerService">Logger Service</param>
         public ParcelUserController(IParcelUserRepository parcelUserRepository, LinkGenerator linkGenerator, IMapper mapper, ILoggerService loggerService)
         {
             this.parcelUserRepository = parcelUserRepository;
@@ -28,6 +39,12 @@ namespace ParcelaWebAPI.Controllers
             this.loggerService = loggerService;
         }
 
+        /// <summary>
+        /// Return all parcel users
+        /// </summary>
+        /// <returns>List of parcel users</returns>
+        /// <response code="200">Returns all parcel users</response>
+        /// <response code="404">No parcel user found</response>
         [HttpGet]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
@@ -45,6 +62,13 @@ namespace ParcelaWebAPI.Controllers
             return Ok(mapper.Map<List<ParcelUserDto>>(parcelUsers));
         }
 
+        /// <summary>
+        /// Returns Parcel user by ID
+        /// </summary>
+        /// <param name="parcelUserId">Parcel user ID</param>
+        /// <returns>Parcel user</returns>
+        /// <response code="200">Returns parcel user by ID</response>
+        /// <response code="404">No parcel user by ID found</response>
         [HttpGet("{parcelUserId}")]
         public ActionResult<ParcelUserDto> GetParcelUser(Guid parcelUserId)
         {
@@ -61,6 +85,13 @@ namespace ParcelaWebAPI.Controllers
             return Ok(mapper.Map<ParcelUserDto>(parcelUser));
         }
 
+        /// <summary>
+        /// Create new parcel user
+        /// </summary>
+        /// <param name="parcelUser">Creation parcel user DTO</param>
+        /// <returns>Confirmation of created parcel user</returns>
+        /// <response code="201">Returns confirmation of created parcel user</response>
+        /// <response code="500">Parcel user creation error</response>
         [HttpPost]
         public ActionResult<ParcelUserConfirmationDto> CreateParcelUser([FromBody] ParcelUserCreationDto parcelUser)
         {
@@ -76,8 +107,17 @@ namespace ParcelaWebAPI.Controllers
             return Created(location, mapper.Map<ParcelUserConfirmationDto>(confirmation));
         }
 
+        /// <summary>
+        /// Parcel User modify
+        /// </summary>
+        /// <param name="parcelUserId">Update Parcel User DTO</param>
+        /// <param name="parcelUser">Update Parcel User DTO</param>
+        /// <returns>Confirmation of updated Parcel User</returns>
+        /// <response code="200">Returns confirmation of updated Parcel User</response>
+        /// <response code="400">Bad request</response>
+        /// <response code="404">Not found Parcel User by ID</response>
+        /// <response code="500">Server error</response>
         [Consumes("application/json")]
-
         [HttpPut("{parcelUserId}")]
         public ActionResult<ParcelUserUpdateDto> UpdateParcelUser(Guid parcelUserId, ParcelUserUpdateDto parcelUser)
         {
@@ -99,6 +139,14 @@ namespace ParcelaWebAPI.Controllers
             return Ok(mapper.Map<ParcelUserDto>(oldParcelUser));
         }
 
+        /// <summary>
+        /// Delete parcel user
+        /// </summary>
+        /// <param name="parcelUserId"> Parcel user ID</param>
+        /// <returns>Status 204 (NoContent)</returns>
+        /// <response code="204">Parcel user deleted</response>
+        /// <response code="404">Parcel user by ID not found</response>
+        /// <response code="500">Server error</response>
         [HttpDelete("{parcelUserId}")]
         public IActionResult DeleteParcelUser(Guid parcelUserId)
         {

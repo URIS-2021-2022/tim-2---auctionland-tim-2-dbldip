@@ -11,6 +11,9 @@ using System.Collections.Generic;
 
 namespace ParcelaWebAPI.Controllers
 {
+    /// <summary>
+    /// Controller for the protected zone
+    /// </summary>
     [ApiController]
     [Route("api/protectedZones")]
     public class ProtectedZoneController : ControllerBase
@@ -18,6 +21,13 @@ namespace ParcelaWebAPI.Controllers
         private readonly IProtectedZoneRepository protectedZoneRepository;
         private readonly IMapper mapper;
         private readonly ILoggerService loggerService;
+
+        /// <summary>
+        /// Protected zone Controller constructor
+        /// </summary>
+        /// <param name="protectedZoneRepository">Protected zone repository</param>
+        /// <param name="mapper">AutoMapper</param>
+        /// <param name="loggerService">Logger Service</param>
         public ProtectedZoneController(IProtectedZoneRepository protectedZoneRepository, IMapper mapper, ILoggerService loggerService)
         {
             this.protectedZoneRepository = protectedZoneRepository;
@@ -25,6 +35,12 @@ namespace ParcelaWebAPI.Controllers
             this.loggerService = loggerService;
         }
 
+        /// <summary>
+        /// Return all protected zones
+        /// </summary>
+        /// <returns>List of protected zones</returns>
+        /// <response code="200">Returns all protected zones</response>
+        /// <response code="404">No protected zone found</response>
         [HttpGet]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
@@ -42,6 +58,13 @@ namespace ParcelaWebAPI.Controllers
             return Ok(mapper.Map<List<ProtectedZoneDto>>(protectedZones));
         }
 
+        /// <summary>
+        /// Returns Protected zone by ID
+        /// </summary>
+        /// <param name="protectedZoneId">Protected zone ID</param>
+        /// <returns>Protected zone</returns>
+        /// <response code="200">Returns Protected zone by ID</response>
+        /// <response code="404">No Protected zone by ID found</response>
         [HttpGet("{protectedZoneId}")]
         public ActionResult<ProtectedZoneDto> GetProtectedZone(Guid protectedZoneId)
         {

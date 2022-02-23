@@ -8,9 +8,14 @@ namespace ParcelaWebAPI.Entities
 {
     public class ProtectedZone
     {
+        /// <summary>
+        /// Protected zone ID
+        /// </summary>
         [Key]
        public Guid protectedZoneId { get; set; }
-
+        /// <summary>
+        /// Level of protected zone
+        /// </summary>
         public int level { get; set; }
     }
 }

@@ -1,0 +1,1104 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>ParcelaWebAPI</name>
+    </assembly>
+    <members>
+        <member name="T:ParcelaWebAPI.Controllers.CadastralMunicipalityController">
+            <summary>
+            Controller for the cadastral municipality
+            </summary>
+        </member>
+        <member name="M:ParcelaWebAPI.Controllers.CadastralMunicipalityController.#ctor(ParcelaWebAPI.Data.ICadastralMunicipalityRepository,AutoMapper.IMapper,ParcelaWebAPI.ServiceCalls.ILoggerService)">
+            <summary>
+            Cadastral municipality Controller constructor
+            </summary>
+            <param name="cadastralMunicipalityRepository">Cadastral municipality repository</param>
+            <param name="mapper">AutoMapper</param>
+            <param name="loggerService">Logger Service</param>
+        </member>
+        <member name="M:ParcelaWebAPI.Controllers.CadastralMunicipalityController.GetPriorities">
+            <summary>
+            Return all cadastral municipalities
+            </summary>
+            <returns>List of cadastral municipalities</returns>
+            <response code="200">Returns all cadastral municipalities</response>
+            <response code="404">No cadastral municipality found</response>
+        </member>
+        <member name="M:ParcelaWebAPI.Controllers.CadastralMunicipalityController.GetCadastralMunicipality(System.Guid)">
+            <summary>
+            Returns Cadastral municipality by ID
+            </summary>
+            <param name="cadastralMunicipalityId">Cadastral municipality ID</param>
+            <returns>Cadastral municipality</returns>
+            <response code="200">Returns Cadastral municipality by ID</response>
+            <response code="404">No Cadastral municipality by ID found</response>
+        </member>
+        <member name="T:ParcelaWebAPI.Controllers.ParcelController">
+            <summary>
+            Controller for the parcel
+            </summary>
+        </member>
+        <member name="M:ParcelaWebAPI.Controllers.ParcelController.#ctor(ParcelaWebAPI.Data.IParcelRepository,Microsoft.AspNetCore.Routing.LinkGenerator,AutoMapper.IMapper,ParcelaWebAPI.ServiceCalls.ILoggerService)">
+            <summary>
+            Parcel Controller constructor
+            </summary>
+            <param name="parcelRepository">Parcel repository</param>
+            <param name="linkGenerator">Link generator</param>
+            <param name="mapper">AutoMapper</param>
+            <param name="loggerService">Logger Service</param>
+        </member>
+        <member name="M:ParcelaWebAPI.Controllers.ParcelController.GetParcels">
+            <summary>
+            Return all parcels
+            </summary>
+            <returns>List of parcels</returns>
+            <response code="200">Returns all parcels</response>
+            <response code="404">No parcel found</response>
+        </member>
+        <member name="M:ParcelaWebAPI.Controllers.ParcelController.GetParcel(System.Guid)">
+            <summary>
+            Returns parcel by ID
+            </summary>
+            <param name="parcelId">Parcel ID</param>
+            <returns>Parcel</returns>
+            <response code="200">Returns parcel by ID</response>
+            <response code="404">No parcel by ID found</response>
+        </member>
+        <member name="M:ParcelaWebAPI.Controllers.ParcelController.CreateParcel(ParcelaWebAPI.Models.ParcelDtos.ParcelCreationDto)">
+            <summary>
+            Create new parcel
+            </summary>
+            <param name="parcel">Creation parcel DTO</param>
+            <returns>Confirmation of created parcel</returns>
+            <response code="201">Returns confirmation of created parcel</response>
+            <response code="500">Parcel creation error</response>
+        </member>
+        <member name="M:ParcelaWebAPI.Controllers.ParcelController.UpdateParcel(System.Guid,ParcelaWebAPI.Models.ParcelDtos.ParcelUpdateDto)">
+            <summary>
+            Parcel modify
+            </summary>
+            <param name="parcelId">Update parcel DTO</param>
+            <param name="parcel">Update parcel DTO</param>
+            <returns>Confirmation of updated parcel</returns>
+            <response code="200">Returns confirmation of updated parcel</response>
+            <response code="400">Bad request</response>
+            <response code="404">Not found parcel by ID</response>
+            <response code="500">Server error</response>
+        </member>
+        <member name="M:ParcelaWebAPI.Controllers.ParcelController.DeleteParcel(System.Guid)">
+            <summary>
+            Delete parcel
+            </summary>
+            <param name="parcelId"> Parcel ID</param>
+            <returns>Status 204 (NoContent)</returns>
+            <response code="204">Parcel deleted</response>
+            <response code="404">Parcel by ID not found</response>
+            <response code="500">Server error</response>
+        </member>
+        <member name="T:ParcelaWebAPI.Controllers.ParcelPartController">
+            <summary>
+            Controller for the parcel part
+            </summary>
+        </member>
+        <member name="M:ParcelaWebAPI.Controllers.ParcelPartController.#ctor(ParcelaWebAPI.Data.IParcelPartRepository,AutoMapper.IMapper,Microsoft.AspNetCore.Routing.LinkGenerator,ParcelaWebAPI.ServiceCalls.ILoggerService)">
+            <summary>
+            Parcel part Controller constructor
+            </summary>
+            <param name="parcelPartRepository">Parcel part repository</param>
+            <param name="linkGenerator">Link generator</param>
+            <param name="mapper">AutoMapper</param>
+             /// <param name="loggerService">Logger Service</param>
+        </member>
+        <member name="M:ParcelaWebAPI.Controllers.ParcelPartController.GetParcelParts">
+            <summary>
+            Return all parcel parts
+            </summary>
+            <returns>List of parcel parts</returns>
+            <response code="200">Returns all parcel parts</response>
+            <response code="404">No parcel part found</response>
+        </member>
+        <member name="M:ParcelaWebAPI.Controllers.ParcelPartController.GetParcelPart(System.Guid)">
+            <summary>
+            Returns parcel part by ID
+            </summary>
+            <param name="parcelPartId">Parcel part ID</param>
+            <returns>Parcel part</returns>
+            <response code="200">Returns parcel part by ID</response>
+            <response code="404">No parcel part by ID found</response>
+        </member>
+        <member name="M:ParcelaWebAPI.Controllers.ParcelPartController.CreateParcelPart(ParcelaWebAPI.Models.ParcelPartDtos.ParcelPartCreationDto)">
+            <summary>
+            Create new parcel part
+            </summary>
+            <param name="parcelPart">Creation parcel part DTO</param>
+            <returns>Confirmation of created parcel part</returns>
+            <response code="201">Returns confirmation of created parcel part</response>
+            <response code="500">Parcel part creation error</response>
+        </member>
+        <member name="M:ParcelaWebAPI.Controllers.ParcelPartController.UpdateParcelPart(System.Guid,ParcelaWebAPI.Models.ParcelPartDtos.ParcelPartUpdateDto)">
+            <summary>
+            Parcel part modify
+            </summary>
+            <param name="parcelPartId">Update parcel part DTO</param>
+            <param name="parcelPart">Update parcel part DTO</param>
+            <returns>Confirmation of updated parcel part</returns>
+            <response code="200">Returns confirmation of updated parcel part</response>
+            <response code="400">Bad request</response>
+            <response code="404">Not found parcel part by ID</response>
+            <response code="500">Server error</response>
+        </member>
+        <member name="M:ParcelaWebAPI.Controllers.ParcelPartController.DeleteParcelPart(System.Guid)">
+            <summary>
+            Delete parcel part
+            </summary>
+            <param name="parcelPartId"> Parcel part ID</param>
+            <returns>Status 204 (NoContent)</returns>
+            <response code="204">Parcel part deleted</response>
+            <response code="404">Parcel part by ID not found</response>
+            <response code="500">Server error</response>
+        </member>
+        <member name="T:ParcelaWebAPI.Controllers.ParcelUserController">
+            <summary>
+            Controller for the parcel user
+            </summary>
+        </member>
+        <member name="M:ParcelaWebAPI.Controllers.ParcelUserController.#ctor(ParcelaWebAPI.Data.IParcelUserRepository,Microsoft.AspNetCore.Routing.LinkGenerator,AutoMapper.IMapper,ParcelaWebAPI.ServiceCalls.ILoggerService)">
+            <summary>
+            Parcel user Controller constructor
+            </summary>
+            <param name="parcelUserRepository">Parcel user repository</param>
+            <param name="linkGenerator">Link generator</param>
+            <param name="mapper">AutoMapper</param>
+             /// <param name="loggerService">Logger Service</param>
+        </member>
+        <member name="M:ParcelaWebAPI.Controllers.ParcelUserController.GetParcelUsers">
+            <summary>
+            Return all parcel users
+            </summary>
+            <returns>List of parcel users</returns>
+            <response code="200">Returns all parcel users</response>
+            <response code="404">No parcel user found</response>
+        </member>
+        <member name="M:ParcelaWebAPI.Controllers.ParcelUserController.GetParcelUser(System.Guid)">
+            <summary>
+            Returns Parcel user by ID
+            </summary>
+            <param name="parcelUserId">Parcel user ID</param>
+            <returns>Parcel user</returns>
+            <response code="200">Returns parcel user by ID</response>
+            <response code="404">No parcel user by ID found</response>
+        </member>
+        <member name="M:ParcelaWebAPI.Controllers.ParcelUserController.CreateParcelUser(ParcelaWebAPI.Models.ParcelUserDtos.ParcelUserCreationDto)">
+            <summary>
+            Create new parcel user
+            </summary>
+            <param name="parcelUser">Creation parcel user DTO</param>
+            <returns>Confirmation of created parcel user</returns>
+            <response code="201">Returns confirmation of created parcel user</response>
+            <response code="500">Parcel user creation error</response>
+        </member>
+        <member name="M:ParcelaWebAPI.Controllers.ParcelUserController.UpdateParcelUser(System.Guid,ParcelaWebAPI.Models.ParcelUserDtos.ParcelUserUpdateDto)">
+            <summary>
+            Parcel User modify
+            </summary>
+            <param name="parcelUserId">Update Parcel User DTO</param>
+            <param name="parcelUser">Update Parcel User DTO</param>
+            <returns>Confirmation of updated Parcel User</returns>
+            <response code="200">Returns confirmation of updated Parcel User</response>
+            <response code="400">Bad request</response>
+            <response code="404">Not found Parcel User by ID</response>
+            <response code="500">Server error</response>
+        </member>
+        <member name="M:ParcelaWebAPI.Controllers.ParcelUserController.DeleteParcelUser(System.Guid)">
+            <summary>
+            Delete parcel user
+            </summary>
+            <param name="parcelUserId"> Parcel user ID</param>
+            <returns>Status 204 (NoContent)</returns>
+            <response code="204">Parcel user deleted</response>
+            <response code="404">Parcel user by ID not found</response>
+            <response code="500">Server error</response>
+        </member>
+        <member name="T:ParcelaWebAPI.Controllers.ProtectedZoneController">
+            <summary>
+            Controller for the protected zone
+            </summary>
+        </member>
+        <member name="M:ParcelaWebAPI.Controllers.ProtectedZoneController.#ctor(ParcelaWebAPI.Data.IProtectedZoneRepository,AutoMapper.IMapper,ParcelaWebAPI.ServiceCalls.ILoggerService)">
+            <summary>
+            Protected zone Controller constructor
+            </summary>
+            <param name="protectedZoneRepository">Protected zone repository</param>
+            <param name="mapper">AutoMapper</param>
+            <param name="loggerService">Logger Service</param>
+        </member>
+        <member name="M:ParcelaWebAPI.Controllers.ProtectedZoneController.GetProtectedZones">
+            <summary>
+            Return all protected zones
+            </summary>
+            <returns>List of protected zones</returns>
+            <response code="200">Returns all protected zones</response>
+            <response code="404">No protected zone found</response>
+        </member>
+        <member name="M:ParcelaWebAPI.Controllers.ProtectedZoneController.GetProtectedZone(System.Guid)">
+            <summary>
+            Returns Protected zone by ID
+            </summary>
+            <param name="protectedZoneId">Protected zone ID</param>
+            <returns>Protected zone</returns>
+            <response code="200">Returns Protected zone by ID</response>
+            <response code="404">No Protected zone by ID found</response>
+        </member>
+        <member name="P:ParcelaWebAPI.Entities.CadastralMunicipality.cadastralMunicipalityId">
+            <summary>
+            Cadastral Municipality ID
+            </summary>
+        </member>
+        <member name="P:ParcelaWebAPI.Entities.CadastralMunicipality.nameOfCadastralMunicipality">
+            <summary>
+            name of Cadastral Municipality
+            </summary>
+        </member>
+        <member name="P:ParcelaWebAPI.Entities.CadastralMunicipalityConfirmation.cadastralMunicipalityId">
+            <summary>
+            Cadastral Municipality ID
+            </summary>
+        </member>
+        <member name="P:ParcelaWebAPI.Entities.CadastralMunicipalityConfirmation.nameOfCadastralMunicipality">
+            <summary>
+            name of Cadastral Municipality
+            </summary>
+        </member>
+        <member name="P:ParcelaWebAPI.Entities.Parcel.parcelId">
+            <summary>
+            Parcel ID
+            </summary>
+        </member>
+        <member name="P:ParcelaWebAPI.Entities.Parcel.surfaceArea">
+            <summary>
+            surface area
+            </summary>
+        </member>
+        <member name="P:ParcelaWebAPI.Entities.Parcel.parcelNumber">
+            <summary>
+            parcel number
+            </summary>
+        </member>
+        <member name="P:ParcelaWebAPI.Entities.Parcel.realEstateListNumber">
+            <summary>
+            Real estate list number
+            </summary>
+        </member>
+        <member name="P:ParcelaWebAPI.Entities.Parcel.protectedZoneRealState">
+            <summary>
+            Real state of protected zone
+            </summary>
+        </member>
+        <member name="P:ParcelaWebAPI.Entities.Parcel.protectedZoneId">
+            <summary>
+            Protected zone ID
+            </summary>
+        </member>
+        <member name="P:ParcelaWebAPI.Entities.Parcel.level">
+            <summary>
+            Number of level
+            </summary>
+        </member>
+        <member name="P:ParcelaWebAPI.Entities.Parcel.parcelUserId">
+            <summary>
+            Parcel user ID
+            </summary>
+        </member>
+        <member name="P:ParcelaWebAPI.Entities.Parcel.name">
+            <summary>
+            Parcel user's name
+            </summary>
+        </member>
+        <member name="P:ParcelaWebAPI.Entities.Parcel.surname">
+            <summary>
+            Parcel user's surname
+            </summary>
+        </member>
+        <member name="P:ParcelaWebAPI.Entities.Parcel.jmbg">
+            <summary>
+            Parcel user's jmbg
+            </summary>
+        </member>
+        <member name="P:ParcelaWebAPI.Entities.Parcel.address">
+            <summary>
+            Parcel user's address
+            </summary>
+        </member>
+        <member name="P:ParcelaWebAPI.Entities.Parcel.cadastralMunicipalityId">
+            <summary>
+            Cadastral Municipality ID
+            </summary>
+        </member>
+        <member name="P:ParcelaWebAPI.Entities.Parcel.nameOfCadastralMunicipality">
+            <summary>
+            name of Cadastral Municipality
+            </summary>
+        </member>
+        <member name="P:ParcelaWebAPI.Entities.Parcel.parcelPartId">
+            <summary>
+            Parcel part ID
+            </summary>
+        </member>
+        <member name="P:ParcelaWebAPI.Entities.Parcel.partSurfaceArea">
+            <summary>
+            Surface area of part
+            </summary>
+        </member>
+        <member name="P:ParcelaWebAPI.Entities.Parcel.partParcelNumber">
+            <summary>
+            Parcel part number
+            </summary>
+        </member>
+        <member name="P:ParcelaWebAPI.Entities.Parcel.partRealEstateListNumber">
+            <summary>
+            Real estate number of parcel part
+            </summary>
+        </member>
+        <member name="P:ParcelaWebAPI.Entities.ParcelConfirmation.parcelId">
+            <summary>
+            Parcel ID
+            </summary>
+        </member>
+        <member name="P:ParcelaWebAPI.Entities.ParcelConfirmation.surfaceArea">
+            <summary>
+            surface area
+            </summary>
+        </member>
+        <member name="P:ParcelaWebAPI.Entities.ParcelConfirmation.parcelNumber">
+            <summary>
+            parcel number
+            </summary>
+        </member>
+        <member name="P:ParcelaWebAPI.Entities.ParcelConfirmation.realEstateListNumber">
+            <summary>
+            Real estate list number
+            </summary>
+        </member>
+        <member name="P:ParcelaWebAPI.Entities.ParcelConfirmation.protectedZoneRealState">
+            <summary>
+            Real state of protected zone
+            </summary>
+        </member>
+        <member name="P:ParcelaWebAPI.Entities.ParcelConfirmation.surname">
+            <summary>
+            Parcel user's surname
+            </summary>
+        </member>
+        <member name="P:ParcelaWebAPI.Entities.ParcelConfirmation.nameOfCadastralMunicipality">
+            <summary>
+            name of Cadastral Municipality
+            </summary>
+        </member>
+        <member name="P:ParcelaWebAPI.Entities.ParcelConfirmation.partSurfaceArea">
+            <summary>
+            Surface area of part
+            </summary>
+        </member>
+        <member name="P:ParcelaWebAPI.Entities.ParcelCreation.surfaceArea">
+            <summary>
+            surface area
+            </summary>
+        </member>
+        <member name="P:ParcelaWebAPI.Entities.ParcelCreation.parcelNumber">
+            <summary>
+            parcel number
+            </summary>
+        </member>
+        <member name="P:ParcelaWebAPI.Entities.ParcelCreation.realEstateListNumber">
+            <summary>
+            Real estate list number
+            </summary>
+        </member>
+        <member name="P:ParcelaWebAPI.Entities.ParcelCreation.protectedZoneRealState">
+            <summary>
+            Real state of protected zone
+            </summary>
+        </member>
+        <member name="P:ParcelaWebAPI.Entities.ParcelCreation.protectedZoneId">
+            <summary>
+            Protected zone ID
+            </summary>
+        </member>
+        <member name="P:ParcelaWebAPI.Entities.ParcelCreation.level">
+            <summary>
+            Number of level
+            </summary>
+        </member>
+        <member name="P:ParcelaWebAPI.Entities.ParcelCreation.parcelUserId">
+            <summary>
+            Parcel user ID
+            </summary>
+        </member>
+        <member name="P:ParcelaWebAPI.Entities.ParcelCreation.name">
+            <summary>
+            Parcel user's name
+            </summary>
+        </member>
+        <member name="P:ParcelaWebAPI.Entities.ParcelCreation.surname">
+            <summary>
+            Parcel user's surname
+            </summary>
+        </member>
+        <member name="P:ParcelaWebAPI.Entities.ParcelCreation.jmbg">
+            <summary>
+            Parcel user's jmbg
+            </summary>
+        </member>
+        <member name="P:ParcelaWebAPI.Entities.ParcelCreation.address">
+            <summary>
+            Parcel user's address
+            </summary>
+        </member>
+        <member name="P:ParcelaWebAPI.Entities.ParcelCreation.parcelPartId">
+            <summary>
+            Parcel part ID
+            </summary>
+        </member>
+        <member name="P:ParcelaWebAPI.Entities.ParcelCreation.partSurfaceArea">
+            <summary>
+            Surface area of part
+            </summary>
+        </member>
+        <member name="P:ParcelaWebAPI.Entities.ParcelCreation.partParcelNumber">
+            <summary>
+            Parcel part number
+            </summary>
+        </member>
+        <member name="P:ParcelaWebAPI.Entities.ParcelCreation.partRealEstateListNumber">
+            <summary>
+            Real estate number of parcel part
+            </summary>
+        </member>
+        <member name="P:ParcelaWebAPI.Entities.ParcelPart.parcelPartId">
+            <summary>
+            Parcel part ID
+            </summary>
+        </member>
+        <member name="P:ParcelaWebAPI.Entities.ParcelPart.partSurfaceArea">
+            <summary>
+            Surface area of part
+            </summary>
+        </member>
+        <member name="P:ParcelaWebAPI.Entities.ParcelPart.partParcelNumber">
+            <summary>
+            Parcel part number
+            </summary>
+        </member>
+        <member name="P:ParcelaWebAPI.Entities.ParcelPart.partRealEstateListNumber">
+            <summary>
+            Real estate number of parcel part
+            </summary>
+        </member>
+        <member name="P:ParcelaWebAPI.Entities.ParcelPartConfirmation.parcelPartId">
+            <summary>
+            Parcel part ID
+            </summary>
+        </member>
+        <member name="P:ParcelaWebAPI.Entities.ParcelPartConfirmation.partSurfaceArea">
+            <summary>
+            Surface area of part
+            </summary>
+        </member>
+        <member name="P:ParcelaWebAPI.Entities.ParcelPartConfirmation.partParcelNumber">
+            <summary>
+            Parcel part number
+            </summary>
+        </member>
+        <member name="P:ParcelaWebAPI.Entities.ParcelPartConfirmation.partRealEstateListNumber">
+            <summary>
+            Real estate number of parcel part
+            </summary>
+        </member>
+        <member name="P:ParcelaWebAPI.Entities.ParcelPartCreation.partSurfaceArea">
+            <summary>
+            Surface area of part
+            </summary>
+        </member>
+        <member name="P:ParcelaWebAPI.Entities.ParcelPartCreation.partParcelNumber">
+            <summary>
+            Parcel part number
+            </summary>
+        </member>
+        <member name="P:ParcelaWebAPI.Entities.ParcelPartCreation.partRealEstateListNumber">
+            <summary>
+            Real estate number of parcel part
+            </summary>
+        </member>
+        <member name="P:ParcelaWebAPI.Entities.ParcelUser.parcelUserId">
+            <summary>
+            Parcel user ID
+            </summary>
+        </member>
+        <member name="P:ParcelaWebAPI.Entities.ParcelUser.name">
+            <summary>
+            Parcel user's name
+            </summary>
+        </member>
+        <member name="P:ParcelaWebAPI.Entities.ParcelUser.surname">
+            <summary>
+            Parcel user's surname
+            </summary>
+        </member>
+        <member name="P:ParcelaWebAPI.Entities.ParcelUser.jmbg">
+            <summary>
+            Parcel user's jmbg
+            </summary>
+        </member>
+        <member name="P:ParcelaWebAPI.Entities.ParcelUser.address">
+            <summary>
+            Parcel user's address
+            </summary>
+        </member>
+        <member name="P:ParcelaWebAPI.Entities.ParcelUserConfirmation.parcelUserId">
+            <summary>
+            Parcel user ID
+            </summary>
+        </member>
+        <member name="P:ParcelaWebAPI.Entities.ParcelUserConfirmation.name">
+            <summary>
+            Parcel user's name
+            </summary>
+        </member>
+        <member name="P:ParcelaWebAPI.Entities.ParcelUserConfirmation.surname">
+            <summary>
+            Parcel user's surname
+            </summary>
+        </member>
+        <member name="P:ParcelaWebAPI.Entities.ParcelUserConfirmation.jmbg">
+            <summary>
+            Parcel user's jmbg
+            </summary>
+        </member>
+        <member name="P:ParcelaWebAPI.Entities.ParcelUserConfirmation.address">
+            <summary>
+            Parcel user's address
+            </summary>
+        </member>
+        <member name="P:ParcelaWebAPI.Entities.ParcelUserCreation.name">
+            <summary>
+            Parcel user's name
+            </summary>
+        </member>
+        <member name="P:ParcelaWebAPI.Entities.ParcelUserCreation.surname">
+            <summary>
+            Parcel user's surname
+            </summary>
+        </member>
+        <member name="P:ParcelaWebAPI.Entities.ParcelUserCreation.jmbg">
+            <summary>
+            Parcel user's jmbg
+            </summary>
+        </member>
+        <member name="P:ParcelaWebAPI.Entities.ParcelUserCreation.address">
+            <summary>
+            Parcel user's address
+            </summary>
+        </member>
+        <member name="P:ParcelaWebAPI.Entities.ProtectedZone.protectedZoneId">
+            <summary>
+            Protected zone ID
+            </summary>
+        </member>
+        <member name="P:ParcelaWebAPI.Entities.ProtectedZone.level">
+            <summary>
+            Level of protected zone
+            </summary>
+        </member>
+        <member name="P:ParcelaWebAPI.Entities.ProtectedZoneConfirmation.protectedZoneId">
+            <summary>
+            Protected zone ID
+            </summary>
+        </member>
+        <member name="P:ParcelaWebAPI.Entities.ProtectedZoneConfirmation.level">
+            <summary>
+            Level of protected zone
+            </summary>
+        </member>
+        <member name="P:ParcelaWebAPI.Models.CadastralMunicipalityDtos.CadastralMunicipalityConfirmationDto.nameOfCadastralMunicipality">
+            <summary>
+            name of Cadastral Municipality
+            </summary>
+        </member>
+        <member name="P:ParcelaWebAPI.Models.CadastralMunicipalityDtos.CadastralMunicipalityDto.nameOfCadastralMunicipality">
+            <summary>
+            name of Cadastral Municipality
+            </summary>
+        </member>
+        <member name="P:ParcelaWebAPI.Models.LogMessageDto.Message">
+            <summary>
+            Log message
+            </summary>
+        </member>
+        <member name="P:ParcelaWebAPI.Models.LogMessageDto.LogLevel">
+            <summary>
+            Log level
+            </summary>
+        </member>
+        <member name="P:ParcelaWebAPI.Models.LogMessageDto.Microservice">
+            <summary>
+            Microservice who 's sending request
+            </summary>
+        </member>
+        <member name="P:ParcelaWebAPI.Models.LogMessageDto.Method">
+            <summary>
+            Log method
+            </summary>
+        </member>
+        <member name="P:ParcelaWebAPI.Models.LogMessageDto.Exception">
+            <summary>
+            Log exception
+            </summary>
+        </member>
+        <member name="P:ParcelaWebAPI.Models.ParcelDtos.ParcelConfirmationDto.surfaceArea">
+            <summary>
+            surface area
+            </summary>
+        </member>
+        <member name="P:ParcelaWebAPI.Models.ParcelDtos.ParcelConfirmationDto.parcelNumber">
+            <summary>
+            parcel number
+            </summary>
+        </member>
+        <member name="P:ParcelaWebAPI.Models.ParcelDtos.ParcelConfirmationDto.realEstateListNumber">
+            <summary>
+            Real estate list number
+            </summary>
+        </member>
+        <member name="P:ParcelaWebAPI.Models.ParcelDtos.ParcelConfirmationDto.protectedZoneRealState">
+            <summary>
+            Real state of protected zone
+            </summary>
+        </member>
+        <member name="P:ParcelaWebAPI.Models.ParcelDtos.ParcelConfirmationDto.name">
+            <summary>
+            Parcel user's name
+            </summary>
+        </member>
+        <member name="P:ParcelaWebAPI.Models.ParcelDtos.ParcelConfirmationDto.surname">
+            <summary>
+            Parcel user's surname
+            </summary>
+        </member>
+        <member name="P:ParcelaWebAPI.Models.ParcelDtos.ParcelConfirmationDto.nameOfCadastralMunicipality">
+            <summary>
+            name of Cadastral Municipality
+            </summary>
+        </member>
+        <member name="P:ParcelaWebAPI.Models.ParcelDtos.ParcelConfirmationDto.partSurfaceArea">
+            <summary>
+            Surface area of part
+            </summary>
+        </member>
+        <member name="P:ParcelaWebAPI.Models.ParcelDtos.ParcelCreationDto.surfaceArea">
+            <summary>
+            surface area
+            </summary>
+        </member>
+        <member name="P:ParcelaWebAPI.Models.ParcelDtos.ParcelCreationDto.parcelNumber">
+            <summary>
+            parcel number
+            </summary>
+        </member>
+        <member name="P:ParcelaWebAPI.Models.ParcelDtos.ParcelCreationDto.realEstateListNumber">
+            <summary>
+            Real estate list number
+            </summary>
+        </member>
+        <member name="P:ParcelaWebAPI.Models.ParcelDtos.ParcelCreationDto.protectedZoneRealState">
+            <summary>
+            Real state of protected zone
+            </summary>
+        </member>
+        <member name="P:ParcelaWebAPI.Models.ParcelDtos.ParcelCreationDto.protectedZoneId">
+            <summary>
+            Protected zone ID
+            </summary>
+        </member>
+        <member name="P:ParcelaWebAPI.Models.ParcelDtos.ParcelCreationDto.level">
+            <summary>
+            Number of level
+            </summary>
+        </member>
+        <member name="P:ParcelaWebAPI.Models.ParcelDtos.ParcelCreationDto.parcelUserId">
+            <summary>
+            Parcel user ID
+            </summary>
+        </member>
+        <member name="P:ParcelaWebAPI.Models.ParcelDtos.ParcelCreationDto.name">
+            <summary>
+            Parcel user's name
+            </summary>
+        </member>
+        <member name="P:ParcelaWebAPI.Models.ParcelDtos.ParcelCreationDto.surname">
+            <summary>
+            Parcel user's surname
+            </summary>
+        </member>
+        <member name="P:ParcelaWebAPI.Models.ParcelDtos.ParcelCreationDto.jmbg">
+            <summary>
+            Parcel user's jmbg
+            </summary>
+        </member>
+        <member name="P:ParcelaWebAPI.Models.ParcelDtos.ParcelCreationDto.address">
+            <summary>
+            Parcel user's address
+            </summary>
+        </member>
+        <member name="P:ParcelaWebAPI.Models.ParcelDtos.ParcelCreationDto.parcelPartId">
+            <summary>
+            Parcel part ID
+            </summary>
+        </member>
+        <member name="P:ParcelaWebAPI.Models.ParcelDtos.ParcelCreationDto.partSurfaceArea">
+            <summary>
+            Surface area of part
+            </summary>
+        </member>
+        <member name="P:ParcelaWebAPI.Models.ParcelDtos.ParcelCreationDto.partParcelNumber">
+            <summary>
+            Parcel part number
+            </summary>
+        </member>
+        <member name="P:ParcelaWebAPI.Models.ParcelDtos.ParcelCreationDto.partRealEstateListNumber">
+            <summary>
+            Real estate number of parcel part
+            </summary>
+        </member>
+        <member name="P:ParcelaWebAPI.Models.ParcelDtos.ParcelDto.surfaceArea">
+            <summary>
+            surface area
+            </summary>
+        </member>
+        <member name="P:ParcelaWebAPI.Models.ParcelDtos.ParcelDto.parcelNumber">
+            <summary>
+            parcel number
+            </summary>
+        </member>
+        <member name="P:ParcelaWebAPI.Models.ParcelDtos.ParcelDto.realEstateListNumber">
+            <summary>
+            Real estate list number
+            </summary>
+        </member>
+        <member name="P:ParcelaWebAPI.Models.ParcelDtos.ParcelDto.protectedZoneRealState">
+            <summary>
+            Real state of protected zone
+            </summary>
+        </member>
+        <member name="P:ParcelaWebAPI.Models.ParcelDtos.ParcelDto.protectedZoneId">
+            <summary>
+            Protected zone ID
+            </summary>
+        </member>
+        <member name="P:ParcelaWebAPI.Models.ParcelDtos.ParcelDto.level">
+            <summary>
+            Number of level
+            </summary>
+        </member>
+        <member name="P:ParcelaWebAPI.Models.ParcelDtos.ParcelDto.parcelUserId">
+            <summary>
+            Parcel user ID
+            </summary>
+        </member>
+        <member name="P:ParcelaWebAPI.Models.ParcelDtos.ParcelDto.name">
+            <summary>
+            Parcel user's name
+            </summary>
+        </member>
+        <member name="P:ParcelaWebAPI.Models.ParcelDtos.ParcelDto.surname">
+            <summary>
+            Parcel user's surname
+            </summary>
+        </member>
+        <member name="P:ParcelaWebAPI.Models.ParcelDtos.ParcelDto.jmbg">
+            <summary>
+            Parcel user's jmbg
+            </summary>
+        </member>
+        <member name="P:ParcelaWebAPI.Models.ParcelDtos.ParcelDto.address">
+            <summary>
+            Parcel user's address
+            </summary>
+        </member>
+        <member name="P:ParcelaWebAPI.Models.ParcelDtos.ParcelDto.cadastralMunicipalityId">
+            <summary>
+            Cadastral Municipality ID
+            </summary>
+        </member>
+        <member name="P:ParcelaWebAPI.Models.ParcelDtos.ParcelDto.nameOfCadastralMunicipality">
+            <summary>
+            name of Cadastral Municipality
+            </summary>
+        </member>
+        <member name="P:ParcelaWebAPI.Models.ParcelDtos.ParcelDto.parcelPartId">
+            <summary>
+            Parcel part ID
+            </summary>
+        </member>
+        <member name="P:ParcelaWebAPI.Models.ParcelDtos.ParcelDto.partSurfaceArea">
+            <summary>
+            Surface area of part
+            </summary>
+        </member>
+        <member name="P:ParcelaWebAPI.Models.ParcelDtos.ParcelDto.partParcelNumber">
+            <summary>
+            Parcel part number
+            </summary>
+        </member>
+        <member name="P:ParcelaWebAPI.Models.ParcelDtos.ParcelDto.partRealEstateListNumber">
+            <summary>
+            Real estate number of parcel part
+            </summary>
+        </member>
+        <member name="P:ParcelaWebAPI.Models.ParcelDtos.ParcelUpdateDto.surfaceArea">
+            <summary>
+            surface area
+            </summary>
+        </member>
+        <member name="P:ParcelaWebAPI.Models.ParcelDtos.ParcelUpdateDto.parcelNumber">
+            <summary>
+            parcel number
+            </summary>
+        </member>
+        <member name="P:ParcelaWebAPI.Models.ParcelDtos.ParcelUpdateDto.realEstateListNumber">
+            <summary>
+            Real estate list number
+            </summary>
+        </member>
+        <member name="P:ParcelaWebAPI.Models.ParcelDtos.ParcelUpdateDto.protectedZoneRealState">
+            <summary>
+            Real state of protected zone
+            </summary>
+        </member>
+        <member name="P:ParcelaWebAPI.Models.ParcelDtos.ParcelUpdateDto.protectedZoneId">
+            <summary>
+            Protected zone ID
+            </summary>
+        </member>
+        <member name="P:ParcelaWebAPI.Models.ParcelDtos.ParcelUpdateDto.level">
+            <summary>
+            Number of level
+            </summary>
+        </member>
+        <member name="P:ParcelaWebAPI.Models.ParcelDtos.ParcelUpdateDto.parcelUserId">
+            <summary>
+            Parcel user ID
+            </summary>
+        </member>
+        <member name="P:ParcelaWebAPI.Models.ParcelDtos.ParcelUpdateDto.name">
+            <summary>
+            Parcel user's name
+            </summary>
+        </member>
+        <member name="P:ParcelaWebAPI.Models.ParcelDtos.ParcelUpdateDto.surname">
+            <summary>
+            Parcel user's surname
+            </summary>
+        </member>
+        <member name="P:ParcelaWebAPI.Models.ParcelDtos.ParcelUpdateDto.jmbg">
+            <summary>
+            Parcel user's jmbg
+            </summary>
+        </member>
+        <member name="P:ParcelaWebAPI.Models.ParcelDtos.ParcelUpdateDto.address">
+            <summary>
+            Parcel user's address
+            </summary>
+        </member>
+        <member name="P:ParcelaWebAPI.Models.ParcelDtos.ParcelUpdateDto.cadastralMunicipalityId">
+            <summary>
+            Cadastral Municipality ID
+            </summary>
+        </member>
+        <member name="P:ParcelaWebAPI.Models.ParcelDtos.ParcelUpdateDto.nameOfCadastralMunicipality">
+            <summary>
+            name of Cadastral Municipality
+            </summary>
+        </member>
+        <member name="P:ParcelaWebAPI.Models.ParcelDtos.ParcelUpdateDto.parcelPartId">
+            <summary>
+            Parcel part ID
+            </summary>
+        </member>
+        <member name="P:ParcelaWebAPI.Models.ParcelDtos.ParcelUpdateDto.partSurfaceArea">
+            <summary>
+            Surface area of part
+            </summary>
+        </member>
+        <member name="P:ParcelaWebAPI.Models.ParcelDtos.ParcelUpdateDto.partParcelNumber">
+            <summary>
+            Parcel part number
+            </summary>
+        </member>
+        <member name="P:ParcelaWebAPI.Models.ParcelDtos.ParcelUpdateDto.partRealEstateListNumber">
+            <summary>
+            Real estate number of parcel part
+            </summary>
+        </member>
+        <member name="P:ParcelaWebAPI.Models.ParcelPartDtos.ParcelPartConfirmationDto.partSurfaceArea">
+            <summary>
+            Surface area of part
+            </summary>
+        </member>
+        <member name="P:ParcelaWebAPI.Models.ParcelPartDtos.ParcelPartConfirmationDto.partParcelNumber">
+            <summary>
+            Parcel part number
+            </summary>
+        </member>
+        <member name="P:ParcelaWebAPI.Models.ParcelPartDtos.ParcelPartConfirmationDto.partRealEstateListNumber">
+            <summary>
+            Real estate number of parcel part
+            </summary>
+        </member>
+        <member name="P:ParcelaWebAPI.Models.ParcelPartDtos.ParcelPartCreationDto.partSurfaceArea">
+            <summary>
+            Surface area of part
+            </summary>
+        </member>
+        <member name="P:ParcelaWebAPI.Models.ParcelPartDtos.ParcelPartCreationDto.partParcelNumber">
+            <summary>
+            Parcel part number
+            </summary>
+        </member>
+        <member name="P:ParcelaWebAPI.Models.ParcelPartDtos.ParcelPartCreationDto.partRealEstateListNumber">
+            <summary>
+            Real estate number of parcel part
+            </summary>
+        </member>
+        <member name="P:ParcelaWebAPI.Models.ParcelPartDtos.ParcelPartDto.partSurfaceArea">
+            <summary>
+            Surface area of part
+            </summary>
+        </member>
+        <member name="P:ParcelaWebAPI.Models.ParcelPartDtos.ParcelPartDto.partParcelNumber">
+            <summary>
+            Parcel part number
+            </summary>
+        </member>
+        <member name="P:ParcelaWebAPI.Models.ParcelPartDtos.ParcelPartDto.partRealEstateListNumber">
+            <summary>
+            Real estate number of parcel part
+            </summary>
+        </member>
+        <member name="P:ParcelaWebAPI.Models.ParcelPartDtos.ParcelPartUpdateDto.parcelPartId">
+            <summary>
+            Parcel part ID
+            </summary>
+        </member>
+        <member name="P:ParcelaWebAPI.Models.ParcelPartDtos.ParcelPartUpdateDto.partSurfaceArea">
+            <summary>
+            Surface area of part
+            </summary>
+        </member>
+        <member name="P:ParcelaWebAPI.Models.ParcelPartDtos.ParcelPartUpdateDto.partParcelNumber">
+            <summary>
+            Parcel part number
+            </summary>
+        </member>
+        <member name="P:ParcelaWebAPI.Models.ParcelPartDtos.ParcelPartUpdateDto.partRealEstateListNumber">
+            <summary>
+            Real estate number of parcel part
+            </summary>
+        </member>
+        <member name="P:ParcelaWebAPI.Models.ParcelUserDtos.ParcelUserConfirmationDto.name">
+            <summary>
+            Parcel user's name
+            </summary>
+        </member>
+        <member name="P:ParcelaWebAPI.Models.ParcelUserDtos.ParcelUserConfirmationDto.surname">
+            <summary>
+            Parcel user's surname
+            </summary>
+        </member>
+        <member name="P:ParcelaWebAPI.Models.ParcelUserDtos.ParcelUserConfirmationDto.jmbg">
+            <summary>
+            Parcel user's jmbg
+            </summary>
+        </member>
+        <member name="P:ParcelaWebAPI.Models.ParcelUserDtos.ParcelUserConfirmationDto.address">
+            <summary>
+            Parcel user's address
+            </summary>
+        </member>
+        <member name="P:ParcelaWebAPI.Models.ParcelUserDtos.ParcelUserCreationDto.name">
+            <summary>
+            Parcel user's name
+            </summary>
+        </member>
+        <member name="P:ParcelaWebAPI.Models.ParcelUserDtos.ParcelUserCreationDto.surname">
+            <summary>
+            Parcel user's surname
+            </summary>
+        </member>
+        <member name="P:ParcelaWebAPI.Models.ParcelUserDtos.ParcelUserCreationDto.jmbg">
+            <summary>
+            Parcel user's jmbg
+            </summary>
+        </member>
+        <member name="P:ParcelaWebAPI.Models.ParcelUserDtos.ParcelUserCreationDto.address">
+            <summary>
+            Parcel user's address
+            </summary>
+        </member>
+        <member name="P:ParcelaWebAPI.Models.ParcelUserDtos.ParcelUserDto.name">
+            <summary>
+            Parcel user's name
+            </summary>
+        </member>
+        <member name="P:ParcelaWebAPI.Models.ParcelUserDtos.ParcelUserDto.surname">
+            <summary>
+            Parcel user's surname
+            </summary>
+        </member>
+        <member name="P:ParcelaWebAPI.Models.ParcelUserDtos.ParcelUserDto.jmbg">
+            <summary>
+            Parcel user's jmbg
+            </summary>
+        </member>
+        <member name="P:ParcelaWebAPI.Models.ParcelUserDtos.ParcelUserDto.address">
+            <summary>
+            Parcel user's address
+            </summary>
+        </member>
+        <member name="P:ParcelaWebAPI.Models.ParcelUserDtos.ParcelUserUpdateDto.parcelUserId">
+            <summary>
+            Parcel user ID
+            </summary>
+        </member>
+        <member name="P:ParcelaWebAPI.Models.ParcelUserDtos.ParcelUserUpdateDto.name">
+            <summary>
+            Parcel user's name
+            </summary>
+        </member>
+        <member name="P:ParcelaWebAPI.Models.ParcelUserDtos.ParcelUserUpdateDto.surname">
+            <summary>
+            Parcel user's surname
+            </summary>
+        </member>
+        <member name="P:ParcelaWebAPI.Models.ParcelUserDtos.ParcelUserUpdateDto.jmbg">
+            <summary>
+            Parcel user's jmbg
+            </summary>
+        </member>
+        <member name="P:ParcelaWebAPI.Models.ParcelUserDtos.ParcelUserUpdateDto.address">
+            <summary>
+            Parcel user's address
+            </summary>
+        </member>
+        <member name="P:ParcelaWebAPI.Models.ProtectedZoneDtos.ProtectedZoneConfirmationDto.level">
+            <summary>
+            Level of protected zone
+            </summary>
+        </member>
+        <member name="P:ParcelaWebAPI.Models.ProtectedZoneDtos.ProtectedZoneDto.level">
+            <summary>
+            Level of protected zone
+            </summary>
+        </member>
+    </members>
+</doc>

@@ -11,6 +11,9 @@ using System.Collections.Generic;
 
 namespace ParcelaWebAPI.Controllers
 {
+    /// <summary>
+    /// Controller for the cadastral municipality
+    /// </summary>
     [ApiController]
     [Route("api/cadastralMunicipalities")]
     public class CadastralMunicipalityController : ControllerBase
@@ -18,6 +21,13 @@ namespace ParcelaWebAPI.Controllers
         private readonly ICadastralMunicipalityRepository cadastralMunicipalityRepository;
         private readonly IMapper mapper;
         private readonly ILoggerService loggerService;
+
+        /// <summary>
+        /// Cadastral municipality Controller constructor
+        /// </summary>
+        /// <param name="cadastralMunicipalityRepository">Cadastral municipality repository</param>
+        /// <param name="mapper">AutoMapper</param>
+        /// <param name="loggerService">Logger Service</param>
         public CadastralMunicipalityController(ICadastralMunicipalityRepository cadastralMunicipalityRepository, IMapper mapper, ILoggerService loggerService)
         {
             this.cadastralMunicipalityRepository = cadastralMunicipalityRepository;
@@ -25,6 +35,12 @@ namespace ParcelaWebAPI.Controllers
             this.loggerService = loggerService;
         }
 
+        /// <summary>
+        /// Return all cadastral municipalities
+        /// </summary>
+        /// <returns>List of cadastral municipalities</returns>
+        /// <response code="200">Returns all cadastral municipalities</response>
+        /// <response code="404">No cadastral municipality found</response>
         [HttpGet]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
@@ -42,6 +58,13 @@ namespace ParcelaWebAPI.Controllers
             return Ok(mapper.Map<List<CadastralMunicipalityDto>>(cadastralMunicipalities));
         }
 
+        /// <summary>
+        /// Returns Cadastral municipality by ID
+        /// </summary>
+        /// <param name="cadastralMunicipalityId">Cadastral municipality ID</param>
+        /// <returns>Cadastral municipality</returns>
+        /// <response code="200">Returns Cadastral municipality by ID</response>
+        /// <response code="404">No Cadastral municipality by ID found</response>
         [HttpGet("{cadastralMunicipalityId}")]
         public ActionResult<CadastralMunicipalityDto> GetCadastralMunicipality(Guid cadastralMunicipalityId)
         {

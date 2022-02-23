@@ -8,14 +8,25 @@ namespace ParcelaWebAPI.Models
 {
     public class LogMessageDto
     {
+        /// <summary>
+        /// Log message
+        /// </summary>
         public string Message { get; set; }
-
+        /// <summary>
+        /// Log level
+        /// </summary>
         public LogLevel LogLevel { get; set; }
-
+        /// <summary>
+        /// Microservice who 's sending request
+        /// </summary>
         public string Microservice { get; set; }
-
+        /// <summary>
+        /// Log method
+        /// </summary>
         public string Method { get; set; }
-
+        /// <summary>
+        /// Log exception
+        /// </summary>
         public Exception Exception { get; set; }
     }
 }

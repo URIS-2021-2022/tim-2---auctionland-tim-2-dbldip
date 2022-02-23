@@ -13,6 +13,9 @@ using System.Collections.Generic;
 
 namespace ParcelaWebAPI.Controllers
 {
+    /// <summary>
+    /// Controller for the parcel
+    /// </summary>
     [ApiController]
     [Route("api/parcels")]
     public class ParcelController : ControllerBase
@@ -21,13 +24,28 @@ namespace ParcelaWebAPI.Controllers
         private readonly LinkGenerator linkGenerator;
         private readonly IMapper mapper;
         private readonly ILoggerService loggerService;
+
+        /// <summary>
+        /// Parcel Controller constructor
+        /// </summary>
+        /// <param name="parcelRepository">Parcel repository</param>
+        /// <param name="linkGenerator">Link generator</param>
+        /// <param name="mapper">AutoMapper</param>
+        /// <param name="loggerService">Logger Service</param>
         public ParcelController(IParcelRepository parcelRepository, LinkGenerator linkGenerator, IMapper mapper, ILoggerService loggerService)
         {
             this.parcelRepository = parcelRepository;
             this.linkGenerator = linkGenerator;
             this.mapper = mapper;
             this.loggerService = loggerService;
-    }
+        }
+
+        /// <summary>
+        /// Return all parcels
+        /// </summary>
+        /// <returns>List of parcels</returns>
+        /// <response code="200">Returns all parcels</response>
+        /// <response code="404">No parcel found</response>
         [HttpGet]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
@@ -44,6 +62,13 @@ namespace ParcelaWebAPI.Controllers
             return Ok(mapper.Map<List<ParcelDto>>(parcels));
         }
 
+        /// <summary>
+        /// Returns parcel by ID
+        /// </summary>
+        /// <param name="parcelId">Parcel ID</param>
+        /// <returns>Parcel</returns>
+        /// <response code="200">Returns parcel by ID</response>
+        /// <response code="404">No parcel by ID found</response>
         [HttpGet("{parcelId}")]
         public ActionResult<ParcelDto> GetParcel(Guid parcelId)
         {
@@ -58,6 +83,13 @@ namespace ParcelaWebAPI.Controllers
             return Ok(mapper.Map<ParcelDto>(parcel));
         }
 
+        /// <summary>
+        /// Create new parcel
+        /// </summary>
+        /// <param name="parcel">Creation parcel DTO</param>
+        /// <returns>Confirmation of created parcel</returns>
+        /// <response code="201">Returns confirmation of created parcel</response>
+        /// <response code="500">Parcel creation error</response>
         [HttpPost]
         public ActionResult<ParcelConfirmationDto> CreateParcel([FromBody] ParcelCreationDto parcel)
         {
@@ -71,6 +103,16 @@ namespace ParcelaWebAPI.Controllers
             return Created(location, mapper.Map<ParcelConfirmationDto>(confirmation));
         }
 
+        /// <summary>
+        /// Parcel modify
+        /// </summary>
+        /// <param name="parcelId">Update parcel DTO</param>
+        /// <param name="parcel">Update parcel DTO</param>
+        /// <returns>Confirmation of updated parcel</returns>
+        /// <response code="200">Returns confirmation of updated parcel</response>
+        /// <response code="400">Bad request</response>
+        /// <response code="404">Not found parcel by ID</response>
+        /// <response code="500">Server error</response>
         [Consumes("application/json")]
         [HttpPut("{parcelId}")]
         public ActionResult<ParcelUpdateDto> UpdateParcel(Guid parcelId, [FromBody] ParcelUpdateDto parcel)
@@ -90,6 +132,14 @@ namespace ParcelaWebAPI.Controllers
             return Ok(mapper.Map<ParcelDto>(oldParcel));
         }
 
+        /// <summary>
+        /// Delete parcel
+        /// </summary>
+        /// <param name="parcelId"> Parcel ID</param>
+        /// <returns>Status 204 (NoContent)</returns>
+        /// <response code="204">Parcel deleted</response>
+        /// <response code="404">Parcel by ID not found</response>
+        /// <response code="500">Server error</response>
         [HttpDelete("{parcelId}")]
         public IActionResult DeleteParcel(Guid parcelId)
         {
