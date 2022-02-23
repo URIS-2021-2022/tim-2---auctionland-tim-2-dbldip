@@ -79,16 +79,21 @@ namespace KupacWebApi.Controllers
 
                 if (buyerOld == null)
                 {
+                    this.loggerService.LogMessage("Buyer can't be updated!", "Put", LogLevel.Warning);
                     return NoContent();
                 }
 
                 buyerRepository.UpdateBuyer(mapper.Map<BuyerUpdate>(buyer));
                 buyerRepository.SaveChanges();
+                this.loggerService.LogMessage("Buyer is updated", "Put", LogLevel.Information);
+
                 return Ok("Changed!");
             }
-            catch (Exception e)
+            catch (Exception exception)
             {
-                return Conflict("ERROR: " + e.Message);
+                this.loggerService.LogMessage("Error with updating buyer", "Delete", LogLevel.Error, exception);
+
+                return Conflict("ERROR: " + exception.Message);
             }
         }
             [HttpDelete("{buyerId}")]

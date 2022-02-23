@@ -79,15 +79,21 @@ namespace KupacWebApi.Controllers
                 var authorizedPersonOld = mapper.Map<AuthorizedPersonWithoutLists>(authorizedPersonRepository.GetAuthorizedPerson(authorizedPerson.authorizedPersonId));
                 if (authorizedPersonOld == null)
                 {
+                    this.loggerService.LogMessage("Authorized person can't be updated!", "Put", LogLevel.Warning);
+
                     return NoContent();
                 }
                 authorizedPersonRepository.UpdateAuthorizedPerson(mapper.Map<AuthorizedPersonUpdate>(authorizedPerson));
                 authorizedPersonRepository.SaveChanges();
+                this.loggerService.LogMessage("Authorized person is updated", "Put", LogLevel.Information);
+
                 return Ok("Changed!");
             }
-            catch (Exception e)
+            catch (Exception exception)
             {
-                return Conflict("ERROR: " + e.Message);
+                this.loggerService.LogMessage("Error with updating authorized person", "Delete", LogLevel.Error, exception);
+
+                return Conflict("ERROR: " + exception.Message);
             }
 
 
