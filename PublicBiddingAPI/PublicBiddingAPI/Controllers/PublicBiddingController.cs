@@ -266,12 +266,12 @@ namespace PublicBiddingAPI.Controllers
             {
                 publicBiddingRepository.DeletePublicBidding(publicBiddingId);
                 publicBiddingRepository.SaveChanges();
-                this.loggerService.LogMessage("Public Biddings was deleted", "Get", LogLevel.Information);
+                this.loggerService.LogMessage("Public Biddings was deleted", "Delete", LogLevel.Information);
                 return NoContent();
             }
             catch (Exception e)
             {
-                this.loggerService.LogMessage("Public Biddings couldn't be deleted", "Get", LogLevel.Error);
+                this.loggerService.LogMessage("Public Biddings couldn't be deleted", "Delete", LogLevel.Error);
                 return StatusCode(StatusCodes.Status500InternalServerError, e.Message);
             }
         }
@@ -318,7 +318,7 @@ namespace PublicBiddingAPI.Controllers
                 //var publicBiddingOld = publicBiddingRepository.getPublicBidding(publicBidding.publicBiddingId);
                 if (publicBiddingOld == null)
                 {
-                    this.loggerService.LogMessage("Public Bidding was not found", "Get", LogLevel.Warning);
+                    this.loggerService.LogMessage("Public Bidding was not found", "Put", LogLevel.Warning);
                     return NoContent();
                 }
                 //var publicBiddingNew = mapper.Map<PublicBiddingWithoutLists>(publicBidding);
@@ -326,12 +326,12 @@ namespace PublicBiddingAPI.Controllers
                 //mapper.Map(publicBidding, publicBiddingOld);
                 publicBiddingRepository.UpdatePublicBidding(mapper.Map<PublicBiddingUpdate>(publicBidding));
                 publicBiddingRepository.SaveChanges();
-                this.loggerService.LogMessage("Public Bidding is changed", "Get", LogLevel.Information);
+                this.loggerService.LogMessage("Public Bidding is changed", "Put", LogLevel.Information);
                 return Ok("Changed!");
             }
             catch(Exception e)
             {
-                this.loggerService.LogMessage("Public Bidding couldn't be updated", "Get", LogLevel.Error);
+                this.loggerService.LogMessage("Public Bidding couldn't be updated", "Put", LogLevel.Error);
                 return Conflict("ERROR: " + e.Message);
             }
             
