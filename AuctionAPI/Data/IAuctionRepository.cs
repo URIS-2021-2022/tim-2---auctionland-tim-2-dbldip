@@ -20,5 +20,7 @@ namespace AuctionAPI.Data
         void UpdateAuction(AuctionUpdate auction);
 
         void DeleteAuction(Guid auctionId);
+
+        void SaveChanges();
     }
 }

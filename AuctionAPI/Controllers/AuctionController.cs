@@ -18,7 +18,7 @@ namespace AuctionAPI.Controllers
     [ApiController]
     [Route("api/auctions")]
     [Produces("application/json", "application/xml")]
-    [ProducesResponseType(StatusCodes.Status200OK)]
+    
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     public class AuctionController : ControllerBase //Daje nam pristup korisnim poljima i metodama
     {
@@ -26,6 +26,12 @@ namespace AuctionAPI.Controllers
         private readonly LinkGenerator linkGenerator; //Generise putanje do neke akcije
         private readonly IMapper mapper;
 
+        /// <summary>
+        /// AuctionController konstruktor
+        /// </summary>
+        /// <param name="auctionRepository">Auction Repository</param>
+        /// <param name="linkGenerator">Link generator</param>
+        /// <param name="mapper">AutoMapper</param>
         public AuctionController(IAuctionRepository auctionRepository, LinkGenerator linkGenerator, IMapper mapper)
         {
             this.auctionRepository = auctionRepository;
@@ -34,13 +40,14 @@ namespace AuctionAPI.Controllers
         }
 
         /// <summary>
-        /// Vraća sve kreirane licitacije
+        /// Vraća sve  licitacije
         /// </summary>
         /// <returns>Lista licitacija</returns>
         /// <response code="200">Vraća listu licitacija</response>
-        /// <response code="404">Nije pronađena ni jedna licitacija</response>
+        /// <response code="204">Nije pronađena ni jedna licitacija</response>
         [HttpGet]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status200OK)]
         public ActionResult<List<AuctionDto>> GetAuctions()
         {
             var auctions = auctionRepository.GetAuctions();
@@ -50,11 +57,6 @@ namespace AuctionAPI.Controllers
                 return NoContent();
             }
 
-            foreach( var auc in auctions)
-            {
-                var auctionDto = mapper.Map<AuctionDto>(auc);
-                //nije gotovo nastavi
-            }
 
             return Ok(auctions);
         }
@@ -65,22 +67,33 @@ namespace AuctionAPI.Controllers
         /// <param name="auctionId">ID licitacije</param>
         /// <returns></returns>
         /// <response code="200">Uspeh</response>
+        /// <response code="404">Licitacija nije pronadjena.</response>
         [HttpGet("{auctionId}")]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status200OK)]
         public ActionResult<AuctionDto> GetAuctionById(Guid auctionId)
         {
-            var creation = auctionRepository.GetAuctionById(auctionId);
+            var auction = auctionRepository.GetAuctionById(auctionId);
 
-            if (creation == null)
+            if (auction == null)
             {
                 return NotFound();
             }
-            //Ukoliko je pronadjeno kreiranje, vraca se status 200 i listu pronadjenih kreiranja
-            return Ok(mapper.Map<List<AuctionDto>>(creation));
+            
+            return Ok(mapper.Map<List<AuctionDto>>(auction));
         }
 
-        
+        /// <summary>
+        /// Kreiranje nove licitacije
+        /// </summary>
+        /// <param name="auctionCreation">Licitacija koja ce se kreirati</param>
+        /// <returns>Rezultat kreiranja licitacije</returns>
         [Consumes("application/json")] //Naznačava OpenAPI dokumentaciji da prihvata samo json tip
         [HttpPost]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status201Created)]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public ActionResult<AuctionConfirmationDto> CreateAuction([FromBody] CreationAuctionDto auctionCreation)
         {
             try
@@ -111,18 +124,64 @@ namespace AuctionAPI.Controllers
             // PLACEHOLDER  
         }
 
+        /// <summary>
+        /// Izmena licitacije
+        /// </summary>
+        /// <param name="auction">Licitacija za izmenu</param>
+        /// <returns>Rezultat akcije</returns>
+        /// <response code="200">Izmena uspešna.</response>
+        /// <response code="204">Licitacija za izmenu ne postoji.</response>
+        /// <response code="409">Greška pri izmeni.</response>
+        [HttpPut]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status409Conflict)]
+        public ActionResult<AuctionConfirmationDto> UpdateAuction(AuctionUpdate auction)
+        {
+            try
+            {
+                var auctionOld = mapper.Map<AuctionWithoutLists>(auctionRepository.GetAuctionById(auction.auctionId));
+
+                if(auctionOld == null)
+                {
+                    return NoContent();
+                }
+
+                auctionRepository.UpdateAuction(auction);
+                auctionRepository.SaveChanges();
+
+                return Ok("Changed!");
+            }
+            catch (Exception exception)
+            {
+                return Conflict("ERROR: " + exception.Message);
+            }
+        }
+
+
+        /// <summary>
+        /// Brisanje licitacije
+        /// </summary>
+        /// <param name="auctionId">ID licitacije</param>
+        /// <returns>Rezultat akcije</returns>
+        /// <response code="204">Licitacija izbrisana.</response204>
+        /// <response code="404">Licitacija za brisanje nije pronadjena.</response>
+        /// <response code="500">Greška pri brisanju.</response>
         [HttpDelete("{auctionId}")]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public IActionResult DeleteAuctionCreation(Guid auctionId)
         {
             try
             {
-                var creation = auctionRepository.GetAuctionById(auctionId);
-                //Ukoliko nije pronadjena ni jedna aukcija vratiti status 204 (NoContent)
-                if (creation == null)
+                var auction = auctionRepository.GetAuctionById(auctionId);
+                if (auction == null)
                 {
                     return NotFound();
                 }
                 auctionRepository.DeleteAuction(auctionId);
+                auctionRepository.SaveChanges();
                 return NoContent();
             }
             catch (Exception)
