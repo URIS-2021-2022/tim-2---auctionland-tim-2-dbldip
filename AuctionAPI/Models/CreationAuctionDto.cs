@@ -53,7 +53,7 @@ namespace AuctionAPI.Models
         /// <summary>
         /// Lista ID-jeva javnih nadmetanja
         /// </summary>
-        List<Guid> publicBidding { get; set; }
+        public List<Guid> publicBiddingIds { get; set; }
 
         /// <summary>
         /// Rok zatvaranja prijava na licitaciju

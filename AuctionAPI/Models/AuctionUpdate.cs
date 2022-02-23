@@ -7,16 +7,14 @@ using System.Threading.Tasks;
 namespace AuctionAPI.Models
 {
     /// <summary>
-    /// Model kreirane licitacije
+    /// Model izmene licitacije
     /// </summary>
-    public class AuctionDto
+    public class AuctionUpdate
     {
-
-        #region Auction
         /// <summary>
         /// ID licitacije
         /// </summary>
-        [Required(ErrorMessage = "Obavezno je uneti ID licitacije.")]
+        [Required(ErrorMessage ="Obavezno je uneti ID licitacije.")]
         public Guid auctionId { get; set; }
 
         /// <summary>
@@ -30,7 +28,6 @@ namespace AuctionAPI.Models
         /// </summary>
         [Required(ErrorMessage = "Obavezno je uneti godinu licitacije.")]
         public int auctionYear { get; set; }
-
 
         /// <summary>
         /// Datum održavanja licitacije
@@ -50,7 +47,7 @@ namespace AuctionAPI.Models
         public int priceStep { get; set; }
 
         /// <summary>
-        /// Lista dokumenata fizičkog lica
+        /// Lista dokumenata ficičkog lica
         /// </summary>
         public List<String> naturalPersonDocumentList { get; set; }
 
@@ -60,16 +57,14 @@ namespace AuctionAPI.Models
         public List<String> legalPersonDocumentList { get; set; }
 
         /// <summary>
-        /// Lista ID-jeva javnog nadmetanja
+        /// Lista ID-jeva javnih nadmetanja
         /// </summary>
-        List<Guid> publicBidding { get; set; }
+        public List<Guid> publicBiddingIds { get; set; }
 
         /// <summary>
         /// Rok zatvaranja prijava na licitaciju
         /// </summary>
-        [Required(ErrorMessage = "Obavezno je uneti rok zatvaranja prijava na licitacij.")]
+        [Required(ErrorMessage = "Obavezno je uneti rok zatvaranja prijava na licitaciju.")]
         public DateTime registryClosingDate { get; set; }
-
-        #endregion
     }
 }

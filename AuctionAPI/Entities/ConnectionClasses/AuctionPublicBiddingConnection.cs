@@ -10,7 +10,7 @@ namespace AuctionAPI.Entities.ConnectionClasses
     {
         [Key]
         public Guid auctionPublicBiddingConnectionId { get; set; }
-        public Guid buyerId { get; set; }
+        public Guid auctionId { get; set; }
         public Guid publicBiddingId { get; set; }
     }
 }

@@ -14,7 +14,12 @@ namespace AuctionAPI.MappingProfiles
         {
             CreateMap<Auction, AuctionDto>();
 
+            CreateMap<AuctionConfirmation, AuctionConfirmationDto>();
+
+            CreateMap<Auction, AuctionConfirmation>();
+
             CreateMap<AuctionDto, CreationAuctionDto>();
+
         }
     }
 }

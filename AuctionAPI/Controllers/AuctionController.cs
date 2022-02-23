@@ -12,9 +12,11 @@ using System.Threading.Tasks;
 
 namespace AuctionAPI.Controllers
 {
-    
+    /// <summary>
+    /// Kontroler za licitaciju
+    /// </summary>
     [ApiController]
-    [Route("api/auctionCreations")]
+    [Route("api/auctions")]
     [Produces("application/json", "application/xml")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -34,17 +36,27 @@ namespace AuctionAPI.Controllers
         /// <summary>
         /// Vraća sve kreirane licitacije
         /// </summary>
-        /// <returns></returns>
+        /// <returns>Lista licitacija</returns>
+        /// <response code="200">Vraća listu licitacija</response>
+        /// <response code="404">Nije pronađena ni jedna licitacija</response>
         [HttpGet]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
         public ActionResult<List<AuctionDto>> GetAuctions()
         {
-            var creations = auctionRepository.GetAuctions();
-            if (creations == null || creations.Count == 0)
+            var auctions = auctionRepository.GetAuctions();
+            
+            if (auctions == null || auctions.Count == 0)
             {
                 return NoContent();
             }
 
-            return Ok(creations);
+            foreach( var auc in auctions)
+            {
+                var auctionDto = mapper.Map<AuctionDto>(auc);
+                //nije gotovo nastavi
+            }
+
+            return Ok(auctions);
         }
 
         /// <summary>
@@ -53,7 +65,7 @@ namespace AuctionAPI.Controllers
         /// <param name="auctionId">ID licitacije</param>
         /// <returns></returns>
         /// <response code="200">Uspeh</response>
-        [HttpGet("{auctionId})")]
+        [HttpGet("{auctionId}")]
         public ActionResult<AuctionDto> GetAuctionById(Guid auctionId)
         {
             var creation = auctionRepository.GetAuctionById(auctionId);
@@ -66,31 +78,32 @@ namespace AuctionAPI.Controllers
             return Ok(mapper.Map<List<AuctionDto>>(creation));
         }
 
-        /*
+        
         [Consumes("application/json")] //Naznačava OpenAPI dokumentaciji da prihvata samo json tip
         [HttpPost]
-        public ActionResult<AuctionDto> CreateAuction([FromBody] CreationAuctionDto auctionCreation)
+        public ActionResult<AuctionConfirmationDto> CreateAuction([FromBody] CreationAuctionDto auctionCreation)
         {
             try
             {
-                bool modelValid = ValidateAuction(auctionCreation);
+                //bool modelValid = ValidateAuction(auctionCreation);
 
-                if (!modelValid)
+                /*
+                 if (!modelValid)
                 {
                     return BadRequest("The auction created is not valid.");
                 }
-
+                */
                 //var auctionCreationEntity = mapper.Map<AuctionDto>(auctionCreation);
 
                 var confirmation = auctionRepository.CreateAuction(auctionCreation);
                 string location = linkGenerator.GetPathByAction("GetAuction", "Auction", new { auctionId = confirmation.auctionId });
-                return Created(location, confirmation);
+                return Created(location, mapper.Map<AuctionConfirmationDto>(confirmation));
             }
             catch (Exception)
             {
                 return StatusCode(StatusCodes.Status500InternalServerError, "Create error");
             }
-        } */
+        } 
 
         private bool ValidateAuction(CreationAuctionDto auctionCreation)
         {
@@ -98,7 +111,7 @@ namespace AuctionAPI.Controllers
             // PLACEHOLDER  
         }
 
-        [HttpDelete("{auctionId")]
+        [HttpDelete("{auctionId}")]
         public IActionResult DeleteAuctionCreation(Guid auctionId)
         {
             try

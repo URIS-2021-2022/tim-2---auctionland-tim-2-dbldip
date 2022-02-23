@@ -19,7 +19,7 @@ namespace AuctionAPI.Entities
         public List<String> naturalPersonDocumentList { get; set; }
         public List<String> legalPersonDocumentList { get; set; }
         
-        public List<AuctionPublicBiddingConnection> publicBidding { get; set; }
+        public List<AuctionPublicBiddingConnection> publicBiddings { get; set; }
         public DateTime registryClosingDate { get; set; }
     }
 }
