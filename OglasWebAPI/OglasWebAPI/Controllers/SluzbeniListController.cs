@@ -14,6 +14,9 @@ using System.Threading.Tasks;
 
 namespace OglasWebAPI.Controllers
 {
+    /// <summary>
+    /// Kontroler za služebni list
+    /// </summary>
     [Route("api/sluzbeniList")]
     [ApiController]
     [Produces("application/json", "application/xml")]
@@ -24,6 +27,13 @@ namespace OglasWebAPI.Controllers
         private readonly IMapper _mapper;
         private readonly ILoggerService _loggerService;
 
+        /// <summary>
+        /// Konstruktor kontrolera službenog lista - DI
+        /// </summary>
+        /// <param name="sluzbeniListRepository">Repository službeni list</param>
+        /// <param name="linkGenerator">Link generator za create zahtev</param>
+        /// <param name="mapper">AutoMapper</param>
+        /// <param name="loggerService">Logger servis</param>
         public SluzbeniListController(ISluzbeniListRepository sluzbeniListRepository, LinkGenerator linkGenerator, IMapper mapper, ILoggerService loggerService)
         {
             _sluzbeniListRepository = sluzbeniListRepository;
@@ -32,6 +42,13 @@ namespace OglasWebAPI.Controllers
             _loggerService = loggerService;
         }
 
+        /// <summary>
+        /// Vraća sve kontakt osobe
+        /// </summary>
+        /// <returns>Lista kontakt osoba</returns>
+        /// <response code="200">Vraća listu kontakt osoba</response>
+        /// <response code="404">Nije pronađena ni jedna kontakt osoba</response>
+        /// 
         [HttpGet]
         [HttpHead]
         public async Task<ActionResult<List<SluzbeniListDto>>> GetAllSluzbeniListovi()
@@ -47,6 +64,14 @@ namespace OglasWebAPI.Controllers
             return Ok(_mapper.Map<IEnumerable<SluzbeniListDto>>(sluzbeniListovi));
         }
 
+        /// <summary>
+        /// Vraća jednan službeni list na osnovu ID-a
+        /// </summary>
+        /// <param name="sluzbeniListId">ID službenog lista</param>
+        /// <returns>Službeni list</returns>
+        /// <response code="200">Vraća traženi službeni list</response>
+        /// <response code="404">Nije pronađen službeni list za uneti ID</response>
+        /// 
         [HttpGet("{sluzbeniListId}")]
         public async Task<ActionResult<SluzbeniListDto>> GetSluzbeniList(Guid sluzbeniListId)
         {
@@ -60,6 +85,23 @@ namespace OglasWebAPI.Controllers
             return Ok(_mapper.Map<SluzbeniListDto>(sluzbeniList));
         }
 
+        /// <summary>
+        /// Kreira novi službeni list
+        /// </summary>
+        /// <param name="sluzbeniList">Model službeni list</param>
+        /// <remarks>
+        /// Primer zahteva za kreiranje novog službenog lista \
+        /// POST /api/sluzbenogLista \
+        /// {   
+        ///     "broj": "aa2331d", \
+        ///     "datum": "2022-02-11", \
+        ///     "opis": "Create Opis sluzbenog lista je odlican" \
+        ///}
+        /// </remarks>
+        /// <returns>Potvrda o kreiranju službenog lista</returns>
+        /// <response code="201">Vraća kreirani službeni list</response>
+        /// <response code="500">Desila se greška prilikom unosa novog službenog lista</response>
+        /// 
         [Consumes("application/json")]
         [HttpPost]
         public async Task<ActionResult<SluzbeniListCreateDto>> CreateSluzbeniList([FromBody] SluzbeniListCreateDto sluzbeniList)
@@ -91,6 +133,16 @@ namespace OglasWebAPI.Controllers
             }
         }
 
+        /// <summary>
+        /// Modifikacija službenog lista
+        /// </summary>
+        /// <param name="sluzbeniListId">ID službenog lista</param>
+        /// <param name="sluzbeniList">Model službenog lista</param>
+        /// <returns>Potvrda o modifikaciji službenog lista</returns>
+        /// <response code="200">Izmenjen službenog lista</response>
+        /// <response code="404">Nije pronađen službeni list za uneti ID</response>
+        /// <response code="500">Serverska greška tokom modifikacije službenog lista</response>
+        ///
         [Consumes("application/json")]
         [HttpPut("{sluzbeniListId}")]
         public async Task<ActionResult<SluzbeniListUpdateDto>> UpdateSluzbeniList(Guid sluzbeniListId, [FromBody] SluzbeniListUpdateDto sluzbeniList)
@@ -130,6 +182,15 @@ namespace OglasWebAPI.Controllers
             }
         }
 
+        /// <summary>
+        /// Brisanje službenog lista na osnovu ID-a
+        /// </summary>
+        /// <param name="sluzbeniListId">ID službenog lista</param>
+        /// <returns>Status 204 (NoContent)</returns>
+        /// <response code="204">Službeni list je uspešno obrisan</response>
+        /// <response code="404">Nije pronađen službeni list za uneti ID</response>
+        /// <response code="500">Serverska greška tokom brisanja službenog lista</response>
+        /// 
         [HttpDelete("{sluzbeniListId}")]
         public async Task<ActionResult> DeleteSluzbeniList(Guid sluzbeniListId)
         {
