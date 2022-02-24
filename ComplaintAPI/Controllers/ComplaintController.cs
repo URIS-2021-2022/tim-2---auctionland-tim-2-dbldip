@@ -71,7 +71,7 @@ namespace ComplaintService.Controllers
         {
             Complaint complaintToCreate = mapper.Map<Complaint>(complaint);
             ComplaintConfirmation confirmation = complaintRepository.CreateComplaint(mapper.Map<Complaint>(complaintToCreate));
-            complaintRepository.SaveChanges();
+            ///context.SaveChanges();
 
             string location = linkGenerator.GetPathByAction(action: "GetComplaintById", controller: "Complaint", values: new { complaintId = confirmation.complaintId });
             return Created(location, mapper.Map<ComplaintConfirmationDto>(confirmation));
