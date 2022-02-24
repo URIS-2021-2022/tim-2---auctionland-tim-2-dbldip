@@ -9,7 +9,7 @@ namespace ComplaintAPI.Models.ComplaintType
     /// <summary>
     /// Dto za kreiranje tipa žalbe
     /// </summary>
-    public class ComplaintTypeCreate
+    public class ComplaintTypeCreateDto
     {
         
         /// <summary>

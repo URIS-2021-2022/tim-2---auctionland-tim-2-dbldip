@@ -30,11 +30,15 @@ namespace ComplaintAPI
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            //services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
+            services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
             services.AddScoped<IComplaintRepository, ComplaintRepository>();
             //services.AddDbContext<ComplaintContext>;
 
-            services.AddControllers();
+            services.AddControllers(setup =>
+            {
+                setup.ReturnHttpNotAcceptable = true;
+            }).AddXmlDataContractSerializerFormatters();
+
             services.AddSwaggerGen(setupAction =>
             {
                 setupAction.SwaggerDoc("ComplaintOpenApiSpecification", 
@@ -54,7 +58,7 @@ namespace ComplaintAPI
             app.UseSwagger();
             app.UseSwaggerUI(setupAction => 
             {
-                setupAction.SwaggerEndpoint("/swagger/v1/swagger.json", "ComplaintAPI v1");
+                setupAction.SwaggerEndpoint("/swagger/ComplaintOpenApiSpecification/swagger.json", "ComplaintAPI v1");
                 setupAction.RoutePrefix = "";
             });
 

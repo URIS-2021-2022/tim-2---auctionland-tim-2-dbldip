@@ -18,7 +18,7 @@ namespace ComplaintAPI.Models
         /// <summary>
         /// Tip žalbe id
         /// </summary>
-        public Guid complaintTypeId { get; set; }
+        public string complaintType { get; set; }
 
         /// <summary>
         /// Datum podnošenja žalbe
@@ -28,7 +28,7 @@ namespace ComplaintAPI.Models
         /// <summary>
         /// Podnosilac žalbe - Mikroservis Kupac
         /// </summary>
-        public Guid personId { get; set; }
+        public string buyer { get; set; }
 
         /// <summary>
         /// Razlog žalbe
@@ -53,7 +53,7 @@ namespace ComplaintAPI.Models
         /// <summary>
         /// Status žalbe
         /// </summary>
-        public Guid complaintStatusId { get; set; }
+        public string complaintStatus { get; set; }
 
         /// <summary>
         /// Broj odluke ili broj nadmetanja
@@ -63,6 +63,6 @@ namespace ComplaintAPI.Models
         /// <summary>
         /// Radnja na osnovu žalbe
         /// </summary>
-        public Guid actionTakenId { get; set; }
+        public string actionTaken { get; set; }
     }
 }
