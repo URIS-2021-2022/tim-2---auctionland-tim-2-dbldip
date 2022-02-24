@@ -44,7 +44,7 @@ namespace ComplaintAPI.Entities
         /// Razlog žalbe
         /// </summary>
         [Required]
-        public string complaintReaason { get; set; }
+        public string complaintReason { get; set; }
 
         /// <summary>
         /// Obrazloženje žalbe
