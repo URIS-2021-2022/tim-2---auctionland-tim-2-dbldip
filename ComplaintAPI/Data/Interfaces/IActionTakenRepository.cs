@@ -9,7 +9,7 @@ namespace ComplaintService.Data.Interfaces
     /// <summary>
     /// Interfejs za kreiranje repozitorijuma za preuzetu radnju na osnovu žalbe
     /// </summary>
-    interface IActionTakenRepository
+    public interface IActionTakenRepository
     {
         /// <summary>
         /// Prikaz liste svih radnji na osnovu žalbe

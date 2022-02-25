@@ -9,7 +9,7 @@ namespace ComplaintService.Data.Interfaces
     /// <summary>
     /// Interfejs za keriranje repozitorijuma za status žalbe
     /// </summary>
-    interface IComplaintStatusRepository
+    public interface IComplaintStatusRepository
     {
         /// <summary>
         /// Prikazivanje liste sa podacima svih statusa žalbi

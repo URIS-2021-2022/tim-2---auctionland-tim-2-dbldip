@@ -1,5 +1,6 @@
 using ComplaintService.Data;
 using ComplaintService.Data.Interfaces;
+using ComplaintService.Entities.Context;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -32,7 +33,11 @@ namespace ComplaintAPI
         {
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
             services.AddScoped<IComplaintRepository, ComplaintRepository>();
-            //services.AddDbContext<ComplaintContext>;
+            services.AddScoped<IActionTakenRepository, ActionTakenRepository>();
+            services.AddScoped<IComplaintStatusRepository, ComplaintStatusRepository>();
+            services.AddScoped<IComplaintTypeRepository, ComplaintTypeRepository>();
+
+            services.AddDbContext<ComplaintContext>();
 
             services.AddControllers(setup =>
             {
