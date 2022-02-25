@@ -1,0 +1,485 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>PaymentService</name>
+    </assembly>
+    <members>
+        <member name="M:PaymentService.Controllers.ExchangeRateController.#ctor(PaymentService.Data.IExchangeRateRepository,Microsoft.AspNetCore.Routing.LinkGenerator,AutoMapper.IMapper,PaymentService.ServiceCalls.ILoggerService)">
+            <summary>
+            ExchangeRateController constructor
+            </summary>
+            <param name="exchangeRateRepository">Exchange rate repository</param>
+            <param name="linkGenerator">Link generator</param>
+            <param name="mapper">AutoMapper</param>
+            <param name="loggerService">Logger service</param>
+        </member>
+        <member name="M:PaymentService.Controllers.ExchangeRateController.GetExchangeRates">
+            <summary>
+            Return all exchange rates
+            </summary>
+            <returns>List of exchange rates</returns>
+            <response code="200">Returns all exchange rates</response>
+            <response code="404">No exchange rates found</response>
+        </member>
+        <member name="M:PaymentService.Controllers.ExchangeRateController.GetExchangeRate(System.Guid)">
+            <summary>
+            Returns exchange rate by ID
+            </summary>
+            <param name="exchangeRateId">Exchange rate ID</param>
+            <returns>Exchange rate</returns>
+            <response code="200">Returns exchange rate by ID</response>
+            <response code="404">No exchange rate by ID found</response>
+        </member>
+        <member name="M:PaymentService.Controllers.ExchangeRateController.CreateExchangeRate(PaymentService.Models.ExchangeRateCreationDto)">
+            <summary>
+            Create new exchange rate
+            </summary>
+            <param name="exchangeRate">Creation exchange rate DTO</param>
+            <returns>Confirmation of created exchange rate</returns>
+            <response code="201">Returns confirmation of created exchange rate</response>
+            <response code="500">Exchange rate creation error</response>
+        </member>
+        <member name="M:PaymentService.Controllers.ExchangeRateController.UpdateExchangeRate(PaymentService.Models.ExchangeRateUpdateDto)">
+            <summary>
+            Exchange rate modify
+            </summary>
+            <param name="exchangeRate">Update exchange rate DTO</param>
+            <returns>Confirmation of updated exchange rate</returns>
+            <response code="200">Returns confirmation of updated exchange rate</response>
+            <response code="400">Bad request</response>
+            <response code="404">Not found exchange rate by ID</response>
+            <response code="500">Server error</response>
+        </member>
+        <member name="M:PaymentService.Controllers.ExchangeRateController.DeleteExchangeRate(System.Guid)">
+            <summary>
+            Delete exchange rate
+            </summary>
+            <param name="exchangeRateId">Exchange rate ID</param>
+            <returns>Status 204 (NoContent)</returns>
+            <response code="204">Exchange rate deleted</response>
+            <response code="404">Exchange rate by ID not found</response>
+            <response code="500">Server error</response>
+        </member>
+        <member name="M:PaymentService.Controllers.PaymentController.#ctor(PaymentService.Data.IPaymentRepository,Microsoft.AspNetCore.Routing.LinkGenerator,AutoMapper.IMapper,PaymentService.ServiceCalls.ILoggerService)">
+            <summary>
+            PaymentController constructor
+            </summary>
+            <param name="paymentRepository">Payment repository</param>
+            <param name="linkGenerator">Link generator</param>
+            <param name="mapper">AutoMapper</param>
+            <param name="loggerService">Logger service</param>
+        </member>
+        <member name="M:PaymentService.Controllers.PaymentController.GetPayments">
+            <summary>
+            Return all payments
+            </summary>
+            <returns>List of payments</returns>
+            <response code="200">Returns all payments</response>
+            <response code="404">No payment found</response>
+        </member>
+        <member name="M:PaymentService.Controllers.PaymentController.GetPayment(System.Guid)">
+            <summary>
+            Returns payment by ID
+            </summary>
+            <param name="paymentId">Payment ID</param>
+            <returns>Payment</returns>
+            <response code="200">Returns payment by ID</response>
+            <response code="404">No payment by ID found</response>
+        </member>
+        <member name="M:PaymentService.Controllers.PaymentController.CreatePayment(PaymentService.Models.PaymentCreationDto)">
+            <summary>
+            Create new payment
+            </summary>
+            <param name="payment">Creation payment DTO</param>
+            <returns>Confirmation of created applipaymentcation</returns>
+            <response code="201">Returns confirmation of created payment</response>
+            <response code="500">Payment creation error</response>
+        </member>
+        <member name="M:PaymentService.Controllers.PaymentController.UpdatePayment(PaymentService.Models.PaymentUpdateDto)">
+            <summary>
+            Payment modify
+            </summary>
+            <param name="payment">Update payment DTO</param>
+            <returns>Confirmation of updated payment</returns>
+            <response code="200">Returns confirmation of updated payment</response>
+            <response code="400">Bad request</response>
+            <response code="404">Not found payment by ID</response>
+            <response code="500">Server error</response>
+        </member>
+        <member name="M:PaymentService.Controllers.PaymentController.DeletePayment(System.Guid)">
+            <summary>
+            Delete payment
+            </summary>
+            <param name="paymentId">Payment ID</param>
+            <returns>Status 204 (NoContent)</returns>
+            <response code="204">Payment deleted</response>
+            <response code="404">Payment by ID not found</response>
+            <response code="500">Server error</response>
+        </member>
+        <member name="T:PaymentService.Entities.ExchangeRate">
+            <summary>
+            Exchange rate
+            </summary>
+        </member>
+        <member name="P:PaymentService.Entities.ExchangeRate.exchangeRateId">
+            <summary>
+            Exchange rate ID
+            </summary>
+        </member>
+        <member name="P:PaymentService.Entities.ExchangeRate.currencyName">
+            <summary>
+            Currency name
+            </summary>
+        </member>
+        <member name="P:PaymentService.Entities.ExchangeRate.currencyCode">
+            <summary>
+            Currency code
+            </summary>
+        </member>
+        <member name="P:PaymentService.Entities.ExchangeRate.currencyPrice">
+            <summary>
+            Currency price
+            </summary>
+        </member>
+        <member name="T:PaymentService.Entities.ExchangeRateConfirmation">
+            <summary>
+            Exchange rate confirmation
+            </summary>
+        </member>
+        <member name="P:PaymentService.Entities.ExchangeRateConfirmation.exchangeRateId">
+            <summary>
+            Exchange rate ID
+            </summary>
+        </member>
+        <member name="P:PaymentService.Entities.ExchangeRateConfirmation.currencyCode">
+            <summary>
+            Currency code
+            </summary>
+        </member>
+        <member name="P:PaymentService.Entities.ExchangeRateConfirmation.currencyPrice">
+            <summary>
+            Currency price
+            </summary>
+        </member>
+        <member name="T:PaymentService.Entities.Payment">
+            <summary>
+            Payment
+            </summary>
+        </member>
+        <member name="P:PaymentService.Entities.Payment.paymentId">
+            <summary>
+            Payment ID
+            </summary>
+        </member>
+        <member name="P:PaymentService.Entities.Payment.accountNumber">
+            <summary>
+            Payment account number
+            </summary>
+        </member>
+        <member name="P:PaymentService.Entities.Payment.referenceNumber">
+            <summary>
+            Payment reference number
+            </summary>
+        </member>
+        <member name="P:PaymentService.Entities.Payment.amount">
+            <summary>
+            Payment amount
+            </summary>
+        </member>
+        <member name="P:PaymentService.Entities.Payment.buyerId">
+            <summary>
+            Buyer ID
+            </summary>
+        </member>
+        <member name="P:PaymentService.Entities.Payment.publicBiddingId">
+            <summary>
+            Public bidding ID
+            </summary>
+        </member>
+        <member name="P:PaymentService.Entities.Payment.exchangeRateId">
+            <summary>
+            Exchange rate ID
+            </summary>
+        </member>
+        <member name="T:PaymentService.Entities.PaymentConfirmation">
+            <summary>
+            Payment confirmation
+            </summary>
+        </member>
+        <member name="P:PaymentService.Entities.PaymentConfirmation.paymentId">
+            <summary>
+            Payment ID
+            </summary>
+        </member>
+        <member name="P:PaymentService.Entities.PaymentConfirmation.accountNumber">
+            <summary>
+            Payment account number
+            </summary>
+        </member>
+        <member name="P:PaymentService.Entities.PaymentConfirmation.referenceNumber">
+            <summary>
+            Payment reference number
+            </summary>
+        </member>
+        <member name="P:PaymentService.Entities.PaymentConfirmation.amount">
+            <summary>
+            Payment amount
+            </summary>
+        </member>
+        <member name="P:PaymentService.Entities.PaymentConfirmation.buyerId">
+            <summary>
+            Buyer ID
+            </summary>
+        </member>
+        <member name="P:PaymentService.Entities.PaymentConfirmation.publicBiddingId">
+            <summary>
+            Public bidding ID
+            </summary>
+        </member>
+        <member name="P:PaymentService.Entities.PaymentConfirmation.PaymentPurpose">
+            <summary>
+            Payment purpose
+            </summary>
+        </member>
+        <member name="P:PaymentService.Entities.PaymentConfirmation.PaymentDate">
+            <summary>
+            Payment date
+            </summary>
+        </member>
+        <member name="P:PaymentService.Entities.PaymentConfirmation.exchangeRateId">
+            <summary>
+            Exchange rate ID
+            </summary>
+        </member>
+        <member name="T:PaymentService.Models.ExchangeRateConfirmationDto">
+            <summary>
+            Exchange rate confirmation DTO
+            </summary>
+        </member>
+        <member name="P:PaymentService.Models.ExchangeRateConfirmationDto.currencyCode">
+            <summary>
+            Currency code
+            </summary>
+        </member>
+        <member name="P:PaymentService.Models.ExchangeRateConfirmationDto.price">
+            <summary>
+            Price
+            </summary>
+        </member>
+        <member name="T:PaymentService.Models.ExchangeRateCreationDto">
+            <summary>
+            Exchange rate creation DTO
+            </summary>
+        </member>
+        <member name="P:PaymentService.Models.ExchangeRateCreationDto.currencyName">
+            <summary>
+            Currency name
+            </summary>
+        </member>
+        <member name="P:PaymentService.Models.ExchangeRateCreationDto.currencyCode">
+            <summary>
+            Currency code
+            </summary>
+        </member>
+        <member name="P:PaymentService.Models.ExchangeRateCreationDto.price">
+            <summary>
+            Price
+            </summary>
+        </member>
+        <member name="T:PaymentService.Models.ExchangeRateDto">
+            <summary>
+            Exchange rate DTO
+            </summary>
+        </member>
+        <member name="P:PaymentService.Models.ExchangeRateDto.exchangeRateId">
+            <summary>
+            Exchange rate ID
+            </summary>
+        </member>
+        <member name="P:PaymentService.Models.ExchangeRateDto.currencyName">
+            <summary>
+            Currency name
+            </summary>
+        </member>
+        <member name="P:PaymentService.Models.ExchangeRateDto.currencyCode">
+            <summary>
+            Currency code
+            </summary>
+        </member>
+        <member name="P:PaymentService.Models.ExchangeRateDto.price">
+            <summary>
+            Price
+            </summary>
+        </member>
+        <member name="T:PaymentService.Models.ExchangeRateUpdateDto">
+            <summary>
+            Exchange rate update DTO
+            </summary>
+        </member>
+        <member name="P:PaymentService.Models.ExchangeRateUpdateDto.exchangeRateId">
+            <summary>
+            Exchange rate ID
+            </summary>
+        </member>
+        <member name="P:PaymentService.Models.ExchangeRateUpdateDto.currencyName">
+            <summary>
+            Currency name
+            </summary>
+        </member>
+        <member name="P:PaymentService.Models.ExchangeRateUpdateDto.currencyCode">
+            <summary>
+            Currency code
+            </summary>
+        </member>
+        <member name="P:PaymentService.Models.ExchangeRateUpdateDto.price">
+            <summary>
+            Price
+            </summary>
+        </member>
+        <member name="T:PaymentService.Models.PaymentConfirmationDto">
+            <summary>
+            Payment confirmation DTO
+            </summary>
+        </member>
+        <member name="P:PaymentService.Models.PaymentConfirmationDto.accountNumber">
+            <summary>
+            Account number
+            </summary>
+        </member>
+        <member name="P:PaymentService.Models.PaymentConfirmationDto.amount">
+            <summary>
+            Amount
+            </summary>
+        </member>
+        <member name="P:PaymentService.Models.PaymentConfirmationDto.buyerId">
+            <summary>
+            Buyer ID
+            </summary>
+        </member>
+        <member name="P:PaymentService.Models.PaymentConfirmationDto.publicBiddingId">
+            <summary>
+            Public bidding ID
+            </summary>
+        </member>
+        <member name="P:PaymentService.Models.PaymentConfirmationDto.exchangeRateId">
+            <summary>
+            Exchange rate ID
+            </summary>
+        </member>
+        <member name="T:PaymentService.Models.PaymentCreationDto">
+            <summary>
+            Payment creation DTO
+            </summary>
+        </member>
+        <member name="P:PaymentService.Models.PaymentCreationDto.accountNumber">
+            <summary>
+            Acount number
+            </summary>
+        </member>
+        <member name="P:PaymentService.Models.PaymentCreationDto.referenceNumber">
+            <summary>
+            Reference number
+            </summary>
+        </member>
+        <member name="P:PaymentService.Models.PaymentCreationDto.amount">
+            <summary>
+            Amount
+            </summary>
+        </member>
+        <member name="P:PaymentService.Models.PaymentCreationDto.buyerId">
+            <summary>
+            Buyer ID
+            </summary>
+        </member>
+        <member name="P:PaymentService.Models.PaymentCreationDto.publicBiddingId">
+            <summary>
+            Public bidding ID
+            </summary>
+        </member>
+        <member name="P:PaymentService.Models.PaymentCreationDto.exchangeRateId">
+            <summary>
+            Exchange rate ID
+            </summary>
+        </member>
+        <member name="T:PaymentService.Models.PaymentDto">
+            <summary>
+            Payment DTO
+            </summary>
+        </member>
+        <member name="P:PaymentService.Models.PaymentDto.paymentId">
+            <summary>
+            Payment ID
+            </summary>
+        </member>
+        <member name="P:PaymentService.Models.PaymentDto.accountNumber">
+            <summary>
+            Account number
+            </summary>
+        </member>
+        <member name="P:PaymentService.Models.PaymentDto.referenceNumber">
+            <summary>
+            Reference number
+            </summary>
+        </member>
+        <member name="P:PaymentService.Models.PaymentDto.amount">
+            <summary>
+            Amount
+            </summary>
+        </member>
+        <member name="P:PaymentService.Models.PaymentDto.buyerId">
+            <summary>
+            Buyer ID
+            </summary>
+        </member>
+        <member name="P:PaymentService.Models.PaymentDto.publicBiddingId">
+            <summary>
+            Public bidding ID
+            </summary>
+        </member>
+        <member name="P:PaymentService.Models.PaymentDto.exchangeRateId">
+            <summary>
+            Exchange rate ID
+            </summary>
+        </member>
+        <member name="T:PaymentService.Models.PaymentUpdateDto">
+            <summary>
+            Payment update DTO
+            </summary>
+        </member>
+        <member name="P:PaymentService.Models.PaymentUpdateDto.paymentId">
+            <summary>
+            Payment ID
+            </summary>
+        </member>
+        <member name="P:PaymentService.Models.PaymentUpdateDto.accountNumber">
+            <summary>
+            Account Number
+            </summary>
+        </member>
+        <member name="P:PaymentService.Models.PaymentUpdateDto.referenceNumber">
+            <summary>
+            Reference Number
+            </summary>
+        </member>
+        <member name="P:PaymentService.Models.PaymentUpdateDto.amount">
+            <summary>
+            Amount
+            </summary>
+        </member>
+        <member name="P:PaymentService.Models.PaymentUpdateDto.buyerId">
+            <summary>
+            Buyer ID
+            </summary>
+        </member>
+        <member name="P:PaymentService.Models.PaymentUpdateDto.publicBiddingId">
+            <summary>
+            Public bidding ID
+            </summary>
+        </member>
+        <member name="P:PaymentService.Models.PaymentUpdateDto.exchangeRateId">
+            <summary>
+            Exchange rate ID
+            </summary>
+        </member>
+    </members>
+</doc>
