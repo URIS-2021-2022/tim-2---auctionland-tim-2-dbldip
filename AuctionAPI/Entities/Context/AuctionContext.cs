@@ -105,7 +105,7 @@ namespace AuctionAPI.Entities
                 .HasData(
                 new
                 {
-                    auctionId = Guid.Parse("cac0e0a2 - 852a - 4265 - ac71 - 49c25fb5559b"),
+                    auctionId = Guid.Parse("cac0e0a2-852a-4265-ac71-49c25fb5559b"),
                     publicBiddingId = Guid.Parse("56A7CFF5-CB0A-46B8-BFC1-93DB415FEEB4")
                 },
                 new

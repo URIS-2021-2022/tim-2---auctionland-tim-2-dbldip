@@ -37,24 +37,27 @@ namespace AuctionAPI
             }).AddXmlDataContractSerializerFormatters();
 
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies()); 
+
             services.AddScoped<IAuctionRepository, AuctionRepository>();
-            
-            
+
+            services.AddDbContext<AuctionContext>();
+
             services.AddSwaggerGen(setupAction =>
             {
-                setupAction.SwaggerDoc("AuctionCreationOpenApiSpecification", 
+                setupAction.SwaggerDoc("AuctionOpenApiSpecification", 
                     new OpenApiInfo { 
-                        Title = "Land Auction API", 
+                        Title = "Auction API", 
                         Version = "v1" 
                     });
 
-                var xmlComments = $"{ Assembly.GetExecutingAssembly().GetName().Name }.xml";
+                var xmlComments = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
                 var xmlCommentsPath = Path.Combine(AppContext.BaseDirectory, xmlComments);
-
                 //setupAction.IncludeXmlComments(xmlCommentsPath);
+
+                
             });
 
-            services.AddDbContext<AuctionContext>();
+           
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -66,7 +69,7 @@ namespace AuctionAPI
             app.UseSwagger();
             app.UseSwaggerUI(setupAction =>
             {
-                setupAction.SwaggerEndpoint("/swagger/AuctionCreationOpenApiSpecificatoin/swagger.json", "Land Auction API");
+                setupAction.SwaggerEndpoint("/swagger/AuctionOpenApiSpecification/swagger.json", "Auction API");
                 setupAction.RoutePrefix = "";
             });
             app.UseRouting();

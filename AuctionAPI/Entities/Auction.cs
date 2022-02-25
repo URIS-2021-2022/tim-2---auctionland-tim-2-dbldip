@@ -3,6 +3,7 @@ using AuctionAPI.Entities.ManyToMany;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -47,11 +48,13 @@ namespace AuctionAPI.Entities
         /// <summary>
         /// Lista dokumentacije fizičkih lica
         /// </summary>
+        [NotMapped]
         public List<String> naturalPersonDocumentList { get; set; }
 
         /// <summary>
         /// Lista dokumentacije pravnih lica
         /// </summary>
+        [NotMapped]
         public List<String> legalPersonDocumentList { get; set; }
         
         /// <summary>
