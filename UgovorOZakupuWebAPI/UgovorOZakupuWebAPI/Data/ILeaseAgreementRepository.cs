@@ -10,11 +10,13 @@ namespace UgovorOZakupuWebAPI.Data
     {
         List<LeaseAgreementWithLists> GetLeaseAgreements(string serialNumber);
 
-        LeaseAgreementWithLists GetLeaseAgreementById(Guid leaseAgreementId);
+        LeaseAgreement GetLeaseAgreementById(Guid leaseAgreementId);
 
         LeaseAgreementConfirmation CreateLeaseAgreement(LeaseAgreement leaseAgreement);
 
-        void UpdateLeaseAgreement(LeaseAgreementWithLists leaseAgreement);
+        void UpdateLeaseAgreement(LeaseAgreementWithLists leaseAgreementWithLists);
+
+        void UpdateMaturityDeadlines(List<MaturityDeadline> maturityDeadlines, Guid leaseAgreementId);
 
         void DeleteLeaseAgreement(Guid leaseAgreementId);
 

@@ -55,6 +55,19 @@ namespace UgovorOZakupuWebAPI.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "MaturityDeadlines",
+                columns: table => new
+                {
+                    MaturityDeadlineId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    LeaseAgreementId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    Deadline = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_MaturityDeadlines", x => x.MaturityDeadlineId);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Documents",
                 columns: table => new
                 {
@@ -87,10 +100,10 @@ namespace UgovorOZakupuWebAPI.Migrations
                     PlaceOfSigning = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     DateOfSigning = table.Column<DateTime>(type: "datetime2", nullable: true),
                     IsDelete = table.Column<bool>(type: "bit", nullable: true, defaultValue: false),
-                    ContractedPublicBiddingId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
-                    ContractPartyId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
-                    GuaranteeTypeId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
-                    DecisionId = table.Column<Guid>(type: "uniqueidentifier", nullable: true)
+                    ContractedPublicBiddingId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    ContractPartyId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    GuaranteeTypeId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    DecisionId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -100,43 +113,24 @@ namespace UgovorOZakupuWebAPI.Migrations
                         column: x => x.ContractedPublicBiddingId,
                         principalTable: "ContractedPublicBiddings",
                         principalColumn: "ContractedPublicBiddingId",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_LeaseAgreements_ContractParties_ContractPartyId",
                         column: x => x.ContractPartyId,
                         principalTable: "ContractParties",
                         principalColumn: "ContractPartyId",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_LeaseAgreements_Documents_DecisionId",
                         column: x => x.DecisionId,
                         principalTable: "Documents",
                         principalColumn: "DocumentId",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_LeaseAgreements_GuaranteeTypes_GuaranteeTypeId",
                         column: x => x.GuaranteeTypeId,
                         principalTable: "GuaranteeTypes",
                         principalColumn: "GuaranteeTypeId",
-                        onDelete: ReferentialAction.Restrict);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "MaturityDeadlines",
-                columns: table => new
-                {
-                    MaturityDeadlineId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    LeaseAgreementId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    Deadline = table.Column<int>(type: "int", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_MaturityDeadlines", x => x.MaturityDeadlineId);
-                    table.ForeignKey(
-                        name: "FK_MaturityDeadlines_LeaseAgreements_LeaseAgreementId",
-                        column: x => x.LeaseAgreementId,
-                        principalTable: "LeaseAgreements",
-                        principalColumn: "LeaseAgreementId",
                         onDelete: ReferentialAction.Cascade);
                 });
 
@@ -168,6 +162,15 @@ namespace UgovorOZakupuWebAPI.Migrations
                 });
 
             migrationBuilder.InsertData(
+                table: "MaturityDeadlines",
+                columns: new[] { "MaturityDeadlineId", "Deadline", "LeaseAgreementId" },
+                values: new object[,]
+                {
+                    { new Guid("f209322d-66e9-46f3-8f34-65d816d4de5a"), 2, new Guid("5a10ccf3-d021-49a9-9844-244c3ac30ebe") },
+                    { new Guid("4546fd1d-aebf-4423-9d11-0a5908ce1aa8"), 1, new Guid("5a10ccf3-d021-49a9-9844-244c3ac30ebe") }
+                });
+
+            migrationBuilder.InsertData(
                 table: "Documents",
                 columns: new[] { "DocumentId", "Date", "DocumentAdoptionDate", "DocumentAuthorId", "FileNumber", "Template" },
                 values: new object[] { new Guid("68ee654e-31f4-40ca-be06-aa95b7356712"), null, null, new Guid("554c65b1-56af-4050-b232-c20d7197bb78"), "File001", "template2" });
@@ -176,16 +179,6 @@ namespace UgovorOZakupuWebAPI.Migrations
                 table: "LeaseAgreements",
                 columns: new[] { "LeaseAgreementId", "ContractPartyId", "ContractedPublicBiddingId", "DateOfSigning", "DecisionId", "GuaranteeTypeId", "LandReturnDeadline", "PlaceOfSigning", "RecordDate", "SerialNumber" },
                 values: new object[] { new Guid("5a10ccf3-d021-49a9-9844-244c3ac30ebe"), new Guid("2426e609-5dd9-4817-8d32-d63a032402ac"), new Guid("55ee6acb-39fd-4464-a5f6-29f9767b82b5"), null, new Guid("68ee654e-31f4-40ca-be06-aa95b7356712"), new Guid("d751aa4b-936c-4b23-bdbe-be6081235133"), null, "Novi Sad", null, "012392" });
-
-            migrationBuilder.InsertData(
-                table: "MaturityDeadlines",
-                columns: new[] { "MaturityDeadlineId", "Deadline", "LeaseAgreementId" },
-                values: new object[] { new Guid("f209322d-66e9-46f3-8f34-65d816d4de5a"), 2, new Guid("5a10ccf3-d021-49a9-9844-244c3ac30ebe") });
-
-            migrationBuilder.InsertData(
-                table: "MaturityDeadlines",
-                columns: new[] { "MaturityDeadlineId", "Deadline", "LeaseAgreementId" },
-                values: new object[] { new Guid("4546fd1d-aebf-4423-9d11-0a5908ce1aa8"), 1, new Guid("5a10ccf3-d021-49a9-9844-244c3ac30ebe") });
 
             migrationBuilder.CreateIndex(
                 name: "IX_Documents_DocumentAuthorId",
@@ -211,20 +204,15 @@ namespace UgovorOZakupuWebAPI.Migrations
                 name: "IX_LeaseAgreements_GuaranteeTypeId",
                 table: "LeaseAgreements",
                 column: "GuaranteeTypeId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_MaturityDeadlines_LeaseAgreementId",
-                table: "MaturityDeadlines",
-                column: "LeaseAgreementId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "MaturityDeadlines");
+                name: "LeaseAgreements");
 
             migrationBuilder.DropTable(
-                name: "LeaseAgreements");
+                name: "MaturityDeadlines");
 
             migrationBuilder.DropTable(
                 name: "ContractedPublicBiddings");

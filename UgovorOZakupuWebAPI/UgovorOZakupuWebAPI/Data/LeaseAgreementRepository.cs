@@ -34,17 +34,17 @@ namespace UgovorOZakupuWebAPI.Data
 
         public void DeleteLeaseAgreement(Guid leaseAgreementId)
         {
-            var leaseAgreementToDelete = GetLeaseAgreementById(leaseAgreementId);
-            leaseAgreementToDelete.IsDelete = true;
-            UpdateLeaseAgreement(leaseAgreementToDelete);
+            var leaseAgreementToDelete = context.LeaseAgreements.FirstOrDefault(e => e.LeaseAgreementId == leaseAgreementId);
+            context.Remove(leaseAgreementToDelete);
+           
         }
 
-        public LeaseAgreementWithLists GetLeaseAgreementById(Guid leaseAgreementId)
+        public LeaseAgreement GetLeaseAgreementById(Guid leaseAgreementId)
         {
             var leaseAgreement = this.context.LeaseAgreements.FirstOrDefault(e => e.LeaseAgreementId == leaseAgreementId);
             if (leaseAgreement == null)
                 return null;
-            var returnLeaseAgreement = mapper.Map<LeaseAgreementWithLists>(leaseAgreement);
+            var returnLeaseAgreement = mapper.Map<LeaseAgreement>(leaseAgreement);
             returnLeaseAgreement.MaturityDeadlines = context.MaturityDeadlines.Where(e => e.LeaseAgreementId == leaseAgreementId).ToList();
             returnLeaseAgreement.ContractedPublicBidding = context.ContractedPublicBiddings.FirstOrDefault(e => e.ContractedPublicBiddingId == leaseAgreement.ContractedPublicBiddingId);
             returnLeaseAgreement.ContractParty = context.ContractParties.FirstOrDefault(e => e.ContractPartyId == leaseAgreement.ContractPartyId);
@@ -75,9 +75,25 @@ namespace UgovorOZakupuWebAPI.Data
             return context.SaveChanges() > 0;
         }
 
-        public void UpdateLeaseAgreement(LeaseAgreementWithLists leaseAgreement)
+        public void UpdateLeaseAgreement(LeaseAgreementWithLists leaseAgreementWithLists)
         {
-        
+            
+        }
+
+        public void UpdateMaturityDeadlines(List<MaturityDeadline> maturityDeadlines, Guid leaseAgreementId)
+        {
+            foreach (var el in context.LeaseAgreements.Where(e => e.LeaseAgreementId == leaseAgreementId))
+            {
+                context.Remove(el);
+            }
+            foreach (var el in maturityDeadlines)
+            {
+                var temp = new MaturityDeadline();
+                temp.LeaseAgreementId = leaseAgreementId;
+                temp.MaturityDeadlineId = new Guid();
+                temp.Deadline = el.Deadline;
+                context.Add(temp);
+            }
         }
     }
 }

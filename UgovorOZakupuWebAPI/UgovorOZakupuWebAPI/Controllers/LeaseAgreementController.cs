@@ -110,8 +110,7 @@ namespace UgovorOZakupuWebAPI.Controllers
         ///      }, \
         ///      "maturityDeadlines" : [ \
         ///      { \
-        ///          "maturityDeadlineId": "4546fd1d-aebf-4423-9d11-0a5908ce1aa8", \
-        ///          "leaseAgreementId": "e371a007-e874-4eed-8ff4-dd8e25a36b4b", \
+        ///          "maturityDeadlineId": "4546fd1d-aebf-4423-9d11-0a5908ce1aa8", \ \
         ///          "deadline": 1 \
         ///      } \
         ///      ] \ 
@@ -124,8 +123,8 @@ namespace UgovorOZakupuWebAPI.Controllers
         [HttpPost]
         public ActionResult<LeaseAgreementConfirmationDto> CreateLeaseAgreement(LeaseAgreementCreationDto leaseAgreementDto)
         {
-            try
-            {
+           // try
+           // {
                 LeaseAgreement leaseAgreement = mapper.Map<LeaseAgreement>(leaseAgreementDto);
                 LeaseAgreementConfirmation confirmation = leaseAgreementRepository.CreateLeaseAgreement(leaseAgreement);
                 leaseAgreementRepository.SaveChanges();
@@ -133,12 +132,12 @@ namespace UgovorOZakupuWebAPI.Controllers
                 string location = linkGenerator.GetPathByAction("GetLeaseAgreementById", "LeaseAgreement", new { leaseAgreementId = confirmation.LeaseAgreementId });
                 this.loggerService.LogMessage("Lease agreement is created successfully", "Post", LogLevel.Information);
                 return Created(location, mapper.Map<LeaseAgreementConfirmationDto>(confirmation));
-            }
-            catch (Exception exception)
-            {
-                this.loggerService.LogMessage("Error with creating lease agreement", "Post", LogLevel.Error, exception);
-                return StatusCode(StatusCodes.Status500InternalServerError, $"Create error {exception}");
-            }
+           // }
+           // catch (Exception exception)
+            //{
+               // this.loggerService.LogMessage("Error with creating lease agreement", "Post", LogLevel.Error, exception);
+               // return StatusCode(StatusCodes.Status500InternalServerError, $"Create error {exception}");
+            //}
         }
 
         /// <summary>
@@ -151,7 +150,7 @@ namespace UgovorOZakupuWebAPI.Controllers
         /// <response code="500">Serverska greška tokom modifikacije ugovora o zakupu</response>
         ///
         [HttpPut]
-        public ActionResult<LeaseAgreementDto> UpdateLeaseAgreement(LeaseAgreementWithLists leaseAgreementDto)
+        public ActionResult<LeaseAgreementDto> UpdateLeaseAgreement(LeaseAgreementUpdateDto leaseAgreementDto)
         {
             try
             {
@@ -162,10 +161,12 @@ namespace UgovorOZakupuWebAPI.Controllers
                     return NotFound();
                 }
                 LeaseAgreement leaseAgreementEntity = mapper.Map<LeaseAgreement>(leaseAgreementDto);
+                leaseAgreementRepository.UpdateMaturityDeadlines(leaseAgreementEntity.MaturityDeadlines, oldLeaseAgreement.LeaseAgreementId);
+                leaseAgreementEntity.LeaseAgreementId = oldLeaseAgreement.LeaseAgreementId;
                 mapper.Map(leaseAgreementEntity, oldLeaseAgreement);
                 leaseAgreementRepository.SaveChanges();
                 this.loggerService.LogMessage("Lease agreement is updated successfully", "Update", LogLevel.Information);
-                return Ok(mapper.Map<LeaseAgreementDto>(oldLeaseAgreement));
+                return Ok(mapper.Map<LeaseAgreementDto>(leaseAgreementEntity));
             }
             catch(Exception exception)
             {
