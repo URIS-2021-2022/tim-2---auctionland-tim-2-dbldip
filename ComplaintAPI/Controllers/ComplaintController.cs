@@ -14,14 +14,24 @@ using System.Threading.Tasks;
 
 namespace ComplaintService.Controllers
 {
+    /// <summary>
+    /// Kontroler žalbe
+    /// </summary>
     [ApiController]
     [Route("api/complaints")]
+    [Produces("application/json", "application/xml")]
     public class ComplaintController : ControllerBase
     {
         private readonly IComplaintRepository complaintRepository;
         private readonly LinkGenerator linkGenerator;
         private readonly IMapper mapper;
 
+        /// <summary>
+        /// Konstruktor kontrolera žalbe
+        /// </summary>
+        /// <param name="complaintRepository">Repozitorijum žalbe </param>
+        /// <param name="linkGenerator">Link generator</param>
+        /// <param name="mapper">AutoMapper</param>
         public ComplaintController(IComplaintRepository complaintRepository, LinkGenerator linkGenerator, IMapper mapper)
         {
             this.complaintRepository = complaintRepository;
@@ -38,6 +48,7 @@ namespace ComplaintService.Controllers
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         public  ActionResult<List<ComplaintDto>> GetComplaints()
         {
+            //Treba integrirati sa Kupac servisom 
             var complaints = complaintRepository.GetAllComplaints();
 
             if (complaints == null || complaints.Count == 0) 
@@ -57,6 +68,7 @@ namespace ComplaintService.Controllers
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         public ActionResult<ComplaintDto> GetComplaint(Guid complaintId)
         {
+            //I ovde treba integracija sa kupac servisom
             var complaint = complaintRepository.GetComplaintById(complaintId);
 
             if(complaint == null)
@@ -66,15 +78,57 @@ namespace ComplaintService.Controllers
             return Ok(mapper.Map<ComplaintDto>(complaint));
         }
 
+
+        /// <summary>
+        /// Kreira novu žalbu
+        /// </summary>
+        /// <param name="zalba">Model kreiranja žalba</param>
+        /// <remarks>
+        /// Primer zahteva za kreiranje nove žalbe \
+        /// POST /api/complaint \
+        /// {   
+        ///     "dateOfComplaint": "01-01-2020", \
+        ///     "dateOfProcedure": "01-05-2021", \
+        ///     "complaintReason": "Nepotpuna dokumentacija", \
+        ///     "elaboration": "Nevalidna dokumentacija", \
+        ///     "procedureNumber": "TT3415", \
+        ///     "decisionNumber": "PP341", \
+        ///     "complaintStatusId": "1c989ee3-13b2-4d3b-abeb-c4e6343eace7" \
+        ///     "complaintTypeId": "1c989ee3-13b2-4d3b-abeb-c4e6343eace7" \
+        ///     "actionTakenId": "1c989ee3-13b2-4d3b-abeb-c4e6343eace7" \
+        ///}
+        /// </remarks>
+        /// <returns>Potvrda o kreiranju žalbe</returns>
+        /// <response code="201">Vraća kreiranu žalbu</response>
+        /// <response code="400">Uneta žalba se već nalazi u bazi podataka</response>
+        /// <response code="500">Desila se greška prilikom unosa nove žalbe</response>
         [HttpPost]
+        [Consumes("application/json")]
+        [ProducesResponseType(StatusCodes.Status201Created)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public ActionResult<ComplaintConfirmationDto> CreateComplaint([FromBody] ComplaintCreateDto complaint)
         {
-            Complaint complaintToCreate = mapper.Map<Complaint>(complaint);
-            ComplaintConfirmation confirmation = complaintRepository.CreateComplaint(mapper.Map<Complaint>(complaintToCreate));
-            ///context.SaveChanges();
+            try
+            {
 
-            string location = linkGenerator.GetPathByAction(action: "GetComplaintById", controller: "Complaint", values: new { complaintId = confirmation.complaintId });
-            return Created(location, mapper.Map<ComplaintConfirmationDto>(confirmation));
+                Complaint complaintToCreate = mapper.Map<Complaint>(complaint);
+                var validComplaint = complaintRepository.isValidComplaint(complaintToCreate);
+
+                if (!validComplaint)
+                {
+                    return BadRequest();
+                }
+
+                ComplaintConfirmation confirmation = complaintRepository.CreateComplaint(mapper.Map<Complaint>(complaintToCreate));
+
+                string location = linkGenerator.GetPathByAction(action: "GetComplaintById", controller: "Complaint", values: new { complaintId = confirmation.complaintId });
+                return Created(location, mapper.Map<ComplaintConfirmationDto>(confirmation));
+            }
+            catch (Exception)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, "Create Complaint error");
+            }
         }
 
         /// <summary>
@@ -105,6 +159,51 @@ namespace ComplaintService.Controllers
             catch(Exception )
             {
                 return StatusCode(StatusCodes.Status500InternalServerError, "Delete complaint error");
+            }
+        }
+
+        /// <summary>
+        /// Izmena  zalbe
+        /// </summary>
+        /// <param name="complaintId">ID žalbe</param>
+        /// <param name="complaint">Model izmene žalbe</param>
+        /// <returns>Potvrda o modifikaciji žalbe</returns>
+        /// <response code="200">Izmenjena zalba</response>
+        /// <response code="400">Uneti podaci već postoje</response>
+        /// <response code="404">Nije pronađena ni jedna žalba sa traženim ID-jem</response>
+        /// <response code="500">Serverska greška tokom izmene žalbe</response>
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        [Consumes("application/json")]
+        [HttpPut("{zalbaId}")]
+        public ActionResult<ComplaintUpdateDto> UpdateComplaint(Guid complaintId, [FromBody] ComplaintUpdateDto complaint)
+        {
+            try
+            {
+                Complaint complaintToUpdate = mapper.Map<Complaint>(complaint);
+                var validComplaint = complaintRepository.isValidComplaint(complaintToUpdate);
+
+                if (!validComplaint)
+                {
+                    return BadRequest();
+                }
+
+                var complaintEntity = complaintRepository.GetComplaintById(complaintId);
+
+                if(complaintEntity == null)
+                {
+                    return NotFound();
+                }
+
+                mapper.Map(complaint, complaintEntity);
+                complaintRepository.UpdateComplaint(mapper.Map<Complaint>(complaint));
+                return Ok(complaint);
+            }
+            catch (Exception)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, "Update complaint error");
             }
         }
     }

@@ -104,7 +104,7 @@ namespace ComplaintService.Data
         /// true - ne postoji već
         /// false - već postoji u bazi
         /// </returns>
-        public bool isValidComplaint(ComplaintDto complaint)
+        public bool isValidComplaint(Complaint complaint)
         {
             var existingComplaints = context.Complaint.Where(a => a.procedureNumber == complaint.procedureNumber || a.decisionNumber == complaint.decisionNumber).ToList();
             return existingComplaints.Count() == 0;

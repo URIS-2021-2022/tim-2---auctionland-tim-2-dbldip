@@ -52,6 +52,6 @@ namespace ComplaintService.Data.Interfaces
         /// </summary>
         /// <param name="complaint">Prosleđena žalba</param>
         /// <returns>Informaciju o validnosti žalbe</returns>
-        bool isValidComplaint(ComplaintDto complaint);
+        bool isValidComplaint(Complaint complaint);
     }
 }
