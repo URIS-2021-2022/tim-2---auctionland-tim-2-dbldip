@@ -20,16 +20,16 @@ namespace AuctionAPI.Controllers
     [Produces("application/json", "application/xml")]
     
     [ProducesResponseType(StatusCodes.Status404NotFound)]
-    public class AuctionController : ControllerBase //Daje nam pristup korisnim poljima i metodama
+    public class AuctionController : ControllerBase
     {
         private readonly IAuctionRepository auctionRepository;
-        private readonly LinkGenerator linkGenerator; //Generise putanje do neke akcije
+        private readonly LinkGenerator linkGenerator; 
         private readonly IMapper mapper;
 
         /// <summary>
         /// AuctionController konstruktor
         /// </summary>
-        /// <param name="auctionRepository">Auction Repository</param>
+        /// <param name="auctionRepository">Repozitorijum licitacije</param>
         /// <param name="linkGenerator">Link generator</param>
         /// <param name="mapper">AutoMapper</param>
         public AuctionController(IAuctionRepository auctionRepository, LinkGenerator linkGenerator, IMapper mapper)
@@ -73,6 +73,7 @@ namespace AuctionAPI.Controllers
         [ProducesResponseType(StatusCodes.Status200OK)]
         public ActionResult<AuctionDto> GetAuctionById(Guid auctionId)
         {
+            //Povezati sa servisom javno nadmetanje da izvlacis objekte tog tipa
             var auction = auctionRepository.GetAuctionById(auctionId);
 
             if (auction == null)
@@ -88,11 +89,11 @@ namespace AuctionAPI.Controllers
         /// </summary>
         /// <param name="auctionCreation">Licitacija koja ce se kreirati</param>
         /// <returns>Rezultat kreiranja licitacije</returns>
+        /// <response code="201">Kreiranje uspešno.</response>
+        /// <response code="500">Serverska greška pri kreiranju licitacije.</response>
         [Consumes("application/json")] //Naznačava OpenAPI dokumentaciji da prihvata samo json tip
         [HttpPost]
-        [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status201Created)]
-        [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public ActionResult<AuctionConfirmationDto> CreateAuction([FromBody] CreationAuctionDto auctionCreation)
         {
@@ -100,7 +101,10 @@ namespace AuctionAPI.Controllers
             {
               
                 var confirmation = auctionRepository.CreateAuction(auctionCreation);
+                auctionRepository.SaveChanges();
+
                 string location = linkGenerator.GetPathByAction("GetAuction", "Auction", new { auctionId = confirmation.auctionId });
+                
                 return Created(location, mapper.Map<AuctionConfirmationDto>(confirmation));
             }
             catch (Exception)
@@ -122,7 +126,7 @@ namespace AuctionAPI.Controllers
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status409Conflict)]
-        public ActionResult<AuctionConfirmationDto> UpdateAuction(AuctionUpdate auction)
+        public ActionResult<AuctionConfirmationDto> UpdateAuction(AuctionUpdateDto auction)
         {
             try
             {
@@ -161,13 +165,16 @@ namespace AuctionAPI.Controllers
         {
             try
             {
-                var auction = auctionRepository.GetAuctionById(auctionId);
-                if (auction == null)
+                var auctionToDelete = auctionRepository.GetAuctionById(auctionId);
+                if (auctionToDelete == null)
                 {
                     return NotFound();
                 }
+
                 auctionRepository.DeleteAuction(auctionId);
+
                 auctionRepository.SaveChanges();
+
                 return NoContent();
             }
             catch (Exception)

@@ -9,7 +9,7 @@ namespace AuctionAPI.Models
     /// <summary>
     /// Model izmene licitacije
     /// </summary>
-    public class AuctionUpdate
+    public class AuctionUpdateDto
     {
         /// <summary>
         /// ID licitacije

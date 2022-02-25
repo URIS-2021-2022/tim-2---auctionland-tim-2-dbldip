@@ -8,11 +8,17 @@ using System.Threading.Tasks;
 
 namespace AuctionAPI.MappingProfiles
 {
+    /// <summary>
+    /// Maper za klasu izmene licitacije
+    /// </summary>
     public class AuctionUpdateProfile : Profile
     {
+        /// <summary>
+        /// Konstruktor za mapiranje izmene licitacije
+        /// </summary>
         public AuctionUpdateProfile() 
         { 
-            CreateMap<AuctionUpdate, AuctionWithoutLists>();
+            CreateMap<AuctionUpdateDto, AuctionWithoutLists>();
         }
     }
 }

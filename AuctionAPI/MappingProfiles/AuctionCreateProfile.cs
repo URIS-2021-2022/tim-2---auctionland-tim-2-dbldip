@@ -8,9 +8,15 @@ using System.Threading.Tasks;
 
 namespace AuctionAPI.MappingProfiles
 {
-    public class CreationProfile : Profile
+    /// <summary>
+    /// Maper za klasu kreiranja licitacije
+    /// </summary>
+    public class AuctionCreateProfile : Profile
     {
-        public CreationProfile()
+        /// <summary>
+        /// Konstruktor za mapiranje licitacije
+        /// </summary>
+        public AuctionCreateProfile()
         {
 
             CreateMap<AuctionConfirmation, AuctionConfirmationDto>();

@@ -1,5 +1,5 @@
 ﻿using AuctionAPI.Entities;
-using AuctionAPI.Entities.ConnectionClasses;
+using AuctionAPI.Entities.ManyToMany;
 using AuctionAPI.Models;
 using AutoMapper;
 using System;
@@ -9,12 +9,19 @@ using System.Threading.Tasks;
 
 namespace AuctionAPI.Data
 {
-
+    /// <summary>
+    /// Repozitorijum licitacije
+    /// </summary>
     public class AuctionRepository : IAuctionRepository
     {
         private readonly AuctionContext context;
         private readonly IMapper mapper;
 
+        /// <summary>
+        /// Konstruktor repozitorijuma licitacije
+        /// </summary>
+        /// <param name="context">Db Context</param>
+        /// <param name="mapper">AutoMapper</param>
         public AuctionRepository(AuctionContext context, IMapper mapper)
         {
             this.context = context;
@@ -28,7 +35,8 @@ namespace AuctionAPI.Data
         /// <returns>Licitaciju sa unetim ID-jem</returns>
         public Auction GetAuctionById(Guid auctionId)
         {
-            var auction = this.context.Auctions.FirstOrDefault(a => a.auctionId == auctionId);
+            var auction = context.Auctions.FirstOrDefault(a => a.auctionId == auctionId);
+
             if (auction == null)
             {
                 return null;
@@ -43,19 +51,20 @@ namespace AuctionAPI.Data
         /// <summary>
         /// Kreiranje licitacije
         /// </summary>
-        /// <param name="auction"></param>
+        /// <param name="auction">Objekat licitacije</param>
         /// <returns>Potvrdu kreirane licitacije</returns>
         public AuctionConfirmation CreateAuction(CreationAuctionDto auction)
         {
             var mappedEntity = mapper.Map<AuctionWithoutLists>(auction);
             var createdEntity = context.Add(mappedEntity);
 
+
             foreach(var pubBid in auction.publicBiddingIds)
             {
-                var temp = new AuctionPublicBiddingConnection();
-                temp.publicBiddingId = pubBid;
-                temp.auctionId = createdEntity.Entity.auctionId;
-                context.Add(temp);
+                var tempAPB = new AuctionPublicBidding();
+                tempAPB.publicBiddingId = pubBid;
+                tempAPB.auctionId = createdEntity.Entity.auctionId;
+                context.AuctionPublicBidding.Add(tempAPB);
             }
 
             return mapper.Map<AuctionConfirmation>(createdEntity.Entity);
@@ -72,11 +81,10 @@ namespace AuctionAPI.Data
                 return null;
 
             List<Auction> returnList = mapper.Map<List<Auction>>(auctions);
-            foreach(var auc in auctions)
+            foreach(var auc in returnList)
             {
-                context.AuctionPublicBidding
+                auc.publicBiddings = context.AuctionPublicBidding
                     .Where(apb => apb.auctionId == auc.auctionId)
-                    .Select(pb => pb.publicBiddingId)
                     .ToList();
             }
             return returnList;
@@ -109,7 +117,7 @@ namespace AuctionAPI.Data
         /// Izmena licitacije
         /// </summary>
         /// <param name="auctionCreation">Izmenjena licitacija</param>
-        public void UpdateAuction(AuctionUpdate auction)
+        public void UpdateAuction(AuctionUpdateDto auction)
         {
             var auctionToUpdate = context.Auctions.FirstOrDefault(auc => auc.auctionId == auction.auctionId);
 
@@ -117,14 +125,14 @@ namespace AuctionAPI.Data
                 .Where(pb => pb.auctionId == auction.auctionId)
                 .ToList();
 
-            context.RemoveRange(publicBiddings);
+            context.AuctionPublicBidding.RemoveRange(publicBiddings);
 
             foreach(var pb in auction.publicBiddingIds)
             {
-                var temp = new AuctionPublicBiddingConnection();
-                temp.auctionId = auction.auctionId;
-                temp.publicBiddingId = pb;
-                context.Add(temp);
+                var tempAPB = new AuctionPublicBidding();
+                tempAPB.auctionId = auction.auctionId;
+                tempAPB.publicBiddingId = pb;
+                context.AuctionPublicBidding.Add(tempAPB);
             }
 
             var newValues = mapper.Map<AuctionWithoutLists>(auction);
@@ -139,18 +147,24 @@ namespace AuctionAPI.Data
         public void DeleteAuction(Guid auctionId)
         {
             var auction = GetAuctionById(auctionId);
+            
+            context.Remove(auction);
 
+            /* prethodna verzija, nije potrebno zbog kaskadnog brisanja podešenog u AuctionContext
             var publicBiddingsToDelete = context.AuctionPublicBidding
                 .Where(pb => pb.auctionId == auction.auctionId)
                 .ToList();
 
             context.RemoveRange(publicBiddingsToDelete);
-            context.Remove(auction);
+            */
         }
 
-        public bool SaveChanges()
+        /// <summary>
+        /// Čuvanje promena u bazu
+        /// </summary>
+        public void SaveChanges()
         {
-            return context.SaveChanges() > 0;
+            context.SaveChanges();
         }
     }
 }
