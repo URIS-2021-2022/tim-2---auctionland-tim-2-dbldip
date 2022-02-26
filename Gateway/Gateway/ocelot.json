@@ -2,18 +2,320 @@
   "Routes": [
     {
       "DownstreamPathTemplate": "/api/{everything}",
-      "DownstreamScheme": "http",
+      "DownstreamScheme": "https",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 44301
+        }
+      ],
+      "UpstreamPathTemplate": "/leaseAgreement/{everything}",
+      "UpstreamHttpMethod": [ "Get", "Post", "Put", "Delete", "Options", "Head" ],
+      "FileCacheOptions": { "TtlSeconds": 30 },
+      "SwaggerKey": "leaseAgreement"
+    },
+    {
+      "DownstreamPathTemplate": "/api/{everything}",
+      "DownstreamScheme": "https",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 44302
+        }
+      ],
+      "UpstreamPathTemplate": "/appUser/{everything}",
+      "UpstreamHttpMethod": [ "Get", "Post", "Put", "Delete", "Options", "Head" ],
+      "FileCacheOptions": { "TtlSeconds": 30 },
+      "SwaggerKey": "appUser"
+    },
+    {
+      "DownstreamPathTemplate": "/api/{everything}",
+      "DownstreamScheme": "https",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 44303
+        }
+      ],
+      "UpstreamPathTemplate": "/commision/{everything}",
+      "UpstreamHttpMethod": [ "Get", "Post", "Put", "Delete", "Options", "Head" ],
+      "FileCacheOptions": { "TtlSeconds": 30 },
+      "SwaggerKey": "commision"
+    },
+    {
+      "DownstreamPathTemplate": "/api/{everything}",
+      "DownstreamScheme": "https",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 44304
+        }
+      ],
+      "UpstreamPathTemplate": "/licitation/{everything}",
+      "UpstreamHttpMethod": [ "Get", "Post", "Put", "Delete", "Options", "Head" ],
+      "FileCacheOptions": { "TtlSeconds": 30 },
+      "SwaggerKey": "licitation"
+    },
+    {
+      "DownstreamPathTemplate": "/api/{everything}",
+      "DownstreamScheme": "https",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 44305
+        }
+      ],
+      "UpstreamPathTemplate": "/advert/{everything}",
+      "UpstreamHttpMethod": [ "Get", "Post", "Put", "Delete", "Options", "Head" ],
+      "FileCacheOptions": { "TtlSeconds": 30 },
+      "SwaggerKey": "advert"
+    },
+    {
+      "DownstreamPathTemplate": "/api/{everything}",
+      "DownstreamScheme": "https",
       "DownstreamHostAndPorts": [
         {
           "Host": "localhost",
           "Port": 44306
         }
       ],
-      "UpstreamPathTemplate": "/applications/{everything}",
-      "UpstreamHttpMethod": [ "Get", "Post", "Put", "Delete", "Options", "Head" ]
+      "UpstreamPathTemplate": "/application/{everything}",
+      "UpstreamHttpMethod": [ "Get", "Post", "Put", "Delete", "Options", "Head" ],
+      "FileCacheOptions": { "TtlSeconds": 30 },
+      "SwaggerKey": "application"
+    },
+    {
+      "DownstreamPathTemplate": "/api/{everything}",
+      "DownstreamScheme": "https",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 44307
+        }
+      ],
+      "UpstreamPathTemplate": "/publicBidding/{everything}",
+      "UpstreamHttpMethod": [ "Get", "Post", "Put", "Delete", "Options", "Head" ],
+      "FileCacheOptions": { "TtlSeconds": 30 },
+      "SwaggerKey": "publicBidding"
+    },
+    {
+      "DownstreamPathTemplate": "/api/{everything}",
+      "DownstreamScheme": "https",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 44308
+        }
+      ],
+      "UpstreamPathTemplate": "/parcel/{everything}",
+      "UpstreamHttpMethod": [ "Get", "Post", "Put", "Delete", "Options", "Head" ],
+      "FileCacheOptions": { "TtlSeconds": 30 },
+      "SwaggerKey": "parcel"
+    },
+    {
+      "DownstreamPathTemplate": "/api/{everything}",
+      "DownstreamScheme": "https",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 44309
+        }
+      ],
+      "UpstreamPathTemplate": "/payment/{everything}",
+      "UpstreamHttpMethod": [ "Get", "Post", "Put", "Delete", "Options", "Head" ],
+      "FileCacheOptions": { "TtlSeconds": 30 },
+      "SwaggerKey": "payment"
+    },
+    {
+      "DownstreamPathTemplate": "/api/{everything}",
+      "DownstreamScheme": "https",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 44310
+        }
+      ],
+      "UpstreamPathTemplate": "/person/{everything}",
+      "UpstreamHttpMethod": [ "Get", "Post", "Put", "Delete", "Options", "Head" ],
+      "FileCacheOptions": { "TtlSeconds": 30 },
+      "SwaggerKey": "person"
+    },
+    {
+      "DownstreamPathTemplate": "/api/{everything}",
+      "DownstreamScheme": "https",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 44311
+        }
+      ],
+      "UpstreamPathTemplate": "/buyer/{everything}",
+      "UpstreamHttpMethod": [ "Get", "Post", "Put", "Delete", "Options", "Head" ],
+      "FileCacheOptions": { "TtlSeconds": 30 },
+      "SwaggerKey": "buyer"
+    },
+    {
+      "DownstreamPathTemplate": "/api/{everything}",
+      "DownstreamScheme": "https",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 44312
+        }
+      ],
+      "UpstreamPathTemplate": "/complaint/{everything}",
+      "UpstreamHttpMethod": [ "Get", "Post", "Put", "Delete", "Options", "Head" ],
+      "FileCacheOptions": { "TtlSeconds": 30 },
+      "SwaggerKey": "complaint"
+    },
+    {
+      "DownstreamPathTemplate": "/api/{everything}",
+      "DownstreamScheme": "https",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 44313
+        }
+      ],
+      "UpstreamPathTemplate": "/address/{everything}",
+      "UpstreamHttpMethod": [ "Get", "Post", "Put", "Delete", "Options", "Head" ],
+      "FileCacheOptions": { "TtlSeconds": 30 },
+      "SwaggerKey": "address"
+    }
+  ],
+  "SwaggerEndPoints": [
+    {
+      "Key": "leaseAgreement",
+      "Config": [
+        {
+          "Name": "Lease Agreement API",
+          "Version": "v1",
+          "Url": "https://localhost:44301/swagger/v1/swagger.json"
+        }
+      ]
+    },
+    {
+      "Key": "appUser",
+      "Config": [
+        {
+          "Name": "User API",
+          "Version": "v1",
+          "Url": "https://localhost:44302/swagger/v1/swagger.json"
+        }
+      ]
+    },
+    {
+      "Key": "commision",
+      "Config": [
+        {
+          "Name": "Commision API",
+          "Version": "v1",
+          "Url": "https://localhost:44303/swagger/v1/swagger.json"
+        }
+      ]
+    },
+    {
+      "Key": "licitation",
+      "Config": [
+        {
+          "Name": "Licitation API",
+          "Version": "v1",
+          "Url": "https://localhost:44304/swagger/v1/swagger.json"
+        }
+      ]
+    },
+    {
+      "Key": "advert",
+      "Config": [
+        {
+          "Name": "Advert API",
+          "Version": "v1",
+          "Url": "https://localhost:44305/swagger/v1/swagger.json"
+        }
+      ]
+    },
+    {
+      "Key": "application",
+      "Config": [
+        {
+          "Name": "Application API",
+          "Version": "v1",
+          "Url": "https://localhost:44306/swagger/v1/swagger.json"
+        }
+      ]
+    },
+    {
+      "Key": "publicBidding",
+      "Config": [
+        {
+          "Name": "Public Bidding API",
+          "Version": "v1",
+          "Url": "https://localhost:44307/swagger/v1/swagger.json"
+        }
+      ]
+    },
+    {
+      "Key": "parcel",
+      "Config": [
+        {
+          "Name": "Parcel API",
+          "Version": "v1",
+          "Url": "https://localhost:44308/swagger/v1/swagger.json"
+        }
+      ]
+    },
+    {
+      "Key": "payment",
+      "Config": [
+        {
+          "Name": "Payment API",
+          "Version": "v1",
+          "Url": "https://localhost:44309/swagger/v1/swagger.json"
+        }
+      ]
+    },
+    {
+      "Key": "person",
+      "Config": [
+        {
+          "Name": "Person API",
+          "Version": "v1",
+          "Url": "https://localhost:44310/swagger/v1/swagger.json"
+        }
+      ]
+    },
+    {
+      "Key": "buyer",
+      "Config": [
+        {
+          "Name": "Buyer API",
+          "Version": "v1",
+          "Url": "https://localhost:44311/swagger/v1/swagger.json"
+        }
+      ]
+    },
+    {
+      "Key": "complaint",
+      "Config": [
+        {
+          "Name": "Complaint API",
+          "Version": "v1",
+          "Url": "https://localhost:44312/swagger/v1/swagger.json"
+        }
+      ]
+    },
+    {
+      "Key": "address",
+      "Config": [
+        {
+          "Name": "Address API",
+          "Version": "v1",
+          "Url": "https://localhost:44313/swagger/v1/swagger.json"
+        }
+      ]
     }
   ],
   "GlobalConfiguration": {
-    "BaseUrl": "https://localhost:44300"
+    "BaseUrl": "https://localhost"
   }
 }
