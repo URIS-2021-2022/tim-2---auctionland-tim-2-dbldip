@@ -1,0 +1,19 @@
+{
+  "Routes": [
+    {
+      "DownstreamPathTemplate": "/api/{everything}",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 44306
+        }
+      ],
+      "UpstreamPathTemplate": "/applications/{everything}",
+      "UpstreamHttpMethod": [ "Get", "Post", "Put", "Delete", "Options", "Head" ]
+    }
+  ],
+  "GlobalConfiguration": {
+    "BaseUrl": "https://localhost:44300"
+  }
+}
