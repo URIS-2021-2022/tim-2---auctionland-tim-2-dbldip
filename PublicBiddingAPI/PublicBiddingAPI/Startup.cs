@@ -33,27 +33,25 @@ namespace PublicBiddingAPI
         {
 
             services.AddControllers();
-            services.AddSwaggerGen(setupAction =>
+            services.AddSwaggerGen(setup =>
             {
-                setupAction.SwaggerDoc("PublicBiddingMicroService",
+
+                setup.SwaggerDoc("v1",
                     new OpenApiInfo()
                     {
-                        Title = "PublicBidding API",
-                        Version = "1",
-                        Description = "This API is used to create, update, delete and get all public biddings.",
-                        Contact = new OpenApiContact
+                        Title = "Public Bidding API",
+                        Version = "v1",
+                        Description = "Public Bidding API manages HTTP Request for public bidding data, it provides GET, POST, PUT,DELETE endpoints and authentication.",
+                        Contact = new Microsoft.OpenApi.Models.OpenApiContact
                         {
                             Name = "Milan Novcic",
                             Email = "novcic.milan17@uns.ac.rs",
                             Url = new Uri("https://github.com/novcicmilan")
                         }
                     });
-
                 var xmlComments = $"{ Assembly.GetExecutingAssembly().GetName().Name }.xml";
-
                 var xmlCommentsPath = Path.Combine(AppContext.BaseDirectory, xmlComments);
-
-                setupAction.IncludeXmlComments(xmlCommentsPath);
+                setup.IncludeXmlComments(xmlCommentsPath);
             });
             //ADDING AUTOMAPPER
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
@@ -79,7 +77,7 @@ namespace PublicBiddingAPI
 
             app.UseSwaggerUI(setupAction =>
             {
-                setupAction.SwaggerEndpoint("/swagger/PublicBiddingMicroService/swagger.json", "PublicBidding API");
+                setupAction.SwaggerEndpoint("/swagger/v1/swagger.json", "publicBiddingApi");
                 setupAction.RoutePrefix = "";
             });
 
