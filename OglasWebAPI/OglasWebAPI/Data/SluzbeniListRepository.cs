@@ -14,9 +14,11 @@ namespace OglasWebAPI.Data
     {
         private readonly OglasContext _context;
 
+
         public SluzbeniListRepository(OglasContext context)
         {
             _context = context;
+
         }
 
         public async Task<List<SluzbeniList>> GetAllSluzbeniListovi()

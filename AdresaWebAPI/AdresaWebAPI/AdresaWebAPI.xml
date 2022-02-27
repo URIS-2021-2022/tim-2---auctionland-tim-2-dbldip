@@ -1,0 +1,390 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>AdresaWebAPI</name>
+    </assembly>
+    <members>
+        <member name="M:AdresaWebAPI.Controllers.AddressController.#ctor(AdresaWebAPI.Data.IAddressRepository,Microsoft.AspNetCore.Routing.LinkGenerator,AutoMapper.IMapper,AdresaWebAPI.ServiceCalls.ILoggerService)">
+            <summary>
+            Constructor
+            </summary>
+            <param name="addressRepository">Address repository, provides methods to alter database</param>
+            <param name="linkGenerator">Used when creating addresses</param>
+            <param name="mapper">Mapping between variables</param>
+            <param name="loggerService">Logging actions </param>
+        </member>
+        <member name="M:AdresaWebAPI.Controllers.AddressController.GetAddresses(System.String,System.String,System.String)">
+            <summary>
+            Getting all addresses, has query parameters for filtering addresses
+            </summary>
+            <param name="streetName">Query param for street name</param>
+            <param name="town">Query param for town</param>
+            <param name="municipality">Query param for municipality</param>
+            <returns>List of addresses</returns>
+        </member>
+        <member name="M:AdresaWebAPI.Controllers.AddressController.GetAddress(System.Guid)">
+            <summary>
+            Getting address with specified id value
+            </summary>
+            <param name="addressId">Id of address request is trying to get</param>
+            <returns>Address</returns>
+        </member>
+        <member name="M:AdresaWebAPI.Controllers.AddressController.CreateAddress(AdresaWebAPI.Models.AddressCreationDto)">
+            <summary>
+            Creates new address and saves it into database
+            </summary>
+            <param name="address">Address to add</param>
+            <remarks>
+            Example of POST request\
+            POST /api/address\
+            "addressStreet" : "Urosa Predica"\
+            "addressNumber" : "93"\
+            "addressTown" : "Becej"\
+            "addressMunicipality":"Becej"\
+            "addressPostalCode" : 21220\
+            "countryId" :  "6a411c13-a195-48f7-8dbd-67596c3974c0"\
+            "countryName" : "Serbia"
+            </remarks>
+            <returns>Confirmation</returns>
+        </member>
+        <member name="M:AdresaWebAPI.Controllers.AddressController.UpdateAddress(AdresaWebAPI.Models.AddressUpdateDto)">
+            <summary>
+            Update method
+            </summary>
+            <param name="address">Addresses' new values</param>
+            /// <summary>
+            Creates new address and saves it into database
+            </summary>
+            <param name="address">Address to add</param>
+            <remarks>
+            Example of POST request\
+            POST /api/address\
+            "addressID": "a091b3a0-d4a9-420f-fea8-08d9e3282c63"\
+            "addressStreet" : "Urosa Predica"\
+            "addressNumber" : "93"\
+            "addressTown" : "Becej"\
+            "addressMunicipality":"Becej"\
+            "addressPostalCode" : 21220\
+            "countryId" :  "6a411c13-a195-48f7-8dbd-67596c3974c0"\
+            "countryName" : "Serbia"
+            </remarks>
+            <returns>Confirmation</returns>
+        </member>
+        <member name="M:AdresaWebAPI.Controllers.AddressController.DeleteAddress(System.Guid)">
+            <summary>
+            Delete endpoint
+            </summary>
+            <param name="addressId">Id value of deleting address</param>
+            <returns>Message</returns>
+        </member>
+        <member name="T:AdresaWebAPI.Controllers.CountryController">
+            <summary>
+            Controller class that manages country data
+            </summary>
+        </member>
+        <member name="M:AdresaWebAPI.Controllers.CountryController.#ctor(AdresaWebAPI.Data.ICountryRepository,Microsoft.AspNetCore.Routing.LinkGenerator,AutoMapper.IMapper,AdresaWebAPI.ServiceCalls.ILoggerService)">
+            <summary>
+            Constructor of CountryController
+            </summary>
+            <param name="countryRepository">Country repository that manages access to the country table in the database</param>
+            <param name="linkGenerator">Used when creating a new country, redirects to other path - endpoint</param>
+            <param name="mapper">Used to convert one type to another, entity to dto most of the time</param>
+            <param name="loggerService">Used to log actions on controller</param>
+        </member>
+        <member name="M:AdresaWebAPI.Controllers.CountryController.GetCountries(System.String)">
+            <summary>
+            Provides getting all countries in the database
+            </summary>
+            <param name="countryName">Country name, query param</param>
+            <returns>List of countries</returns>
+        </member>
+        <member name="M:AdresaWebAPI.Controllers.CountryController.GetCountry(System.Guid)">
+            <summary>
+            Provides getting one country with provided id
+            </summary>
+            <param name="countryId">Country id</param>
+            <returns>Country</returns>
+        </member>
+        <member name="M:AdresaWebAPI.Controllers.CountryController.CreateCountry(AdresaWebAPI.Models.CountryCreationDto)">
+            <summary>
+            Creation endpoint, creates a country
+            </summary>
+            <param name="createdCountry">Country entity to create</param>
+            <returns>Country confirmation</returns>
+        </member>
+        <member name="M:AdresaWebAPI.Controllers.CountryController.UpdateCountry(AdresaWebAPI.Models.CountryDto)">
+            <summary>
+            Update method for country data
+            </summary>
+            <param name="country">New country data</param>
+            <returns>Country confirmation</returns>
+        </member>
+        <member name="M:AdresaWebAPI.Controllers.CountryController.DeleteCountry(System.Guid)">
+            <summary>
+            Delete method for countries
+            </summary>
+            <param name="countryId">Country id to delete</param>
+            <returns>Message</returns>
+        </member>
+        <member name="T:AdresaWebAPI.Entities.Address">
+            <summary>
+            Address entity, used as template in the database
+            </summary>
+        </member>
+        <member name="P:AdresaWebAPI.Entities.Address.addressId">
+            <summary>
+            Id value
+            </summary>
+        </member>
+        <member name="P:AdresaWebAPI.Entities.Address.addressStreet">
+            <summary>
+            Street name
+            </summary>
+        </member>
+        <member name="P:AdresaWebAPI.Entities.Address.addressNumber">
+            <summary>
+            Street number
+            </summary>
+        </member>
+        <member name="P:AdresaWebAPI.Entities.Address.addressTown">
+            <summary>
+            Town name
+            </summary>
+        </member>
+        <member name="P:AdresaWebAPI.Entities.Address.addressMunicipality">
+            <summary>
+            Municipality name
+            </summary>
+        </member>
+        <member name="P:AdresaWebAPI.Entities.Address.addressPostalCode">
+            <summary>
+            Town postal code
+            </summary>
+        </member>
+        <member name="P:AdresaWebAPI.Entities.Address.countryId">
+            <summary>
+            Country id
+            </summary>
+        </member>
+        <member name="T:AdresaWebAPI.Entities.AddressConfirmation">
+            <summary>
+            Confirmation of created address
+            </summary>
+        </member>
+        <member name="P:AdresaWebAPI.Entities.AddressConfirmation.addressID">
+            <summary>
+            ID of created address
+            </summary>
+        </member>
+        <member name="P:AdresaWebAPI.Entities.AddressConfirmation.addressStreet">
+            <summary>
+            Street of crerated address
+            </summary>
+        </member>
+        <member name="P:AdresaWebAPI.Entities.AddressConfirmation.addressNumber">
+            <summary>
+            Street number of created address
+            </summary>
+        </member>
+        <member name="P:AdresaWebAPI.Entities.AddressConfirmation.addressTown">
+            <summary>
+            Town of created address
+            </summary>
+        </member>
+        <member name="P:AdresaWebAPI.Entities.AddressConfirmation.countryName">
+            <summary>
+            Country of created address
+            </summary>
+        </member>
+        <member name="T:AdresaWebAPI.Entities.Country">
+            <summary>
+            Country entity
+            </summary>
+        </member>
+        <member name="P:AdresaWebAPI.Entities.Country.countryID">
+            <summary>
+            Id of the country
+            </summary>
+        </member>
+        <member name="P:AdresaWebAPI.Entities.Country.countryName">
+            <summary>
+            name of the country
+            </summary>
+        </member>
+        <member name="T:AdresaWebAPI.Entities.CountryConfirmation">
+            <summary>
+            Confirmation entity 
+            </summary>
+        </member>
+        <member name="P:AdresaWebAPI.Entities.CountryConfirmation.countryId">
+            <summary>
+            Id of created country
+            </summary>
+        </member>
+        <member name="P:AdresaWebAPI.Entities.CountryConfirmation.countryName">
+            <summary>
+            name of created country
+            </summary>
+        </member>
+        <member name="T:AdresaWebAPI.Models.AddressConfirmationDto">
+            <summary>
+            Dto of address confirmation
+            </summary>
+        </member>
+        <member name="P:AdresaWebAPI.Models.AddressConfirmationDto.addressStreet">
+            <summary>
+            Street name
+            </summary>
+        </member>
+        <member name="P:AdresaWebAPI.Models.AddressConfirmationDto.addressNumber">
+            <summary>
+            street number
+            </summary>
+        </member>
+        <member name="P:AdresaWebAPI.Models.AddressConfirmationDto.addressTown">
+            <summary>
+            town name
+            </summary>
+        </member>
+        <member name="P:AdresaWebAPI.Models.AddressConfirmationDto.countryName">
+            <summary>
+            country name
+            </summary>
+        </member>
+        <member name="T:AdresaWebAPI.Models.AddressCreationDto">
+            <summary>
+            Dto sent when targeting POST endpoint
+            </summary>
+        </member>
+        <member name="P:AdresaWebAPI.Models.AddressCreationDto.addressStreet">
+            <summary>
+            street name
+            </summary>
+        </member>
+        <member name="P:AdresaWebAPI.Models.AddressCreationDto.addressNumber">
+            <summary>
+            street number
+            </summary>
+        </member>
+        <member name="P:AdresaWebAPI.Models.AddressCreationDto.addressTown">
+            <summary>
+            town
+            </summary>
+        </member>
+        <member name="P:AdresaWebAPI.Models.AddressCreationDto.addressMunicipality">
+            <summary>
+            municipality name
+            </summary>
+        </member>
+        <member name="P:AdresaWebAPI.Models.AddressCreationDto.addressPostalCode">
+            <summary>
+            postal code
+            </summary>
+        </member>
+        <member name="P:AdresaWebAPI.Models.AddressCreationDto.countryId">
+            <summary>
+            country id
+            </summary>
+        </member>
+        <member name="T:AdresaWebAPI.Models.AddressDto">
+            <summary>
+            Dto sent to user when targeting GET endpoint
+            </summary>
+        </member>
+        <member name="P:AdresaWebAPI.Models.AddressDto.addressId">
+            <summary>
+            Address id
+            </summary>
+        </member>
+        <member name="P:AdresaWebAPI.Models.AddressDto.completeAddress">
+            <summary>
+            Street name + number
+            </summary>
+        </member>
+        <member name="P:AdresaWebAPI.Models.AddressDto.townInfo">
+            <summary>
+            Town name, municipality name, postal code
+            </summary>
+        </member>
+        <member name="P:AdresaWebAPI.Models.AddressDto.country">
+            <summary>
+            country name
+            </summary>
+        </member>
+        <member name="T:AdresaWebAPI.Models.AddressUpdateDto">
+            <summary>
+            Dto sent to server when targeting PUT endpoint
+            </summary>
+        </member>
+        <member name="P:AdresaWebAPI.Models.AddressUpdateDto.addressId">
+            <summary>
+            address id which is being updated
+            </summary>
+        </member>
+        <member name="P:AdresaWebAPI.Models.AddressUpdateDto.addressStreet">
+            <summary>
+            new street name
+            </summary>
+        </member>
+        <member name="P:AdresaWebAPI.Models.AddressUpdateDto.addressNumber">
+            <summary>
+            new street number
+            </summary>
+        </member>
+        <member name="P:AdresaWebAPI.Models.AddressUpdateDto.addressTown">
+            <summary>
+            new town name
+            </summary>
+        </member>
+        <member name="P:AdresaWebAPI.Models.AddressUpdateDto.addressMunicipality">
+            <summary>
+            new municipality name
+            </summary>
+        </member>
+        <member name="P:AdresaWebAPI.Models.AddressUpdateDto.addressPostalCode">
+            <summary>
+            new postal code
+            </summary>
+        </member>
+        <member name="P:AdresaWebAPI.Models.AddressUpdateDto.countryId">
+            <summary>
+            new country id
+            </summary>
+        </member>
+        <member name="T:AdresaWebAPI.Models.CountryConfirmationDto">
+            <summary>
+            Confirmation dto sent to user when creation is successful
+            </summary>
+        </member>
+        <member name="P:AdresaWebAPI.Models.CountryConfirmationDto.countryName">
+            <summary>
+            Name of the newly created country
+            </summary>
+        </member>
+        <member name="T:AdresaWebAPI.Models.CountryCreationDto">
+            <summary>
+            Dto sent to server when targeting POST endpoint
+            </summary>
+        </member>
+        <member name="P:AdresaWebAPI.Models.CountryCreationDto.countryName">
+            <summary>
+            New country name
+            </summary>
+        </member>
+        <member name="T:AdresaWebAPI.Models.CountryDto">
+            <summary>
+            dto sent to user when targeting GET endpoint
+            </summary>
+        </member>
+        <member name="P:AdresaWebAPI.Models.CountryDto.countryId">
+            <summary>
+            country id
+            </summary>
+        </member>
+        <member name="P:AdresaWebAPI.Models.CountryDto.countryName">
+            <summary>
+            country name
+            </summary>
+        </member>
+    </members>
+</doc>

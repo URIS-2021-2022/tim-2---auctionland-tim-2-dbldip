@@ -38,7 +38,9 @@ namespace OglasWebAPI.ServiceCalls
                 HttpContent httpContent = new StringContent(JsonConvert.SerializeObject(logMessage));
                 httpContent.Headers.ContentType.MediaType = "application/json";
 
+
          
+
             }
             catch (Exception)
             {

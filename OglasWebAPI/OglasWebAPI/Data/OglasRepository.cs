@@ -14,9 +14,11 @@ namespace OglasWebAPI.Data
     {
         private readonly OglasContext _context;
 
+
         public OglasRepository(OglasContext context)
         {
             _context = context;
+
         }
 
         public async Task<List<Oglas>> GetAllOglasi()
