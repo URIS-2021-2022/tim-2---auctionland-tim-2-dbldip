@@ -48,6 +48,7 @@ namespace Application.Data
         public void UpdateApplication(LicitationApplication application)
         {
             // Entity framework can do it by itself
+
         }
     }
 }

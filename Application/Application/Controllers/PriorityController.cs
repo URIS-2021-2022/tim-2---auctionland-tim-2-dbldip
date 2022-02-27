@@ -21,6 +21,7 @@ namespace Application.Controllers
         private readonly IMapper mapper;
         private readonly ILoggerService loggerService;
 
+
         /// <summary>
         /// ApplicationController constructor
         /// </summary>
@@ -54,6 +55,7 @@ namespace Application.Controllers
             }
 
             loggerService.LogMessage("List of priorities returned", "Get", LogLevel.Information);
+
             return Ok(mapper.Map<List<PriorityDto>>(priorities));
         }
 
@@ -75,6 +77,7 @@ namespace Application.Controllers
             }
 
             loggerService.LogMessage("Priority returned", "Get", LogLevel.Information);
+
             return Ok(mapper.Map<PriorityDto>(priority));
         }
     }

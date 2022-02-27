@@ -14,6 +14,7 @@ namespace Application.Data
         public PriorityRepository(LicitationApplicationContext context)
         {
             this.context = context;
+
         }
 
         public List<Priority> GetPriorities()

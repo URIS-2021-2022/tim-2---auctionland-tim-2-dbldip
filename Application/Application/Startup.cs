@@ -42,6 +42,7 @@ namespace Application
             services.AddScoped<IPriorityRepository, PriorityRepository>();
             services.AddScoped<ILoggerService, LoggerServiceMock>();
 
+
             services.AddSwaggerGen(setup =>
             {
                 /*var securitySchema = new OpenApiSecurityScheme
@@ -68,6 +69,7 @@ namespace Application
                 //setup.AddSecurityRequirement(securityRequirement);
 
                 setup.SwaggerDoc("v1",
+
                     new OpenApiInfo()
                     {
                         Title = "Application API",

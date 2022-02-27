@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Routing;
 using Microsoft.Extensions.Logging;
+
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -28,17 +29,20 @@ namespace Application.Controllers
         /// ApplicationController constructor
         /// </summary>
         /// <param name="applicationRepository">Application repository</param>
+
         /// /// <param name="priorityRepository">Priority repository</param>
         /// <param name="linkGenerator">Link generator</param>
         /// <param name="mapper">AutoMapper</param>
         /// <param name="loggerService">Logger service</param>
         public LicitationApplicationController(IApplicationRepository applicationRepository, IPriorityRepository priorityRepository, LinkGenerator linkGenerator, IMapper mapper, ILoggerService loggerService)
+
         {
             this.applicationRepository = applicationRepository;
             this.priorityRepository = priorityRepository;
             this.linkGenerator = linkGenerator;
             this.mapper = mapper;
             this.loggerService = loggerService;
+
         }
 
         /// <summary>
@@ -53,6 +57,7 @@ namespace Application.Controllers
         public ActionResult<List<LicitationApplicationDto>> GetApplications()
         {
             var applications = applicationRepository.GetApplications();
+
             if (applications == null || applications.Count == 0)
             {
                 loggerService.LogMessage("List of applications is empty", "Get", LogLevel.Warning);
@@ -60,6 +65,7 @@ namespace Application.Controllers
             }
 
             loggerService.LogMessage("List of applications returned", "Get", LogLevel.Information);
+
             return Ok(mapper.Map<List<LicitationApplicationDto>>(applications));
         }
 
@@ -75,12 +81,14 @@ namespace Application.Controllers
         {
             var application = applicationRepository.GetApplicationById(applicationId);
             if (application == null)
+
             {
                 loggerService.LogMessage("There is no application with that id", "Get", LogLevel.Warning);
                 return NoContent();
             }
 
             loggerService.LogMessage("Application returned", "Get", LogLevel.Information);
+
             return Ok(mapper.Map<LicitationApplicationDto>(application));
         }
 
@@ -106,6 +114,7 @@ namespace Application.Controllers
 
             string location = linkGenerator.GetPathByAction(action: "GetApplication", controller: "LicitationApplication", values: new { applicationId = confirmation.applicationId });
             loggerService.LogMessage("Application created", "Post", LogLevel.Information);
+
             return Created(location, mapper.Map<LicitationApplicationConfirmationDto>(confirmation));
         }
 
@@ -123,15 +132,18 @@ namespace Application.Controllers
         {
             var oldApplication = applicationRepository.GetApplicationById(application.applicationId);
             if (oldApplication == null)
+
             {
                 loggerService.LogMessage("There is no application with that id", "Get", LogLevel.Warning);
                 return NotFound();
             }
 
+
             LicitationApplication applicationEntity = mapper.Map<LicitationApplication>(application);
             mapper.Map(applicationEntity, oldApplication);
             applicationRepository.SaveChanges();
             loggerService.LogMessage("Application updated", "Put", LogLevel.Information);
+
             return Ok(mapper.Map<LicitationApplicationDto>(oldApplication));
         }
 
@@ -150,6 +162,7 @@ namespace Application.Controllers
             {
                 var applicationToDelete = applicationRepository.GetApplicationById(applicationId);
                 if (applicationToDelete == null)
+
                 {
                     loggerService.LogMessage("There is no application with that id", "Get", LogLevel.Warning);
                     return NotFound();
@@ -158,11 +171,13 @@ namespace Application.Controllers
                 applicationRepository.DeleteApplication(applicationId);
                 applicationRepository.SaveChanges();
                 loggerService.LogMessage("Application deleted", "Delete", LogLevel.Information);
+
                 return NoContent();
             }
             catch (Exception e)
             {
                 return StatusCode(StatusCodes.Status500InternalServerError, "Delete error: " +  e.Message);
+
             }
         }
     }
