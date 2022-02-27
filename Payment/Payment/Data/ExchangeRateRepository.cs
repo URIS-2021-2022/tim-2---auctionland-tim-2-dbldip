@@ -46,6 +46,7 @@ namespace PaymentService.Data
 
         public void UpdateExchangeRate(ExchangeRate exchangeRate)
         {
+            // Entity Framework can do it by himself
         }
     }
 }
