@@ -1,0 +1,425 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>OglasWebAPI</name>
+    </assembly>
+    <members>
+        <member name="T:OglasWebAPI.Controllers.OglasController">
+            <summary>
+            Kontroler za oglas
+            </summary>
+        </member>
+        <!-- Badly formed XML comment ignored for member "M:OglasWebAPI.Controllers.OglasController.#ctor(OglasWebAPI.Data.Interfaces.IOglasRepository,Microsoft.AspNetCore.Routing.LinkGenerator,AutoMapper.IMapper,OglasWebAPI.ServiceCalls.ILoggerService)" -->
+        <member name="M:OglasWebAPI.Controllers.OglasController.GetAllOglasi">
+            <summary>
+            Vraća sve oglase
+            </summary>
+            <returns>Lista oglasa</returns>
+            <response code="200">Vraća listu oglasa</response>
+            <response code="404">Nije pronađen ni jedan oglas</response>
+            
+        </member>
+        <member name="M:OglasWebAPI.Controllers.OglasController.GetOglas(System.Guid)">
+             <summary>
+             Vraća jedan oglas na osnovu ID-a
+             </summary>
+             <param name="oglasId">ID oglasa</param>
+             <returns>Oglas</returns>
+             <response code="200">Vraća traženi oglas</response>
+             <response code="404">Nije pronađen oglas za uneti ID</response>
+            
+        </member>
+        <member name="M:OglasWebAPI.Controllers.OglasController.CreateOglas(OglasWebAPI.Models.Oglas.OglasCreateDto)">
+             <summary>
+             Kreira novi oglas
+             </summary>
+             <param name="oglas">Model oglas</param>
+             <remarks>
+             Primer zahteva za kreiranje novog oglasa \
+             POST /api/oglas \
+             {   
+                 "datumObjave": "2020-07-13T00:00:00", \
+                 "rokObjave": "2022-01-31T18:32:34.4441329", \
+                 "mesto": "Mesto 3 create", \
+                 "oglasivac": "Oglasivac 3 create", \
+                 "oblast": "Oblast 3 create", \
+                 "predmetJavneProdaje": "Predmet javne prodaje 3", \
+                 "sluzbeniListId": "09e79dbf-0679-4d8f-a15c-9aad2c86acfa", \
+                 "sluzbeniList": null \
+            }
+             </remarks>
+             <returns>Potvrda o kreiranju oglasa</returns>
+             <response code="201">Vraća kreirani oglas</response>
+             <response code="500">Desila se greška prilikom unosa novog oglasa</response>
+            
+        </member>
+        <member name="M:OglasWebAPI.Controllers.OglasController.UpdateOglas(System.Guid,OglasWebAPI.Models.Oglas.OglasUpdateDto)">
+             <summary>
+             Modifikacija oglas
+             </summary>
+             <param name="oglasId">ID oglasa</param>
+             <param name="oglas">Model oglas</param>
+             <returns>Potvrda o modifikaciji oglasa</returns>
+             <response code="200">Izmenjen olgas</response>
+             <response code="404">Nije pronađen oglas za uneti ID</response>
+             <response code="500">Serverska greška tokom modifikacije oglasa</response>
+            
+        </member>
+        <member name="M:OglasWebAPI.Controllers.OglasController.DeleteOglas(System.Guid)">
+            <summary>
+            Brisanje oglasa na osnovu ID-a
+            </summary>
+            <param name="oglasId">ID oglasa</param>
+            <returns>Status 204 (NoContent)</returns>
+            <response code="204">Oglas je uspešno obrisan</response>
+            <response code="404">Nije pronađen oglas za uneti ID</response>
+            <response code="500">Serverska greška tokom brisanja oglasa</response>
+            
+        </member>
+        <member name="T:OglasWebAPI.Controllers.SluzbeniListController">
+            <summary>
+            Kontroler za služebni list
+            </summary>
+        </member>
+        <member name="M:OglasWebAPI.Controllers.SluzbeniListController.#ctor(OglasWebAPI.Data.Interfaces.ISluzbeniListRepository,Microsoft.AspNetCore.Routing.LinkGenerator,AutoMapper.IMapper,OglasWebAPI.ServiceCalls.ILoggerService)">
+            <summary>
+            Konstruktor kontrolera službenog lista - DI
+            </summary>
+            <param name="sluzbeniListRepository">Repository službeni list</param>
+            <param name="linkGenerator">Link generator za create zahtev</param>
+            <param name="mapper">AutoMapper</param>
+            <param name="loggerService">Logger servis</param>
+        </member>
+        <member name="M:OglasWebAPI.Controllers.SluzbeniListController.GetAllSluzbeniListovi">
+            <summary>
+            Vraća sve kontakt osobe
+            </summary>
+            <returns>Lista kontakt osoba</returns>
+            <response code="200">Vraća listu kontakt osoba</response>
+            <response code="404">Nije pronađena ni jedna kontakt osoba</response>
+            
+        </member>
+        <member name="M:OglasWebAPI.Controllers.SluzbeniListController.GetSluzbeniList(System.Guid)">
+            <summary>
+            Vraća jednan službeni list na osnovu ID-a
+            </summary>
+            <param name="sluzbeniListId">ID službenog lista</param>
+            <returns>Službeni list</returns>
+            <response code="200">Vraća traženi službeni list</response>
+            <response code="404">Nije pronađen službeni list za uneti ID</response>
+            
+        </member>
+        <member name="M:OglasWebAPI.Controllers.SluzbeniListController.CreateSluzbeniList(OglasWebAPI.Models.SluzbeniList.SluzbeniListCreateDto)">
+             <summary>
+             Kreira novi službeni list
+             </summary>
+             <param name="sluzbeniList">Model službeni list</param>
+             <remarks>
+             Primer zahteva za kreiranje novog službenog lista \
+             POST /api/sluzbenogLista \
+             {   
+                 "broj": "aa2331d", \
+                 "datum": "2022-02-11", \
+                 "opis": "Create Opis sluzbenog lista je odlican" \
+            }
+             </remarks>
+             <returns>Potvrda o kreiranju službenog lista</returns>
+             <response code="201">Vraća kreirani službeni list</response>
+             <response code="500">Desila se greška prilikom unosa novog službenog lista</response>
+             
+        </member>
+        <member name="M:OglasWebAPI.Controllers.SluzbeniListController.UpdateSluzbeniList(System.Guid,OglasWebAPI.Models.SluzbeniList.SluzbeniListUpdateDto)">
+             <summary>
+             Modifikacija službenog lista
+             </summary>
+             <param name="sluzbeniListId">ID službenog lista</param>
+             <param name="sluzbeniList">Model službenog lista</param>
+             <returns>Potvrda o modifikaciji službenog lista</returns>
+             <response code="200">Izmenjen službenog lista</response>
+             <response code="404">Nije pronađen službeni list za uneti ID</response>
+             <response code="500">Serverska greška tokom modifikacije službenog lista</response>
+            
+        </member>
+        <member name="M:OglasWebAPI.Controllers.SluzbeniListController.DeleteSluzbeniList(System.Guid)">
+            <summary>
+            Brisanje službenog lista na osnovu ID-a
+            </summary>
+            <param name="sluzbeniListId">ID službenog lista</param>
+            <returns>Status 204 (NoContent)</returns>
+            <response code="204">Službeni list je uspešno obrisan</response>
+            <response code="404">Nije pronađen službeni list za uneti ID</response>
+            <response code="500">Serverska greška tokom brisanja službenog lista</response>
+            
+        </member>
+        <member name="T:OglasWebAPI.Entities.Oglas">
+            <summary>
+            Entitet oglas
+            </summary>
+        </member>
+        <member name="P:OglasWebAPI.Entities.Oglas.OglasId">
+            <summary>
+            Id olgasa
+            </summary>
+        </member>
+        <member name="P:OglasWebAPI.Entities.Oglas.DatumObjave">
+            <summary>
+            Datum objave oglasa
+            </summary>
+        </member>
+        <member name="P:OglasWebAPI.Entities.Oglas.RokObjave">
+            <summary>
+            Rok objave oglasa
+            </summary>
+        </member>
+        <member name="P:OglasWebAPI.Entities.Oglas.Mesto">
+            <summary>
+            Mesto oglasa
+            </summary>
+        </member>
+        <member name="P:OglasWebAPI.Entities.Oglas.Oglasivac">
+            <summary>
+            Oglašivač oglasa
+            </summary>
+        </member>
+        <member name="P:OglasWebAPI.Entities.Oglas.Oblast">
+            <summary>
+            Oblast oglasa 
+            </summary>
+        </member>
+        <member name="P:OglasWebAPI.Entities.Oglas.PredmetJavneProdaje">
+            <summary>
+            Predmet javne nabavke oglasa
+            </summary>
+        </member>
+        <member name="P:OglasWebAPI.Entities.Oglas.SluzbeniListId">
+            <summary>
+            Službeni list id
+            </summary>
+        </member>
+        <member name="P:OglasWebAPI.Entities.Oglas.SluzbeniList">
+            <summary>
+            Službeni list
+            </summary>
+        </member>
+        <member name="T:OglasWebAPI.Entities.SluzbeniList">
+            <summary>
+            Entitet službeni list
+            </summary>
+        </member>
+        <member name="P:OglasWebAPI.Entities.SluzbeniList.SluzbeniListId">
+            <summary>
+            Id službenog lista
+            </summary>
+        </member>
+        <member name="P:OglasWebAPI.Entities.SluzbeniList.Broj">
+            <summary>
+            Broj službenog lista
+            </summary>
+        </member>
+        <member name="P:OglasWebAPI.Entities.SluzbeniList.Datum">
+            <summary>
+            Datum službenog lista
+            </summary>
+        </member>
+        <member name="P:OglasWebAPI.Entities.SluzbeniList.Opis">
+            <summary>
+            Opis službenog lista
+            </summary>
+        </member>
+        <member name="T:OglasWebAPI.Models.Oglas.OglasCreateDto">
+            <summary>
+            Dto Create oglas
+            </summary>
+        </member>
+        <member name="P:OglasWebAPI.Models.Oglas.OglasCreateDto.DatumObjave">
+            <summary>
+            Datum objave oglasa
+            </summary>
+        </member>
+        <member name="P:OglasWebAPI.Models.Oglas.OglasCreateDto.RokObjave">
+            <summary>
+            Rok objave oglasa
+            </summary>
+        </member>
+        <member name="P:OglasWebAPI.Models.Oglas.OglasCreateDto.Mesto">
+            <summary>
+            Mesto oglasa
+            </summary>
+        </member>
+        <member name="P:OglasWebAPI.Models.Oglas.OglasCreateDto.Oglasivac">
+            <summary>
+            Odlašivač oglasa
+            </summary>
+        </member>
+        <member name="P:OglasWebAPI.Models.Oglas.OglasCreateDto.Oblast">
+            <summary>
+            Oblast oglasa
+            </summary>
+        </member>
+        <member name="P:OglasWebAPI.Models.Oglas.OglasCreateDto.PredmetJavneProdaje">
+            <summary>
+            Predmet javne nabavke oglasa
+            </summary>
+        </member>
+        <member name="P:OglasWebAPI.Models.Oglas.OglasCreateDto.SluzbeniListId">
+            <summary>
+            Službeni lista id
+            </summary>
+        </member>
+        <member name="P:OglasWebAPI.Models.Oglas.OglasCreateDto.SluzbeniList">
+            <summary>
+            Službeni list
+            </summary>
+        </member>
+        <member name="T:OglasWebAPI.Models.Oglas.OglasDto">
+            <summary>
+            Dto Oglas
+            </summary>
+        </member>
+        <member name="P:OglasWebAPI.Models.Oglas.OglasDto.DatumObjave">
+            <summary>
+            Datum objave oglasa
+            </summary>
+        </member>
+        <member name="P:OglasWebAPI.Models.Oglas.OglasDto.RokObjave">
+            <summary>
+            Rok objave oglasa
+            </summary>
+        </member>
+        <member name="P:OglasWebAPI.Models.Oglas.OglasDto.Mesto">
+            <summary>
+            Mesto oglasa
+            </summary>
+        </member>
+        <member name="P:OglasWebAPI.Models.Oglas.OglasDto.Oglasivac">
+            <summary>
+            Oglašivač oglasa
+            </summary>
+        </member>
+        <member name="P:OglasWebAPI.Models.Oglas.OglasDto.Oblast">
+            <summary>
+            Oblast oglasa
+            </summary>
+        </member>
+        <member name="P:OglasWebAPI.Models.Oglas.OglasDto.PredmetJavneProdaje">
+            <summary>
+            Predmet javne nabavke oglasa
+            </summary>
+        </member>
+        <member name="P:OglasWebAPI.Models.Oglas.OglasDto.SluzbeniListId">
+            <summary>
+            Službeni list id
+            </summary>
+        </member>
+        <member name="P:OglasWebAPI.Models.Oglas.OglasDto.SluzbeniList">
+            <summary>
+            Službeni list
+            </summary>
+        </member>
+        <member name="T:OglasWebAPI.Models.Oglas.OglasUpdateDto">
+            <summary>
+            Dto Update oglas
+            </summary>
+        </member>
+        <member name="P:OglasWebAPI.Models.Oglas.OglasUpdateDto.DatumObjave">
+            <summary>
+            Datum objave oglasa
+            </summary>
+        </member>
+        <member name="P:OglasWebAPI.Models.Oglas.OglasUpdateDto.RokObjave">
+            <summary>
+            Rok objave oglasa
+            </summary>
+        </member>
+        <member name="P:OglasWebAPI.Models.Oglas.OglasUpdateDto.Mesto">
+            <summary>
+            Mesto oglasa
+            </summary>
+        </member>
+        <member name="P:OglasWebAPI.Models.Oglas.OglasUpdateDto.Oglasivac">
+            <summary>
+            Odlašivač oglasa
+            </summary>
+        </member>
+        <member name="P:OglasWebAPI.Models.Oglas.OglasUpdateDto.Oblast">
+            <summary>
+            Oblast oglasa
+            </summary>
+        </member>
+        <member name="P:OglasWebAPI.Models.Oglas.OglasUpdateDto.PredmetJavneProdaje">
+            <summary>
+            Predmet javne nabavke oglasa
+            </summary>
+        </member>
+        <member name="P:OglasWebAPI.Models.Oglas.OglasUpdateDto.SluzbeniListId">
+            <summary>
+            Službeni lista id
+            </summary>
+        </member>
+        <member name="P:OglasWebAPI.Models.Oglas.OglasUpdateDto.SluzbeniList">
+            <summary>
+            Službeni list
+            </summary>
+        </member>
+        <member name="T:OglasWebAPI.Models.SluzbeniList.SluzbeniListCreateDto">
+            <summary>
+            Dto Create službeni list
+            </summary>
+        </member>
+        <member name="P:OglasWebAPI.Models.SluzbeniList.SluzbeniListCreateDto.Broj">
+            <summary>
+            Broj službenog lista
+            </summary>
+        </member>
+        <member name="P:OglasWebAPI.Models.SluzbeniList.SluzbeniListCreateDto.Datum">
+            <summary>
+            Datum službenog lista
+            </summary>
+        </member>
+        <member name="P:OglasWebAPI.Models.SluzbeniList.SluzbeniListCreateDto.Opis">
+            <summary>
+            Opis službenog lista
+            </summary>
+        </member>
+        <member name="T:OglasWebAPI.Models.SluzbeniList.SluzbeniListDto">
+            <summary>
+            Dto službeni list
+            </summary>
+        </member>
+        <member name="P:OglasWebAPI.Models.SluzbeniList.SluzbeniListDto.Broj">
+            <summary>
+            Broj službenog lista
+            </summary>
+        </member>
+        <member name="P:OglasWebAPI.Models.SluzbeniList.SluzbeniListDto.Datum">
+            <summary>
+            Datum službenog lista
+            </summary>
+        </member>
+        <member name="P:OglasWebAPI.Models.SluzbeniList.SluzbeniListDto.Opis">
+            <summary>
+            Opis službenog lista
+            </summary>
+        </member>
+        <member name="T:OglasWebAPI.Models.SluzbeniList.SluzbeniListUpdateDto">
+            <summary>
+            Dto Update službeni list
+            </summary>
+        </member>
+        <member name="P:OglasWebAPI.Models.SluzbeniList.SluzbeniListUpdateDto.Broj">
+            <summary>
+            Broj službenog lista
+            </summary>
+        </member>
+        <member name="P:OglasWebAPI.Models.SluzbeniList.SluzbeniListUpdateDto.Datum">
+            <summary>
+            Datum službenog lista
+            </summary>
+        </member>
+        <member name="P:OglasWebAPI.Models.SluzbeniList.SluzbeniListUpdateDto.Opis">
+            <summary>
+            Opis službenog lista
+            </summary>
+        </member>
+    </members>
+</doc>

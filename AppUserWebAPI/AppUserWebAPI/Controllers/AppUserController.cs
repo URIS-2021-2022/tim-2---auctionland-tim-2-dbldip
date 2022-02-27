@@ -127,6 +127,7 @@ namespace AppUserWebAPI.Controllers
         {
             AppUser userToCreate = mapper.Map<AppUser>(user);
             if (!appUserRepository.validateUserData(userToCreate))
+
             {
                 this.loggerService.LogMessage("User didnt pass validation", "Post", LogLevel.Warning);
                 return Conflict(new { mesage = $"There's an existing App User with provided username field: {user.appUserUsername} !" });
@@ -192,7 +193,9 @@ namespace AppUserWebAPI.Controllers
             catch (Exception e)
             {
                 this.loggerService.LogMessage("Error while deleting app user", "Delete", LogLevel.Error);
+
                 return StatusCode(StatusCodes.Status500InternalServerError, e.Message);
+
             }
         }
     }

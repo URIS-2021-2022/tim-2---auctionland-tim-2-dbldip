@@ -12,6 +12,7 @@ namespace AppUserWebAPI.Data
 
         private readonly AppUserContext context;
 
+
         public TypeOfUserRepository(AppUserContext context)
         {
             this.context = context;

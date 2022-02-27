@@ -26,6 +26,7 @@ namespace AppUserWebAPI.Controllers
         /// <param name="typeOfUserRepository"></param>
         /// <param name="linkGenerator"></param>
         /// <param name="mapper"></param>
+
         public TypeOfUserController(ITypeOfUserRepository typeOfUserRepository, IMapper mapper)
         {
             this.typeOfUserRepository = typeOfUserRepository;
