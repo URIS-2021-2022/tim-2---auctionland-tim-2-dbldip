@@ -12,6 +12,7 @@ namespace AuctionAPI
     public class Program
     {
         protected static void Main(string[] args)
+
         {
             CreateHostBuilder(args).Build().Run();
         }

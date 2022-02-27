@@ -60,6 +60,7 @@ namespace AuctionAPI.Data
 
 
             foreach(var pubBid in auctionCreation.publicBiddingIds)
+
             {
                 var tempAPB = new AuctionPublicBidding();
                 tempAPB.publicBiddingId = pubBid;
@@ -78,7 +79,9 @@ namespace AuctionAPI.Data
         {
             var auctions = this.context.Auctions.ToList();
             if (auctions == null || auctions.Count == 0)
+
                 return new List<Auction>();
+
 
             List<Auction> returnList = mapper.Map<List<Auction>>(auctions);
             foreach(var auc in returnList)
