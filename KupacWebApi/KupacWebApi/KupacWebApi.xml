@@ -1,0 +1,665 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>KupacWebApi</name>
+    </assembly>
+    <members>
+        <member name="M:KupacWebApi.Controllers.AuthorizedPersonController.#ctor(KupacWebApi.Data.IAuthorizedPersonRepository,Microsoft.AspNetCore.Routing.LinkGenerator,AutoMapper.IMapper,KupacWebApi.ServiceCalls.ILoggerService)">
+            <summary>
+            BuyerController constructor
+            </summary>
+            <param name="authorizedPersonRepository">Authorized person repository</param>
+            <param name="linkGenerator">Link generator</param>
+            <param name="mapper">AutoMapper</param>
+             /// <param name="loggerService">Logger Service</param>
+        </member>
+        <member name="M:KupacWebApi.Controllers.AuthorizedPersonController.GetBuyers">
+            <summary>
+            Return all authorized people
+            </summary>
+            <returns>List of authorized people</returns>
+            <response code="200">Returns all authorized people</response>
+            <response code="404">No authorized person found</response>
+        </member>
+        <member name="M:KupacWebApi.Controllers.AuthorizedPersonController.GetAuthorizedPersonById(System.Guid)">
+            <summary>
+            Returns AuthorizedPerson by ID
+            </summary>
+            <param name="authorizedPersonId">Authorized Person ID</param>
+            <returns>Authorized Person</returns>
+            <response code="200">Returns AuthorizedPerson by ID</response>
+            <response code="404">No AuthorizedPerson by ID found</response>
+        </member>
+        <member name="M:KupacWebApi.Controllers.AuthorizedPersonController.CreateBuyer(KupacWebApi.Models.AuthorizedPersonCreationDto)">
+            <summary>
+            Create new  AuthorizedPerson
+            </summary>
+            <param name="authorizedPerson">Creation  AuthorizedPerson DTO</param>
+            <returns>Confirmation of created  AuthorizedPerson</returns>
+            <response code="201">Returns confirmation of created  AuthorizedPerson</response>
+            <response code="500"> AuthorizedPerson creation error</response>
+        </member>
+        <member name="M:KupacWebApi.Controllers.AuthorizedPersonController.UpdateAuthorizedPerson(KupacWebApi.Models.AuthorizedPersonUpdateDto)">
+            <summary>
+            AuthorizedPerson modify
+            </summary>
+            <param name="authorizedPerson">Update AuthorizedPerson DTO</param>
+            <returns>Confirmation of updated AuthorizedPerson</returns>
+            <response code="200">Returns confirmation of updated AuthorizedPerson</response>
+            <response code="400">Bad request</response>
+            <response code="404">Not found AuthorizedPerson by ID</response>
+            <response code="500">Server error</response>
+        </member>
+        <member name="M:KupacWebApi.Controllers.AuthorizedPersonController.DeleteAuthorizedPerson(System.Guid)">
+            <summary>
+            Delete AuthorizedPerson
+            </summary>
+            <param name="authorizedPersonId">AuthorizedPerson ID</param>
+            <returns>Status 204 (NoContent)</returns>
+            <response code="204">AuthorizedPerson deleted</response>
+            <response code="404">AuthorizedPerson by ID not found</response>
+            <response code="500">Server error</response>
+        </member>
+        <member name="T:KupacWebApi.Controllers.BuyerController">
+            <summary>
+            Controller for the buyer
+            </summary>
+        </member>
+        <member name="M:KupacWebApi.Controllers.BuyerController.#ctor(KupacWebApi.Data.IBuyerRepository,Microsoft.AspNetCore.Routing.LinkGenerator,AutoMapper.IMapper,KupacWebApi.ServiceCalls.ILoggerService)">
+            <summary>
+            Buyer Controller constructor
+            </summary>
+            <param name="buyerRepository">Buyer repository</param>
+            <param name="linkGenerator">Link generator</param>
+            <param name="mapper">AutoMapper</param>
+             /// <param name="loggerService">Logger Service</param>
+        </member>
+        <member name="M:KupacWebApi.Controllers.BuyerController.GetBuyers">
+            <summary>
+            Return all buyers
+            </summary>
+            <returns>List of buyers</returns>
+            <response code="200">Returns all buyers</response>
+            <response code="404">No buyer found</response>
+        </member>
+        <member name="M:KupacWebApi.Controllers.BuyerController.GetBuyerById(System.Guid)">
+            <summary>
+            Returns buyer by ID
+            </summary>
+            <param name="buyerId">Buyer ID</param>
+            <returns>Buyer</returns>
+            <response code="200">Returns buyer by ID</response>
+            <response code="404">No buyer by ID found</response>
+        </member>
+        <member name="M:KupacWebApi.Controllers.BuyerController.CreateBuyer(KupacWebApi.Models.BuyerCreationDto)">
+            <summary>
+            Create new buyer
+            </summary>
+            <param name="buyer">Creation buyer DTO</param>
+            <returns>Confirmation of created buyer</returns>
+            <response code="201">Returns confirmation of created buyer</response>
+            <response code="500">Buyer creation error</response>
+        </member>
+        <member name="M:KupacWebApi.Controllers.BuyerController.UpdateBuyer(KupacWebApi.Models.BuyerUpdateDto)">
+            <summary>
+            Buyer modify
+            </summary>
+            <param name="buyer">Update buyer DTO</param>
+            <returns>Confirmation of updated buyer</returns>
+            <response code="200">Returns confirmation of updated buyer</response>
+            <response code="400">Bad request</response>
+            <response code="404">Not found buyer by ID</response>
+            <response code="500">Server error</response>
+        </member>
+        <member name="M:KupacWebApi.Controllers.BuyerController.DeleteBuyer(System.Guid)">
+            <summary>
+            Delete buyer
+            </summary>
+            <param name="buyerId"> Buyer ID</param>
+            <returns>Status 204 (NoContent)</returns>
+            <response code="204">Buyer deleted</response>
+            <response code="404">Buyer by ID not found</response>
+            <response code="500">Server error</response>
+        </member>
+        <member name="P:KupacWebApi.Entities.AuthorizedPerson.authorizedPersonId">
+            <summary>
+            AuthorizedPerson ID
+            </summary>
+        </member>
+        <member name="P:KupacWebApi.Entities.AuthorizedPerson.name">
+            <summary>
+            Authorized person's name
+            </summary>
+        </member>
+        <member name="P:KupacWebApi.Entities.AuthorizedPerson.surname">
+            <summary>
+            Authorized person's surname
+            </summary>
+        </member>
+        <member name="P:KupacWebApi.Entities.AuthorizedPerson.jmbg">
+            <summary>
+            Authorized person's jmbg
+            </summary>
+        </member>
+        <member name="P:KupacWebApi.Entities.AuthorizedPerson.buyers">
+            <summary>
+            List of IDs - Buyer and Authorized person
+            </summary>
+        </member>
+        <member name="P:KupacWebApi.Entities.AuthorizedPerson.tableNumber">
+            <summary>
+            List of table numbers
+            </summary>
+        </member>
+        <member name="P:KupacWebApi.Entities.AuthorizedPerson.address">
+            <summary>
+            Address
+            </summary>
+        </member>
+        <member name="P:KupacWebApi.Entities.AuthorizedPerson.country">
+            <summary>
+            Country
+            </summary>
+        </member>
+        <member name="P:KupacWebApi.Entities.AuthorizedPerson.isDelete">
+            <summary>
+            Delete check property
+            </summary>
+        </member>
+        <member name="P:KupacWebApi.Entities.AuthorizedPersonConfirmation.authorizedPersonId">
+            <summary>
+            AuthorizedPerson ID
+            </summary>
+        </member>
+        <member name="P:KupacWebApi.Entities.AuthorizedPersonConfirmation.name">
+            <summary>
+            Authorized person's name
+            </summary>
+        </member>
+        <member name="P:KupacWebApi.Entities.AuthorizedPersonConfirmation.surname">
+            <summary>
+            Authorized person's surname
+            </summary>
+        </member>
+        <member name="P:KupacWebApi.Entities.AuthorizedPersonConfirmation.jmbg">
+            <summary>
+            Authorized person's jmbg
+            </summary>
+        </member>
+        <member name="P:KupacWebApi.Entities.AuthorizedPersonConfirmation.buyerIds">
+            <summary>
+            List of IDs - Buyer 
+            </summary>
+        </member>
+        <member name="P:KupacWebApi.Entities.AuthorizedPersonConfirmation.tableNumber">
+            <summary>
+            List of table numbers
+            </summary>
+        </member>
+        <member name="P:KupacWebApi.Entities.AuthorizedPersonConfirmation.addressId">
+            <summary>
+            Address ID
+            </summary>
+        </member>
+        <member name="P:KupacWebApi.Entities.AuthorizedPersonConfirmation.countryId">
+            <summary>
+            Country ID
+            </summary>
+        </member>
+        <member name="P:KupacWebApi.Entities.AuthorizedPersonCreation.name">
+            <summary>
+            Authorized person's name
+            </summary>
+        </member>
+        <member name="P:KupacWebApi.Entities.AuthorizedPersonCreation.surname">
+            <summary>
+            Authorized person's surname
+            </summary>
+        </member>
+        <member name="P:KupacWebApi.Entities.AuthorizedPersonCreation.jmbg">
+            <summary>
+            Authorized person's jmbg
+            </summary>
+        </member>
+        <member name="P:KupacWebApi.Entities.AuthorizedPersonCreation.buyerIds">
+            <summary>
+            List of IDs - Buyer 
+            </summary>
+        </member>
+        <member name="P:KupacWebApi.Entities.AuthorizedPersonCreation.tableNumber">
+            <summary>
+            List of table numbers
+            </summary>
+        </member>
+        <member name="P:KupacWebApi.Entities.AuthorizedPersonCreation.addressId">
+            <summary>
+            Address ID
+            </summary>
+        </member>
+        <member name="P:KupacWebApi.Entities.AuthorizedPersonCreation.countryId">
+            <summary>
+            Country ID
+            </summary>
+        </member>
+        <member name="P:KupacWebApi.Entities.AuthorizedPersonUpdate.authorizedPersonId">
+            <summary>
+            AuthorizedPerson ID
+            </summary>
+        </member>
+        <member name="P:KupacWebApi.Entities.AuthorizedPersonWithoutLists.authorizedPersonId">
+            <summary>
+            Authorized person ID
+            </summary>
+        </member>
+        <member name="P:KupacWebApi.Entities.AuthorizedPersonWithoutLists.name">
+            <summary>
+            Authorized person's name
+            </summary>
+        </member>
+        <member name="P:KupacWebApi.Entities.AuthorizedPersonWithoutLists.surname">
+            <summary>
+            Authorized person's surname
+            </summary>
+        </member>
+        <member name="P:KupacWebApi.Entities.AuthorizedPersonWithoutLists.jmbg">
+            <summary>
+            Authorized person's jmbg
+            </summary>
+        </member>
+        <member name="P:KupacWebApi.Entities.Buyer.buyerId">
+            <summary>
+            Buyer ID
+            </summary>
+        </member>
+        <member name="P:KupacWebApi.Entities.Buyer.person">
+            <summary>
+            Person
+            </summary>
+        </member>
+        <member name="P:KupacWebApi.Entities.Buyer.realizedArea">
+            <summary>
+            Buyer's realized area
+            </summary>
+        </member>
+        <member name="P:KupacWebApi.Entities.Buyer.hasBan">
+            <summary>
+            Check if buyer has been banned on some public biddings
+            </summary>
+        </member>
+        <member name="P:KupacWebApi.Entities.Buyer.dateOfBanStart">
+            <summary>
+            Date of ban start
+            </summary>
+        </member>
+        <member name="P:KupacWebApi.Entities.Buyer.dateOfBanEnd">
+            <summary>
+            Date of ban end
+            </summary>
+        </member>
+        <member name="P:KupacWebApi.Entities.Buyer.banDuration">
+            <summary>
+            Ban duration
+            </summary>
+        </member>
+        <member name="P:KupacWebApi.Entities.Buyer.publicBiddings">
+            <summary>
+            List of IDs - Buyer and Public bidding
+            </summary>
+        </member>
+        <member name="P:KupacWebApi.Entities.Buyer.payments">
+            <summary>
+            List of IDs - Buyer and Payment
+            </summary>
+        </member>
+        <member name="P:KupacWebApi.Entities.Buyer.authorizedPeople">
+            <summary>
+            List of IDs - Buyer and Authorized Person
+            </summary>
+        </member>
+        <member name="P:KupacWebApi.Entities.Buyer.isDelete">
+            <summary>
+            Delete check property
+            </summary>
+        </member>
+        <member name="P:KupacWebApi.Entities.BuyerConfirmation.buyerId">
+            <summary>
+            Buyer ID
+            </summary>
+        </member>
+        <member name="P:KupacWebApi.Entities.BuyerConfirmation.personId">
+            <summary>
+            Person ID
+            </summary>
+        </member>
+        <member name="P:KupacWebApi.Entities.BuyerConfirmation.realizedArea">
+            <summary>
+            Buyer's realized area
+            </summary>
+        </member>
+        <member name="P:KupacWebApi.Entities.BuyerConfirmation.hasBan">
+            <summary>
+            Check if buyer has been banned on some public biddings
+            </summary>
+        </member>
+        <member name="P:KupacWebApi.Entities.BuyerConfirmation.dateOfBanStart">
+            <summary>
+            Date of ban start
+            </summary>
+        </member>
+        <member name="P:KupacWebApi.Entities.BuyerConfirmation.dateOfBanEnd">
+            <summary>
+            Date of ban end
+            </summary>
+        </member>
+        <member name="P:KupacWebApi.Entities.BuyerConfirmation.banDuration">
+            <summary>
+            Ban duration
+            </summary>
+        </member>
+        <member name="P:KupacWebApi.Entities.BuyerConfirmation.publicBiddingIds">
+            <summary>
+            List of IDs - Public bidding
+            </summary>
+        </member>
+        <member name="P:KupacWebApi.Entities.BuyerConfirmation.paymentIds">
+            <summary>
+            List of IDs - Payment
+            </summary>
+        </member>
+        <member name="P:KupacWebApi.Entities.BuyerConfirmation.authorizedPeopleIds">
+            <summary>
+            List of IDs - Authorized Person
+            </summary>
+        </member>
+        <member name="P:KupacWebApi.Entities.BuyerCreation.personId">
+            <summary>
+            Person ID
+            </summary>
+        </member>
+        <member name="P:KupacWebApi.Entities.BuyerCreation.realizedArea">
+            <summary>
+            Buyer's realized area
+            </summary>
+        </member>
+        <member name="P:KupacWebApi.Entities.BuyerCreation.hasBan">
+            <summary>
+            Check if buyer has been banned on some public biddings
+            </summary>
+        </member>
+        <member name="P:KupacWebApi.Entities.BuyerCreation.dateOfBanStart">
+            <summary>
+            Date of ban start
+            </summary>
+        </member>
+        <member name="P:KupacWebApi.Entities.BuyerCreation.dateOfBanEnd">
+            <summary>
+            Date of ban end
+            </summary>
+        </member>
+        <member name="P:KupacWebApi.Entities.BuyerCreation.banDuration">
+            <summary>
+            Ban duration
+            </summary>
+        </member>
+        <member name="P:KupacWebApi.Entities.BuyerCreation.publicBiddingIds">
+            <summary>
+            List of IDs - Public bidding
+            </summary>
+        </member>
+        <member name="P:KupacWebApi.Entities.BuyerCreation.paymentIds">
+            <summary>
+            List of IDs - Payment
+            </summary>
+        </member>
+        <member name="P:KupacWebApi.Entities.BuyerCreation.authorizedPeopleIds">
+            <summary>
+            List of IDs - Authorized Person
+            </summary>
+        </member>
+        <member name="P:KupacWebApi.Entities.BuyerUpdate.buyerId">
+            <summary>
+            Buyer ID
+            </summary>
+        </member>
+        <member name="P:KupacWebApi.Entities.BuyerWithoutLists.buyerId">
+            <summary>
+            Buyer ID
+            </summary>
+        </member>
+        <member name="P:KupacWebApi.Entities.BuyerWithoutLists.realizedArea">
+            <summary>
+            Buyer's realized area
+            </summary>
+        </member>
+        <member name="P:KupacWebApi.Entities.BuyerWithoutLists.hasBan">
+            <summary>
+            Check if buyer has been banned on some public biddings
+            </summary>
+        </member>
+        <member name="P:KupacWebApi.Entities.BuyerWithoutLists.dateOfBanStart">
+            <summary>
+            Date of ban start
+            </summary>
+        </member>
+        <member name="P:KupacWebApi.Entities.BuyerWithoutLists.dateOfBanEnd">
+            <summary>
+            Date of ban end
+            </summary>
+        </member>
+        <member name="P:KupacWebApi.Entities.BuyerWithoutLists.banDuration">
+            <summary>
+            Ban duration
+            </summary>
+        </member>
+        <member name="P:KupacWebApi.Models.AuthorizedPersonConfirmationDto.name">
+            <summary>
+            Authorized person's name
+            </summary>
+        </member>
+        <member name="P:KupacWebApi.Models.AuthorizedPersonConfirmationDto.surname">
+            <summary>
+            Authorized person's surname
+            </summary>
+        </member>
+        <member name="P:KupacWebApi.Models.AuthorizedPersonConfirmationDto.jmbg">
+            <summary>
+            Authorized person's jmbg
+            </summary>
+        </member>
+        <member name="P:KupacWebApi.Models.AuthorizedPersonConfirmationDto.tableNumber">
+            <summary>
+            List of table numbers
+            </summary>
+        </member>
+        <member name="P:KupacWebApi.Models.AuthorizedPersonCreationDto.name">
+            <summary>
+            Authorized person's name
+            </summary>
+        </member>
+        <member name="P:KupacWebApi.Models.AuthorizedPersonCreationDto.surname">
+            <summary>
+            Authorized person's surname
+            </summary>
+        </member>
+        <member name="P:KupacWebApi.Models.AuthorizedPersonCreationDto.jmbg">
+            <summary>
+            Authorized person's jmbg
+            </summary>
+        </member>
+        <member name="P:KupacWebApi.Models.AuthorizedPersonCreationDto.buyerIds">
+            <summary>
+            List of IDs - Buyer 
+            </summary>
+        </member>
+        <member name="P:KupacWebApi.Models.AuthorizedPersonCreationDto.tableNumber">
+            <summary>
+            List of table numbers
+            </summary>
+        </member>
+        <member name="P:KupacWebApi.Models.AuthorizedPersonCreationDto.addressId">
+            <summary>
+            Address ID
+            </summary>
+        </member>
+        <member name="P:KupacWebApi.Models.AuthorizedPersonCreationDto.countryId">
+            <summary>
+            Country ID
+            </summary>
+        </member>
+        <member name="P:KupacWebApi.Models.AuthorizedPersonDto.name">
+            <summary>
+            Authorized person's name
+            </summary>
+        </member>
+        <member name="P:KupacWebApi.Models.AuthorizedPersonDto.surname">
+            <summary>
+            Authorized person's surname
+            </summary>
+        </member>
+        <member name="P:KupacWebApi.Models.AuthorizedPersonDto.jmbg">
+            <summary>
+            Authorized person's jmbg
+            </summary>
+        </member>
+        <member name="P:KupacWebApi.Models.AuthorizedPersonDto.tableNumber">
+            <summary>
+            List of table numbers
+            </summary>
+        </member>
+        <member name="P:KupacWebApi.Models.AuthorizedPersonUpdateDto.authorizedPersonId">
+            <summary>
+            Authorized person ID
+            </summary>
+        </member>
+        <member name="P:KupacWebApi.Models.BuyerConfirmationDto.realizedArea">
+            <summary>
+            Buyer's realized area
+            </summary>
+        </member>
+        <member name="P:KupacWebApi.Models.BuyerConfirmationDto.hasBan">
+            <summary>
+            Check if buyer has been banned on some public biddings
+            </summary>
+        </member>
+        <member name="P:KupacWebApi.Models.BuyerConfirmationDto.dateOfBanStart">
+            <summary>
+            Date of ban start
+            </summary>
+        </member>
+        <member name="P:KupacWebApi.Models.BuyerConfirmationDto.dateOfBanEnd">
+            <summary>
+            Date of ban end
+            </summary>
+        </member>
+        <member name="P:KupacWebApi.Models.BuyerConfirmationDto.banDuration">
+            <summary>
+            Ban duration
+            </summary>
+        </member>
+        <member name="P:KupacWebApi.Models.BuyerCreationDto.personId">
+            <summary>
+            Person ID
+            </summary>
+        </member>
+        <member name="P:KupacWebApi.Models.BuyerCreationDto.realizedArea">
+            <summary>
+            Buyer's realized area
+            </summary>
+        </member>
+        <member name="P:KupacWebApi.Models.BuyerCreationDto.hasBan">
+            <summary>
+            Check if buyer has been banned on some public biddings
+            </summary>
+        </member>
+        <member name="P:KupacWebApi.Models.BuyerCreationDto.dateOfBanStart">
+            <summary>
+            Date of ban start
+            </summary>
+        </member>
+        <member name="P:KupacWebApi.Models.BuyerCreationDto.dateOfBanEnd">
+            <summary>
+            Date of ban end
+            </summary>
+        </member>
+        <member name="P:KupacWebApi.Models.BuyerCreationDto.banDuration">
+            <summary>
+            Ban duration
+            </summary>
+        </member>
+        <member name="P:KupacWebApi.Models.BuyerCreationDto.publicBiddingIds">
+            <summary>
+            List of IDs - Public bidding
+            </summary>
+        </member>
+        <member name="P:KupacWebApi.Models.BuyerCreationDto.paymentIds">
+            <summary>
+            List of IDs - Payment
+            </summary>
+        </member>
+        <member name="P:KupacWebApi.Models.BuyerCreationDto.authorizedPeopleIds">
+            <summary>
+            List of IDs - Authorized Person
+            </summary>
+        </member>
+        <member name="P:KupacWebApi.Models.BuyerDto.personId">
+            <summary>
+            Person ID
+            </summary>
+        </member>
+        <member name="P:KupacWebApi.Models.BuyerDto.realizedArea">
+            <summary>
+            Buyer's realized area
+            </summary>
+        </member>
+        <member name="P:KupacWebApi.Models.BuyerDto.hasBan">
+            <summary>
+            Check if buyer has been banned on some public biddings
+            </summary>
+        </member>
+        <member name="P:KupacWebApi.Models.BuyerDto.dateOfBanStart">
+            <summary>
+            Date of ban start
+            </summary>
+        </member>
+        <member name="P:KupacWebApi.Models.BuyerDto.dateOfBanEnd">
+            <summary>
+            Date of ban end
+            </summary>
+        </member>
+        <member name="P:KupacWebApi.Models.BuyerDto.banDuration">
+            <summary>
+            Ban duration
+            </summary>
+        </member>
+        <member name="P:KupacWebApi.Models.BuyerUpdateDto.buyerId">
+            <summary>
+            Buyer ID
+            </summary>
+        </member>
+        <member name="P:KupacWebApi.Models.LogMessageDto.Message">
+            <summary>
+            Log message
+            </summary>
+        </member>
+        <member name="P:KupacWebApi.Models.LogMessageDto.LogLevel">
+            <summary>
+            Log level
+            </summary>
+        </member>
+        <member name="P:KupacWebApi.Models.LogMessageDto.Microservice">
+            <summary>
+            Microservice who 's sending request
+            </summary>
+        </member>
+        <member name="P:KupacWebApi.Models.LogMessageDto.Method">
+            <summary>
+            Log method
+            </summary>
+        </member>
+        <member name="P:KupacWebApi.Models.LogMessageDto.Exception">
+            <summary>
+            Log exception
+            </summary>
+        </member>
+    </members>
+</doc>

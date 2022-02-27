@@ -52,11 +52,13 @@ namespace AuctionAPI
 
                 var xmlComments = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
                 var xmlCommentsPath = Path.Combine(AppContext.BaseDirectory, xmlComments);
+
                 if (File.Exists(xmlCommentsPath)) 
                 {
                     setupAction.IncludeXmlComments(xmlCommentsPath);
                 }
                     
+
 
                 
             });
