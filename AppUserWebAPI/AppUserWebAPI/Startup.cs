@@ -1,5 +1,6 @@
 using AppUserWebAPI.Data;
 using AppUserWebAPI.Entities;
+using AppUserWebAPI.ServiceCalls;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;

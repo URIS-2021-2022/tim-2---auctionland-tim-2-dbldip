@@ -1,5 +1,6 @@
  using AdresaWebAPI.Data;
 using AdresaWebAPI.Entities;
+using AdresaWebAPI.ServiceCalls;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -12,7 +13,9 @@ using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Threading.Tasks;
 
 namespace AdresaWebAPI
@@ -49,7 +52,7 @@ namespace AdresaWebAPI
                 //Korisitmo refleksiju za dobijanje XML fajla za komentarima
                 var xmlComments = $"{ Assembly.GetExecutingAssembly().GetName().Name }.xml";
                 var xmlCommentsPath = Path.Combine(AppContext.BaseDirectory, xmlComments);
-                setup.IncludeXmlComments(xmlCommentsPath);
+                c.IncludeXmlComments(xmlCommentsPath);
             });
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
             services.AddScoped<ICountryRepository, CountryRepository>();

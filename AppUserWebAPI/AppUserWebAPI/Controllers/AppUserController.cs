@@ -22,7 +22,7 @@ namespace AppUserWebAPI.Controllers
     /// <summary>
     /// Controller class that manages app user data, provides GET, POST, PUT, DELETE methods.
     /// </summary>
-    [Authorize]
+   // [Authorize]
     [ApiController]
     [Route("/api/appUser")]
     public class AppUserController : ControllerBase

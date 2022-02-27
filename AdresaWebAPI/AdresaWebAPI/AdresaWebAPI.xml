@@ -4,6 +4,11 @@
         <name>AdresaWebAPI</name>
     </assembly>
     <members>
+        <member name="T:AdresaWebAPI.Controllers.AddressController">
+            <summary>
+            Address controller that provides GET, POST, DELETE AND PUT methods
+            </summary>
+        </member>
         <member name="M:AdresaWebAPI.Controllers.AddressController.#ctor(AdresaWebAPI.Data.IAddressRepository,Microsoft.AspNetCore.Routing.LinkGenerator,AutoMapper.IMapper,AdresaWebAPI.ServiceCalls.ILoggerService)">
             <summary>
             Constructor

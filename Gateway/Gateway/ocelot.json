@@ -23,13 +23,13 @@
           "Port": 44302
         }
       ],
-      "UpstreamPathTemplate": "/appUser/{everything}",
+      "UpstreamPathTemplate": "/api/{everything}",
       "UpstreamHttpMethod": [ "Get", "Post", "Put", "Delete", "Options", "Head" ],
       "FileCacheOptions": { "TtlSeconds": 30 },
       "SwaggerKey": "appUser"
     },
     {
-      "DownstreamPathTemplate": "/api/{everything}",
+      "DownstreamPathTemplate": "/swagger/v1/swagger.json",
       "DownstreamScheme": "https",
       "DownstreamHostAndPorts": [
         {
@@ -198,7 +198,7 @@
       "Key": "appUser",
       "Config": [
         {
-          "Name": "User API",
+          "Name": "AppUser API",
           "Version": "v1",
           "Url": "https://localhost:44302/swagger/v1/swagger.json"
         }

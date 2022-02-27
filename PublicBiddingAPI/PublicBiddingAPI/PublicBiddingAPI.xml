@@ -9,7 +9,7 @@
             Controller class that manages Public Biddings, provides multiple GET methods, POST, PUT and DELETE endpoints also.
             </summary>
         </member>
-        <member name="M:PublicBiddingAPI.Controllers.PublicBiddingController.#ctor(PublicBiddingAPI.Data.IPublicBiddingRepository,PublicBiddingAPI.Data.ITypeOfPublicBiddingRepository,Microsoft.AspNetCore.Routing.LinkGenerator,AutoMapper.IMapper)">
+        <member name="M:PublicBiddingAPI.Controllers.PublicBiddingController.#ctor(PublicBiddingAPI.Data.IPublicBiddingRepository,PublicBiddingAPI.Data.ITypeOfPublicBiddingRepository,Microsoft.AspNetCore.Routing.LinkGenerator,AutoMapper.IMapper,PublicBiddingAPI.ServiceCalls.ILoggerService)">
             <summary>
             Constructor of a PublicBiddingController, 
             </summary>
@@ -64,7 +64,7 @@
              </remarks>
              <returns>Public bidding confirmation</returns>
              <response code="201">Public bidding confirmation</response>
-             <response code="409">Conflict when creating</response>
+             <response code="500">Conflict when creating</response>
         </member>
         <member name="M:PublicBiddingAPI.Controllers.PublicBiddingController.GetPublicBiddingsByBuyer(System.Guid)">
             <summary>
@@ -159,14 +159,16 @@
              </remarks>
              <returns>Public bidding confirmation</returns>
              <response code="200">Public bidding confirmation</response>
-             <response code="404">Could not find any stored data</response>
+             <response code="400">Bad request</response>
+             <response code="404">Not found PublicBidding by ID</response>
+             <response code="500">Server error</response>
         </member>
         <member name="T:PublicBiddingAPI.Controllers.TypeOfPublicBiddingController">
             <summary>
             Controller class that manages Types of Public Biddings, only provides GET methods since these are permanent values for types..
             </summary>
         </member>
-        <member name="M:PublicBiddingAPI.Controllers.TypeOfPublicBiddingController.#ctor(PublicBiddingAPI.Data.ITypeOfPublicBiddingRepository,AutoMapper.IMapper)">
+        <member name="M:PublicBiddingAPI.Controllers.TypeOfPublicBiddingController.#ctor(PublicBiddingAPI.Data.ITypeOfPublicBiddingRepository,AutoMapper.IMapper,PublicBiddingAPI.ServiceCalls.ILoggerService)">
             <summary>
             Constructor of a TypeOfPublicBiddingController
             </summary>
@@ -398,6 +400,166 @@
         <member name="P:PublicBiddingAPI.Entities.TypeOfPublicBidding.typeOfPublicBiddingName">
             <summary>
             Name of type
+            </summary>
+        </member>
+        <member name="T:PublicBiddingAPI.Models.PublicBiddingConfirmationDto">
+            <summary>
+            Confirmation dto that's sent to user when creating public bidding via post request
+            </summary>
+        </member>
+        <member name="P:PublicBiddingAPI.Models.PublicBiddingConfirmationDto.date">
+            <summary>
+            Date of public bidding
+            </summary>
+        </member>
+        <member name="P:PublicBiddingAPI.Models.PublicBiddingConfirmationDto.startingTime">
+            <summary>
+            start time of bidding
+            </summary>
+        </member>
+        <member name="P:PublicBiddingAPI.Models.PublicBiddingConfirmationDto.endingTime">
+            <summary>
+            end time of bidding
+            </summary>
+        </member>
+        <member name="P:PublicBiddingAPI.Models.PublicBiddingConfirmationDto.typeOfPublicBidding">
+            <summary>
+            type of bidding
+            </summary>
+        </member>
+        <member name="P:PublicBiddingAPI.Models.PublicBiddingConfirmationDto.bestBid">
+            <summary>
+            bid that won the bidding
+            </summary>
+        </member>
+        <member name="P:PublicBiddingAPI.Models.PublicBiddingConfirmationDto.buyerId">
+            <summary>
+            buyer who won the bidding - his/her id
+            </summary>
+        </member>
+        <member name="T:PublicBiddingAPI.Models.PublicBiddingCreationDto">
+            <summary>
+            Dto object sent to the server when sending POST request
+            </summary>
+        </member>
+        <member name="P:PublicBiddingAPI.Models.PublicBiddingCreationDto.date">
+            <summary>
+            date of public bidding
+            </summary>
+        </member>
+        <member name="P:PublicBiddingAPI.Models.PublicBiddingCreationDto.startingTime">
+            <summary>
+            start time of the bidding
+            </summary>
+        </member>
+        <member name="P:PublicBiddingAPI.Models.PublicBiddingCreationDto.endingTime">
+            <summary>
+            end time of bidding
+            </summary>
+        </member>
+        <member name="P:PublicBiddingAPI.Models.PublicBiddingCreationDto.plotIds">
+            <summary>
+            plots that are being bid on
+            </summary>
+        </member>
+        <member name="P:PublicBiddingAPI.Models.PublicBiddingCreationDto.startingPricePerHectare">
+            <summary>
+            price per hectare
+            </summary>
+        </member>
+        <member name="P:PublicBiddingAPI.Models.PublicBiddingCreationDto.excepted">
+            <summary>
+            is the bidding being excepted
+            </summary>
+        </member>
+        <member name="P:PublicBiddingAPI.Models.PublicBiddingCreationDto.typeOfPublicBiddingName">
+            <summary>
+            Type of public bidding
+            </summary>
+        </member>
+        <member name="P:PublicBiddingAPI.Models.PublicBiddingCreationDto.bestBid">
+            <summary>
+            bid that won the bidding
+            </summary>
+        </member>
+        <member name="P:PublicBiddingAPI.Models.PublicBiddingCreationDto.bestBidderId">
+            <summary>
+            id of buyer that won the bidding
+            </summary>
+        </member>
+        <member name="P:PublicBiddingAPI.Models.PublicBiddingCreationDto.cadastralMunicipalityId">
+            <summary>
+            Id of municipality bidding is being held in
+            </summary>
+        </member>
+        <member name="P:PublicBiddingAPI.Models.PublicBiddingCreationDto.leasePeriod">
+            <summary>
+            lease period of plots being bid on
+            </summary>
+        </member>
+        <member name="P:PublicBiddingAPI.Models.PublicBiddingCreationDto.appliedBuyersId">
+            <summary>
+            List of ids of applied buyers
+            </summary>
+        </member>
+        <member name="P:PublicBiddingAPI.Models.PublicBiddingCreationDto.biddersId">
+            <summary>
+            list of ids of bidders competing in the bidding
+            </summary>
+        </member>
+        <member name="P:PublicBiddingAPI.Models.PublicBiddingCreationDto.numbOfParticipants">
+            <summary>
+            total number of participants
+            </summary>
+        </member>
+        <member name="T:PublicBiddingAPI.Models.PublicBiddingDto">
+            <summary>
+            Dto that represents data sent to the user when requesting something from PublicBiddingController
+            </summary>
+        </member>
+        <member name="P:PublicBiddingAPI.Models.PublicBiddingDto.date">
+            <summary>
+            Date that public bidding is being held on 
+            </summary>
+        </member>
+        <member name="P:PublicBiddingAPI.Models.PublicBiddingDto.startingTime">
+            <summary>
+            Start time of public bidding
+            </summary>
+        </member>
+        <member name="P:PublicBiddingAPI.Models.PublicBiddingDto.endingTime">
+            <summary>
+            End time of public bidding
+            </summary>
+        </member>
+        <member name="P:PublicBiddingAPI.Models.PublicBiddingDto.plots">
+            <summary>
+            Plots being auctioned on public bidding
+            </summary>
+        </member>
+        <member name="P:PublicBiddingAPI.Models.PublicBiddingDto.bestBid">
+            <summary>
+            Bid that won the public bidding
+            </summary>
+        </member>
+        <member name="P:PublicBiddingAPI.Models.PublicBiddingDto.bestBidder">
+            <summary>
+            Person that won the auction - public bidding
+            </summary>
+        </member>
+        <member name="P:PublicBiddingAPI.Models.PublicBiddingDto.leasePeriod">
+            <summary>
+            Period that plot is being leased on
+            </summary>
+        </member>
+        <member name="T:PublicBiddingAPI.Models.PublicBiddingUpdateDto">
+            <summary>
+            Dto sent to the server while Updating public bidding via PUT request
+            </summary>
+        </member>
+        <member name="P:PublicBiddingAPI.Models.PublicBiddingUpdateDto.publicBiddingId">
+            <summary>
+            Adding id to the creation dto 
             </summary>
         </member>
     </members>

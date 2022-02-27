@@ -9,6 +9,7 @@ using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
 using PublicBiddingAPI.Data;
 using PublicBiddingAPI.Entities;
+using PublicBiddingAPI.ServiceCalls;
 using System;
 using System.Collections.Generic;
 using System.IO;

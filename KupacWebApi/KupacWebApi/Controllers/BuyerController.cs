@@ -9,7 +9,9 @@ using Microsoft.AspNetCore.Routing;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Net;
 using System.Threading.Tasks;
 
 namespace KupacWebApi.Controllers
@@ -61,7 +63,25 @@ namespace KupacWebApi.Controllers
                 return NoContent();
             }
 
-            this.loggerService.LogMessage("List of buyers is returned", "Get", LogLevel.Information);
+            foreach (var el in buyers)
+            {
+                foreach (var temp in el.payments)
+                {
+                    var responseText = String.Empty;
+                    HttpWebRequest request = (HttpWebRequest)WebRequest.Create(@"http://localhost:44300/payment/payments/" + temp.payerId);
+                    request.AutomaticDecompression = DecompressionMethods.GZip | DecompressionMethods.Deflate;
+                    
+                    using (HttpWebResponse response = (HttpWebResponse)request.GetResponse())
+                    using (Stream stream = response.GetResponseStream())
+                    using (StreamReader reader = new StreamReader(stream))
+                    {
+                        responseText = reader.ReadToEnd();
+                    }
+
+                    Console.WriteLine(responseText);
+                }
+            }
+                this.loggerService.LogMessage("List of buyers is returned", "Get", LogLevel.Information);
             return Ok(mapper.Map<List<BuyerDto>>(buyers));
         }
         /// <summary>
