@@ -1,0 +1,1215 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>UgovorOZakupuWebAPI</name>
+    </assembly>
+    <members>
+        <member name="T:UgovorOZakupuWebAPI.Controllers.ContractedPublicBiddingController">
+            <summary>
+            Kontroler za ugovoreno javno nadmetanje
+            </summary>
+        </member>
+        <!-- Badly formed XML comment ignored for member "M:UgovorOZakupuWebAPI.Controllers.ContractedPublicBiddingController.#ctor(UgovorOZakupuWebAPI.Data.IContractedPublicBiddingRepository,Microsoft.AspNetCore.Routing.LinkGenerator,AutoMapper.IMapper,UgovorOZakupuWebAPI.ServiceCalls.ILoggerService)" -->
+        <member name="M:UgovorOZakupuWebAPI.Controllers.ContractedPublicBiddingController.GetContractedPublicBiddings">
+            <summary>
+            Vraća sva ugovorena javna nadmetanja
+            </summary>
+            <returns>Lista oglasa</returns>
+            <response code="200">Vraća listu ugovorenih javnih nadmetanja</response>
+            <response code="404">Nije pronađeno ni jedno ugovoreno javno nadmetanje</response>
+            
+        </member>
+        <member name="M:UgovorOZakupuWebAPI.Controllers.ContractedPublicBiddingController.GetContractedPublicBiddingById(System.Guid)">
+             <summary>
+             Vraća jedno ugovoreno javno nadmetanje na osnovu ID-a
+             </summary>
+             <param name="contractedPublicBiddingId">ID oglasa</param>
+             <returns>Ugovoreno javno nadmetanje</returns>
+             <response code="200">Vraća traženo ugovoreno javno nadmetanje</response>
+             <response code="404">Nije pronađno ni jedno javno nadmetanje za dati ID</response>
+            
+        </member>
+        <member name="M:UgovorOZakupuWebAPI.Controllers.ContractedPublicBiddingController.CreateContractedPublicBidding(UgovorOZakupuWebAPI.Models.ContractedPublicBiddingDto)">
+             <summary>
+             Kreira novo ugovoreno javno nadmetanje
+             </summary>
+             <param name="contractedPublicBiddingDto">Model za ugovoreno javno nadmetanje</param>
+             <remarks>
+             Primer zahteva za kreiranje novog oglasa \
+             POST /api/leaseAgreement/contractedPublicBidding \
+             {   
+                 "additionalInfo": "Sto pre." \
+            }
+             </remarks>
+             <returns>Potvrda o kreiranju ugovorenog javnog nadmetanja</returns>
+             <response code="201">Vraća kreirano ugovoreno javno nadmetanje</response>
+             <response code="500">Desila se greška prilikom unosa novog ugovorenog javnog nadmetanja</response>
+            
+        </member>
+        <member name="M:UgovorOZakupuWebAPI.Controllers.ContractedPublicBiddingController.UpdateContractedPublicBidding(UgovorOZakupuWebAPI.Models.ContractedPublicBiddingDto)">
+             <summary>
+             Modifikacija ugovorenog javnog nadmetanja
+             </summary>
+             <param name="contractedPublicBiddingDto">Model ugovorenog javnog nadmetanja</param>
+             <returns>Potvrda o modifikaciji ugovorenog javnog nadmetanja</returns>
+             <response code="200">Izmenjeno ugovoreno javno nadmetanje</response>
+             <response code="404">Nije pronađeno ugovoreno javno nadmetanje za uneti ID</response>
+             <response code="500">Serverska greška tokom modifikacije ugovorenog javnog nadmetanja</response>
+            
+        </member>
+        <member name="M:UgovorOZakupuWebAPI.Controllers.ContractedPublicBiddingController.DeleteContractedPublicBidding(System.Guid)">
+            <summary>
+            Brisanje oglasa na osnovu ID-a
+            </summary>
+            <param name="contractedPublicBiddingId">ID oglasa</param>
+            <returns>Status 204 (NoContent)</returns>
+            <response code="204">Ugovoreno javno nadmetanje je uspešno obrisano</response>
+            <response code="404">Nije pronađeno ugovoreno javno nadmetanje za uneti ID</response>
+            <response code="500">Serverska greška tokom brisanja ugovorenog javnog nadmetanja</response>
+            
+        </member>
+        <member name="T:UgovorOZakupuWebAPI.Controllers.ContractPartyController">
+            <summary>
+            Kontroler za učesnika ugovora
+            </summary>
+        </member>
+        <!-- Badly formed XML comment ignored for member "M:UgovorOZakupuWebAPI.Controllers.ContractPartyController.#ctor(UgovorOZakupuWebAPI.Data.IContractPartyRepository,Microsoft.AspNetCore.Routing.LinkGenerator,AutoMapper.IMapper,UgovorOZakupuWebAPI.ServiceCalls.ILoggerService)" -->
+        <member name="M:UgovorOZakupuWebAPI.Controllers.ContractPartyController.GetContractParties">
+            <summary>
+            Vraća sve učesnike ugovora
+            </summary>
+            <returns>Lista učesnika ugovora</returns>
+            <response code="200">Vraća listu učesnika ugovora</response>
+            <response code="404">Nije pronađen ni jedan učesnik ugovora</response>
+            
+        </member>
+        <member name="M:UgovorOZakupuWebAPI.Controllers.ContractPartyController.GetContractPartyById(System.Guid)">
+             <summary>
+             Vraća jednog učesnika ugovora na osnovu ID-a
+             </summary>
+             <param name="contractPartyId">ID učesnika ugovora</param>
+             <returns>Učesnik ugovora</returns>
+             <response code="200">Vraća učesnika ugovora</response>
+             <response code="404">Nije pronađen učesnik ugovora za uneti ID</response>
+            
+        </member>
+        <member name="M:UgovorOZakupuWebAPI.Controllers.ContractPartyController.CreateContractParty(UgovorOZakupuWebAPI.Models.ContractPartyDto)">
+             <summary>
+             Kreira novog učesnika ugovora
+             </summary>
+             <param name="contractPartyDto">Model učesnika ugovora</param>
+             <remarks>
+             Primer zahteva za kreiranje novog učesnika ugovora \
+             POST /api/leaseAgreement/contractParty \
+             {   
+                 "contractPartyId": "f84a055c-7ae0-44e7-9207-c3bb66deb14a", \
+            }
+             </remarks>
+             <returns>Potvrda o kreiranju učesnika ugovora</returns>
+             <response code="201">Vraća kreiranog učesnika ugovora</response>
+             <response code="500">Desila se greška prilikom unosa novog učesnika ugovora</response>
+            
+        </member>
+        <member name="M:UgovorOZakupuWebAPI.Controllers.ContractPartyController.UpdateContractParty(UgovorOZakupuWebAPI.Models.ContractPartyDto)">
+             <summary>
+             Modifikacija učesnika ugovora
+             </summary>
+             <param name="contractPartyDto">Model učesnik ugovoa</param>
+             <returns>Potvrda o modifikaciji učesnika ugovora</returns>
+             <response code="200">Izmenjen učesnik ugovora</response>
+             <response code="404">Nije pronađen učesnik ugovora za uneti ID</response>
+             <response code="500">Serverska greška tokom modifikacije učesnika ugovora</response>
+            
+        </member>
+        <member name="M:UgovorOZakupuWebAPI.Controllers.ContractPartyController.DeleteContractParty(System.Guid)">
+            <summary>
+            Brisanje učesnika ugovora na osnovu ID-a
+            </summary>
+            <param name="contractPartyId">ID učesnika ugovora</param>
+            <returns>Status 204 (NoContent)</returns>
+            <response code="204">Učesnika ugovora je uspešno obrisan</response>
+            <response code="404">Nije pronađen učesnik ugovora za uneti ID</response>
+            <response code="500">Serverska greška tokom brisanja učesnika ugovora</response>
+            
+        </member>
+        <member name="T:UgovorOZakupuWebAPI.Controllers.DocumentAuthorController">
+            <summary>
+            Kontroler za autora dokumenta
+            </summary>
+        </member>
+        <!-- Badly formed XML comment ignored for member "M:UgovorOZakupuWebAPI.Controllers.DocumentAuthorController.#ctor(UgovorOZakupuWebAPI.Data.IDocumentAuthorRepository,Microsoft.AspNetCore.Routing.LinkGenerator,AutoMapper.IMapper,UgovorOZakupuWebAPI.ServiceCalls.ILoggerService)" -->
+        <member name="M:UgovorOZakupuWebAPI.Controllers.DocumentAuthorController.GetDocumentAuthors">
+            <summary>
+            Vraća autore dokumenta
+            </summary>
+            <returns>Lista autora dokumenta</returns>
+            <response code="200">Vraća listu autora dokumenta</response>
+            <response code="404">Nije pronađen ni autor dokumenta</response>
+            
+        </member>
+        <member name="M:UgovorOZakupuWebAPI.Controllers.DocumentAuthorController.GetDocumentAuthorById(System.Guid)">
+             <summary>
+             Vraća jednog autora dokumenta osnovu ID-a
+             </summary>
+             <param name="documentAuthorId">ID autora dokumenta</param>
+             <returns>Autor dokumenta</returns>
+             <response code="200">Vraća traženog autora dokumenta</response>
+             <response code="404">Nije pronađen autor dokumenta za uneti ID</response>
+            
+        </member>
+        <member name="M:UgovorOZakupuWebAPI.Controllers.DocumentAuthorController.CreateDocument(UgovorOZakupuWebAPI.Models.DocumentAuthorDto)">
+             <summary>
+             Kreira novog autora dokumenta
+             </summary>
+             <param name="documentAuthorDto">Model oglas</param>
+             <remarks>
+             Primer zahteva za kreiranje novog oglasa \
+             POST /api/leaseAgreement/documentAuthor \
+             {   
+                 "documentAuthorId": "dea67985-ced6-4af2-a0df-fcfc21e947fe", \
+                 "agencyInfo": "Agencija za zavod 021" \
+            }
+             </remarks>
+             <returns>Potvrda o kreiranju autora dokumenta</returns>
+             <response code="201">Vraća kreiranog autora dokumenta</response>
+             <response code="500">Desila se greška prilikom unosa novog autora dokumenta</response>
+            
+        </member>
+        <member name="M:UgovorOZakupuWebAPI.Controllers.DocumentAuthorController.UpdateDocumentAuthor(UgovorOZakupuWebAPI.Models.DocumentAuthorDto)">
+             <summary>
+             Modifikacija autora dokumenta
+             </summary>
+             <param name="documentAuthorDto">Model autora dokumenta</param>
+             <returns>Potvrda o modifikaciji autora dokumenta</returns>
+             <response code="200">Izmenjen autor dokumenta</response>
+             <response code="404">Nije pronađen autor dokumenta za uneti ID</response>
+             <response code="500">Serverska greška tokom modifikacije autora dokumenta</response>
+            
+        </member>
+        <member name="M:UgovorOZakupuWebAPI.Controllers.DocumentAuthorController.DeleteDocumentAuthor(System.Guid)">
+            <summary>
+            Brisanje autora dokumenta na osnovu ID-a
+            </summary>
+            <param name="documentAuthorId">ID autora dokumenta</param>
+            <returns>Status 204 (NoContent)</returns>
+            <response code="204">Autor dokumenta je uspešno obrisan</response>
+            <response code="404">Nije pronađen autora dokumenta za uneti ID</response>
+            <response code="500">Serverska greška tokom brisanja oautora dokumenta</response>
+            
+        </member>
+        <member name="T:UgovorOZakupuWebAPI.Controllers.DocumentController">
+            <summary>
+            Kontroler za dokument
+            </summary>
+        </member>
+        <!-- Badly formed XML comment ignored for member "M:UgovorOZakupuWebAPI.Controllers.DocumentController.#ctor(UgovorOZakupuWebAPI.Data.IDocumentRepository,Microsoft.AspNetCore.Routing.LinkGenerator,AutoMapper.IMapper,UgovorOZakupuWebAPI.ServiceCalls.ILoggerService)" -->
+        <member name="M:UgovorOZakupuWebAPI.Controllers.DocumentController.GetDocuments(System.String)">
+            <summary>
+            Vraća sve dokumente
+            </summary>
+            <returns>Lista dokumenata</returns>
+            <response code="200">Vraća listu dokumenata</response>
+            <response code="404">Nije pronađen ni jedan dokument</response>
+            
+        </member>
+        <member name="M:UgovorOZakupuWebAPI.Controllers.DocumentController.GetDocumentById(System.Guid)">
+             <summary>
+             Vraća jedan dokument na osnovu ID-a
+             </summary>
+             <param name="documentId">ID dokumenta</param>
+             <returns>Dokument</returns>
+             <response code="200">Vraća traženi dokument</response>
+             <response code="404">Nije pronađen dokument za uneti ID</response>
+            
+        </member>
+        <member name="M:UgovorOZakupuWebAPI.Controllers.DocumentController.CreateDocument(UgovorOZakupuWebAPI.Models.DocumentDto)">
+             <summary>
+             Kreira novi dokument
+             </summary>
+             <param name="documentDto">Model dokument</param>
+             <remarks>
+             Primer zahteva za kreiranje novog oglasa \
+             POST /api/leaseAgreement/document \
+             {   
+                 "fileNumber": "File001", \
+                 "date": null, \
+                 "documentAdoptionDate": null, \
+                 "template": "template2", \
+                 "documentAuthorId": "554c65b1-56af-4050-b232-c20d7197bb78" \
+            }
+             </remarks>
+             <returns>Potvrda o kreiranju dokumenta</returns>
+             <response code="201">Vraća kreirani dokument</response>
+             <response code="500">Desila se greška prilikom unosa novog dokumenta</response>
+            
+        </member>
+        <member name="M:UgovorOZakupuWebAPI.Controllers.DocumentController.UpdateDocument(UgovorOZakupuWebAPI.Models.DocumentDto)">
+             <summary>
+             Modifikacija dokument
+             </summary>
+             <param name="documentDto">Model dokumenta</param>
+             <returns>Potvrda o modifikaciji dokumenta</returns>
+             <response code="200">Izmenjen dokument</response>
+             <response code="404">Nije pronađen dokument za uneti ID</response>
+             <response code="500">Serverska greška tokom modifikacije dokumenta</response>
+            
+        </member>
+        <!-- Badly formed XML comment ignored for member "M:UgovorOZakupuWebAPI.Controllers.DocumentController.DeleteDocument(System.Guid)" -->
+        <member name="T:UgovorOZakupuWebAPI.Controllers.GuaranteeTypeController">
+            <summary>
+            Kontroler za tip garancije
+            </summary>
+        </member>
+        <!-- Badly formed XML comment ignored for member "M:UgovorOZakupuWebAPI.Controllers.GuaranteeTypeController.#ctor(UgovorOZakupuWebAPI.Data.IGuaranteeTypeRepository,AutoMapper.IMapper,UgovorOZakupuWebAPI.ServiceCalls.ILoggerService)" -->
+        <member name="M:UgovorOZakupuWebAPI.Controllers.GuaranteeTypeController.GetGuaranteeTypes">
+            <summary>
+            Vraća sve tipove garancija
+            </summary>
+            <returns>Lista tipova garancija</returns>
+            <response code="200">Vraća listu tipova garancija</response>
+            <response code="404">Nije pronađen ni jedan tip garancije</response>
+            
+        </member>
+        <member name="T:UgovorOZakupuWebAPI.Controllers.LeaseAgreementController">
+            <summary>
+            Kontroler za ugovor o zakupu
+            </summary>
+        </member>
+        <!-- Badly formed XML comment ignored for member "M:UgovorOZakupuWebAPI.Controllers.LeaseAgreementController.#ctor(UgovorOZakupuWebAPI.Data.ILeaseAgreementRepository,Microsoft.AspNetCore.Routing.LinkGenerator,AutoMapper.IMapper,UgovorOZakupuWebAPI.ServiceCalls.ILoggerService)" -->
+        <member name="M:UgovorOZakupuWebAPI.Controllers.LeaseAgreementController.GetLeaseAgreements(System.String)">
+            <summary>
+            Vraća ugovore o zakupu
+            </summary>
+            <returns>Lista ugovora o zakupu</returns>
+            <response code="200">Vraća listu ugovora o zakupu</response>
+            <response code="404">Nije pronađen ni jedan ugovor o zakupu</response>
+            
+        </member>
+        <member name="M:UgovorOZakupuWebAPI.Controllers.LeaseAgreementController.GetLeaseAgreementById(System.Guid)">
+             <summary>
+             Vraća jedan ugovor o zakupu na osnovu ID-a
+             </summary>
+             <param name="leaseAgreementId">ID oglasa</param>
+             <returns>Ugovor o zakupu</returns>
+             <response code="200">Vraća traženi ugovor o zakupu</response>
+             <response code="404">Nije pronađen ugovor o zakupu za uneti ID</response>
+            
+        </member>
+        <member name="M:UgovorOZakupuWebAPI.Controllers.LeaseAgreementController.CreateLeaseAgreement(UgovorOZakupuWebAPI.Models.LeaseAgreementCreationDto)">
+             <summary>
+             Kreira novi ugovor o zakupu
+             </summary>
+             <param name="leaseAgreementDto">Model ugovora u zakupu</param>
+             <remarks>
+             Primer zahteva za kreiranje novog oglasa \
+             POST /api/leaseAgreement \
+             {   
+                 "serialNumber": "012392", \
+                 "recordDate": "2022-01-31T18:32:34.4441329",\
+                 "landReturnDeadline": "2022-01-31T18:32:34.4441329",\
+                 "placeOfSigning": "Novi Sad", \
+                 "dateOfSigning": "2022-01-31T18:32:34.4441329", \
+                 "contractedPublicBidding": { "additionalInfo": "Sto pre."}, \
+                 "contractParty":{}, \
+                 "guaranteeType": {"type": "Žirantska"}, \
+                 "decision": {  \
+                     "fileNumber": "File002",\
+                     "date": null,
+                     "documentAdoptionDate": null, \
+                     "template": "template2", \
+                     "documentAuthor" : { \
+                         "agencyInfo": "Agencija zaa zavod 025" \
+                         } \
+                  }, \
+                  "maturityDeadlines" : [ \
+                  { \
+                      "maturityDeadlineId": "4546fd1d-aebf-4423-9d11-0a5908ce1aa8", \ \
+                      "deadline": 1 \
+                  } \
+                  ] \ 
+            }
+             </remarks>
+             <returns>Potvrda o kreiranju ugovora o zakupu</returns>
+             <response code="201">Vraća kreirani ugovor o zakupu</response>
+             <response code="500">Desila se greška prilikom unosa novog ugovora o zakupu</response>
+            
+        </member>
+        <member name="M:UgovorOZakupuWebAPI.Controllers.LeaseAgreementController.UpdateLeaseAgreement(UgovorOZakupuWebAPI.Models.LeaseAgreementUpdateDto)">
+             <summary>
+             Modifikacija ugovora o zakupu
+             </summary>
+             <param name="leaseAgreementDto">Model ugovora o zakupu</param>
+             <returns>Potvrda o modifikaciji ugovora o zakupu</returns>
+             <response code="200">Izmenjen ugovor o zakupu</response>
+             <response code="404">Nije pronađen ugovor o zakupu za uneti ID</response>
+             <response code="500">Serverska greška tokom modifikacije ugovora o zakupu</response>
+            
+        </member>
+        <member name="M:UgovorOZakupuWebAPI.Controllers.LeaseAgreementController.DeleteLeaseAgreement(System.Guid)">
+            <summary>
+            Brisanje ugovora o zakupu na osnovu ID-a
+            </summary>
+            <param name="leaseAgreementId">ID ugovora o zakupu</param>
+            <returns>Status 204 (NoContent)</returns>
+            <response code="204">Ugovor o zakupu je uspešno obrisan</response>
+            <response code="404">Nije pronađen ugovor o zakupu za uneti ID</response>
+            <response code="500">Serverska greška tokom brisanja ugovora o zakupu</response>
+            
+        </member>
+        <member name="T:UgovorOZakupuWebAPI.Entities.ContractedPublicBidding">
+            <summary>
+            Entitet ugovoreno javno nadmetanje
+            </summary>
+        </member>
+        <member name="P:UgovorOZakupuWebAPI.Entities.ContractedPublicBidding.ContractedPublicBiddingId">
+            <summary>
+            Javno nadmetanje id
+            </summary>
+        </member>
+        <member name="P:UgovorOZakupuWebAPI.Entities.ContractedPublicBidding.AdditionalInfo">
+            <summary>
+            dodatne informacijes
+            </summary>
+        </member>
+        <member name="T:UgovorOZakupuWebAPI.Entities.ContractedPublicBiddingConfirmation">
+            <summary>
+            Entitet potvrda ugovoreno javno nadmetanje 
+            </summary>
+        </member>
+        <member name="P:UgovorOZakupuWebAPI.Entities.ContractedPublicBiddingConfirmation.ContractedPublicBiddingId">
+            <summary>
+            ID ugovorenog javnog nadmetanja
+            </summary>
+        </member>
+        <member name="P:UgovorOZakupuWebAPI.Entities.ContractedPublicBiddingConfirmation.AdditionalInfo">
+            <summary>
+            dodatne informacije
+            </summary>
+        </member>
+        <member name="T:UgovorOZakupuWebAPI.Entities.ContractParty">
+            <summary>
+            Entitet ucesnik ugovora
+            </summary>
+        </member>
+        <member name="P:UgovorOZakupuWebAPI.Entities.ContractParty.ContractPartyId">
+            <summary>
+            ID ucesnika ugovora
+            </summary>
+        </member>
+        <member name="T:UgovorOZakupuWebAPI.Entities.ContractPartyConfirmation">
+            <summary>
+            Entitet potvrda ucesnika ugovora
+            </summary>
+        </member>
+        <member name="P:UgovorOZakupuWebAPI.Entities.ContractPartyConfirmation.ContractPartyId">
+            <summary>
+            ID ucenika ugovora
+            </summary>
+        </member>
+        <member name="T:UgovorOZakupuWebAPI.Entities.Document">
+            <summary>
+            Entitet dokument
+            </summary>
+        </member>
+        <member name="P:UgovorOZakupuWebAPI.Entities.Document.DocumentId">
+            <summary>
+            ID dokumenta
+            </summary>
+        </member>
+        <member name="P:UgovorOZakupuWebAPI.Entities.Document.FileNumber">
+            <summary>
+            serijski broj
+            </summary>
+        </member>
+        <member name="P:UgovorOZakupuWebAPI.Entities.Document.Date">
+            <summary>
+            datum
+            </summary>
+        </member>
+        <member name="P:UgovorOZakupuWebAPI.Entities.Document.DocumentAdoptionDate">
+            <summary>
+            datum zakljucenja ugovora
+            </summary>
+        </member>
+        <member name="P:UgovorOZakupuWebAPI.Entities.Document.Template">
+            <summary>
+            template
+            </summary>
+        </member>
+        <member name="P:UgovorOZakupuWebAPI.Entities.Document.DocumentAuthorId">
+            <summary>
+            ID autora dokumenta
+            </summary>
+        </member>
+        <member name="P:UgovorOZakupuWebAPI.Entities.Document.DocumentAuthor">
+            <summary>
+            Autor dokumenta
+            </summary>
+        </member>
+        <member name="T:UgovorOZakupuWebAPI.Entities.DocumentAuthor">
+            <summary>
+            Entitet Autor dokumenta
+            </summary>
+        </member>
+        <member name="P:UgovorOZakupuWebAPI.Entities.DocumentAuthor.DocumentAuthorId">
+            <summary>
+            ID autora dokmenta
+            </summary>
+        </member>
+        <member name="P:UgovorOZakupuWebAPI.Entities.DocumentAuthor.AgencyInfo">
+            <summary>
+            Informacije o agenciji
+            </summary>
+        </member>
+        <member name="T:UgovorOZakupuWebAPI.Entities.DocumentAuthorConfirmation">
+            <summary>
+            Entitet potvrda autora dokumenta
+            </summary>
+        </member>
+        <member name="P:UgovorOZakupuWebAPI.Entities.DocumentAuthorConfirmation.DocumentAuthorId">
+            <summary>
+            ID autora dokumenta
+            </summary>
+        </member>
+        <member name="P:UgovorOZakupuWebAPI.Entities.DocumentAuthorConfirmation.AgencyInfo">
+            <summary>
+            Informacije o agenciji
+            </summary>
+        </member>
+        <member name="T:UgovorOZakupuWebAPI.Entities.DocumentConfirmation">
+            <summary>
+            Entitet potvrda dokumenta
+            </summary>
+        </member>
+        <member name="P:UgovorOZakupuWebAPI.Entities.DocumentConfirmation.DocumentId">
+            <summary>
+            ID dokumenta
+            </summary>
+        </member>
+        <member name="P:UgovorOZakupuWebAPI.Entities.DocumentConfirmation.FileNumber">
+            <summary>
+            serijski broj
+            </summary>
+        </member>
+        <member name="T:UgovorOZakupuWebAPI.Entities.GuaranteeType">
+            <summary>
+            Entitet tip garancije
+            </summary>
+        </member>
+        <member name="P:UgovorOZakupuWebAPI.Entities.GuaranteeType.GuaranteeTypeId">
+            <summary>
+            ID tipa garancije
+            </summary>
+        </member>
+        <member name="P:UgovorOZakupuWebAPI.Entities.GuaranteeType.Type">
+            <summary>
+            tip
+            </summary>
+        </member>
+        <member name="T:UgovorOZakupuWebAPI.Entities.LeaseAgreement">
+            <summary>
+            Entitet ugovor o zakupu
+            </summary>
+        </member>
+        <member name="P:UgovorOZakupuWebAPI.Entities.LeaseAgreement.LeaseAgreementId">
+            <summary>
+            ID ugovor o zakupu
+            </summary>
+        </member>
+        <member name="P:UgovorOZakupuWebAPI.Entities.LeaseAgreement.SerialNumber">
+            <summary>
+            serijski broj
+            </summary>
+        </member>
+        <member name="P:UgovorOZakupuWebAPI.Entities.LeaseAgreement.RecordDate">
+            <summary>
+            Datum
+            </summary>
+        </member>
+        <member name="P:UgovorOZakupuWebAPI.Entities.LeaseAgreement.LandReturnDeadline">
+            <summary>
+            Rok za vracanje
+            </summary>
+        </member>
+        <member name="P:UgovorOZakupuWebAPI.Entities.LeaseAgreement.PlaceOfSigning">
+            <summary>
+            Mesto potpisivanja
+            </summary>
+        </member>
+        <member name="P:UgovorOZakupuWebAPI.Entities.LeaseAgreement.DateOfSigning">
+            <summary>
+            Datum potpisivanja
+            </summary>
+        </member>
+        <member name="P:UgovorOZakupuWebAPI.Entities.LeaseAgreement.IsDelete">
+            <summary>
+            logicko brisanje
+            </summary>
+        </member>
+        <member name="P:UgovorOZakupuWebAPI.Entities.LeaseAgreement.ContractedPublicBiddingId">
+            <summary>
+            ugovoreno javno nadmetanje ID
+            </summary>
+        </member>
+        <member name="P:UgovorOZakupuWebAPI.Entities.LeaseAgreement.ContractedPublicBidding">
+            <summary>
+            ugovoreno javno nadmetanje
+            </summary>
+        </member>
+        <member name="P:UgovorOZakupuWebAPI.Entities.LeaseAgreement.ContractPartyId">
+            <summary>
+            ucesnik ugovora id
+            </summary>
+        </member>
+        <member name="P:UgovorOZakupuWebAPI.Entities.LeaseAgreement.ContractParty">
+            <summary>
+            ucesnik ugovora
+            </summary>
+        </member>
+        <member name="P:UgovorOZakupuWebAPI.Entities.LeaseAgreement.GuaranteeTypeId">
+            <summary>
+            tip garancije id
+            </summary>
+        </member>
+        <member name="P:UgovorOZakupuWebAPI.Entities.LeaseAgreement.GuaranteeType">
+            <summary>
+            tip garancije
+            </summary>
+        </member>
+        <member name="P:UgovorOZakupuWebAPI.Entities.LeaseAgreement.DecisionId">
+            <summary>
+            id odluke
+            </summary>
+        </member>
+        <member name="P:UgovorOZakupuWebAPI.Entities.LeaseAgreement.Decision">
+            <summary>
+            odluka
+            </summary>
+        </member>
+        <member name="P:UgovorOZakupuWebAPI.Entities.LeaseAgreement.MaturityDeadlines">
+            <summary>
+            lista rokova
+            </summary>
+        </member>
+        <member name="T:UgovorOZakupuWebAPI.Entities.LeaseAgreementConfirmation">
+            <summary>
+            Entitet potvrda ugovora o zakupu
+            </summary>
+        </member>
+        <member name="P:UgovorOZakupuWebAPI.Entities.LeaseAgreementConfirmation.LeaseAgreementId">
+            <summary>
+            ID ugovora o zakupu
+            </summary>
+        </member>
+        <member name="P:UgovorOZakupuWebAPI.Entities.LeaseAgreementConfirmation.SerialNumber">
+            <summary>
+            serijski broj
+            </summary>
+        </member>
+        <member name="T:UgovorOZakupuWebAPI.Entities.LeaseAgreementCreation">
+            <summary>
+            Entitet kreacija ugovora o zakupu
+            </summary>
+        </member>
+        <member name="P:UgovorOZakupuWebAPI.Entities.LeaseAgreementCreation.LeaseAgreementId">
+            <summary>
+            ID ugovora o zakupu
+            </summary>
+        </member>
+        <member name="P:UgovorOZakupuWebAPI.Entities.LeaseAgreementCreation.SerialNumber">
+            <summary>
+            serijski broj
+            </summary>
+        </member>
+        <member name="P:UgovorOZakupuWebAPI.Entities.LeaseAgreementCreation.RecordDate">
+            <summary>
+            Datum
+            </summary>
+        </member>
+        <member name="P:UgovorOZakupuWebAPI.Entities.LeaseAgreementCreation.LandReturnDeadline">
+            <summary>
+            Rok za vracanje
+            </summary>
+        </member>
+        <member name="P:UgovorOZakupuWebAPI.Entities.LeaseAgreementCreation.PlaceOfSigning">
+            <summary>
+            Mesto potpisivanja
+            </summary>
+        </member>
+        <member name="P:UgovorOZakupuWebAPI.Entities.LeaseAgreementCreation.DateOfSigning">
+            <summary>
+            Datum potpisivanja
+            </summary>
+        </member>
+        <member name="P:UgovorOZakupuWebAPI.Entities.LeaseAgreementCreation.IsDelete">
+            <summary>
+            logicko brisanje
+            </summary>
+        </member>
+        <member name="P:UgovorOZakupuWebAPI.Entities.LeaseAgreementCreation.ContractedPublicBidding">
+            <summary>
+            ugovoreno javno nadmetanje
+            </summary>
+        </member>
+        <member name="P:UgovorOZakupuWebAPI.Entities.LeaseAgreementCreation.ContractParty">
+            <summary>
+            ucesnik ugovora
+            </summary>
+        </member>
+        <member name="P:UgovorOZakupuWebAPI.Entities.LeaseAgreementCreation.GuaranteeType">
+            <summary>
+            tip garancije
+            </summary>
+        </member>
+        <member name="P:UgovorOZakupuWebAPI.Entities.LeaseAgreementCreation.Decision">
+            <summary>
+            odluka
+            </summary>
+        </member>
+        <member name="P:UgovorOZakupuWebAPI.Entities.LeaseAgreementCreation.MaturityDeadlines">
+            <summary>
+            lista rokova
+            </summary>
+        </member>
+        <member name="T:UgovorOZakupuWebAPI.Entities.LeaseAgreementWithLists">
+            <summary>
+            Entitet ugovor o zakupu sa listama
+            </summary>
+        </member>
+        <member name="P:UgovorOZakupuWebAPI.Entities.LeaseAgreementWithLists.LeaseAgreementId">
+            <summary>
+            ID ugovor o zakupu
+            </summary>
+        </member>
+        <member name="P:UgovorOZakupuWebAPI.Entities.LeaseAgreementWithLists.SerialNumber">
+            <summary>
+            serijski broj
+            </summary>
+        </member>
+        <member name="P:UgovorOZakupuWebAPI.Entities.LeaseAgreementWithLists.RecordDate">
+            <summary>
+            Datum
+            </summary>
+        </member>
+        <member name="P:UgovorOZakupuWebAPI.Entities.LeaseAgreementWithLists.LandReturnDeadline">
+            <summary>
+            Rok za vracanje
+            </summary>
+        </member>
+        <member name="P:UgovorOZakupuWebAPI.Entities.LeaseAgreementWithLists.PlaceOfSigning">
+            <summary>
+            Mesto potpisivanja
+            </summary>
+        </member>
+        <member name="P:UgovorOZakupuWebAPI.Entities.LeaseAgreementWithLists.DateOfSigning">
+            <summary>
+            Datum potpisivanja
+            </summary>
+        </member>
+        <member name="P:UgovorOZakupuWebAPI.Entities.LeaseAgreementWithLists.IsDelete">
+            <summary>
+            logicko brisanje
+            </summary>
+        </member>
+        <member name="P:UgovorOZakupuWebAPI.Entities.LeaseAgreementWithLists.MaturityDeadlines">
+            <summary>
+            lista rokova
+            </summary>
+        </member>
+        <member name="P:UgovorOZakupuWebAPI.Entities.LeaseAgreementWithLists.ContractedPublicBiddingId">
+            <summary>
+            ugovoreno javno nadmetanje ID
+            </summary>
+        </member>
+        <member name="P:UgovorOZakupuWebAPI.Entities.LeaseAgreementWithLists.ContractedPublicBidding">
+            <summary>
+            ugovoreno javno nadmetanje
+            </summary>
+        </member>
+        <member name="P:UgovorOZakupuWebAPI.Entities.LeaseAgreementWithLists.ContractPartyId">
+            <summary>
+            ucesnik ugovora id
+            </summary>
+        </member>
+        <member name="P:UgovorOZakupuWebAPI.Entities.LeaseAgreementWithLists.ContractParty">
+            <summary>
+            ucesnik ugovora
+            </summary>
+        </member>
+        <member name="P:UgovorOZakupuWebAPI.Entities.LeaseAgreementWithLists.GuaranteeTypeId">
+            <summary>
+            tip garancije id
+            </summary>
+        </member>
+        <member name="P:UgovorOZakupuWebAPI.Entities.LeaseAgreementWithLists.GuaranteeType">
+            <summary>
+            tip garancije
+            </summary>
+        </member>
+        <member name="P:UgovorOZakupuWebAPI.Entities.LeaseAgreementWithLists.DecisionId">
+            <summary>
+            id odluke
+            </summary>
+        </member>
+        <member name="P:UgovorOZakupuWebAPI.Entities.LeaseAgreementWithLists.Decision">
+            <summary>
+            odluka
+            </summary>
+        </member>
+        <member name="T:UgovorOZakupuWebAPI.Entities.MaturityDeadline">
+            <summary>
+            rokovi dospeca
+            </summary>
+        </member>
+        <member name="P:UgovorOZakupuWebAPI.Entities.MaturityDeadline.MaturityDeadlineId">
+            <summary>
+            id
+            </summary>
+        </member>
+        <member name="P:UgovorOZakupuWebAPI.Entities.MaturityDeadline.LeaseAgreementId">
+            <summary>
+            ugovoreno javno nadmetanje id
+            </summary>
+        </member>
+        <member name="P:UgovorOZakupuWebAPI.Entities.MaturityDeadline.Deadline">
+            <summary>
+            rok
+            </summary>
+        </member>
+        <member name="T:UgovorOZakupuWebAPI.Models.ContractedPublicBiddingConfirmationDto">
+            <summary>
+            Dto potvrda ugovorenog javnog nadmetanja
+            </summary>
+        </member>
+        <member name="P:UgovorOZakupuWebAPI.Models.ContractedPublicBiddingConfirmationDto.ContractedPublicBiddingId">
+            <summary>
+            ID
+            </summary>
+        </member>
+        <member name="P:UgovorOZakupuWebAPI.Models.ContractedPublicBiddingConfirmationDto.AdditionalInfo">
+            <summary>
+            dodatne informacije
+            </summary>
+        </member>
+        <member name="T:UgovorOZakupuWebAPI.Models.ContractedPublicBiddingCreationDto">
+            <summary>
+            Dto kreiranje ugovorenog javnog nadmetanja
+            </summary>
+        </member>
+        <member name="P:UgovorOZakupuWebAPI.Models.ContractedPublicBiddingCreationDto.ContractedPublicBiddingId">
+            <summary>
+            id
+            </summary>
+        </member>
+        <member name="P:UgovorOZakupuWebAPI.Models.ContractedPublicBiddingCreationDto.AdditionalInfo">
+            <summary>
+            dodatne informacije
+            </summary>
+        </member>
+        <member name="T:UgovorOZakupuWebAPI.Models.ContractedPublicBiddingDto">
+            <summary>
+            Dto ugovoreno javno nadmetanje
+            </summary>
+        </member>
+        <member name="P:UgovorOZakupuWebAPI.Models.ContractedPublicBiddingDto.ContractedPublicBiddingId">
+            <summary>
+            ID
+            </summary>
+        </member>
+        <member name="P:UgovorOZakupuWebAPI.Models.ContractedPublicBiddingDto.AdditionalInfo">
+            <summary>
+            dodatne informacije
+            </summary>
+        </member>
+        <member name="T:UgovorOZakupuWebAPI.Models.ContractPartyConfirmationDto">
+            <summary>
+            Dto potvrda ucesnika ugovora
+            </summary>
+        </member>
+        <member name="P:UgovorOZakupuWebAPI.Models.ContractPartyConfirmationDto.ContractPartyId">
+            <summary>
+            ID
+            </summary>
+        </member>
+        <member name="T:UgovorOZakupuWebAPI.Models.ContractPartyCreationDto">
+            <summary>
+            Dto kreacija ucesnika ugovora
+            </summary>
+        </member>
+        <member name="P:UgovorOZakupuWebAPI.Models.ContractPartyCreationDto.ContractPartyId">
+            <summary>
+            ID
+            </summary>
+        </member>
+        <member name="T:UgovorOZakupuWebAPI.Models.ContractPartyDto">
+            <summary>
+            Dto ucesnik ugovora
+            </summary>
+        </member>
+        <member name="P:UgovorOZakupuWebAPI.Models.ContractPartyDto.ContractPartyId">
+            <summary>
+            id
+            </summary>
+        </member>
+        <member name="T:UgovorOZakupuWebAPI.Models.DocumentAuthorConfirmationDto">
+            <summary>
+            Dto potvrda autora dokumenta
+            </summary>
+        </member>
+        <member name="P:UgovorOZakupuWebAPI.Models.DocumentAuthorConfirmationDto.DocumentAuthorId">
+            <summary>
+            ID
+            </summary>
+        </member>
+        <member name="P:UgovorOZakupuWebAPI.Models.DocumentAuthorConfirmationDto.AgencyInfo">
+            <summary>
+            informacije o agenciji
+            </summary>
+        </member>
+        <member name="T:UgovorOZakupuWebAPI.Models.DocumentAuthorCreationDto">
+            <summary>
+            Dto Create oglas
+            </summary>
+        </member>
+        <member name="P:UgovorOZakupuWebAPI.Models.DocumentAuthorCreationDto.DocumentAuthorId">
+            <summary>
+            ID
+            </summary>
+        </member>
+        <member name="P:UgovorOZakupuWebAPI.Models.DocumentAuthorCreationDto.AgencyInfo">
+            <summary>
+            Dto agencija informacije
+            </summary>
+        </member>
+        <member name="T:UgovorOZakupuWebAPI.Models.DocumentAuthorDto">
+            <summary>
+            Dto autor dokumenta
+            </summary>
+        </member>
+        <member name="P:UgovorOZakupuWebAPI.Models.DocumentAuthorDto.DocumentAuthorId">
+            <summary>
+            ID
+            </summary>
+        </member>
+        <member name="P:UgovorOZakupuWebAPI.Models.DocumentAuthorDto.AgencyInfo">
+            <summary>
+            informacije o agenciji
+            </summary>
+        </member>
+        <member name="T:UgovorOZakupuWebAPI.Models.DocumentConfirmationDto">
+            <summary>
+            Dto potvrda dokumenta
+            </summary>
+        </member>
+        <member name="P:UgovorOZakupuWebAPI.Models.DocumentConfirmationDto.DocumentId">
+            <summary>
+            ID
+            </summary>
+        </member>
+        <member name="P:UgovorOZakupuWebAPI.Models.DocumentConfirmationDto.FileNumber">
+            <summary>
+            broj dokumenta
+            </summary>
+        </member>
+        <member name="T:UgovorOZakupuWebAPI.Models.DocumentCreationDto">
+            <summary>
+            Dto kreiranje dokumenta
+            </summary>
+        </member>
+        <member name="P:UgovorOZakupuWebAPI.Models.DocumentCreationDto.DocumentId">
+            <summary>
+            ID
+            </summary>
+        </member>
+        <member name="P:UgovorOZakupuWebAPI.Models.DocumentCreationDto.FileNumber">
+            <summary>
+            broj dokumenta
+            </summary>
+        </member>
+        <member name="T:UgovorOZakupuWebAPI.Models.DocumentDto">
+            <summary>
+            Dto dokument
+            </summary>
+        </member>
+        <member name="P:UgovorOZakupuWebAPI.Models.DocumentDto.DocumentId">
+            <summary>
+            ID
+            </summary>
+        </member>
+        <member name="P:UgovorOZakupuWebAPI.Models.DocumentDto.FileNumber">
+            <summary>
+            broj dokumenta
+            </summary>
+        </member>
+        <member name="P:UgovorOZakupuWebAPI.Models.DocumentDto.Date">
+            <summary>
+            datum
+            </summary>
+        </member>
+        <member name="P:UgovorOZakupuWebAPI.Models.DocumentDto.DocumentAdoptionDate">
+            <summary>
+            datum zakljucenja
+            </summary>
+        </member>
+        <member name="P:UgovorOZakupuWebAPI.Models.DocumentDto.Template">
+            <summary>
+            sablon
+            </summary>
+        </member>
+        <member name="P:UgovorOZakupuWebAPI.Models.DocumentDto.DocumentAuthorId">
+            <summary>
+            ID autora dokumenta
+            </summary>
+        </member>
+        <member name="P:UgovorOZakupuWebAPI.Models.DocumentDto.DocumentAuthor">
+            <summary>
+            autor dokumenta
+            </summary>
+        </member>
+        <member name="T:UgovorOZakupuWebAPI.Models.GuaranteeTypeDto">
+            <summary>
+            Dto tip garancije
+            </summary>
+        </member>
+        <member name="P:UgovorOZakupuWebAPI.Models.GuaranteeTypeDto.GuaranteeTypeId">
+            <summary>
+            Tip garancije ID
+            </summary>
+        </member>
+        <member name="P:UgovorOZakupuWebAPI.Models.GuaranteeTypeDto.Type">
+            <summary>
+            tip
+            </summary>
+        </member>
+        <member name="T:UgovorOZakupuWebAPI.Models.LeaseAgreementConfirmationDto">
+            <summary>
+            Dto potvrde ugovora o zakupu
+            </summary>
+        </member>
+        <member name="P:UgovorOZakupuWebAPI.Models.LeaseAgreementConfirmationDto.LeaseAgreementId">
+            <summary>
+            ID
+            </summary>
+        </member>
+        <member name="P:UgovorOZakupuWebAPI.Models.LeaseAgreementConfirmationDto.SerialNumber">
+            <summary>
+            serijski broj
+            </summary>
+        </member>
+        <member name="T:UgovorOZakupuWebAPI.Models.LeaseAgreementCreationDto">
+            <summary>
+            Dto kreiranje ugovora o zakupu
+            </summary>
+        </member>
+        <member name="P:UgovorOZakupuWebAPI.Models.LeaseAgreementCreationDto.LeaseAgreementId">
+            <summary>
+            ID
+            </summary>
+        </member>
+        <member name="P:UgovorOZakupuWebAPI.Models.LeaseAgreementCreationDto.SerialNumber">
+            <summary>
+            serijski broj
+            </summary>
+        </member>
+        <member name="P:UgovorOZakupuWebAPI.Models.LeaseAgreementCreationDto.RecordDate">
+            <summary>
+            datum zakljucivanja
+            </summary>
+        </member>
+        <member name="P:UgovorOZakupuWebAPI.Models.LeaseAgreementCreationDto.LandReturnDeadline">
+             <summary>
+            rok za vracanje
+             </summary>
+        </member>
+        <member name="P:UgovorOZakupuWebAPI.Models.LeaseAgreementCreationDto.PlaceOfSigning">
+            <summary>
+            mesto zakljucivanja
+            </summary>
+        </member>
+        <member name="P:UgovorOZakupuWebAPI.Models.LeaseAgreementCreationDto.DateOfSigning">
+            <summary>
+            datum zakljucivanja
+            </summary>
+        </member>
+        <member name="P:UgovorOZakupuWebAPI.Models.LeaseAgreementCreationDto.IsDelete">
+            <summary>
+            logicko brisanje
+            </summary>
+        </member>
+        <member name="P:UgovorOZakupuWebAPI.Models.LeaseAgreementCreationDto.ContractedPublicBidding">
+            <summary>
+            ugovoreno javno nadmetanje
+            </summary>
+        </member>
+        <member name="P:UgovorOZakupuWebAPI.Models.LeaseAgreementCreationDto.ContractParty">
+            <summary>
+            ucesnik ugovora
+            </summary>
+        </member>
+        <member name="P:UgovorOZakupuWebAPI.Models.LeaseAgreementCreationDto.GuaranteeType">
+            <summary>
+            tip garancije
+            </summary>
+        </member>
+        <member name="P:UgovorOZakupuWebAPI.Models.LeaseAgreementCreationDto.Decision">
+            <summary>
+            odluka
+            </summary>
+        </member>
+        <member name="P:UgovorOZakupuWebAPI.Models.LeaseAgreementCreationDto.MaturityDeadlines">
+            <summary>
+            rokovi za vracanje
+            </summary>
+        </member>
+        <member name="T:UgovorOZakupuWebAPI.Models.LeaseAgreementDto">
+            <summary>
+            Dto ugovor o zakupu
+            </summary>
+        </member>
+        <member name="P:UgovorOZakupuWebAPI.Models.LeaseAgreementDto.LeaseAgreementId">
+            <summary>
+            ID
+            </summary>
+        </member>
+        <member name="P:UgovorOZakupuWebAPI.Models.LeaseAgreementDto.SerialNumber">
+            <summary>
+            serijski broj
+            </summary>
+        </member>
+        <member name="P:UgovorOZakupuWebAPI.Models.LeaseAgreementDto.RecordDate">
+            <summary>
+             datum zakljucivanja
+            </summary>
+        </member>
+        <member name="P:UgovorOZakupuWebAPI.Models.LeaseAgreementDto.LandReturnDeadline">
+            <summary>
+            rok za vracanje
+            </summary>
+        </member>
+        <member name="P:UgovorOZakupuWebAPI.Models.LeaseAgreementDto.PlaceOfSigning">
+            <summary>
+            mesto zakljucivanja
+            </summary>
+        </member>
+        <member name="P:UgovorOZakupuWebAPI.Models.LeaseAgreementDto.DateOfSigning">
+            <summary>
+            datum zakljucivanja
+            </summary>
+        </member>
+        <member name="P:UgovorOZakupuWebAPI.Models.LeaseAgreementDto.IsDelete">
+            <summary>
+            logicko brisanje
+            </summary>
+        </member>
+        <member name="P:UgovorOZakupuWebAPI.Models.LeaseAgreementDto.ContractedPublicBidding">
+            <summary>
+            ugovoreno javno nadmetanje
+            </summary>
+        </member>
+        <member name="P:UgovorOZakupuWebAPI.Models.LeaseAgreementDto.ContractParty">
+            <summary>
+            Ducesnik ugovora
+            </summary>
+        </member>
+        <member name="P:UgovorOZakupuWebAPI.Models.LeaseAgreementDto.GuaranteeType">
+            <summary>
+            tip garancije
+            </summary>
+        </member>
+        <member name="P:UgovorOZakupuWebAPI.Models.LeaseAgreementDto.Decision">
+            <summary>
+            odluka
+            </summary>
+        </member>
+        <member name="P:UgovorOZakupuWebAPI.Models.LeaseAgreementDto.MaturityDeadlines">
+            <summary>
+            rokovi za vracanje
+            </summary>
+        </member>
+        <member name="T:UgovorOZakupuWebAPI.Models.LeaseAgreementUpdateDto">
+            <summary>
+            Dto azuriranje ugovora o zakupu
+            </summary>
+        </member>
+        <member name="P:UgovorOZakupuWebAPI.Models.LeaseAgreementUpdateDto.LeaseAgreementId">
+            <summary>
+            ID ugovor o zakupu
+            </summary>
+        </member>
+        <member name="P:UgovorOZakupuWebAPI.Models.LeaseAgreementUpdateDto.SerialNumber">
+            <summary>
+            serijski broj
+            </summary>
+        </member>
+        <member name="P:UgovorOZakupuWebAPI.Models.LeaseAgreementUpdateDto.RecordDate">
+            <summary>
+            Datum
+            </summary>
+        </member>
+        <member name="P:UgovorOZakupuWebAPI.Models.LeaseAgreementUpdateDto.LandReturnDeadline">
+            <summary>
+            Rok za vracanje
+            </summary>
+        </member>
+        <member name="P:UgovorOZakupuWebAPI.Models.LeaseAgreementUpdateDto.PlaceOfSigning">
+            <summary>
+            Mesto potpisivanja
+            </summary>
+        </member>
+        <member name="P:UgovorOZakupuWebAPI.Models.LeaseAgreementUpdateDto.DateOfSigning">
+            <summary>
+            Datum potpisivanja
+            </summary>
+        </member>
+        <member name="P:UgovorOZakupuWebAPI.Models.LeaseAgreementUpdateDto.IsDelete">
+            <summary>
+            logicko brisanje
+            </summary>
+        </member>
+        <member name="P:UgovorOZakupuWebAPI.Models.LeaseAgreementUpdateDto.ContractedPublicBiddingId">
+            <summary>
+            ugovoreno javno nadmetanje ID
+            </summary>
+        </member>
+        <member name="P:UgovorOZakupuWebAPI.Models.LeaseAgreementUpdateDto.ContractedPublicBidding">
+            <summary>
+            ugovoreno javno nadmetanje
+            </summary>
+        </member>
+        <member name="P:UgovorOZakupuWebAPI.Models.LeaseAgreementUpdateDto.ContractPartyId">
+            <summary>
+            ucesnik ugovora id
+            </summary>
+        </member>
+        <member name="P:UgovorOZakupuWebAPI.Models.LeaseAgreementUpdateDto.ContractParty">
+            <summary>
+            ucesnik ugovora
+            </summary>
+        </member>
+        <member name="P:UgovorOZakupuWebAPI.Models.LeaseAgreementUpdateDto.GuaranteeTypeId">
+            <summary>
+            tip garancije id
+            </summary>
+        </member>
+        <member name="P:UgovorOZakupuWebAPI.Models.LeaseAgreementUpdateDto.GuaranteeType">
+            <summary>
+            tip garancije
+            </summary>
+        </member>
+        <member name="P:UgovorOZakupuWebAPI.Models.LeaseAgreementUpdateDto.DecisionId">
+            <summary>
+            id odluke
+            </summary>
+        </member>
+        <member name="P:UgovorOZakupuWebAPI.Models.LeaseAgreementUpdateDto.Decision">
+            <summary>
+            odluka
+            </summary>
+        </member>
+        <member name="P:UgovorOZakupuWebAPI.Models.LeaseAgreementUpdateDto.MaturityDeadlines">
+            <summary>
+            lista rokova
+            </summary>
+        </member>
+    </members>
+</doc>
