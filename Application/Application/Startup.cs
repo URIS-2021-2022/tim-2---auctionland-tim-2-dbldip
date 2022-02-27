@@ -33,10 +33,7 @@ namespace Application
         {
 
             services.AddControllers();
-            services.AddSwaggerGen(c =>
-            {
-                c.SwaggerDoc("v1", new OpenApiInfo { Title = "Application", Version = "v1" });
-            });
+
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
             services.AddScoped<IApplicationRepository, ApplicationRepository>();
             services.AddScoped<IPriorityRepository, PriorityRepository>();
