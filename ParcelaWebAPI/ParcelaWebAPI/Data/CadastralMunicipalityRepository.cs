@@ -11,12 +11,11 @@ namespace ParcelaWebAPI.Data
     {
 
         private readonly ParcelContext context;
-        private readonly IMapper mapper;
 
-        public CadastralMunicipalityRepository(ParcelContext context, IMapper mapper)
+
+        public CadastralMunicipalityRepository(ParcelContext context)
         {
             this.context = context;
-            this.mapper = mapper;
         }
         public List<CadastralMunicipality> GetCadastralMunicipalities(string nameOfCadastralMunicipality = null)
         {

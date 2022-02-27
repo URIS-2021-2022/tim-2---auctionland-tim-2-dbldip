@@ -11,12 +11,11 @@ namespace ParcelaWebAPI.Data
     {
 
         private readonly ParcelContext context;
-        private readonly IMapper mapper;
 
-        public ProtectedZoneRepository(ParcelContext context, IMapper mapper)
+
+        public ProtectedZoneRepository(ParcelContext context)
         {
             this.context = context;
-            this.mapper = mapper;
         }
         public ProtectedZone GetProtectedZoneById(Guid protectedZoneId)
         {
