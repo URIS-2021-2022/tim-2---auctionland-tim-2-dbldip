@@ -315,15 +315,11 @@ namespace PublicBiddingAPI.Controllers
             try
             {
                 var publicBiddingOld = mapper.Map<PublicBiddingWithoutLists>(publicBiddingRepository.getPublicBidding(publicBidding.publicBiddingId));
-                //var publicBiddingOld = publicBiddingRepository.getPublicBidding(publicBidding.publicBiddingId);
                 if (publicBiddingOld == null)
                 {
                     this.loggerService.LogMessage("Public Bidding was not found", "Put", LogLevel.Warning);
                     return NoContent();
                 }
-                //var publicBiddingNew = mapper.Map<PublicBiddingWithoutLists>(publicBidding);
-                //var publicBiddingNew = mapper.Map<PublicBidding>(publicBidding);
-                //mapper.Map(publicBidding, publicBiddingOld);
                 publicBiddingRepository.UpdatePublicBidding(mapper.Map<PublicBiddingUpdate>(publicBidding));
                 publicBiddingRepository.SaveChanges();
                 this.loggerService.LogMessage("Public Bidding is changed", "Put", LogLevel.Information);
