@@ -48,7 +48,8 @@ namespace AdresaWebAPI.Data
 
         public void UpdateCountry(Country country)
         {
+            //EF implements this method, works with saveChanges()
         }
-     
+
     }
 }

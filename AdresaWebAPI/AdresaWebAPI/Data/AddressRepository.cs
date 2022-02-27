@@ -50,6 +50,7 @@ namespace AdresaWebAPI.Data
 
         public void UpdateAddress(Address address)
         {
+            //EF implements this method, works with saveChanges()
         }
     }
 }
