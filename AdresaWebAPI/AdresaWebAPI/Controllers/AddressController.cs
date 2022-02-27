@@ -3,7 +3,6 @@ using AdresaWebAPI.Entities;
 using AdresaWebAPI.Models;
 using AdresaWebAPI.ServiceCalls;
 using AutoMapper;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Routing;
@@ -15,7 +14,7 @@ using System.Threading.Tasks;
 
 namespace AdresaWebAPI.Controllers
 {
-    [Authorize]
+
     /// <summary>
     /// Address controller that provides GET, POST, DELETE AND PUT methods
     /// </summary>

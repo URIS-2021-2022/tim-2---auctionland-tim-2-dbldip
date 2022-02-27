@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 namespace AdresaWebAPI
 {
     public static class Program
+
     {
         public static void Main(string[] args)
         {

@@ -50,6 +50,5 @@ namespace AdresaWebAPI.Data
         {
             //EF implements this method, works with saveChanges()
         }
-
     }
 }
