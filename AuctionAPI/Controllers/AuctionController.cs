@@ -1,10 +1,12 @@
 ﻿using AuctionAPI.Data;
 using AuctionAPI.Entities;
 using AuctionAPI.Models;
+using AuctionAPI.ServiceCalls;
 using AutoMapper;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Routing;
+using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -25,6 +27,7 @@ namespace AuctionAPI.Controllers
         private readonly IAuctionRepository auctionRepository;
         private readonly LinkGenerator linkGenerator; 
         private readonly IMapper mapper;
+        private readonly ILoggerService loggerService;
 
         /// <summary>
         /// AuctionController konstruktor
@@ -32,11 +35,12 @@ namespace AuctionAPI.Controllers
         /// <param name="auctionRepository">Repozitorijum licitacije</param>
         /// <param name="linkGenerator">Link generator</param>
         /// <param name="mapper">AutoMapper</param>
-        public AuctionController(IAuctionRepository auctionRepository, LinkGenerator linkGenerator, IMapper mapper)
+        public AuctionController(IAuctionRepository auctionRepository, LinkGenerator linkGenerator, IMapper mapper, ILoggerService loggerService)
         {
             this.auctionRepository = auctionRepository;
             this.linkGenerator = linkGenerator;
             this.mapper = mapper;
+            this.loggerService = loggerService;
         }
 
         /// <summary>
@@ -54,10 +58,11 @@ namespace AuctionAPI.Controllers
             
             if (auctions == null || auctions.Count == 0)
             {
+                this.loggerService.LogMessage("List of auctions is empty", "Get", LogLevel.Warning);
                 return NoContent();
             }
 
-
+            this.loggerService.LogMessage("List of auctions is returned", "Get", LogLevel.Information);
             return Ok(auctions);
         }
 
@@ -78,9 +83,10 @@ namespace AuctionAPI.Controllers
 
             if (auction == null)
             {
+                this.loggerService.LogMessage("There is no auction with that id", "Get", LogLevel.Warning);
                 return NotFound();
             }
-            
+            this.loggerService.LogMessage("Auction is returned", "Get", LogLevel.Information);
             return Ok(mapper.Map<List<AuctionDto>>(auction));
         }
 
@@ -105,10 +111,13 @@ namespace AuctionAPI.Controllers
 
                 string location = linkGenerator.GetPathByAction("GetAuction", "Auction", new { auctionId = confirmation.auctionId });
                 
+                this.loggerService.LogMessage("Auction is added", "Post", LogLevel.Information);
+
                 return Created(location, mapper.Map<AuctionConfirmationDto>(confirmation));
             }
-            catch (Exception)
+            catch (Exception exception)
             {
+                this.loggerService.LogMessage("Error with adding auction", "Delete", LogLevel.Error, exception);
                 return StatusCode(StatusCodes.Status500InternalServerError, "Create error");
             }
         } 
@@ -134,16 +143,21 @@ namespace AuctionAPI.Controllers
 
                 if(auctionOld == null)
                 {
+                    this.loggerService.LogMessage("Auction can't be updated!", "Put", LogLevel.Warning);
                     return NoContent();
                 }
 
                 auctionRepository.UpdateAuction(auction);
                 auctionRepository.SaveChanges();
 
+                this.loggerService.LogMessage("Auction is updated", "Put", LogLevel.Information);
+
                 return Ok("Changed!");
             }
             catch (Exception exception)
             {
+                this.loggerService.LogMessage("Error with updating auction", "Delete", LogLevel.Error, exception);
+
                 return Conflict("ERROR: " + exception.Message);
             }
         }
@@ -168,6 +182,8 @@ namespace AuctionAPI.Controllers
                 var auctionToDelete = auctionRepository.GetAuctionById(auctionId);
                 if (auctionToDelete == null)
                 {
+                    this.loggerService.LogMessage("Auction to delete can't be found!", "Delete", LogLevel.Warning);
+
                     return NotFound();
                 }
 
@@ -175,10 +191,14 @@ namespace AuctionAPI.Controllers
 
                 auctionRepository.SaveChanges();
 
+                this.loggerService.LogMessage("Auction is deleted successfully!", "Delete", LogLevel.Warning);
+
                 return NoContent();
             }
-            catch (Exception)
+            catch (Exception exception)
             {
+                this.loggerService.LogMessage("Error with deleting auction", "Delete", LogLevel.Error, exception);
+
                 return StatusCode(StatusCodes.Status500InternalServerError, "Delete error");
             }
         }
