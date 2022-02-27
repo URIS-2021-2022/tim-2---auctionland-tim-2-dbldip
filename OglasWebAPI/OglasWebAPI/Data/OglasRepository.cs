@@ -13,12 +13,10 @@ namespace OglasWebAPI.Data
     public class OglasRepository : IOglasRepository
     {
         private readonly OglasContext _context;
-        private readonly IMapper _mapper;
 
-        public OglasRepository(OglasContext context, IMapper mapper)
+        public OglasRepository(OglasContext context)
         {
             _context = context;
-            _mapper = mapper;
         }
 
         public async Task<List<Oglas>> GetAllOglasi()
