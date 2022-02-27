@@ -13,12 +13,12 @@ namespace LiceWebAPI.Data
     public class KontaktOsobaRepository : IKontaktOsobaRepository
     {
         private readonly LiceContext _context;
-        private readonly IMapper _mapper;
+        private readonly IMapper mapper;
 
         public KontaktOsobaRepository(LiceContext context, IMapper mapper)
         {
             _context = context;
-            _mapper = mapper;
+            this.mapper = mapper;
         }
 
         public async Task<List<KontaktOsoba>> GetAllKontaktOsobe()
