@@ -25,15 +25,17 @@ namespace PublicBiddingAPI.Entities
             optionsBuilder.UseSqlServer(configuration.GetConnectionString("PublicBiddingDb"));
         }
 
-        protected override void OnModelCreating(ModelBuilder builder)
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            builder.Entity<TypeOfPublicBidding>()
+            modelBuilder.Entity<TypeOfPublicBidding>()
                 .HasData(new
                 {
                     typeOfPublicBiddingId = Guid.Parse("db2e9db5-16f1-447b-8c6d-3ffcc0277afb"),
                     typeOfPublicBiddingName= "Javno nadmetanje"
                 });
-            builder.Entity<TypeOfPublicBidding>()
+
+            modelBuilder.Entity<TypeOfPublicBidding>()
                 .HasData(new
                 {
                     typeOfPublicBiddingId = Guid.Parse("7d4d747d-e7af-4702-8e4a-cefbf69beccd"),
