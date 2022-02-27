@@ -24,51 +24,51 @@ namespace AppUserWebAPI.Entities
             optionsBuilder.UseSqlServer(configuration.GetConnectionString("UsersDb"));
         }
 
-        protected override void OnModelCreating(ModelBuilder builder)
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            builder.Entity<TypeOfUser>()
+            modelBuilder.Entity<TypeOfUser>()
                 .HasData(new
                 {
                     typeOfUserId = Guid.Parse("6ba863f6-0692-4cac-9233-c37d45c077ec"),
                     typeOfUser = "Operater"
                 });
-            builder.Entity<TypeOfUser>()
+            modelBuilder.Entity<TypeOfUser>()
                 .HasData(new
                 {
                     typeOfUserId = Guid.Parse("e9a14b65-9576-4d72-91c3-216fe76c8454"),
                     typeOfUser = "Tehnicki sekretar"
                 });
-            builder.Entity<TypeOfUser>()
+            modelBuilder.Entity<TypeOfUser>()
                 .HasData(new
                 {
                     typeOfUserId = Guid.Parse("b27196e7-3ffd-4b72-b201-1366052b2f71"),
                     typeOfUser = "Prva komisija"
                 });
-            builder.Entity<TypeOfUser>()
+            modelBuilder.Entity<TypeOfUser>()
                 .HasData(new
                 {
                     typeOfUserId = Guid.Parse("8e4314fd-413e-4974-a6ea-c34ac02c2eb9"),
                     typeOfUser = "Superuser"
                 });
-            builder.Entity<TypeOfUser>()
+            modelBuilder.Entity<TypeOfUser>()
                 .HasData(new
                 {
                     typeOfUserId = Guid.Parse("d9257584-a4fd-4503-9755-aa7684399a34"),
                     typeOfUser = "Operater Nadmetanja"
                 });
-            builder.Entity<TypeOfUser>()
+            modelBuilder.Entity<TypeOfUser>()
                 .HasData(new
                 {
                     typeOfUserId = Guid.Parse("4426b5ab-8829-4c84-9b0a-2bd15dbe2a47"),
                     typeOfUser = "Licitant"
                 });
-            builder.Entity<TypeOfUser>()
+            modelBuilder.Entity<TypeOfUser>()
                 .HasData(new
                 {
                     typeOfUserId = Guid.Parse("592fc1b8-6b01-4bde-a65b-5bdcd65d19d3"),
                     typeOfUser = "Menadzer"
                 });
-            builder.Entity<TypeOfUser>()
+            modelBuilder.Entity<TypeOfUser>()
                 .HasData(new
                 {
                     typeOfUserId = Guid.Parse("f6be0101-3d5b-425a-8987-cd5bcfb22fbb"),

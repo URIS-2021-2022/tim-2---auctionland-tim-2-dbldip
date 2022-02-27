@@ -18,7 +18,6 @@ namespace AppUserWebAPI.Controllers
     public class TypeOfUserController : ControllerBase
     {
         private readonly ITypeOfUserRepository typeOfUserRepository;
-        private readonly LinkGenerator linkGenerator;
         private readonly IMapper mapper;
 
         /// <summary>
@@ -27,10 +26,9 @@ namespace AppUserWebAPI.Controllers
         /// <param name="typeOfUserRepository"></param>
         /// <param name="linkGenerator"></param>
         /// <param name="mapper"></param>
-        public TypeOfUserController(ITypeOfUserRepository typeOfUserRepository, LinkGenerator linkGenerator, IMapper mapper)
+        public TypeOfUserController(ITypeOfUserRepository typeOfUserRepository, IMapper mapper)
         {
             this.typeOfUserRepository = typeOfUserRepository;
-            this.linkGenerator = linkGenerator;
             this.mapper = mapper;
         }
         /// <summary>

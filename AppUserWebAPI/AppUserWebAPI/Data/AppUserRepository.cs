@@ -71,6 +71,7 @@ namespace AppUserWebAPI.Data
 
         public void UpdateAppUser(AppUser user)
         {
+            //EF implements this method
         }
 
         public bool validateUserData(AppUser user)
