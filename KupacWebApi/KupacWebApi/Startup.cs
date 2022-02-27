@@ -33,11 +33,6 @@ namespace KupacWebApi
         {
 
             services.AddControllers();
-            /*services.AddSwaggerGen(c =>
-            {
-                c.SwaggerDoc("v1", new OpenApiInfo { Title = "KupacWebApi", Version = "v1" });
-            });*/
-
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
             services.AddDbContext<BuyerContext>();
             services.AddScoped<IBuyerRepository, BuyerRepository>();
@@ -75,10 +70,10 @@ namespace KupacWebApi
                     {
                         Title = "Kupac API",
                         Version = "v1",
-                        Description = "API Kupac omoguæava unos i pregled podataka o kupcima.",
+                        Description = "API Kupac omoguÃ¦ava unos i pregled podataka o kupcima.",
                         Contact = new Microsoft.OpenApi.Models.OpenApiContact
                         {
-                            Name = "Andrija Tasiæ",
+                            Name = "Andrija TasiÃ¦",
                             Email = "andrija.tasic@uns.ac.rs",
                             Url = new Uri(Configuration["Swagger:Github"])
                         }

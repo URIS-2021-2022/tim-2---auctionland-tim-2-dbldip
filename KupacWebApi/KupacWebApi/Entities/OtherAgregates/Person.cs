@@ -10,7 +10,6 @@ namespace KupacWebApi.Entities.OtherAgregates
 
     public class Person
     {
-        //public Guid personId { get; set; }
         public string name { get; set; }
         public Address address { get; set; } 
     }
