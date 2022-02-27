@@ -10,12 +10,11 @@ namespace Application.Data
     public class PriorityRepository : IPriorityRepository
     {
         private readonly LicitationApplicationContext context;
-        private readonly IMapper mapper;
 
-        public PriorityRepository(LicitationApplicationContext context, IMapper mapper)
+        public PriorityRepository(LicitationApplicationContext context)
         {
             this.context = context;
-            this.mapper = mapper;
+
         }
 
         public List<Priority> GetPriorities()
