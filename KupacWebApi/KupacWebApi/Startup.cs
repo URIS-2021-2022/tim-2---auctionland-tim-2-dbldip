@@ -33,10 +33,6 @@ namespace KupacWebApi
         {
 
             services.AddControllers();
-            /*services.AddSwaggerGen(c =>
-            {
-                c.SwaggerDoc("v1", new OpenApiInfo { Title = "KupacWebApi", Version = "v1" });
-            });*/
 
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
             services.AddDbContext<BuyerContext>();

@@ -161,7 +161,7 @@ namespace KupacWebApi.Controllers
 
             catch (Exception exception)
             {
-                this.loggerService.LogMessage("Error with deleting buyer", "Delete", LogLevel.Error, exception);
+                this.loggerService.LogMessage("Error with deleting person", "Delete", LogLevel.Error, exception);
                 return StatusCode(StatusCodes.Status500InternalServerError, "Error with deleting buyer");
             }
         }

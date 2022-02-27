@@ -75,7 +75,7 @@ namespace KupacWebApi.Data
         {
             var buyers = this.context.Buyers.ToList();
             if (buyers == null || buyers.Count == 0)
-                return null;
+                return new List<Buyer>();
             List<Buyer> returnList = mapper.Map<List<Buyer>>(buyers);
             foreach (var el in returnList)
             {

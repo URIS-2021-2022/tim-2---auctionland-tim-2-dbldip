@@ -10,7 +10,6 @@ namespace KupacWebApi.Entities.OtherAgregates
 
     public class PublicBidding
     {
-        //public Guid publicBiddingId { get; set; }
         public DateTime date { get; set; }
         public DateTime startingTime { get; set; }
         public DateTime endingTime { get; set; }
