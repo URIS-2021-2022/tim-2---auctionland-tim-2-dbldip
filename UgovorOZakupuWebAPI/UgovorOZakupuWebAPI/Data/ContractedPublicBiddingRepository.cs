@@ -37,7 +37,7 @@ namespace UgovorOZakupuWebAPI.Data
         {
             var contractedPublicBiddings = this.context.ContractedPublicBiddings.ToList();
             if (contractedPublicBiddings == null || contractedPublicBiddings.Count == 0)
-                return null;
+                return(List<ContractedPublicBidding>)Enumerable.Empty<Document>();
             return contractedPublicBiddings;
         }
 
@@ -48,7 +48,7 @@ namespace UgovorOZakupuWebAPI.Data
 
         public void UpdateContractedPublicBidding(ContractedPublicBidding contractedPublicBidding)
         {
-            
+            //updates automatically
         }
     }
 }

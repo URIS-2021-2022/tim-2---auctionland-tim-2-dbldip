@@ -34,7 +34,7 @@ namespace UgovorOZakupuWebAPI.Data
         {
             var contractParties = this.context.ContractParties.ToList();
             if (contractParties == null || contractParties.Count == 0)
-                return null;
+                return(List<ContractParty>)Enumerable.Empty<Document>();
             return contractParties;
         }
 
@@ -50,7 +50,7 @@ namespace UgovorOZakupuWebAPI.Data
 
         public void UpdateContractParty(ContractParty contractParty)
         {
-            
+            //Update automatically
         }
     }
 }

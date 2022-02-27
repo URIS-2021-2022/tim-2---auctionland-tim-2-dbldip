@@ -40,8 +40,8 @@ namespace UgovorOZakupuWebAPI.Data
         {
             var documents = this.context.Documents.Where(e => (fileNumber == null || e.FileNumber == fileNumber)).ToList();
             if (documents == null || documents.Count == 0)
-                return null;
-            foreach(var el in documents)
+                return (List<Document>)Enumerable.Empty<Document>();
+            foreach (var el in documents)
             {
                 el.DocumentAuthor = context.DocumentAuthors.FirstOrDefault(e => e.DocumentAuthorId == el.DocumentAuthorId);
             }
@@ -55,6 +55,7 @@ namespace UgovorOZakupuWebAPI.Data
 
         public void UpdateDocument(Document document)
         {
+            //Updates automatically
         }
     }
 }

@@ -123,8 +123,8 @@ namespace UgovorOZakupuWebAPI.Controllers
         [HttpPost]
         public ActionResult<LeaseAgreementConfirmationDto> CreateLeaseAgreement(LeaseAgreementCreationDto leaseAgreementDto)
         {
-           // try
-           // {
+            try
+            {
                 LeaseAgreement leaseAgreement = mapper.Map<LeaseAgreement>(leaseAgreementDto);
                 LeaseAgreementConfirmation confirmation = leaseAgreementRepository.CreateLeaseAgreement(leaseAgreement);
                 leaseAgreementRepository.SaveChanges();
@@ -132,12 +132,12 @@ namespace UgovorOZakupuWebAPI.Controllers
                 string location = linkGenerator.GetPathByAction("GetLeaseAgreementById", "LeaseAgreement", new { leaseAgreementId = confirmation.LeaseAgreementId });
                 this.loggerService.LogMessage("Lease agreement is created successfully", "Post", LogLevel.Information);
                 return Created(location, mapper.Map<LeaseAgreementConfirmationDto>(confirmation));
-           // }
-           // catch (Exception exception)
-            //{
-               // this.loggerService.LogMessage("Error with creating lease agreement", "Post", LogLevel.Error, exception);
-               // return StatusCode(StatusCodes.Status500InternalServerError, $"Create error {exception}");
-            //}
+            }
+            catch (Exception exception)
+            {
+                this.loggerService.LogMessage("Error with creating lease agreement", "Post", LogLevel.Error, exception);
+                return StatusCode(StatusCodes.Status500InternalServerError, $"Create error {exception}");
+            }
         }
 
         /// <summary>
