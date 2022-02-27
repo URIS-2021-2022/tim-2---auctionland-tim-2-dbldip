@@ -57,7 +57,7 @@ namespace UgovorOZakupuWebAPI.Data
         {
             var leaseAgreements = this.context.LeaseAgreements.ToList();
             if (leaseAgreements == null || leaseAgreements.Count == 0)
-                return null;
+                return (List<LeaseAgreementWithLists>)Enumerable.Empty<Document>();
             List<LeaseAgreementWithLists> returnList = mapper.Map<List<LeaseAgreementWithLists>>(leaseAgreements);
             foreach(var el in returnList)
             {
@@ -77,7 +77,7 @@ namespace UgovorOZakupuWebAPI.Data
 
         public void UpdateLeaseAgreement(LeaseAgreementWithLists leaseAgreementWithLists)
         {
-            
+            //Updates automatically
         }
 
         public void UpdateMaturityDeadlines(List<MaturityDeadline> maturityDeadlines, Guid leaseAgreementId)
@@ -90,7 +90,7 @@ namespace UgovorOZakupuWebAPI.Data
             {
                 var temp = new MaturityDeadline();
                 temp.LeaseAgreementId = leaseAgreementId;
-                temp.MaturityDeadlineId = new Guid();
+                temp.MaturityDeadlineId = Guid.NewGuid();
                 temp.Deadline = el.Deadline;
                 context.Add(temp);
             }

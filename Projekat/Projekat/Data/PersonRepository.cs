@@ -44,7 +44,7 @@ namespace CommissionWebAPI.Data
 
         public void UpdatePerson(Person person)
         {
-
+            //Update automatically
         }
 
         public bool SaveChanges()

@@ -70,7 +70,7 @@ namespace CommissionWebAPI.Data
                 {
                     foreach (var el1 in el.Members)
                     {
-                        Person temp1 = new Person();
+                        Person temp1;
                         temp1 = context.Persons.FirstOrDefault(e => e.PersonId == el1.PersonId);
                         temp.Members.Add(temp1);
                     }
@@ -102,6 +102,7 @@ namespace CommissionWebAPI.Data
 
         public void UpdateCommission(CommissionWithLists commission)
         {
+            //Updates automatically
         }
     }
 }
