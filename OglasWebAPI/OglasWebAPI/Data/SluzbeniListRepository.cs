@@ -13,12 +13,12 @@ namespace OglasWebAPI.Data
     public class SluzbeniListRepository : ISluzbeniListRepository
     {
         private readonly OglasContext _context;
-        private readonly IMapper _mapper;
 
-        public SluzbeniListRepository(OglasContext context, IMapper mapper)
+
+        public SluzbeniListRepository(OglasContext context)
         {
             _context = context;
-            _mapper = mapper;
+
         }
 
         public async Task<List<SluzbeniList>> GetAllSluzbeniListovi()
