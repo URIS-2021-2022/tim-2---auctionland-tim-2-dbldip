@@ -54,6 +54,8 @@ namespace AdresaWebAPI
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
             services.AddScoped<ICountryRepository, CountryRepository>();
             services.AddScoped<IAddressRepository, AddressRepository>();
+            services.AddScoped<ILoggerService, LoggerService>();
+            services.AddScoped<ILoggerService, LoggerServiceMock>();
             services.AddDbContext<AddressContext>();
         }
 
