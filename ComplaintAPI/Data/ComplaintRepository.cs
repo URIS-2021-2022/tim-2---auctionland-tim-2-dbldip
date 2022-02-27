@@ -62,6 +62,7 @@ namespace ComplaintService.Data
             if(complaints == null || complaints.Count == 0)
             {
                 return new List<Complaint>();
+
             }
 
             List<Complaint> returnList = mapper.Map<List<Complaint>>(complaints);
@@ -108,6 +109,7 @@ namespace ComplaintService.Data
         {
             var existingComplaints = context.Complaint.Where(a => a.procedureNumber == complaint.procedureNumber || a.decisionNumber == complaint.decisionNumber).ToList();
             return existingComplaints.Count == 0;
+
         }
 
         /// <summary>
