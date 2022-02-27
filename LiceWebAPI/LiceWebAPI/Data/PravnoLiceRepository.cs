@@ -13,12 +13,12 @@ namespace LiceWebAPI.Data
     public class PravnoLiceRepository : IPravnoLiceRepository
     {
         private readonly LiceContext _context;
-        private readonly IMapper _mapper;
 
-        public PravnoLiceRepository(LiceContext context, IMapper mapper)
+
+        public PravnoLiceRepository(LiceContext context)
         {
             _context = context;
-            _mapper = mapper;
+
         }
         public async Task<List<PravnoLice>> GetAllPravnaLica()
         {
