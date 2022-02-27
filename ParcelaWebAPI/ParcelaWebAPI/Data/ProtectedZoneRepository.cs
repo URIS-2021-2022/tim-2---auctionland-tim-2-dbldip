@@ -12,6 +12,7 @@ namespace ParcelaWebAPI.Data
 
         private readonly ParcelContext context;
 
+
         public ProtectedZoneRepository(ParcelContext context)
         {
             this.context = context;

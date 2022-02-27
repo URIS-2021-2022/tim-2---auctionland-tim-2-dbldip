@@ -12,6 +12,7 @@ namespace ParcelaWebAPI.Data
 
         private readonly ParcelContext context;
 
+
         public CadastralMunicipalityRepository(ParcelContext context)
         {
             this.context = context;
