@@ -278,7 +278,7 @@
       "Key": "person",
       "Config": [
         {
-          "Name": "Person API",
+          "Name": "Lice API",
           "Version": "v1",
           "Url": "https://localhost:44310/swagger/v1/swagger.json"
         }
