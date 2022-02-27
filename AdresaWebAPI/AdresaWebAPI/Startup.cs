@@ -33,7 +33,23 @@ namespace AdresaWebAPI
             services.AddControllers();
             services.AddSwaggerGen(c =>
             {
-                c.SwaggerDoc("v1", new OpenApiInfo { Title = "AdresaWebAPI", Version = "v1" });
+                c.SwaggerDoc("v2",
+                    new OpenApiInfo()
+                    {
+                        Title = "AdresaWebAPI API",
+                        Version = "v1",
+                        Description = "Public Bidding API allows creation and read of all public biddings",
+                        Contact = new Microsoft.OpenApi.Models.OpenApiContact
+                        {
+                            Name = "Novcic Milan",
+                            Email = "novcic.milan17@uns.ac.rs",
+                            Url = new Uri(Configuration["Swagger:Github"])
+                        }
+                    });
+                //Korisitmo refleksiju za dobijanje XML fajla za komentarima
+                var xmlComments = $"{ Assembly.GetExecutingAssembly().GetName().Name }.xml";
+                var xmlCommentsPath = Path.Combine(AppContext.BaseDirectory, xmlComments);
+                setup.IncludeXmlComments(xmlCommentsPath);
             });
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
             services.AddScoped<ICountryRepository, CountryRepository>();
@@ -47,9 +63,12 @@ namespace AdresaWebAPI
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
-                app.UseSwagger();
-                app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "AdresaWebAPI v1"));
             }
+            app.UseSwaggerUI(setupAction =>
+            {
+                setupAction.SwaggerEndpoint("/swagger/v1/swagger.json", "Application API");
+                setupAction.RoutePrefix = "";
+            });
 
             app.UseHttpsRedirection();
 
