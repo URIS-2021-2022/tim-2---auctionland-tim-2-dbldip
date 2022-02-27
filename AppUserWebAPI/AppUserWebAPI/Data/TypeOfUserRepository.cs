@@ -11,12 +11,11 @@ namespace AppUserWebAPI.Data
     {
 
         private readonly AppUserContext context;
-        private readonly IMapper mapper;
 
-        public TypeOfUserRepository(AppUserContext context, IMapper mapper)
+
+        public TypeOfUserRepository(AppUserContext context)
         {
             this.context = context;
-            this.mapper = mapper;
         }
 
         public TypeOfUser GetTypeOfUserById(Guid typeOfUserId)
