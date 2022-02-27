@@ -7,7 +7,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace LoggerWebApi
+namespace LiceWebAPI
 {
 
     public static class Program

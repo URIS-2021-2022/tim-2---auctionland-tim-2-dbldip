@@ -7,11 +7,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace LoggerWebApi
+namespace ParcelaWebAPI
 {
-
     public static class Program
-
     {
         public static void Main(string[] args)
         {

@@ -7,13 +7,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace LoggerWebApi
+namespace AuctionAPI
 {
-
-    public static class Program
-
+    public class Program
     {
-        public static void Main(string[] args)
+        protected static void Main(string[] args)
+
         {
             CreateHostBuilder(args).Build().Run();
         }

@@ -1,0 +1,310 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>CommissionWebAPI</name>
+    </assembly>
+    <members>
+        <member name="T:CommissionWebAPI.Controllers.CommissionController">
+            <summary>
+            Kontroler za komisije
+            </summary>
+        </member>
+        <member name="M:CommissionWebAPI.Controllers.CommissionController.#ctor(CommissionWebAPI.Data.ICommissionRepository,AutoMapper.IMapper,Microsoft.AspNetCore.Routing.LinkGenerator,CommissionWebAPI.ServiceCalls.ILoggerService)">
+            <summary>
+            Konstruktor kontrolera komisije - DI
+            </summary>
+            <param name="commissionRepository">Repository komisije</param>
+            <param name="mapper">AutoMapper</param>
+            <param name="link">Link generator za create zahtev</param>
+            <param name="loggerService">Logger servis</param>
+        </member>
+        <member name="M:CommissionWebAPI.Controllers.CommissionController.GetCommissions">
+            <summary>
+            Vraća sve komisije
+            </summary>
+            <returns>Lista fizičkih lica</returns>
+            <response code="200">Vraća listu komisija</response>
+            <response code="404">Nije pronađena ni jedna komisija</response>
+            
+        </member>
+        <member name="M:CommissionWebAPI.Controllers.CommissionController.GetCommissionById(System.Guid)">
+            <summary>
+            Vraća jednu komisiju osnovu ID-a
+            </summary>
+            <param name="commissionId">ID komisije</param>
+            <returns>Komisija</returns>
+            <response code="200">Vraća tražena komisija</response>
+            <response code="404">Nije pronađena komisija za uneti ID</response>
+            
+        </member>
+        <member name="M:CommissionWebAPI.Controllers.CommissionController.CreateCommission(CommissionWebAPI.Models.CommissionCreationDto)">
+            <summary>
+            Kreira novu komisiju
+            </summary>
+            <param name="commissionDto">Model komisija</param>
+            <remarks>
+            Primer zahteva za kreiranje nove komisije \
+            POST /api/commission \
+            {
+                "president": {
+                "personId": "0d63898d-f929-4ba6-b676-cf9ce3ef4ae7",
+                "name": "Milan",
+                "surname": "Novcic",
+                "role": "Minstar"
+            },
+                "members": [
+                {
+                    "commissionId": "949506c9-bb02-4f6b-8026-07b33e3e6722",
+                    "personId": "1499bf05-df8c-465d-895c-bcc5633a40dd"
+                }
+                ]
+            }
+            </remarks>
+            <returns>Potvrda o kreiranju komisije</returns>
+            <response code="201">Vraća kreiranu komisiju</response>
+            <response code="500">Desila se greška prilikom unosa nove komisije</response>
+            
+        </member>
+        <member name="M:CommissionWebAPI.Controllers.CommissionController.DeleteCommission(System.Guid)">
+            <summary>
+            Brisanje komisije na osnovu ID-a
+            </summary>
+            <param name="commissionId">ID komisije</param>
+            <returns>Status 204 (NoContent)</returns>
+            <response code="204">Komisija je uspešno obrisana</response>
+            <response code="404">Nije pronađena komisija za uneti ID</response>
+            <response code="500">Serverska greška tokom brisanja komisije</response>
+            
+        </member>
+        <member name="M:CommissionWebAPI.Controllers.CommissionController.UpdateCommission(CommissionWebAPI.Models.CommissionUpdateDto)">
+             <summary>
+             Modifikacija komisije
+             </summary>
+             <param name="commission">Update model komisije</param>
+             <returns>Potvrda o modifikaciji komisije</returns>
+             <response code="200">Izmenjena komisija</response>
+             <response code="404">Nije pronađena komisija za uneti ID</response>
+             <response code="500">Serverska greška tokom modifikacije komisije</response>
+            
+        </member>
+        <member name="T:CommissionWebAPI.Controllers.PersonController">
+            <summary>
+            Kontroler za ličnost
+            </summary>
+        </member>
+        <member name="M:CommissionWebAPI.Controllers.PersonController.#ctor(CommissionWebAPI.Data.IPersonRepository,AutoMapper.IMapper,Microsoft.AspNetCore.Routing.LinkGenerator,CommissionWebAPI.ServiceCalls.ILoggerService)">
+            <summary>
+            Konstruktor kontrolera ličnosti - DI
+            </summary>
+            <param name="personRepository">Repository ličnosti</param>
+            <param name="linkGenerator">Link generator za create zahtev</param>
+            <param name="mapper">AutoMapper</param>
+            <param name="loggerService">Logger servis</param>
+        </member>
+        <member name="M:CommissionWebAPI.Controllers.PersonController.GetPersons(System.String,System.String,System.String)">
+            <summary>
+            Vraća sve ličnosti
+            </summary>
+            <returns>Lista ličnosti</returns>
+            <response code="200">Vraća listu ličnosti</response>
+            <response code="404">Nije pronađena ni jedna ličnost</response>
+            
+        </member>
+        <member name="M:CommissionWebAPI.Controllers.PersonController.GetPersonById(System.Guid)">
+            <summary>
+            Vraća jednu ličnost na osnovu ID-a
+            </summary>
+            <param name="personId">ID ličnosti</param>
+            <returns>Ličnost</returns>
+            <response code="200">Vraća traženu ličnost</response>
+            <response code="404">Nije pronađena ličnost za uneti ID</response>
+            
+        </member>
+        <member name="M:CommissionWebAPI.Controllers.PersonController.CreatePerson(CommissionWebAPI.Models.PersonCreationDto)">
+             <summary>
+             Kreira novu ličnost
+             </summary>
+             <param name="personDto">Model ličnosti</param>
+             <remarks>
+             Primer zahteva za kreiranje nove ličnosti \
+             POST /api/person \
+             {   
+                 "Name": "Jovana", \
+                 "Surname": "Miscevic", \
+                 "Role": "Ministar" \
+            }
+             </remarks>
+             <returns>Potvrda o kreiranju ličnosti</returns>
+             <response code="201">Vraća kreiranu ličnost</response>
+             <response code="500">Desila se greška prilikom unosa nove ličnosti</response>
+             
+        </member>
+        <member name="M:CommissionWebAPI.Controllers.PersonController.DeletePerson(System.Guid)">
+            <summary>
+            Brisanje ličnosti na osnovu ID-a
+            </summary>
+            <param name="personId">ID ličnosti</param>
+            <returns>Status 204 (NoContent)</returns>
+            <response code="204">Ličnost je uspešno obrisana</response>
+            <response code="404">Nije pronađena ličnost za uneti ID</response>
+            <response code="500">Serverska greška tokom brisanja ličnosti</response>
+            
+        </member>
+        <member name="M:CommissionWebAPI.Controllers.PersonController.UpdatePerson(CommissionWebAPI.Models.PersonUpdateDto)">
+             <summary>
+             Modifikacija ličnosti
+             </summary>
+             <param name="person">Model ličnosti</param>
+             <returns>Potvrda o modifikaciji ličnosti</returns>
+             <response code="200">Izmenjena ličnost</response>
+             <response code="404">Nije pronađena ličnost za uneti ID</response>
+             <response code="500">Serverska greška tokom modifikacije ličnosti</response>
+            
+        </member>
+        <member name="T:CommissionWebAPI.Entities.Commission">
+            <summary>
+            Entitet komisija
+            </summary>
+        </member>
+        <member name="P:CommissionWebAPI.Entities.Commission.CommissionId">
+            <summary>
+            ID komisije
+            </summary>
+        </member>
+        <member name="P:CommissionWebAPI.Entities.Commission.PresidentId">
+            <summary>
+            ID predsednika
+            </summary>
+        </member>
+        <member name="P:CommissionWebAPI.Entities.Commission.President">
+            <summary>
+            Entitet predsednik
+            </summary>
+        </member>
+        <member name="P:CommissionWebAPI.Entities.Commission.Members">
+            <summary>
+            Lista članova
+            </summary>
+        </member>
+        <member name="T:CommissionWebAPI.Entities.CommissionConfirmation">
+            <summary>
+            Entitet potvrda komisije
+            </summary>
+        </member>
+        <member name="P:CommissionWebAPI.Entities.CommissionConfirmation.CommissionId">
+            <summary>
+            ID komisije
+            </summary>
+        </member>
+        <member name="T:CommissionWebAPI.Entities.CommissionCreation">
+            <summary>
+            Entitet kreacija komisije
+            </summary>
+        </member>
+        <member name="P:CommissionWebAPI.Entities.CommissionCreation.CommissionId">
+            <summary>
+            ID komisije
+            </summary>
+        </member>
+        <member name="P:CommissionWebAPI.Entities.CommissionCreation.PresidentId">
+            <summary>
+            ID predsednika
+            </summary>
+        </member>
+        <member name="P:CommissionWebAPI.Entities.CommissionCreation.Members">
+            <summary>
+            Lista ID-eva članova
+            </summary>
+        </member>
+        <member name="T:CommissionWebAPI.Entities.CommissionWithLists">
+            <summary>
+            Entitet komisija sa listom
+            </summary>
+        </member>
+        <member name="P:CommissionWebAPI.Entities.CommissionWithLists.CommissionId">
+            <summary>
+            ID komisije
+            </summary>
+        </member>
+        <member name="P:CommissionWebAPI.Entities.CommissionWithLists.PresidentId">
+            <summary>
+            ID predsednika
+            </summary>
+        </member>
+        <member name="P:CommissionWebAPI.Entities.CommissionWithLists.President">
+            <summary>
+            Predsednik
+            </summary>
+        </member>
+        <member name="P:CommissionWebAPI.Entities.CommissionWithLists.Members">
+            <summary>
+            Lista članova
+            </summary>
+        </member>
+        <member name="T:CommissionWebAPI.Entities.Members">
+            <summary>
+            Entitet članovi
+            </summary>
+        </member>
+        <member name="P:CommissionWebAPI.Entities.Members.CommissionId">
+            <summary>
+            Deo kompozitnog ključa
+            </summary>
+        </member>
+        <member name="P:CommissionWebAPI.Entities.Members.PersonId">
+            <summary>
+            Deo kompozitnog ključa
+            </summary>
+        </member>
+        <member name="T:CommissionWebAPI.Entities.Person">
+            <summary>
+            Entitet ličnost
+            </summary>
+        </member>
+        <member name="P:CommissionWebAPI.Entities.Person.PersonId">
+            <summary>
+            ID ličnost
+            </summary>
+        </member>
+        <member name="P:CommissionWebAPI.Entities.Person.Name">
+            <summary>
+            Ime
+            </summary>
+        </member>
+        <member name="P:CommissionWebAPI.Entities.Person.Surname">
+            <summary>
+            Prezime
+            </summary>
+        </member>
+        <member name="P:CommissionWebAPI.Entities.Person.Role">
+            <summary>
+            Uloga
+            </summary>
+        </member>
+        <member name="T:CommissionWebAPI.Entities.PersonConfirmation">
+            <summary>
+            Entitet kreacija ličnosti
+            </summary>
+        </member>
+        <member name="P:CommissionWebAPI.Entities.PersonConfirmation.PersonId">
+            <summary>
+            ID ličnosti
+            </summary>
+        </member>
+        <member name="P:CommissionWebAPI.Entities.PersonConfirmation.Name">
+            <summary>
+            Ime
+            </summary>
+        </member>
+        <member name="P:CommissionWebAPI.Entities.PersonConfirmation.Surname">
+            <summary>
+            Prezime
+            </summary>
+        </member>
+        <member name="P:CommissionWebAPI.Entities.PersonConfirmation.Role">
+            <summary>
+            Uloga
+            </summary>
+        </member>
+    </members>
+</doc>

@@ -7,11 +7,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace LoggerWebApi
+namespace AppUserWebAPI
 {
 
     public static class Program
-
     {
         public static void Main(string[] args)
         {
