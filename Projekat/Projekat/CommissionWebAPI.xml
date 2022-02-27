@@ -306,5 +306,190 @@
             Uloga
             </summary>
         </member>
+        <member name="T:CommissionWebAPI.Models.CommissionConfirmationDto">
+            <summary>
+            Dto Potvrda Komisija
+            </summary>
+        </member>
+        <member name="P:CommissionWebAPI.Models.CommissionConfirmationDto.CommissionId">
+            <summary>
+            ID Komisija
+            </summary>
+        </member>
+        <member name="T:CommissionWebAPI.Models.CommissionCreationDto">
+            <summary>
+            Create Komisija
+            </summary>
+        </member>
+        <member name="P:CommissionWebAPI.Models.CommissionCreationDto.President">
+            <summary>
+            Predsednik
+            </summary>
+        </member>
+        <member name="P:CommissionWebAPI.Models.CommissionCreationDto.Members">
+            <summary>
+            Lista članova
+            </summary>
+        </member>
+        <member name="T:CommissionWebAPI.Models.CommissionDto">
+            <summary>
+            Komisija Dto
+            </summary>
+        </member>
+        <member name="P:CommissionWebAPI.Models.CommissionDto.CommissionId">
+            <summary>
+            ID Komisija
+            </summary>
+        </member>
+        <member name="P:CommissionWebAPI.Models.CommissionDto.President">
+            <summary>
+            Predsednik
+            </summary>
+        </member>
+        <member name="P:CommissionWebAPI.Models.CommissionDto.Members">
+            <summary>
+            Lista ključeva članova
+            </summary>
+        </member>
+        <member name="T:CommissionWebAPI.Models.CommissionsFilledDto">
+            <summary>
+            Popunjena komisija dto
+            </summary>
+        </member>
+        <member name="P:CommissionWebAPI.Models.CommissionsFilledDto.CommissionId">
+            <summary>
+            ID Komisija
+            </summary>
+        </member>
+        <member name="P:CommissionWebAPI.Models.CommissionsFilledDto.President">
+            <summary>
+            predsednik
+            </summary>
+        </member>
+        <member name="P:CommissionWebAPI.Models.CommissionsFilledDto.Members">
+            <summary>
+            Lista članova
+            </summary>
+        </member>
+        <member name="T:CommissionWebAPI.Models.CommissionUpdateDto">
+            <summary>
+            Komisija update dto
+            </summary>
+        </member>
+        <member name="P:CommissionWebAPI.Models.CommissionUpdateDto.CommissionId">
+            <summary>
+            ID Komisija
+            </summary>
+        </member>
+        <member name="P:CommissionWebAPI.Models.CommissionUpdateDto.PresidentId">
+            <summary>
+            Predsednik ID
+            </summary>
+        </member>
+        <member name="P:CommissionWebAPI.Models.CommissionUpdateDto.President">
+            <summary>
+            Predsednik
+            </summary>
+        </member>
+        <member name="P:CommissionWebAPI.Models.CommissionUpdateDto.Members">
+            <summary>
+            Lista ključeva članova
+            </summary>
+        </member>
+        <member name="T:CommissionWebAPI.Models.PersonConfirmationDto">
+            <summary>
+            Ličnost potvrda dto
+            </summary>
+        </member>
+        <member name="P:CommissionWebAPI.Models.PersonConfirmationDto.PersonId">
+            <summary>
+            ID Ličnost
+            </summary>
+        </member>
+        <member name="P:CommissionWebAPI.Models.PersonConfirmationDto.Name">
+            <summary>
+            Ime
+            </summary>
+        </member>
+        <member name="P:CommissionWebAPI.Models.PersonConfirmationDto.Surname">
+            <summary>
+            Prezime
+            </summary>
+        </member>
+        <member name="P:CommissionWebAPI.Models.PersonConfirmationDto.Role">
+            <summary>
+            Uloga
+            </summary>
+        </member>
+        <member name="T:CommissionWebAPI.Models.PersonCreationDto">
+            <summary>
+            Create ličnost dto
+            </summary>
+        </member>
+        <member name="P:CommissionWebAPI.Models.PersonCreationDto.Name">
+            <summary>
+            Ime
+            </summary>
+        </member>
+        <member name="P:CommissionWebAPI.Models.PersonCreationDto.Surname">
+            <summary>
+            Prezime
+            </summary>
+        </member>
+        <member name="P:CommissionWebAPI.Models.PersonCreationDto.Role">
+            <summary>
+            Uloga
+            </summary>
+        </member>
+        <member name="T:CommissionWebAPI.Models.PersonDto">
+            <summary>
+            Ličnost dto
+            </summary>
+        </member>
+        <member name="P:CommissionWebAPI.Models.PersonDto.PersonId">
+            <summary>
+            ID ličnost
+            </summary>
+        </member>
+        <member name="P:CommissionWebAPI.Models.PersonDto.Name">
+            <summary>
+            Ime
+            </summary>
+        </member>
+        <member name="P:CommissionWebAPI.Models.PersonDto.Surname">
+            <summary>
+            Prezime
+            </summary>
+        </member>
+        <member name="P:CommissionWebAPI.Models.PersonDto.Role">
+            <summary>
+            Uloga
+            </summary>
+        </member>
+        <member name="T:CommissionWebAPI.Models.PersonUpdateDto">
+            <summary>
+            Ličnost update dto
+            </summary>
+        </member>
+        <member name="P:CommissionWebAPI.Models.PersonUpdateDto.PersonId">
+            <summary>
+            ID Ličnost
+            </summary>
+        </member>
+        <member name="P:CommissionWebAPI.Models.PersonUpdateDto.Name">
+            <summary>
+            Ime
+            </summary>
+        </member>
+        <member name="P:CommissionWebAPI.Models.PersonUpdateDto.Surname">
+            <summary>
+            Prezime
+            </summary>
+        </member>
+        <member name="P:CommissionWebAPI.Models.PersonUpdateDto.Role">
+            <summary>
+            Uloga
+            </summary>
+        </member>
     </members>
 </doc>
