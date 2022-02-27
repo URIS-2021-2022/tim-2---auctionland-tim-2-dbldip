@@ -24,3 +24,4 @@ namespace ComplaintService.ServiceCalls
             System.Diagnostics.Debug.WriteLine(JsonConvert.SerializeObject(logMessage));
         }
     }
+}

@@ -1,4 +1,4 @@
-﻿using AutoMapper.Configuration;
+﻿using Microsoft.Extensions.Configuration;
 using ComplaintService.Models.LogMessage;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
@@ -45,4 +45,5 @@ namespace ComplaintService.ServiceCalls
                 System.Diagnostics.Debug.WriteLine("Error while sending log message to logger service");
             }
         }
+    }
 }

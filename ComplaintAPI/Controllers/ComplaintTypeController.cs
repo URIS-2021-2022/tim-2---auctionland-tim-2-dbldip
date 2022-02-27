@@ -215,7 +215,7 @@ namespace ComplaintService.Controllers
                 this.loggerService.LogMessage("Complaint type is deleted", "Delete", LogLevel.Information);
                 return NoContent();
             }
-            catch
+            catch(Exception exception)
             {
                 this.loggerService.LogMessage("Error with deleting complaint type", "Delete", LogLevel.Error, exception);
                 return StatusCode(StatusCodes.Status500InternalServerError, "Delete Complaint Type error");
