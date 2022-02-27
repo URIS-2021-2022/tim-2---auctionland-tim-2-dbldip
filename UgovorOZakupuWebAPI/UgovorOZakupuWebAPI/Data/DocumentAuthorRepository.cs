@@ -47,7 +47,7 @@ namespace UgovorOZakupuWebAPI.Data
 
         public void UpdateDocumentAuthor(DocumentAuthor documentAuthor)
         {
-            
+            //Updates automatically
         }
     }
 }
