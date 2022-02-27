@@ -14,9 +14,11 @@ namespace LiceWebAPI.Data
     {
         private readonly LiceContext _context;
 
+
         public KontaktOsobaRepository(LiceContext context)
         {
             _context = context;
+
         }
 
         public async Task<List<KontaktOsoba>> GetAllKontaktOsobe()

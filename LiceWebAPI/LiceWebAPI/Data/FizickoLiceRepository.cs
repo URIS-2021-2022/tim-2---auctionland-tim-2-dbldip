@@ -14,9 +14,11 @@ namespace LiceWebAPI.Data
     {
         private readonly LiceContext _context;
 
+
         public FizickoLiceRepository(LiceContext context)
         {
             _context = context;
+
         }
         public async Task<List<FizickoLice>> GetAllFizickaLica()
         {

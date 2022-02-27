@@ -13,10 +13,12 @@ namespace LiceWebAPI.Data
         private readonly IPravnoLiceRepository _pravnoLiceRepository;
         private readonly IFizickoLiceRepository _fizickoLiceRepository;
 
+
         public LiceRepository(IPravnoLiceRepository pravnoLiceRepository, IFizickoLiceRepository fizickoLiceRepository)
         {
             this._pravnoLiceRepository = pravnoLiceRepository;
             this._fizickoLiceRepository = fizickoLiceRepository;
+
         }
         public async Task<List<Lice>> GetAllLica()
         {
