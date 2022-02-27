@@ -9,7 +9,9 @@ using System.Threading.Tasks;
 
 namespace KupacWebApi
 {
+
     public static class Program
+
     {
         public static void Main(string[] args)
         {
