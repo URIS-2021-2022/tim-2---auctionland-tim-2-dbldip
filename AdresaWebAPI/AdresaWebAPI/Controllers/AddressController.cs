@@ -14,6 +14,7 @@ using System.Threading.Tasks;
 
 namespace AdresaWebAPI.Controllers
 {
+
     /// <summary>
     /// Address controller that provides GET, POST, DELETE AND PUT methods
     /// </summary>
@@ -172,7 +173,7 @@ namespace AdresaWebAPI.Controllers
             catch (Exception ex)
             {
                 this.loggerService.LogMessage("Error while deleting", "Delete", LogLevel.Error);
-                return StatusCode(StatusCodes.Status500InternalServerError, "Delete Error!");
+                return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
             }
         }
     }

@@ -24,9 +24,10 @@ namespace AdresaWebAPI.Entities
             optionsBuilder.UseSqlServer(configuration.GetConnectionString("CountriesDb"));
         }
 
-        protected override void OnModelCreating(ModelBuilder builder)
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            builder.Entity<Country>()
+            modelBuilder.Entity<Country>()
+
                 .HasData(new
                 {
                     countryID = Guid.Parse("6a411c13-a195-48f7-8dbd-67596c3974c0"),
