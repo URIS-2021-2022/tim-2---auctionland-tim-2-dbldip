@@ -57,7 +57,7 @@ namespace KupacWebApi.Data
         {
             var authorizedPeople = this.context.AuthorizedPeople.ToList();
             if (authorizedPeople == null || authorizedPeople.Count == 0)
-                return null;
+                return new List<AuthorizedPerson>();
             List<AuthorizedPerson> returnList = mapper.Map<List<AuthorizedPerson>>(authorizedPeople);
             foreach (var el in returnList)
             {
