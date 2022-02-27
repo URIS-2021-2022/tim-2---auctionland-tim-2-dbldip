@@ -61,6 +61,8 @@ namespace PublicBiddingAPI
             //ADDING REPOSITORIES
             services.AddScoped<ITypeOfPublicBiddingRepository, TypeOfPublicBiddingRepository>();
             services.AddScoped<IPublicBiddingRepository, PublicBiddingRepository>();
+            services.AddScoped<ILoggerService, LoggerService>();
+            services.AddScoped<ILoggerService, LoggerServiceMock>();
 
         }
 
