@@ -13,12 +13,10 @@ namespace LiceWebAPI.Data
     public class FizickoLiceRepository : IFizickoLiceRepository
     {
         private readonly LiceContext _context;
-        private readonly IMapper mapper;
 
-        public FizickoLiceRepository(LiceContext context, IMapper mapper)
+        public FizickoLiceRepository(LiceContext context)
         {
             _context = context;
-            this.mapper = mapper;
         }
         public async Task<List<FizickoLice>> GetAllFizickaLica()
         {

@@ -12,13 +12,11 @@ namespace LiceWebAPI.Data
     {
         private readonly IPravnoLiceRepository _pravnoLiceRepository;
         private readonly IFizickoLiceRepository _fizickoLiceRepository;
-        private readonly LiceContext context;
 
-        public LiceRepository(IPravnoLiceRepository pravnoLiceRepository, IFizickoLiceRepository fizickoLiceRepository, LiceContext context)
+        public LiceRepository(IPravnoLiceRepository pravnoLiceRepository, IFizickoLiceRepository fizickoLiceRepository)
         {
             this._pravnoLiceRepository = pravnoLiceRepository;
             this._fizickoLiceRepository = fizickoLiceRepository;
-            this.context = context;
         }
         public async Task<List<Lice>> GetAllLica()
         {
