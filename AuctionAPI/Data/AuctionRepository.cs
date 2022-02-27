@@ -53,13 +53,14 @@ namespace AuctionAPI.Data
         /// </summary>
         /// <param name="auction">Objekat licitacije</param>
         /// <returns>Potvrdu kreirane licitacije</returns>
-        public AuctionConfirmation CreateAuction(CreationAuctionDto auction)
+        public AuctionConfirmation CreateAuction(CreationAuctionDto auctionCreation)
         {
-            var mappedEntity = mapper.Map<AuctionWithoutLists>(auction);
+            var mappedEntity = mapper.Map<AuctionWithoutLists>(auctionCreation);
             var createdEntity = context.Add(mappedEntity);
 
 
-            foreach(var pubBid in auction.publicBiddingIds)
+            foreach(var pubBid in auctionCreation.publicBiddingIds)
+
             {
                 var tempAPB = new AuctionPublicBidding();
                 tempAPB.publicBiddingId = pubBid;
@@ -78,7 +79,9 @@ namespace AuctionAPI.Data
         {
             var auctions = this.context.Auctions.ToList();
             if (auctions == null || auctions.Count == 0)
-                return null;
+
+                return new List<Auction>();
+
 
             List<Auction> returnList = mapper.Map<List<Auction>>(auctions);
             foreach(var auc in returnList)
