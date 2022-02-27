@@ -1,5 +1,6 @@
 using Application.Data;
 using Application.Entities;
+using Application.ServiceCalls;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -39,6 +40,7 @@ namespace Application
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
             services.AddScoped<IApplicationRepository, ApplicationRepository>();
             services.AddScoped<IPriorityRepository, PriorityRepository>();
+            services.AddScoped<ILoggerService, LoggerServiceMock>();
 
             services.AddSwaggerGen(setup =>
             {
@@ -65,7 +67,7 @@ namespace Application
 
                 //setup.AddSecurityRequirement(securityRequirement);
 
-                setup.SwaggerDoc("v2",
+                setup.SwaggerDoc("v1",
                     new OpenApiInfo()
                     {
                         Title = "Application API",

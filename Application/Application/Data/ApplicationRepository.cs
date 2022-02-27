@@ -47,7 +47,7 @@ namespace Application.Data
 
         public void UpdateApplication(LicitationApplication application)
         {
-            throw new NotImplementedException();
+            // Entity framework can do it by itself
         }
     }
 }
