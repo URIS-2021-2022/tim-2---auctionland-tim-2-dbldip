@@ -49,12 +49,12 @@ namespace AuctionAPI.Entities
         /// Unos inicijalni podataka u bazu
         /// </summary>
         /// <param name="builder">Omogućava unošenje i podešavanje podataka u toku kreiranja modela</param>
-        protected override void OnModelCreating(ModelBuilder builder)
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
 
             //Povezivanje veze više prema više licitacija sa javnim nadmetanjem
             // i podešavanje kaskadnog brisanja
-            builder.Entity<AuctionPublicBidding>()
+            modelBuilder.Entity<AuctionPublicBidding>()
                 .HasOne(apb => apb.auction)
                 .WithMany()
                 .HasForeignKey(apb => apb.auctionId)
@@ -62,12 +62,12 @@ namespace AuctionAPI.Entities
                 .IsRequired();
 
             //Kreiranje primarnog ključa za APB
-            builder.Entity<AuctionPublicBidding>()
+            modelBuilder.Entity<AuctionPublicBidding>()
                 .HasKey(apb => new { apb.auctionId, apb.publicBiddingId });
 
 
 
-            builder.Entity<AuctionWithoutLists>()
+            modelBuilder.Entity<AuctionWithoutLists>()
                 .HasData(
                 new
                 {
@@ -101,7 +101,7 @@ namespace AuctionAPI.Entities
                     registryClosingDate = DateTime.Now.AddDays(-2)
                 });
 
-            builder.Entity<AuctionPublicBidding>()
+            modelBuilder.Entity<AuctionPublicBidding>()
                 .HasData(
                 new
                 {

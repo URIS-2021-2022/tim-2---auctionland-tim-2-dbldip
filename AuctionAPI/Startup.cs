@@ -1,5 +1,6 @@
 using AuctionAPI.Data;
 using AuctionAPI.Entities;
+using AuctionAPI.ServiceCalls;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -41,6 +42,8 @@ namespace AuctionAPI
             services.AddScoped<IAuctionRepository, AuctionRepository>();
 
             services.AddDbContext<AuctionContext>();
+
+            services.AddScoped<ILoggerService, LoggerServiceMock>();
 
             services.AddSwaggerGen(setupAction =>
             {
