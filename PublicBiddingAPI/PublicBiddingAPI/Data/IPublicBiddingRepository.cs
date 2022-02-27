@@ -12,7 +12,9 @@ namespace PublicBiddingAPI.Data
         List<PublicBidding> getPublicBiddingsByBestBidder(Guid bestBidderId);
         List<PublicBidding> getPublicBiddingsByAppliedBuyer(Guid buyerId);
         List<PublicBidding> getPublicBiddingsByBidder(Guid bidderId);
-        List<PublicBidding> getPublicBiddingsByCadastralMunicipality(Guid cadastralMunicipality);
+
+        List<PublicBidding> getPublicBiddingsByCadastralMunicipality(Guid cadastralMunicipalityId);
+
         List<PublicBidding> getPublicBiddingsByStartingPricePerHectare(double price);
         List<PublicBidding> getPublicBiddingsByLeasePeriod(double period);
         PublicBiddingConfirmation createPublicBidding(PublicBiddingCreation publicBidding);
