@@ -32,6 +32,8 @@
     <Compile Include="Migrations\20220222224012_UpdatedEntities.Designer.cs" />
     <Compile Include="Migrations\20220222233327_EditedEntities.cs" />
     <Compile Include="Migrations\20220222233327_EditedEntities.Designer.cs" />
+    <Compile Include="Migrations\20220227105107_MigrationIntegration1.cs" />
+    <Compile Include="Migrations\20220227105107_MigrationIntegration1.Designer.cs" />
     <Compile Include="Migrations\PaymentContextModelSnapshot.cs" />
   </ItemGroup>
 
