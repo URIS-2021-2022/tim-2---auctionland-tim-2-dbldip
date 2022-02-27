@@ -320,6 +320,7 @@ namespace PublicBiddingAPI.Controllers
                     this.loggerService.LogMessage("Public Bidding was not found", "Put", LogLevel.Warning);
                     return NoContent();
                 }
+
                 publicBiddingRepository.UpdatePublicBidding(mapper.Map<PublicBiddingUpdate>(publicBidding));
                 publicBiddingRepository.SaveChanges();
                 this.loggerService.LogMessage("Public Bidding is changed", "Put", LogLevel.Information);

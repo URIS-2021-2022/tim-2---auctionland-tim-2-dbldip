@@ -72,6 +72,7 @@ namespace PublicBiddingAPI.Data
             var biddings = this.context.PublicBidding.ToList();
             if (biddings == null || biddings.Count == 0)
                 return new List<PublicBidding>();
+
             List<PublicBidding> returnList = mapper.Map<List<PublicBidding>>(biddings);
             foreach (var el in returnList)
             {
@@ -106,6 +107,7 @@ namespace PublicBiddingAPI.Data
             var biddings = this.context.PublicBidding.ToList();
             if (biddings == null || biddings.Count == 0)
                 return new List<PublicBidding>();
+
             List<PublicBidding> tempList = mapper.Map<List<PublicBidding>>(biddings);
             List<PublicBidding> returnList = new List<PublicBidding>();
             foreach (var el in tempList)
@@ -133,6 +135,7 @@ namespace PublicBiddingAPI.Data
             var biddings = this.context.PublicBidding.ToList();
             if (biddings == null || biddings.Count == 0)
                 return new List<PublicBidding>();
+
             List<PublicBidding> tempList = mapper.Map<List<PublicBidding>>(biddings);
             List<PublicBidding> returnList = new List<PublicBidding>();
             foreach (var el in tempList)
@@ -155,6 +158,7 @@ namespace PublicBiddingAPI.Data
             var biddings = this.context.PublicBidding.ToList();
             if (biddings == null || biddings.Count == 0)
                 return new List<PublicBidding>();
+
             List<PublicBidding> tempList = mapper.Map<List<PublicBidding>>(biddings);
             List<PublicBidding> returnList = new List<PublicBidding>();
             foreach (var el in tempList)
@@ -181,6 +185,7 @@ namespace PublicBiddingAPI.Data
             var biddings = this.context.PublicBidding.Where(e => e.cadastralMunicipality.cadastralMuniciplaityId == cadastralMunicipalityId).ToList();
             if (biddings == null || biddings.Count == 0)
                 return new List<PublicBidding>();
+
             List<PublicBidding> returnList = mapper.Map<List<PublicBidding>>(biddings);
             foreach (var el in returnList)
             {
@@ -197,6 +202,7 @@ namespace PublicBiddingAPI.Data
             var biddings = this.context.PublicBidding.Where(e => e.leasePeriod == period).ToList();
             if (biddings == null || biddings.Count == 0)
                 return new List<PublicBidding>();
+
             List<PublicBidding> returnList = mapper.Map<List<PublicBidding>>(biddings);
             foreach (var el in returnList)
             {
@@ -213,6 +219,7 @@ namespace PublicBiddingAPI.Data
             var biddings = this.context.PublicBidding.Where(e=>e.startingPricePerHectare == price).ToList();
             if (biddings == null || biddings.Count == 0)
                 return new List<PublicBidding>();
+
             List<PublicBidding> returnList = mapper.Map<List<PublicBidding>>(biddings);
             foreach (var el in returnList)
             {

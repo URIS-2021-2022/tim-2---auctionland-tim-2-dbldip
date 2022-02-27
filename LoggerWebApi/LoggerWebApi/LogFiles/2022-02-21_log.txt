@@ -1,0 +1,11 @@
+2022-02-21 15:02:50.2099 |INFO| Microservices: test microservis, Method: test, Message: test poruka 
+2022-02-21 15:02:53.7768 |INFO| Microservices: test microservis, Method: test, Message: test poruka 
+2022-02-21 15:02:54.2248 |INFO| Microservices: test microservis, Method: test, Message: test poruka 
+2022-02-21 15:02:54.5187 |INFO| Microservices: test microservis, Method: test, Message: test poruka 
+2022-02-21 15:02:54.7669 |INFO| Microservices: test microservis, Method: test, Message: test poruka 
+2022-02-21 15:02:54.9964 |INFO| Microservices: test microservis, Method: test, Message: test poruka 
+2022-02-21 15:14:03.5447 |WARN| Microservices: microservice, Method: method, Message: Test iz swaggera 
+2022-02-21 15:14:10.0358 |ERROR| Microservices: microservice, Method: method, Message: Test iz swaggera 
+2022-02-21 15:14:15.6013 |INFO| Microservices: microservice, Method: method, Message: Test iz swaggera 
+2022-02-21 15:15:33.6673 |WARN| Microservices: microservice, Method: method, Message: Test iz swaggera 
+2022-02-21 15:15:52.8136 |ERROR| Microservices: microservice, Method: method, Message: Eror iz swaggera System.Exception: Exception of type 'System.Exception' was thrown.
