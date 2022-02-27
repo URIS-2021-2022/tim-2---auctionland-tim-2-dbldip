@@ -2,9 +2,11 @@
 using ComplaintAPI.Entities;
 using ComplaintAPI.Models.ComplaintStatus;
 using ComplaintService.Data.Interfaces;
+using ComplaintService.ServiceCalls;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Routing;
+using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -23,6 +25,7 @@ namespace ComplaintService.Controllers
         private readonly IComplaintStatusRepository complaintStatusRepository;
         private readonly LinkGenerator linkGenerator;
         private readonly IMapper mapper;
+        private readonly ILoggerService loggerService;
 
         /// <summary>
         /// Konstruktor kontrolera statusa žalbe
@@ -30,11 +33,12 @@ namespace ComplaintService.Controllers
         /// <param name="complaintStatusRepository">Repozitorijum kontolera statusa žalbe</param>
         /// <param name="linkGenerator">Link generator</param>
         /// <param name="mapper">AutoMapper</param>
-        public ComplaintStatusController(IComplaintStatusRepository complaintStatusRepository, LinkGenerator linkGenerator, IMapper mapper)
+        public ComplaintStatusController(IComplaintStatusRepository complaintStatusRepository, LinkGenerator linkGenerator, IMapper mapper, ILoggerService loggerService)
         {
             this.complaintStatusRepository = complaintStatusRepository;
             this.linkGenerator = linkGenerator;
             this.mapper = mapper;
+            this.loggerService = loggerService;
         }
 
         /// <summary>
@@ -53,8 +57,10 @@ namespace ComplaintService.Controllers
 
             if (complaintStatusList == null || complaintStatusList.Count == 0)
             {
+                this.loggerService.LogMessage("List of complaint statuses is empty", "Get", LogLevel.Warning);
                 return NoContent();
             }
+            this.loggerService.LogMessage("List of complaint statuses is returned", "Get", LogLevel.Information);
 
             return Ok(mapper.Map<IEnumerable<ComplaintStatusDto>>(complaintStatusList));
         }
@@ -75,9 +81,10 @@ namespace ComplaintService.Controllers
 
             if (complaintStatus == null)
             {
+                this.loggerService.LogMessage("There is no complaint status with that id", "Get", LogLevel.Warning);
                 return NotFound();
             }
-
+            this.loggerService.LogMessage("Complaint status is returned", "Get", LogLevel.Information);
             return Ok(mapper.Map<ComplaintStatusDto>(complaintStatus));
         }
 
@@ -109,17 +116,20 @@ namespace ComplaintService.Controllers
 
                 if (!validComplaintStatus)
                 {
+                    this.loggerService.LogMessage("Complaint status is not valid.", "Post", LogLevel.Warning);
                     return BadRequest();
                 }
 
                 ComplaintStatus createdComplaintStatus = complaintStatusRepository.CreateComplaintStatus(mapper.Map<ComplaintStatus>(complaintStatus));
-
                 string location = linkGenerator.GetPathByAction("GetComplaintStatus", "ComplaintStatus", new { complaintStatusId = createdComplaintStatus.complaintStatusId });
+                
+                this.loggerService.LogMessage("Complaint status is created", "Post", LogLevel.Information);
 
                 return Created(location, mapper.Map<ComplaintStatusCreateDto>(createdComplaintStatus));
             }
-            catch (Exception)
+            catch (Exception exception)
             {
+                this.loggerService.LogMessage("Error with creating complaint status", "Post", LogLevel.Error, exception);
                 return StatusCode(StatusCodes.Status500InternalServerError, "Create Complaint Status error");
             }
         }
@@ -148,6 +158,7 @@ namespace ComplaintService.Controllers
 
                 if (!validComplaintStatus)
                 {
+                    this.loggerService.LogMessage("Complaint status is not valid", "Put", LogLevel.Warning);
                     return BadRequest();
                 }
 
@@ -155,16 +166,19 @@ namespace ComplaintService.Controllers
 
                 if (complaintStatusEntity == null)
                 {
+                    this.loggerService.LogMessage("Complaint to update not found", "Put", LogLevel.Warning);
                     return NotFound();
                 }
 
                 mapper.Map(complaintStatus, complaintStatusEntity);
                 complaintStatusRepository.UpdateComplaintStatus(mapper.Map<ComplaintStatus>(complaintStatus));
 
+                this.loggerService.LogMessage("Complaint status is updated successfully!", "Put", LogLevel.Information);
                 return Ok(complaintStatus);
             }
-            catch (Exception)
+            catch (Exception exception)
             {
+                this.loggerService.LogMessage("Error with updating complaint status", "Put", LogLevel.Error, exception);
                 return StatusCode(StatusCodes.Status500InternalServerError, "Update Complaint Status error");
             }
 
@@ -190,15 +204,18 @@ namespace ComplaintService.Controllers
 
                 if (complaintStatus == null)
                 {
+                    this.loggerService.LogMessage("Complaint status to delete does not exist.", "Delete", LogLevel.Warning);
                     return NotFound();
                 }
 
+                this.loggerService.LogMessage("Complaint status is deleted", "Delete", LogLevel.Information);
                 complaintStatusRepository.DeleteComplaintStatus(complaintStatusId);
 
                 return NoContent();
             }
-            catch
+            catch (Exception exception)
             {
+                this.loggerService.LogMessage("Error with deleting complaint status", "Delete", LogLevel.Error, exception);
                 return StatusCode(StatusCodes.Status500InternalServerError, "Delete Complaint Status error");
             }
         }

@@ -2,9 +2,11 @@
 using ComplaintAPI.Entities;
 using ComplaintAPI.Models.ComplaintType;
 using ComplaintService.Data.Interfaces;
+using ComplaintService.ServiceCalls;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Routing;
+using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -23,6 +25,7 @@ namespace ComplaintService.Controllers
         private readonly IComplaintTypeRepository complaintTypeRepository;
         private readonly LinkGenerator linkGenerator;
         private readonly IMapper mapper;
+        private readonly ILoggerService loggerService;
 
         /// <summary>
         /// Konstruktor kontrolera tipa žalbe
@@ -30,11 +33,12 @@ namespace ComplaintService.Controllers
         /// <param name="complaintTypeRepository">Repozitorijum kontolera tipa žalbe</param>
         /// <param name="linkGenerator">Link generator</param>
         /// <param name="mapper">AutoMapper</param>
-        public ComplaintTypeController(IComplaintTypeRepository complaintTypeRepository, LinkGenerator linkGenerator, IMapper mapper)
+        public ComplaintTypeController(IComplaintTypeRepository complaintTypeRepository, LinkGenerator linkGenerator, IMapper mapper, ILoggerService loggerService)
         {
             this.complaintTypeRepository = complaintTypeRepository;
             this.linkGenerator = linkGenerator;
             this.mapper = mapper;
+            this.loggerService = loggerService;
         }
 
         /// <summary>
@@ -53,9 +57,11 @@ namespace ComplaintService.Controllers
 
             if(complaintTypesList == null || complaintTypesList.Count == 0)
             {
+                this.loggerService.LogMessage("List of complaint typess is empty", "Get", LogLevel.Warning);
                 return NoContent();
             }
 
+            this.loggerService.LogMessage("List of complaint typess is returned", "Get", LogLevel.Information);
             return Ok(mapper.Map<IEnumerable<ComplaintTypeDto>>(complaintTypesList));
         }
 
@@ -69,15 +75,16 @@ namespace ComplaintService.Controllers
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [HttpGet("{complaintTypeId}")]
-        public ActionResult<ComplaintTypeDto> GetComplaint(Guid complaintTypeId)
+        public ActionResult<ComplaintTypeDto> GetComplaintType(Guid complaintTypeId)
         {
             var complaintType = complaintTypeRepository.GetComplaintTypeById(complaintTypeId);
 
             if(complaintType == null)
             {
+                this.loggerService.LogMessage("There is no complaint type with that id", "Get", LogLevel.Warning);
                 return NotFound();
             }
-
+            this.loggerService.LogMessage("Complaint type is returned", "Get", LogLevel.Information);
             return Ok(mapper.Map<ComplaintTypeDto>(complaintType));
         }
 
@@ -109,17 +116,21 @@ namespace ComplaintService.Controllers
 
                 if (!validComplaintType)
                 {
+                    this.loggerService.LogMessage("Created complaint type is not valid", "Post", LogLevel.Warning);
                     return BadRequest();
                 }
 
                 ComplaintType createdComplaintType = complaintTypeRepository.CreateComplaintType(mapper.Map<ComplaintType>(complaintType));
 
                 string location = linkGenerator.GetPathByAction("GetComplaintType", "ComplaintType", new  { complaintTypeId = createdComplaintType.complaintTypeId });
+                
+                this.loggerService.LogMessage("Complaint type is created", "Post", LogLevel.Information);
 
                 return Created(location, mapper.Map<ComplaintTypeCreateDto>(createdComplaintType));
             }
-            catch (Exception)
+            catch (Exception exception)
             {
+                this.loggerService.LogMessage("Error with creating complaint type", "Post", LogLevel.Error, exception);
                 return StatusCode(StatusCodes.Status500InternalServerError, "Create Complaint Type error");
             }
         }
@@ -148,6 +159,8 @@ namespace ComplaintService.Controllers
 
                 if (!validComplaintType)
                 {
+                    this.loggerService.LogMessage("Complaint type is not valid", "Put", LogLevel.Warning);
+
                     return BadRequest();
                 }
 
@@ -155,16 +168,20 @@ namespace ComplaintService.Controllers
 
                 if(complaintTypeEntity == null)
                 {
+                    this.loggerService.LogMessage("Complaint type to update not found", "Put", LogLevel.Warning);
+
                     return NotFound();
                 }
 
                 mapper.Map(complaintType, complaintTypeEntity);
                 complaintTypeRepository.UpdateComplaintType(mapper.Map<ComplaintType>(complaintType));
-                
+
+                this.loggerService.LogMessage("Complaint type is updated successfully!", "Put", LogLevel.Information);
                 return Ok(complaintType);
             }
-            catch (Exception)
+            catch (Exception exception)
             {
+                this.loggerService.LogMessage("Error with updating complaint type", "Put", LogLevel.Error, exception);
                 return StatusCode(StatusCodes.Status500InternalServerError, "Update Complaint Type error");
             }
 
@@ -190,15 +207,17 @@ namespace ComplaintService.Controllers
 
                 if (complaintType == null)
                 {
+                    this.loggerService.LogMessage("Complaint type to delete does not exist.", "Delete", LogLevel.Warning);
                     return NotFound();
                 }
 
                 complaintTypeRepository.DeleteComplaintType(complaintTypeId);
-
+                this.loggerService.LogMessage("Complaint type is deleted", "Delete", LogLevel.Information);
                 return NoContent();
             }
             catch
             {
+                this.loggerService.LogMessage("Error with deleting complaint type", "Delete", LogLevel.Error, exception);
                 return StatusCode(StatusCodes.Status500InternalServerError, "Delete Complaint Type error");
             }
         }

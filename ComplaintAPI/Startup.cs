@@ -1,6 +1,7 @@
 using ComplaintService.Data;
 using ComplaintService.Data.Interfaces;
 using ComplaintService.Entities.Context;
+using ComplaintService.ServiceCalls;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -36,6 +37,7 @@ namespace ComplaintAPI
             services.AddScoped<IActionTakenRepository, ActionTakenRepository>();
             services.AddScoped<IComplaintStatusRepository, ComplaintStatusRepository>();
             services.AddScoped<IComplaintTypeRepository, ComplaintTypeRepository>();
+            services.AddScoped<ILoggerService, LoggerServiceMock>();
 
             services.AddDbContext<ComplaintContext>();
 
