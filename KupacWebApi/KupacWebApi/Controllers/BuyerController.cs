@@ -68,7 +68,7 @@ namespace KupacWebApi.Controllers
                 foreach (var temp in el.payments)
                 {
                     var responseText = String.Empty;
-                    HttpWebRequest request = (HttpWebRequest)WebRequest.Create(@"http://localhost:44300/payment/payments/" + temp.payerId);
+                    HttpWebRequest request = (HttpWebRequest)WebRequest.Create(@"http://localhost:44300/payment/payment/" + temp.payerId);
                     request.AutomaticDecompression = DecompressionMethods.GZip | DecompressionMethods.Deflate;
                     
                     using (HttpWebResponse response = (HttpWebResponse)request.GetResponse())
