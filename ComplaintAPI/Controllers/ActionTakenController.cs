@@ -2,9 +2,11 @@
 using ComplaintAPI.Models.ActionTaken;
 using ComplaintService.Data.Interfaces;
 using ComplaintService.Entities;
+using ComplaintService.ServiceCalls;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Routing;
+using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -24,6 +26,7 @@ namespace ComplaintService.Controllers
         private readonly IActionTakenRepository actionTakenRepository;
         private readonly LinkGenerator linkGenerator;
         private readonly IMapper mapper;
+        private readonly ILoggerService loggerService;
 
         /// <summary>
         /// Konstruktor kontrolera za radnju
@@ -31,11 +34,12 @@ namespace ComplaintService.Controllers
         /// <param name="actionTakenRepository">Repozitorijum radnje na osnovu žalbe</param>
         /// <param name="linkGenerator">Link generator</param>
         /// <param name="mapper">AutoMapper</param>
-        public ActionTakenController(IActionTakenRepository actionTakenRepository, LinkGenerator linkGenerator, IMapper mapper)
+        public ActionTakenController(IActionTakenRepository actionTakenRepository, LinkGenerator linkGenerator, IMapper mapper, ILoggerService loggerService)
         {
             this.actionTakenRepository = actionTakenRepository;
             this.linkGenerator = linkGenerator;
             this.mapper = mapper;
+            this.loggerService = loggerService;
         }
 
         /// <summary>
@@ -53,9 +57,10 @@ namespace ComplaintService.Controllers
 
             if(actionTakenList == null || actionTakenList.Count == 0)
             {
+                this.loggerService.LogMessage("List of actions taken is empty", "Get", LogLevel.Warning);
                 return NoContent();
             }
-
+            this.loggerService.LogMessage("List of actions taken is returned", "Get", LogLevel.Information);
             return Ok(mapper.Map<IEnumerable<ActionTakenDto>>(actionTakenList));
         }
 
@@ -75,9 +80,10 @@ namespace ComplaintService.Controllers
 
             if(actionTaken == null)
             {
+                this.loggerService.LogMessage("There is no action taken with that id", "Get", LogLevel.Warning);
                 return NotFound();
             }
-
+            this.loggerService.LogMessage("Action taken is returned", "Get", LogLevel.Information);
             return Ok(mapper.Map<ActionTakenDto>(actionTaken));
         }
 
@@ -110,18 +116,23 @@ namespace ComplaintService.Controllers
 
                 if (!validActionTaken)
                 {
+                    this.loggerService.LogMessage("Action taken is not valid.", "Post", LogLevel.Warning);
+
                     return BadRequest();
                 }
 
                 ActionTaken createdActionTaken = actionTakenRepository.CreateActionTaken(mapper.Map<ActionTaken>(actionTaken));
 
                 string location = linkGenerator.GetPathByAction("GetActionTaken", "ActionTaken", new { actionTakenId = createdActionTaken.actionTakenId });
+                this.loggerService.LogMessage("Action taken is created", "Post", LogLevel.Information);
 
                 return Created(location, mapper.Map<ActionTakenCreateDto>(createdActionTaken));
             }
-            catch (Exception)
+            catch (Exception exception)
             {
-                return StatusCode(StatusCodes.Status500InternalServerError, "Create Action Taken error");
+                this.loggerService.LogMessage("Error with creating action taken", "Post", LogLevel.Error, exception);
+
+                return Conflict("ERROR: " + exception.Message);
             }
         }
 
@@ -148,6 +159,8 @@ namespace ComplaintService.Controllers
 
                 if (!validActionTaken)
                 {
+                    this.loggerService.LogMessage("Action taken is not valid.", "Put", LogLevel.Warning);
+
                     return BadRequest();
                 }
 
@@ -155,6 +168,8 @@ namespace ComplaintService.Controllers
 
                 if(actionTakenEntity == null)
                 {
+                    this.loggerService.LogMessage("Actions taken does not exist", "Put", LogLevel.Warning);
+
                     return NotFound();
                 }
 
@@ -163,8 +178,10 @@ namespace ComplaintService.Controllers
                 actionTakenRepository.UpdateActionTaken(mapper.Map<ActionTaken>(actionTaken));
                 return Ok(actionTaken);
             }
-            catch (Exception)
+            catch (Exception exception)
             {
+                this.loggerService.LogMessage("Error with updating action taken", "Put", LogLevel.Error, exception);
+
                 return StatusCode(StatusCodes.Status500InternalServerError, "Update Action Taken error");
             }
         }
@@ -189,14 +206,20 @@ namespace ComplaintService.Controllers
 
                 if (actionTakenToDelete == null)
                 {
+                    this.loggerService.LogMessage("List of actions taken is empty", "Delete", LogLevel.Warning);
+
                     return NotFound();
                 }
+
+                this.loggerService.LogMessage("Action taken is deleted successfully!", "Delete", LogLevel.Warning);
 
                 actionTakenRepository.deleteActionTaken(actionTakenId);
                 return NoContent();
             }
-            catch (Exception)
+            catch (Exception exception)
             {
+                this.loggerService.LogMessage("Error with deleting action taken", "Delete", LogLevel.Error, exception);
+
                 return StatusCode(StatusCodes.Status500InternalServerError, "Delete Action Taken error");
             }
         }

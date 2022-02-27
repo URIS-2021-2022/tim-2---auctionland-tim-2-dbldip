@@ -4,9 +4,11 @@ using ComplaintAPI.Models;
 using ComplaintAPI.Models.Complaint;
 using ComplaintService.Data.Interfaces;
 using ComplaintService.Entities.Confirmations;
+using ComplaintService.ServiceCalls;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Routing;
+using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -25,6 +27,7 @@ namespace ComplaintService.Controllers
         private readonly IComplaintRepository complaintRepository;
         private readonly LinkGenerator linkGenerator;
         private readonly IMapper mapper;
+        private readonly ILoggerService loggerService;
 
         /// <summary>
         /// Konstruktor kontrolera žalbe
@@ -32,11 +35,12 @@ namespace ComplaintService.Controllers
         /// <param name="complaintRepository">Repozitorijum žalbe </param>
         /// <param name="linkGenerator">Link generator</param>
         /// <param name="mapper">AutoMapper</param>
-        public ComplaintController(IComplaintRepository complaintRepository, LinkGenerator linkGenerator, IMapper mapper)
+        public ComplaintController(IComplaintRepository complaintRepository, LinkGenerator linkGenerator, IMapper mapper, ILoggerService loggerService)
         {
             this.complaintRepository = complaintRepository;
             this.linkGenerator = linkGenerator;
             this.mapper = mapper;
+            this.loggerService = loggerService;
         }
 
         /// <summary>
@@ -53,8 +57,10 @@ namespace ComplaintService.Controllers
 
             if (complaints == null || complaints.Count == 0) 
             {
+                this.loggerService.LogMessage("List of complaints is empty", "Get", LogLevel.Warning);
                 return NoContent();
             }
+            this.loggerService.LogMessage("List of complaints is returned", "Get", LogLevel.Information);
             return Ok(mapper.Map<List<ComplaintDto>>(complaints));
         }
 
@@ -73,8 +79,10 @@ namespace ComplaintService.Controllers
 
             if(complaint == null)
             {
+                this.loggerService.LogMessage("There is no complaint with that id", "Get", LogLevel.Warning);
                 return NotFound();
             }
+            this.loggerService.LogMessage("Complaint is returned", "Get", LogLevel.Information);
             return Ok(mapper.Map<ComplaintDto>(complaint));
         }
 
@@ -117,50 +125,24 @@ namespace ComplaintService.Controllers
 
                 if (!validComplaint)
                 {
+                    this.loggerService.LogMessage("Complaint is not valid.", "Post", LogLevel.Warning);
                     return BadRequest();
                 }
 
                 ComplaintConfirmation confirmation = complaintRepository.CreateComplaint(mapper.Map<Complaint>(complaintToCreate));
 
                 string location = linkGenerator.GetPathByAction(action: "GetComplaintById", controller: "Complaint", values: new { complaintId = confirmation.complaintId });
+                this.loggerService.LogMessage("Complaint is created", "Post", LogLevel.Information);
+
                 return Created(location, mapper.Map<ComplaintConfirmationDto>(confirmation));
             }
-            catch (Exception)
+            catch (Exception exception)
             {
+                this.loggerService.LogMessage("Error with creating complaint", "Post", LogLevel.Error, exception);
                 return StatusCode(StatusCodes.Status500InternalServerError, "Create Complaint error");
             }
         }
 
-        /// <summary>
-        /// Brisanje žalbe na osnovu prosleđenog ID-ja
-        /// </summary>
-        /// <param name="complaintId">ID žalbe</param>
-        /// <returns>Status 204 (NoContent)</returns>
-        /// <response code="204">Žalba je uspešno izbrisana</response>
-        /// <response code="404">Nije pronađena žalba sa unetim ID-jem</response>
-        /// <response code="500">Serverska greška u toku brisanja žalbe</response>
-        [HttpDelete("{zalbaId}")]
-        [ProducesResponseType(StatusCodes.Status204NoContent)]
-        [ProducesResponseType(StatusCodes.Status404NotFound)]
-        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public ActionResult DeleteComplaint(Guid complaintId)
-        {
-            try { 
-                var complaint = complaintRepository.GetComplaintById(complaintId);
-
-                if(complaint == null)
-                {
-                    return NotFound();
-                }
-
-                complaintRepository.DeleteComplaint(complaintId);
-                    return NoContent();
-            }
-            catch(Exception )
-            {
-                return StatusCode(StatusCodes.Status500InternalServerError, "Delete complaint error");
-            }
-        }
 
         /// <summary>
         /// Izmena  zalbe
@@ -187,6 +169,8 @@ namespace ComplaintService.Controllers
 
                 if (!validComplaint)
                 {
+                    this.loggerService.LogMessage("Complaint is not valid", "Put", LogLevel.Warning);
+
                     return BadRequest();
                 }
 
@@ -194,16 +178,57 @@ namespace ComplaintService.Controllers
 
                 if(complaintEntity == null)
                 {
+                    this.loggerService.LogMessage("Complaint to update not found", "Put", LogLevel.Warning);
                     return NotFound();
                 }
 
                 mapper.Map(complaint, complaintEntity);
                 complaintRepository.UpdateComplaint(mapper.Map<Complaint>(complaint));
+
+                this.loggerService.LogMessage("Complaint is updated successfully!", "Put", LogLevel.Information);
                 return Ok(complaint);
             }
-            catch (Exception)
+            catch (Exception exception)
             {
+                this.loggerService.LogMessage("Error with updating complaint", "Put", LogLevel.Error, exception);
+
                 return StatusCode(StatusCodes.Status500InternalServerError, "Update complaint error");
+            }
+        }
+
+
+        /// <summary>
+        /// Brisanje žalbe na osnovu prosleđenog ID-ja
+        /// </summary>
+        /// <param name="complaintId">ID žalbe</param>
+        /// <returns>Status 204 (NoContent)</returns>
+        /// <response code="204">Žalba je uspešno izbrisana</response>
+        /// <response code="404">Nije pronađena žalba sa unetim ID-jem</response>
+        /// <response code="500">Serverska greška u toku brisanja žalbe</response>
+        [HttpDelete("{zalbaId}")]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        public ActionResult DeleteComplaint(Guid complaintId)
+        {
+            try
+            {
+                var complaint = complaintRepository.GetComplaintById(complaintId);
+
+                if (complaint == null)
+                {
+                    this.loggerService.LogMessage("Complaint to delete does not exist.", "Delete", LogLevel.Warning);
+                    return NotFound();
+                }
+
+                this.loggerService.LogMessage("Complaint is deleted", "Delete", LogLevel.Information);
+                complaintRepository.DeleteComplaint(complaintId);
+                return NoContent();
+            }
+            catch (Exception exception)
+            {
+                this.loggerService.LogMessage("Error with deleting complaint", "Delete", LogLevel.Error, exception);
+                return Conflict("ERROR: " + exception.Message);
             }
         }
     }
