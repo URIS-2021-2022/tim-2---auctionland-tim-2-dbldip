@@ -152,7 +152,9 @@ namespace PaymentService.Controllers
             }
             catch (Exception e)
             {
+
                 return StatusCode(StatusCodes.Status500InternalServerError, "Delete error: " + e.Message);
+
             }
         }
     }
