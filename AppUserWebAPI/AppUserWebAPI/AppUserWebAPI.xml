@@ -1,0 +1,281 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>AppUserWebAPI</name>
+    </assembly>
+    <members>
+        <member name="T:AppUserWebAPI.Controllers.AppUserController">
+            <summary>
+            Controller class that manages app user data, provides GET, POST, PUT, DELETE methods.
+            </summary>
+        </member>
+        <member name="M:AppUserWebAPI.Controllers.AppUserController.#ctor(AppUserWebAPI.Data.IAppUserRepository,AutoMapper.IMapper,Microsoft.AspNetCore.Routing.LinkGenerator,AppUserWebAPI.ServiceCalls.ILoggerService)">
+            <summary>
+            Constructor of a AppUserController, 
+            </summary>
+            <param name="appUserRepository">Public bidding repository</param>
+            <param name="linkGenerator">Link generator for create request</param>
+            <param name="mapper">AutoMapper</param>
+            <param name="loggerService"></param>
+        </member>
+        <member name="M:AppUserWebAPI.Controllers.AppUserController.GetAppUsers(System.String,System.String,System.String)">
+            <summary>
+            Returns all AppUser data when requested
+            </summary>
+            <returns>List of app users</returns>
+            <response code="200">Returns list of app users</response>
+            <response code="404">Could not find any stored data</response>
+        </member>
+        <member name="M:AppUserWebAPI.Controllers.AppUserController.GetUser(System.Guid)">
+            <summary>
+            Returns certain app user when requested, which type is specified with correct id param in the request url
+            </summary>
+            <param name="appUserId">Buyer Id</param>
+            <returns>appUser</returns>
+            <response code="200">Returns App user</response>
+            <response code="404">Could not find any stored data</response>
+        </member>
+        <member name="M:AppUserWebAPI.Controllers.AppUserController.GetUserByUsername(System.String)">
+            <summary>
+            Returns certain app user when requested, which user is specified with correct username param in the request url
+            </summary>
+            <param name="username">username</param>
+            <returns>app user</returns>
+            <response code="200">Returns app user</response>
+            <response code="404">Could not find any stored data</response>
+        </member>
+        <member name="M:AppUserWebAPI.Controllers.AppUserController.CreateAppUser(AppUserWebAPI.Models.AppUserCreationDto)">
+             <summary>
+             Creating new user
+             </summary>
+             <param name="user">User to add</param>
+             <remarks>
+             {
+            "appUserName":"John",\
+            "appUserLastName": "Smith",\
+            "appUserUsername":"johnsmith1312",\
+            "appUserPassword":"unprotectedpassword",\
+            "typeOfUserId" : "b27196e7-3ffd-4b72-b201-1366052b2f71",\
+            "typeOfUser": "Prva komisija"\
+            }
+            </remarks>
+            <returns>Confirmation</returns>
+        </member>
+        <member name="M:AppUserWebAPI.Controllers.AppUserController.UpdateAppUser(AppUserWebAPI.Models.AppUserUpdateDto)">
+             <summary>
+             Update endpoint 
+             </summary>
+             <param name="appUser">New app user values</param>
+             <remarks>
+             {
+             "appUserId": "fdcdee71-95b0-467d-998e-08d9f46c032b"\
+            "appUserName":"John",\
+            "appUserLastName": "Smith",\
+            "appUserUsername":"johnsmith12",\
+            "appUserPassword":"unprotectedpassword",\
+            "typeOfUserId" : "b27196e7-3ffd-4b72-b201-1366052b2f71",\
+            "typeOfUser": "Prva komisija"\
+            }
+            </remarks>
+             <returns>Confirmation</returns>
+        </member>
+        <member name="T:AppUserWebAPI.Controllers.LoginController">
+            <summary>
+            Controller class that manages app user authentication and provides token for authenticated users
+            </summary>
+        </member>
+        <member name="M:AppUserWebAPI.Controllers.LoginController.authenticateUser(AppUserWebAPI.Models.LoginModel)">
+            <summary>
+            Login method that check user for his username and password, if the correct combination of two is provided it generates a token as a response!
+            </summary>
+            <param name="userLoginModel">Login model to authenticate</param>
+            <returns></returns>
+        </member>
+        <member name="T:AppUserWebAPI.Controllers.TypeOfUserController">
+            <summary>
+            Controller class that manages type of user data
+            </summary>
+        </member>
+        <member name="M:AppUserWebAPI.Controllers.TypeOfUserController.#ctor(AppUserWebAPI.Data.ITypeOfUserRepository,AutoMapper.IMapper)">
+            <summary>
+            Controller of TypeOfUserController
+            </summary>
+            <param name="typeOfUserRepository"></param>
+            <param name="linkGenerator"></param>
+            <param name="mapper"></param>
+        </member>
+        <member name="M:AppUserWebAPI.Controllers.TypeOfUserController.GetTypes">
+            <summary>
+            Manages getting type data from database
+            </summary>
+            <returns>List of types</returns>
+        </member>
+        <member name="M:AppUserWebAPI.Controllers.TypeOfUserController.GetTypeOfUserById(System.Guid)">
+            <summary>
+            Manages getting data from the database with specified id
+            </summary>
+            <param name="typeId"></param>
+            <returns>returns a type with passed id</returns>
+        </member>
+        <member name="T:AppUserWebAPI.Entities.AppUser">
+            <summary>
+            AppUser entity, used as a template for database
+            </summary>
+        </member>
+        <member name="P:AppUserWebAPI.Entities.AppUser.appUserId">
+            <summary>
+            Id property of user, generated by EF
+            </summary>
+        </member>
+        <member name="P:AppUserWebAPI.Entities.AppUser.appUserName">
+            <summary>
+            First name
+            </summary>
+        </member>
+        <member name="P:AppUserWebAPI.Entities.AppUser.appUserLastName">
+            <summary>
+            Last name
+            </summary>
+        </member>
+        <member name="P:AppUserWebAPI.Entities.AppUser.appUserUsername">
+            <summary>
+            Username
+            </summary>
+        </member>
+        <member name="P:AppUserWebAPI.Entities.AppUser.appUserPassword">
+            <summary>
+            Password, will be hashed in database
+            </summary>
+        </member>
+        <member name="P:AppUserWebAPI.Entities.AppUser.typeOfUserId">
+            <summary>
+            Type id 
+            </summary>
+        </member>
+        <member name="T:AppUserWebAPI.Entities.AppUserConfirmation">
+            <summary>
+            Confirmation entity used to confirm creating users
+            </summary>
+        </member>
+        <member name="P:AppUserWebAPI.Entities.AppUserConfirmation.appUserId">
+            <summary>
+            newly created user id
+            </summary>
+        </member>
+        <member name="P:AppUserWebAPI.Entities.AppUserConfirmation.appUserName">
+            <summary>
+            newly created user first name
+            </summary>
+        </member>
+        <member name="P:AppUserWebAPI.Entities.AppUserConfirmation.appUserLastName">
+            <summary>
+            newly created user last name
+            </summary>
+        </member>
+        <member name="P:AppUserWebAPI.Entities.AppUserConfirmation.typeOfUser">
+            <summary>
+            newly created user type of user
+            </summary>
+        </member>
+        <member name="T:AppUserWebAPI.Entities.AppUserUpdate">
+            <summary>
+            Dto sent to server when targeting PUT endpoint
+            </summary>
+        </member>
+        <member name="P:AppUserWebAPI.Entities.AppUserUpdate.appUserId">
+            <summary>
+            Id property of user, generated by EF
+            </summary>
+        </member>
+        <member name="P:AppUserWebAPI.Entities.AppUserUpdate.appUserName">
+            <summary>
+            new First name
+            </summary>
+        </member>
+        <member name="P:AppUserWebAPI.Entities.AppUserUpdate.appUserLastName">
+            <summary>
+            new Last name
+            </summary>
+        </member>
+        <member name="P:AppUserWebAPI.Entities.AppUserUpdate.appUserUsername">
+            <summary>
+            new Username
+            </summary>
+        </member>
+        <member name="P:AppUserWebAPI.Entities.AppUserUpdate.appUserPassword">
+            <summary>
+            new Password, will be hashed in database
+            </summary>
+        </member>
+        <member name="P:AppUserWebAPI.Entities.AppUserUpdate.typeOfUserId">
+            <summary>
+            new Type id 
+            </summary>
+        </member>
+        <member name="T:AppUserWebAPI.Entities.TypeOfUser">
+            <summary>
+            Type of user entity, used as a template for database
+            </summary>
+        </member>
+        <member name="P:AppUserWebAPI.Entities.TypeOfUser.typeOfUserId">
+            <summary>
+            Typeid
+            </summary>
+        </member>
+        <member name="P:AppUserWebAPI.Entities.TypeOfUser.typeOfUser">
+            <summary>
+            name of type
+            </summary>
+        </member>
+        <member name="T:AppUserWebAPI.Models.AppUserDto">
+            <summary>
+            Dto sent to user via response
+            </summary>
+        </member>
+        <member name="P:AppUserWebAPI.Models.AppUserUpdateDto.appUserId">
+            <summary>
+            Id property of user, generated by EF
+            </summary>
+        </member>
+        <member name="P:AppUserWebAPI.Models.AppUserUpdateDto.appUserName">
+            <summary>
+            First name
+            </summary>
+        </member>
+        <member name="P:AppUserWebAPI.Models.AppUserUpdateDto.appUserLastName">
+            <summary>
+            Last name
+            </summary>
+        </member>
+        <member name="P:AppUserWebAPI.Models.AppUserUpdateDto.appUserUsername">
+            <summary>
+            Username
+            </summary>
+        </member>
+        <member name="P:AppUserWebAPI.Models.AppUserUpdateDto.appUserPassword">
+            <summary>
+            Password, will be hashed in database
+            </summary>
+        </member>
+        <member name="P:AppUserWebAPI.Models.AppUserUpdateDto.typeOfUserId">
+            <summary>
+            Type id 
+            </summary>
+        </member>
+        <member name="T:AppUserWebAPI.Models.LoginModel">
+            <summary>
+            Model used as a parameter for LoginMethod in LoginController
+            </summary>
+        </member>
+        <member name="P:AppUserWebAPI.Models.LoginModel.userName">
+            <summary>
+            Username 
+            </summary>
+        </member>
+        <member name="P:AppUserWebAPI.Models.LoginModel.password">
+            <summary>
+            Password
+            </summary>
+        </member>
+    </members>
+</doc>

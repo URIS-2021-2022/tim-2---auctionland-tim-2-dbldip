@@ -92,7 +92,7 @@ namespace AppUserWebAPI
             app.UseSwagger();
             app.UseSwaggerUI(setupAction =>
             {
-                setupAction.SwaggerEndpoint("/swagger/v1/swagger.json", "AppUser API");
+                setupAction.SwaggerEndpoint("/swagger/v1/swagger.json", "appUserApi");
                 setupAction.RoutePrefix = "";
             });
 

@@ -23,7 +23,7 @@
           "Port": 44302
         }
       ],
-      "UpstreamPathTemplate": "/api/{everything}",
+      "UpstreamPathTemplate": "/appUser/{everything}",
       "UpstreamHttpMethod": [ "Get", "Post", "Put", "Delete", "Options", "Head" ],
       "FileCacheOptions": { "TtlSeconds": 30 },
       "SwaggerKey": "appUser"

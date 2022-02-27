@@ -39,9 +39,9 @@ namespace AdresaWebAPI
                 c.SwaggerDoc("v2",
                     new OpenApiInfo()
                     {
-                        Title = "AdresaWebAPI API",
+                        Title = "Address API",
                         Version = "v1",
-                        Description = "Public Bidding API allows creation and read of all public biddings",
+                        Description = "Address API allows creation and read of all public biddings",
                         Contact = new Microsoft.OpenApi.Models.OpenApiContact
                         {
                             Name = "Novcic Milan",
@@ -69,9 +69,10 @@ namespace AdresaWebAPI
             {
                 app.UseDeveloperExceptionPage();
             }
+            app.UseSwagger();
             app.UseSwaggerUI(setupAction =>
             {
-                setupAction.SwaggerEndpoint("/swagger/v1/swagger.json", "Application API");
+                setupAction.SwaggerEndpoint("/swagger/v1/swagger.json", "Address API");
                 setupAction.RoutePrefix = "";
             });
 
