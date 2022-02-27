@@ -28,95 +28,95 @@ namespace ParcelaWebAPI.Entities
         }
 
 
-        protected override void OnModelCreating(ModelBuilder builder)
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            builder.Entity<CadastralMunicipality>()
+            modelBuilder.Entity<CadastralMunicipality>()
                 .HasData(new
                 {
                     cadastralMunicipalityId = Guid.Parse("0e0b5e85-f9d8-44e9-8486-6b6702619dc8"),
                     nameOfCadastralMunicipality = "Cantavir"
                 });
-            builder.Entity<CadastralMunicipality>()
+            modelBuilder.Entity<CadastralMunicipality>()
                .HasData(new
                {
                    cadastralMunicipalityId = Guid.Parse("e15eb4b2-1e6e-44b7-8d74-c2df17ccfc44"),
                    nameOfCadastralMunicipality = "Backi Vinogradi"
                });
-            builder.Entity<CadastralMunicipality>()
+            modelBuilder.Entity<CadastralMunicipality>()
                .HasData(new
                {
                    cadastralMunicipalityId = Guid.Parse("944256fc-8589-475b-9be1-17ef6e29380b"),
                    nameOfCadastralMunicipality = "Bikovo"
                });
-            builder.Entity<CadastralMunicipality>()
+            modelBuilder.Entity<CadastralMunicipality>()
                .HasData(new
                {
                    cadastralMunicipalityId = Guid.Parse("1554cd0c-bbdd-498c-8a65-88830c99e508"),
                    nameOfCadastralMunicipality = "Djudjin"
                });
-            builder.Entity<CadastralMunicipality>()
+            modelBuilder.Entity<CadastralMunicipality>()
                .HasData(new
                {
                    cadastralMunicipalityId = Guid.Parse("f2e91127-6e56-4f15-bfb1-a6e88efc9ebc"),
                    nameOfCadastralMunicipality = "Zednik"
                });
-            builder.Entity<CadastralMunicipality>()
+            modelBuilder.Entity<CadastralMunicipality>()
                .HasData(new
                {
                    cadastralMunicipalityId = Guid.Parse("a1e35aa8-449e-4081-b59a-f1ba12fba5e7"),
                    nameOfCadastralMunicipality = "Tavankut"
                });
-            builder.Entity<CadastralMunicipality>()
+            modelBuilder.Entity<CadastralMunicipality>()
                .HasData(new
                {
                    cadastralMunicipalityId = Guid.Parse("8532190d-68f8-4465-896f-2a7e652973ce"),
                    nameOfCadastralMunicipality = "Bajmok"
                });
-            builder.Entity<CadastralMunicipality>()
+            modelBuilder.Entity<CadastralMunicipality>()
                .HasData(new
                {
                    cadastralMunicipalityId = Guid.Parse("28937834-ea14-44e9-969f-ef27dc9bfe2f"),
                    nameOfCadastralMunicipality = "Donji Grad"
                });
-            builder.Entity<CadastralMunicipality>()
+            modelBuilder.Entity<CadastralMunicipality>()
                .HasData(new
                {
                    cadastralMunicipalityId = Guid.Parse("d127347a-431b-4f02-999c-162769a5b3df"),
                    nameOfCadastralMunicipality = "Stari Grad"
                });
-            builder.Entity<CadastralMunicipality>()
+            modelBuilder.Entity<CadastralMunicipality>()
                .HasData(new
                {
                    cadastralMunicipalityId = Guid.Parse("a54bee2c-6373-46b9-b25b-d5ba187f7ae5"),
                    nameOfCadastralMunicipality = "Novi Grad"
                });
-            builder.Entity<CadastralMunicipality>()
+            modelBuilder.Entity<CadastralMunicipality>()
                .HasData(new
                {
                    cadastralMunicipalityId = Guid.Parse("b1707be4-a980-4cce-a7eb-a3af44ba36fb"),
                    nameOfCadastralMunicipality = "Palic"
                });
-            builder.Entity<ProtectedZone>()
+            modelBuilder.Entity<ProtectedZone>()
               .HasData(new
               {
                   protectedZoneId = Guid.Parse("b4817195-2be0-4032-9c3b-c4c153a721dd"),
                   level = 1
               });
-            builder.Entity<ProtectedZone>()
+            modelBuilder.Entity<ProtectedZone>()
               .HasData(new
               {
                   protectedZoneId = Guid.Parse("f7fb9b2f-f2ef-42b7-9920-239424b7fda8"),
                   level = 2
               });
 
-            builder.Entity<ProtectedZone>()
+            modelBuilder.Entity<ProtectedZone>()
               .HasData(new
               {
                   protectedZoneId = Guid.Parse("39d4bbf0-355d-4228-b8e6-e74b1a4fa62c"),
                   level = 3
               });
 
-            builder.Entity<ProtectedZone>()
+            modelBuilder.Entity<ProtectedZone>()
               .HasData(new
               {
                   protectedZoneId = Guid.Parse("e192ce2d-d31c-4525-b54c-2459483bf2c1"),

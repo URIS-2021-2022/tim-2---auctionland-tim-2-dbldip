@@ -13,7 +13,6 @@ namespace ParcelaWebAPI.Profiles.ParcelUserProfiles
         public ParcelUserProfile()
         {
             CreateMap<ParcelUser, ParcelUserDto>();
-            //CreateMap<ParcelUserCreationDto, ParcelUser>();
             CreateMap<ParcelUserUpdateDto, ParcelUser>();
             CreateMap<ParcelUser, ParcelUser>();
             CreateMap<ParcelUserCreation, ParcelUser>();

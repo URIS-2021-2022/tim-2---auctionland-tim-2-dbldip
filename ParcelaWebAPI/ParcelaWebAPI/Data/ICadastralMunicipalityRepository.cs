@@ -10,7 +10,6 @@ namespace ParcelaWebAPI.Data
     {
         List<CadastralMunicipality> GetCadastralMunicipalities(string nameOfCadastralMunicipality = null);
         CadastralMunicipality GetCadastralMunicipalityById(Guid cadastralMunicipalityId);
-        //void UpdateCadastralMunicipality(CadastralMunicipality cadastralMunicipality);
         bool SaveChanges();
     }
 }
